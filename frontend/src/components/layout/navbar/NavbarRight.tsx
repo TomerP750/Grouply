@@ -4,28 +4,44 @@ import { NavLink } from "react-router-dom";
 import { useTheme } from "../../../context/ThemeContext";
 import { NavbarDrawer } from "./Navbar-Drawer";
 
+
+const navbarItems = [
+    { to: "/", label: "Home" },
+    { to: "/about", label: "About" },
+    { to: "/pricing", label: "Pricing" }
+];
+
+
 export function NavbarRight() {
 
     const [menuOpen, setMenuOpen] = useState<boolean>(false);
 
     const { theme, toggle } = useTheme();
 
+    const [isActive, setIsActive] = useState<string>("home");
+
     return (
         <nav className="flex items-center gap-5">
 
             <ul className="hidden sm:flex items-center gap-8 text-lg text-[#1d6654] dark:text-white">
 
-                <li>
-                    <NavLink to={"/"}>Home</NavLink>
-                </li>
+                {navbarItems.map(item => {
+                    const active = isActive === item.label.toLowerCase();
 
-                <li>
-                    <NavLink to={"/"}>About</NavLink>
-                </li>
-
-                <li>
-                    <NavLink to={"/"}>Pricing</NavLink>
-                </li>
+                    return (
+                        <li key={item.to}>
+                            <NavLink
+                                to={item.to}
+                                onClick={() => setIsActive(item.label.toLowerCase())}
+                                className={`${active
+                                    ? "dark:bg-white dark:text-black bg-black text-white px-2 py-1 rounded-xl "
+                                    : "text-gray-400"} ${!active && 'hover:underline hover:underline-offset-4'}`}
+                            >
+                                {item.label}
+                            </NavLink>
+                        </li>
+                    )
+                })}
 
             </ul>
 
@@ -39,7 +55,7 @@ export function NavbarRight() {
 
             <button
                 onClick={toggle}
-                className={`hidden sm:block p-2 rounded-full ${theme === "dark" ? ' text-yellow-400 bg-blue-900' : 'bg-black text-white' } cursor-pointer`}>{theme === "dark" ? <BiSun size={25} /> : <BiMoon size={25} />}
+                className={`hidden sm:block p-2 rounded-full ${theme === "dark" ? ' text-yellow-400 bg-blue-900' : 'bg-black text-white'} cursor-pointer`}>{theme === "dark" ? <BiSun size={25} /> : <BiMoon size={25} />}
             </button>
 
 

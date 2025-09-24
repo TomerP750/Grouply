@@ -1,4 +1,6 @@
-export function Footer() {
+
+
+export function NotFound() {
     return (
         <div>
             

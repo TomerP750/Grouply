@@ -1,11 +1,9 @@
 
 
-
-
-export function Login() {
+export function About() {
     return (
         <div>
-
+            
         </div>
     )
 }
