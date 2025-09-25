@@ -1,7 +1,7 @@
-package com.grouply.backend.group_member;
+package com.grouply.backend.project_member;
 
-
-import com.grouply.backend.group.Group;
+import com.grouply.backend.group_member.GroupMember;
+import com.grouply.backend.project.Project;
 import com.grouply.backend.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -15,19 +15,18 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Builder
-public class GroupMember {
+public class ProjectMember {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    private User user;
+    private GroupMember user;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private GroupRole groupRole;
+    private ProjectRole projectRole;
 
     @ManyToOne
-    private Group group;
+    private Project project;
 }

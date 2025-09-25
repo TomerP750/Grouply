@@ -2,14 +2,14 @@ package com.grouply.backend.project;
 
 public interface IProjectService {
 
-    void createProject();
+    void createProject(CreateProjectDTO dto);
 
-    void patchProject();
+//    void patchProject();
 
-    void updateProject();
+    void updateProject(UpdateProjectDTO dto);
 
-    void deleteProject();
+    void deleteProject(DeleteProjectDTO dto);
 
-    void markAsFinished(Long projectId);
+    void markAsFinished(Long userId ,Long projectId);
 
 }

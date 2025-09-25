@@ -1,6 +1,7 @@
 package com.grouply.backend.project;
 
 import com.grouply.backend.group.Group;
+import com.grouply.backend.technology.Technology;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,6 +11,8 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "projects")
@@ -31,10 +34,14 @@ public class Project {
     @CreatedDate
     private LocalDateTime createdAt;
 
-    private LocalDateTime finishedAt;
-
     @Enumerated(EnumType.STRING)
     private ProjectStatus status;
+
+    @ManyToMany(mappedBy = "project")
+    private Set<Technology> technologies = new HashSet<>();
+
+
+    
 
 
 }
