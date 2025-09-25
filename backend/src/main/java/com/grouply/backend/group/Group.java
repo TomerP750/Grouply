@@ -29,7 +29,6 @@ public class Group {
     @Column(nullable = false, unique = true)
     private String name;
 
-    //TODO should i do manytomany with groupmember
     @OneToMany(mappedBy = "group")
     private Set<GroupMember> members = new HashSet<>();
 

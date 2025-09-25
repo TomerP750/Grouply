@@ -67,6 +67,14 @@ public class JwtService {
         }
     }
 
+    public Long extractId(String token) {
+        try {
+            return Long.valueOf(getClaims(token).getId());
+        } catch (JwtException e) {
+            throw new JwtException("failed extract id");
+        }
+    }
+
     public boolean isValidToken(String token) {
 
         Date expiration = getClaims(token).getExpiration();

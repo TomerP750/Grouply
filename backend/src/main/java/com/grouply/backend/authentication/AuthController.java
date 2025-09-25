@@ -1,5 +1,6 @@
 package com.grouply.backend.authentication;
 
+import com.grouply.backend.exceptions.InvalidInputException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,7 +20,7 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public AuthResponseDTO signup(@RequestBody SignUpRequestDTO dto) {
+    public AuthResponseDTO signup(@RequestBody SignUpRequestDTO dto) throws InvalidInputException {
         return authService.signup(dto);
     }
 

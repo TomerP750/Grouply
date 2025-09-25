@@ -1,5 +1,8 @@
 package com.grouply.backend.project;
 
+import com.grouply.backend.exceptions.InvalidInputException;
+import com.grouply.backend.exceptions.UnauthorizedException;
+
 public interface IProjectService {
 
     void createProject(CreateProjectDTO dto);
@@ -10,6 +13,6 @@ public interface IProjectService {
 
     void deleteProject(DeleteProjectDTO dto);
 
-    void markAsFinished(Long userId ,Long projectId);
+    void markAsFinished(Long userId ,Long projectId) throws UnauthorizedException, InvalidInputException;
 
 }

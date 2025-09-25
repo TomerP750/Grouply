@@ -8,5 +8,4 @@ public class CreateProjectDTO {
     String name;
     Long groupId;
 
-
 }
