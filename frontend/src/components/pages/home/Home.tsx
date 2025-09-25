@@ -1,4 +1,6 @@
-import { Features } from "./Features";
+import { Faq } from "../Faq";
+import { Features } from "./features/Features";
+
 import { Hero } from "./Hero";
 
 export function Home() {
@@ -7,6 +9,7 @@ export function Home() {
             {/* <Navbar/> */}
             <Hero/>
             <Features/>
+            <Faq/>
         </main>
     )
 }

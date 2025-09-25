@@ -2,6 +2,6 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-* {
+/* * {
     font-family: 'Outfit', 'sans-serif';
-}
+} */
