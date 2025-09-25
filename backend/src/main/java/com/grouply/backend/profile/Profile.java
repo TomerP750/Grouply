@@ -1,7 +1,5 @@
-package com.grouply.backend.group_member;
+package com.grouply.backend.profile;
 
-
-import com.grouply.backend.group.Group;
 import com.grouply.backend.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -10,25 +8,23 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table
+@Table(name = "profiles")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Builder
-public class GroupMember {
+public class Profile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String about;
+    private String bannerUrl;
+
+    //TODO add project participant in
+
     @OneToOne
-    @Column(nullable = false)
     private User user;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private GroupRole groupRole;
-
-    @ManyToOne
-    private Group group;
 }

@@ -15,4 +15,9 @@ public class GlobalExceptionHandler {
         return null;
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<String> handleIllegalArgumentException() {
+        return null;
+    }
+
 }

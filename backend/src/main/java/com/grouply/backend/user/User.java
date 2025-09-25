@@ -31,12 +31,17 @@ public class User {
     @Column(nullable = false)
     private String lastName;
 
+    @Column(nullable = false, unique = true)
+    private String username;
+
     @Email
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
     @Column(nullable = false)
     private String password;
+
+    private String avatarUrl;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
