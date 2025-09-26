@@ -1,6 +1,6 @@
 import axios from "axios";
 import type { LoginRequestDTO } from "../components/pages/authentication/Login";
-import type { SignUpRequestDTO } from "../components/pages/authentication/signup-wizard/Signup";
+import type { SignUpRequestDTO } from "../components/pages/authentication/signup-wizard/steps/1_Signup";
 
 const BASE_API = "http://localhost:8080/api/auth";
 

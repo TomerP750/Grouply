@@ -3,32 +3,33 @@ import { useForm } from "react-hook-form";
 import { BiLoaderAlt } from "react-icons/bi";
 import { BsArrowLeft } from "react-icons/bs";
 import { FiEye, FiEyeOff } from "react-icons/fi";
-import { useDispatch } from "react-redux";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import type { SignUpRequestDTO } from "../Dtos/SignUpRequestDTO";
+import { useWizardStep } from "../../../../../context/WizardStepContext";
 
-export type SignUpRequestDTO = {
-    firstName: string;
-    lastName: string;
-    username: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
-};
+type SignUpRequest = {
+ 
+    firstName: string
+    lastName: string
+    username: string
+    email: string
+    password: string
+    confirmPassword: string
 
+}
 
 export function SignUp() {
     const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-    const {register,handleSubmit,getValues,formState: { errors }} = useForm<SignUpRequestDTO>();
+    const { register, handleSubmit, getValues, formState: { errors } } = useForm<SignUpRequest>();
 
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
+    const { increment } = useWizardStep();
 
-    const handleRegister = (data: SignUpRequestDTO) => {
-        
-    };
+    const handleSignUp = (data: SignUpRequest) => {
+
+    }
 
     return (
         <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-slate-100 via-white to-slate-100 text-slate-800 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 dark:text-slate-100">
@@ -53,7 +54,7 @@ export function SignUp() {
                             <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">Join teams, ship features, grow your portfolio.</p>
                         </div>
 
-                        <form onSubmit={handleSubmit(handleRegister)} className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                        <form onSubmit={handleSubmit(handleSignUp)} className="grid grid-cols-1 gap-4 sm:grid-cols-2">
 
                             {/* First Name */}
                             <div>
@@ -184,6 +185,8 @@ export function SignUp() {
                                 >
                                     {loading ? <BiLoaderAlt size={20} className="animate-spin" /> : 'Create Account'}
                                 </button>
+                                
+                                {/* <button onClick={increment}>Next Step</button> ** FOR WIZARD */}
                             </div>
 
                             {/* Alt */}

@@ -5,12 +5,21 @@ import { useTheme } from "../../../context/ThemeContext";
 import { NavbarDrawer } from "./Navbar-Drawer";
 
 
+
 const navbarItems = [
-    { to: "/", label: "Home" },
-    { to: "/about", label: "About" },
-    { to: "/pricing", label: "Pricing" }
+  { to: "/", label: "Home", end: true },       // end=true so "/" doesn't match every route
+  { to: "/about", label: "About" },
+  { to: "/pricing", label: "Pricing" },
 ];
 
+const linkClasses = ({ isActive }: { isActive: boolean }) =>
+    [
+      "px-3 py-1 rounded-xl transition",
+      isActive
+        ? "bg-black text-white dark:bg-white dark:text-black font-semibold"
+        : "text-gray-500 hover:underline hover:underline-offset-4 dark:text-gray-300",
+      "focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400",
+    ].join(" ");
 
 export function NavbarRight() {
 
@@ -20,47 +29,52 @@ export function NavbarRight() {
 
     const [isActive, setIsActive] = useState<string>("home");
 
+    
+
     return (
-        <nav className="flex items-center gap-5">
+    <nav className="flex items-center gap-5">
+      {/* Desktop links */}
+      <ul className="hidden md:flex items-center gap-6 text-lg">
+        {navbarItems.map(({ to, label, end }) => (
+          <li key={to}>
+            <NavLink to={to} end={end} className={linkClasses}>
+              {label}
+            </NavLink>
+          </li>
+        ))}
+      </ul>
 
-            <ul className="hidden md:flex items-center gap-8 text-lg text-[#1d6654] dark:text-white">
+      {/* Login button */}
+      <NavLink
+        to="/login"
+        className="hidden md:inline-flex items-center justify-center rounded-3xl bg-[#0f0f10] px-5 py-3 text-white font-bold hover:bg-gray-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400"
+      >
+        Login
+      </NavLink>
 
-                {navbarItems.map(item => {
-                    const active = isActive === item.label.toLowerCase();
+      {/* Mobile menu button */}
+      <button
+        onClick={() => setMenuOpen(true)}
+        className="md:hidden p-1 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400"
+        aria-label="Open menu"
+      >
+        <BiMenu className="text-current" size={40} />
+      </button>
 
-                    return (
-                        <li key={item.to}>
-                            <NavLink
-                                to={item.to}
-                                onClick={() => setIsActive(item.label.toLowerCase())}
-                                className={`${active
-                                    ? "dark:bg-white dark:text-black bg-black text-white px-2 py-1 rounded-xl "
-                                    : "text-gray-400"} ${!active && 'hover:underline hover:underline-offset-4'}`}
-                            >
-                                {item.label}
-                            </NavLink>
-                        </li>
-                    )
-                })}
+      {/* Theme toggle */}
+      <button
+        onClick={toggle}
+        className={`hidden md:inline-flex items-center justify-center p-2 rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 ${
+          theme === "dark" ? "text-yellow-400 bg-blue-900" : "bg-black text-white"
+        }`}
+        aria-label="Toggle theme"
+        title="Toggle theme"
+      >
+        {theme === "dark" ? <BiSun size={22} /> : <BiMoon size={22} />}
+      </button>
 
-            </ul>
-
-            <NavLink
-                to="/login"
-                className={"hidden md:block bg-[#0f0f10] text-white py-3 px-5 rounded-3xl font-bold hover:bg-gray-800"}>Login</NavLink>
-
-            <button onClick={() => setMenuOpen(true)}>
-                <BiMenu className="visible md:hidden dark:text-white cursor-pointer" size={40} />
-            </button>
-
-            <button
-                onClick={toggle}
-                className={`hidden md:block p-2 rounded-full ${theme === "dark" ? ' text-yellow-400 bg-blue-900' : 'bg-black text-white'} cursor-pointer`}>{theme === "dark" ? <BiSun size={25} /> : <BiMoon size={25} />}
-            </button>
-
-
-            {menuOpen && <NavbarDrawer/>}
-
-        </nav>
-    )
+      {/* Drawer */}
+      {menuOpen && <NavbarDrawer onClose={() => setMenuOpen(false)} />}
+    </nav>
+  );
 }
