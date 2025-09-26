@@ -18,9 +18,9 @@ export function Faq() {
     const [openId, setOpenId] = useState<number | null>(null);
 
     return (
-        <div className="flex flex-col gap-10 bg-slate-900 min-h-120 p-20 items-center">
-            <p className="text-white text-3xl sm:text-5xl font-bold">Frequently asked questions</p>
-            <div className="flex flex-col items-center w-full gap-5">
+        <section className="flex flex-col gap-10 min-h-120 p-20 items-center">
+            <p className="text-3xl sm:text-5xl font-bold">Frequently asked questions</p>
+            <div className="flex flex-col items-center w-full gap-4">
                 {questionsData.map(f =>
                     <Accordion
                         key={f.id}
@@ -29,6 +29,6 @@ export function Faq() {
                         faq={f} />
                 )}
             </div>
-        </div>
+        </section>
     )
 }

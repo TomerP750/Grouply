@@ -1,11 +1,11 @@
 import { FooterBottom } from "./FooterBottom";
-import { FooterTop } from "./FooterItems";
+import { FooterTop } from "./FooterTop";
 
 
 
 export function Footer() {
   return (
-    <footer className="bg-slate-800 text-white">
+    <footer className="bg-gray-400 dark:bg-[#080909] dark:text-white">
     
       <div className="mx-auto px-6 py-12">
         

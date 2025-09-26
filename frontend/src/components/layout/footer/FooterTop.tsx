@@ -16,11 +16,11 @@ export function FooterTop() {
             {footerItems.map(f => <FooterItem key={f.title} footerItem={f}/>)}
 
             {/* Subscribe column */}
-            <div>
-                <h3 className="text-sm font-semibold uppercase tracking-wide text-slate-300">
+            {/* <div>
+                <h3 className="text-sm font-semibold uppercase tracking-wide ">
                     Subscribe
                 </h3>
-                <p className="mt-2 text-sm text-slate-400">
+                <p className="mt-2 text-sm">
                     Get study tips and product updates.
                 </p>
                 <form className="mt-4 flex flex-col sm:flex-row gap-2">
@@ -37,13 +37,13 @@ export function FooterTop() {
                         type="submit"
                         className="rounded-xl px-4 py-2 text-sm font-medium 
                            bg-indigo-500 hover:bg-indigo-400 cursor-pointer
-                           focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                           focus:outline-none focus:ring-2 focus:ring-indigo-400 text-white"
                     >
                         Subscribe
                     </button>
 
                 </form>
-            </div>
+            </div> */}
         </div>
     )
 }

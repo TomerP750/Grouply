@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import type { FooterItem } from "./FooterItems";
+import type { FooterItem } from "./FooterTop";
 
 interface FooterItemProps {
     footerItem: FooterItem
@@ -11,10 +11,10 @@ export function FooterItem({ footerItem }: FooterItemProps) {
 
     return (
         <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wide text-slate-300">
+            <h3 className="text-sm font-semibold uppercase tracking-wider dark:text-slate-300">
                 {title}
             </h3>
-            <ul className="mt-4 space-y-3 text-slate-200">
+            <ul className="mt-4 space-y-3 ">
                 <li><NavLink to="#" className="hover:text-indigo-300">{link1}</NavLink></li>
                 <li><NavLink to="#" className="hover:text-indigo-300">{link2}</NavLink></li>
                 <li><NavLink to="#" className="hover:text-indigo-300">{link3}</NavLink></li>

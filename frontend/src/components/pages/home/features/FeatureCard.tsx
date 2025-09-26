@@ -6,12 +6,19 @@ interface FeatureCardProps {
 }
 
 export function FeatureCard({ feature }: FeatureCardProps) {
+
+    const Icon = feature.icon;
+
     return (
-        <div className="flex items-center gap-5">
-            <feature.icon size={50} className="bg-indigo-500 rounded-xl p-2"/>
-            <div className="flex flex-col">
-                <span className="text-2xl">{feature.title}</span>
-                <span className="text-sm">{feature.description}</span>
+        <div className="w-full flex items-start gap-5">
+
+            <div className="w-12 aspect-square rounded-xl bg-gradient-to-r from-indigo-500  to-indigo-600 flex items-center justify-center shrink-0">
+                <Icon className="w-7 h-7 text-white" /> 
+            </div>
+            
+            <div className="flex flex-col gap-2">
+                <span className="text-lg font-medium">{feature.title}</span>
+                <span className="text-base w-full sm:w-3/4 dark:text-gray-300">{feature.description}</span>
             </div>
         </div>
     )
