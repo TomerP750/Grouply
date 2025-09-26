@@ -1,5 +1,5 @@
-import { Navbar } from "../../layout/navbar/Navbar";
-import { Faq } from "../Faq";
+import { Faq } from "./Faq";
+
 import { Features } from "./features/Features";
 
 import { Hero } from "./Hero";

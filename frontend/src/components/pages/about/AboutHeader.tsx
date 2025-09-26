@@ -1,13 +1,18 @@
-
+import darkHeroImage from "../../../assets/heroDark.png";
+import { Navbar } from "../../layout/navbar/Navbar";
 
 export function AboutHeader() {
     return (
 
-        <section className="relative overflow-hidden">
+        <section className="relative overflow-hidden bg-cover bg-center pb-10" style={{
+            backgroundImage: `url(${darkHeroImage})`,
+        }}>
+
+            <Navbar/>
 
             <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-16 md:py-24">
                 <div className="flex flex-col items-start gap-6 md:gap-8">
-                    
+
                     <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium shadow-sm dark:border-slate-700 dark:bg-slate-800">
                         <span className="inline-block h-2 w-2 rounded-full bg-indigo-500" />
                         Built for devs who want to build together

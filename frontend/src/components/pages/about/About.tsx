@@ -9,8 +9,6 @@ export default function About() {
     return (
         <div className="min-h-screen bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-100">
             
-            <Navbar/>
-
             <AboutHeader/>
         
             <AboutWhatIs/>

@@ -1,5 +1,5 @@
-import { useState } from "react"
-import { Accordion } from "../elements/Accordion"
+import { Accordion } from "../../elements/Accordion"
+
 
 export type FaqModel = {
     id: number
@@ -15,8 +15,6 @@ const questionsData: FaqModel[] = [
 
 export function Faq() {
 
-    const [openId, setOpenId] = useState<number | null>(null);
-
     return (
         <section className="flex flex-col gap-10 min-h-120 p-20 items-center">
             <p className="text-3xl sm:text-5xl font-bold">Frequently asked questions</p>
@@ -24,8 +22,6 @@ export function Faq() {
                 {questionsData.map(f =>
                     <Accordion
                         key={f.id}
-                        isOpen={openId === f.id}
-                        onToggle={() => setOpenId(openId === f.id ? null : f.id)}
                         faq={f} />
                 )}
             </div>

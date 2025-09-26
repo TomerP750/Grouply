@@ -48,7 +48,7 @@ export function Features() {
 
                 <div className="flex flex-col items-center gap-8">
                     <p className="font-medium text-3xl sm:text-5xl">Designed for Collaboration</p>
-                    <p className="w-3/4 text-sm sm:text-base sm:max-w-1/2 text-gray-300">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Commodi quis reiciendis, perferendis at libero atque illo rerum aspernatur amet consequatur aut. Perferendis illo consequatur, quasi dolor architecto impedit quas deserunt!</p>
+                    <p className="w-3/4 text-sm sm:text-base sm:max-w-1/2 dark:text-gray-300">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Commodi quis reiciendis, perferendis at libero atque illo rerum aspernatur amet consequatur aut. Perferendis illo consequatur, quasi dolor architecto impedit quas deserunt!</p>
                 </div>
                 <div className="w-2/3 grid grid-cols-1 sm:grid-cols-2 gap-x-5 gap-y-20 justify-items-center">
                     {featuresData.map(f => <FeatureCard key={f.id} feature={f} />)}

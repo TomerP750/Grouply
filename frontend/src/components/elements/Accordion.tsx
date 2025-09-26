@@ -1,22 +1,17 @@
-import { BiMinus, BiPlus } from "react-icons/bi"
-import type { FaqModel } from "../pages/Faq"
-
-
+import type { FaqModel } from "../pages/home/Faq"
 
 interface AccordionProps {
-    isOpen: boolean
     faq: FaqModel
-    onToggle: () => void
 }
 
-export function Accordion({ isOpen, faq, onToggle }: AccordionProps) {
+export function Accordion({ faq }: AccordionProps) {
     return (
-        <div className="flex flex-col items-start cursor-pointer dark:text-white bg-gray-200 dark:bg-slate-800 px-3 py-2 w-full sm:w-1/2 sm:max-w-1/2 " onClick={onToggle}>
-            <div className="flex items-center justify-between w-full">
-                <p className="text-base sm:text-lg">{faq.question}</p>
-                {isOpen ? <BiMinus size={25}/> : <BiPlus size={25}/>}
-            </div>
-            {isOpen && <p className="py-2 text-gray-400">{faq.answer}</p>}
-        </div>
+        <details className="w-2/3 group rounded-2xl border border-slate-200 bg-white p-5 shadow-sm open:shadow-md dark:border-slate-700 dark:bg-slate-800">
+            <summary className="cursor-pointer list-none text-base font-semibold">
+                {faq.question}
+                <span className="float-right transition group-open:rotate-180">▾</span>
+            </summary>
+            <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">{faq.answer}</p>
+        </details>
     )
 }
