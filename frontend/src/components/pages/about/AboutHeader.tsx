@@ -1,5 +1,3 @@
-import { BsArrowLeft } from "react-icons/bs";
-import { NavLink } from "react-router-dom";
 
 
 export function AboutHeader() {
@@ -9,15 +7,9 @@ export function AboutHeader() {
 
             <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-16 md:py-24">
                 <div className="flex flex-col items-start gap-6 md:gap-8">
-                    {/* Return tp home */}
-                    <NavLink
-                        to={"/"}
-                        className={"text-white flex items-center gap-2 hover:bg-[#10b981] border border-[#10b981] px-3 py-2 rounded-3xl"}>
-                        <BsArrowLeft /> Return to home
-                    </NavLink>
-
+                    
                     <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium shadow-sm dark:border-slate-700 dark:bg-slate-800">
-                        <span className="inline-block h-2 w-2 rounded-full bg-emerald-500" />
+                        <span className="inline-block h-2 w-2 rounded-full bg-indigo-500" />
                         Built for devs who want to build together
                     </span>
 
@@ -31,7 +23,7 @@ export function AboutHeader() {
                         showcase every project you’ve shipped on a clean profile that’s ready for HR.
                     </p>
 
-                    {/* Quick badges */}
+                    {/* badges */}
                     <div className="flex flex-wrap items-center gap-3">
                         {[
                             "Filter by technologies",

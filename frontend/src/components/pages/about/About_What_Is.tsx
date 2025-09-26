@@ -20,7 +20,7 @@ export function AboutWhatIs() {
                             { icon: <FaUserCircle className="shrink-0" />, text: "Showcase your shipped work on a clean, HR‑friendly profile" },
                         ].map((item, i) => (
                             <li key={i} className="flex items-start gap-3">
-                                <span className="mt-1 text-emerald-500">{item.icon}</span>
+                                <span className="mt-1 text-indigo-400">{item.icon}</span>
                                 <span className="text-slate-700 dark:text-slate-200">{item.text}</span>
                             </li>
                         ))}
@@ -43,8 +43,8 @@ export function AboutWhatIs() {
                             className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:shadow-md dark:border-slate-700 dark:bg-slate-800"
                         >
                             <div className="flex items-start gap-4">
-                                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/10">
-                                    <span className="text-emerald-600 dark:text-emerald-400">{f.icon}</span>
+                                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-500/10">
+                                    <span className="text-indigo-400 dark:text-indigo-400">{f.icon}</span>
                                 </div>
                                 <div className="flex-1">
                                     <h3 className="text-base font-semibold">{f.title}</h3>
