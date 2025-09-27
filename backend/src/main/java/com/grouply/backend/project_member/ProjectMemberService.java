@@ -26,14 +26,32 @@ public class ProjectMemberService implements IProjectMemberService{
 
 
     @Override
-    public void removeMemberFromProject(Long userId, Long memberId, Long projectId) {
+    public void removeMemberFromProject(Long ownerId, Long memberToRemoveId, Long projectId) throws UnauthorizedException {
+        if (!isOwner(ownerId, projectId)) {
+            throw new UnauthorizedException("You are not authorized to remove user");
+        }
 
+        ProjectMember memberToRemove = fetchProjectMember(memberToRemoveId, projectId);
+
+        int ownerCount = projectMemberRepository
+                .countByProjectIdAndProjectRole(projectId, ProjectRole.OWNER);
+
+        if (memberToRemove.getProjectRole() == ProjectRole.OWNER && ownerCount <= 1) {
+            throw new IllegalStateException("Project must have at least one owner");
+        }
+
+        Project project = fetchProject(projectId);
+        project.getProjectMembers().remove(memberToRemove);
+
+        projectMemberRepository.deleteByIdAndProjectId(memberToRemoveId, projectId);
     }
 
     @Override
     public void requestToJoinProject(Long userId, Long ownerId, Long projectId) {
 
     }
+
+
 
 
 

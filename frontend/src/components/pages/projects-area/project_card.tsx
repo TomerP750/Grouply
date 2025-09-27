@@ -3,6 +3,7 @@ import { MdBookmarkAdd } from "react-icons/md";
 import { NavLink } from "react-router-dom";
 import { Avatar } from "../../elements/Avatar";
 import { useState } from "react";
+import defaultImage from "../../../assets/projectdefault.jpg";
 
 interface ProjectCardProps {
     dummy: {
@@ -21,9 +22,9 @@ export function ProjectCard({ dummy }: ProjectCardProps) {
     };
 
     return (
-        <div className="w-115 h-90 bg-white dark:bg-slate-800 dark:text-white rounded-2xl shadow-lg overflow-hidden flex flex-col">
+        <div className="w-115 h-100 bg-gray-100 dark:bg-slate-800 dark:text-white rounded-2xl shadow-lg overflow-hidden flex flex-col">
             {/* Image placeholder */}
-            <div className="h-1/3 bg-gradient-to-r from-blue-600 to-blue-500 w-full"></div>
+            <img src={defaultImage} className="h-[40%] object-center object-cover bg-gradient-to-r from-blue-600 to-blue-500 w-full"/>
 
             {/* Content */}
             <div className="flex flex-col flex-grow w-full px-6 py-4 gap-2">

@@ -148,30 +148,9 @@ public class ProjectService implements IProjectService {
     }
 
 
-//
-//    @Override
-//    @Transactional
-//    public void removeUserFromProject(Long ownerId, Long memberToRemoveId, Long projectId) throws UnauthorizedException {
-//
-//        if (!isOwner(ownerId, projectId)) {
-//            throw new UnauthorizedException("You are not authorized to remove user");
-//        }
-//
-//        ProjectMember memberToRemove = fetchProjectMember(memberToRemoveId, projectId);
-//
-//        int ownerCount = projectMemberRepository
-//                .countByProjectIdAndProjectRole(projectId, ProjectRole.OWNER);
-//
-//        if (memberToRemove.getProjectRole() == ProjectRole.OWNER && ownerCount <= 1) {
-//            throw new IllegalStateException("Project must have at least one owner");
-//        }
-//
-//        Project project = fetchProject(projectId);
-//        project.getProjectMembers().remove(memberToRemove);
-//
-//        projectMemberRepository.deleteByIdAndProjectId(memberToRemoveId, projectId);
-//
-//    }
+    public ProjectDTO getOneProject(Long projectId) {
+        return EntityToDtoMapper.toProjectDto(fetchProject(projectId));
+    }
 
 
 

@@ -4,7 +4,7 @@ import com.grouply.backend.exceptions.UnauthorizedException;
 
 public interface IProjectMemberService {
 
-    void removeMemberFromProject(Long userId, Long memberId, Long projectId);
+    void removeMemberFromProject(Long userId, Long memberId, Long projectId) throws UnauthorizedException;
 
     void requestToJoinProject(Long userId, Long ownerId, Long projectId);
 
