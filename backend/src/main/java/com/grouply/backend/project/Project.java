@@ -32,7 +32,7 @@ public class Project {
 //    @ManyToOne
 //    private Group group;
 
-    @OneToMany(mappedBy = "project")
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ProjectMember> projectMembers;
 
     @CreatedDate
@@ -44,8 +44,6 @@ public class Project {
     @ManyToMany(mappedBy = "project")
     private Set<Technology> technologies = new HashSet<>();
 
-
-    
 
 
 }

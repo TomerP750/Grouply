@@ -19,6 +19,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 public class FinishedProject {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
