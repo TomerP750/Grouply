@@ -3,14 +3,9 @@ import { Navbar } from "../../layout/navbar/Navbar";
 import { Filters } from "./Filters";
 import { ProjectCard } from "./project_card";
 import { BiLoaderAlt } from "react-icons/bi";
+import { dummies } from "./dummies";
 
 
-const dummies = [
-    { id: 1, name: "project1", desc: "description very long description very long desciption" },
-    { id: 2, name: "project2", desc: "description very long description very long desciption" },
-    { id: 3, name: "project3", desc: "description very long description very long desciption" },
-    { id: 4, name: "project4", desc: "description very long description very long desciption" },
-]
 
 export function SearchProjectsPage() {
 
@@ -25,7 +20,7 @@ export function SearchProjectsPage() {
             <Filters />
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 justify-items-center gap-y-10 py-15">
-                {dummies.map(d => <ProjectCard key={d.id} dummy={d} />)}
+                {dummies.map(p => <ProjectCard key={p.id} projectPost={p} />)}
 
             </div>
 

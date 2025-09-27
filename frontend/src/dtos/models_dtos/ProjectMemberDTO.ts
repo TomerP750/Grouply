@@ -1,5 +1,6 @@
-import type { ProjectPosition } from "../models/enums/ProjectPosition"
-import type { ProjectRole } from "../models/enums/ProjectRole"
+
+import type { ProjectPosition } from "../enums/ProjectPosition"
+import type { ProjectRole } from "../enums/ProjectRole"
 import type { UserDTO } from "./UserDTO"
 
 export class ProjectMemberDTO {

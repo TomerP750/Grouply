@@ -1,4 +1,4 @@
-import type { InvitationStatus } from "../models/enums/InvitationStatus"
+import type { InvitationStatus } from "../enums/InvitationStatus"
 
 export class InvitationDTO {
     id: number

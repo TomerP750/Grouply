@@ -1,4 +1,4 @@
-import type { Role } from "../models/enums/Role"
+import type { Role } from "../enums/Role"
 
 
 export class UserDTO {
@@ -10,7 +10,7 @@ export class UserDTO {
     role: Role 
 
     constructor(firstName: string,lastName: string,username: string,email: string,
-    avatarUrl: string ,role: Role ) {
+    role: Role ,avatarUrl?: string ) {
         this.firstName = firstName
         this.lastName = lastName
         this.email = email

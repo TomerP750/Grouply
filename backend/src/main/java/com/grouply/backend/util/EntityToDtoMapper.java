@@ -5,6 +5,7 @@ import com.grouply.backend.project.Dtos.ProjectDTO;
 import com.grouply.backend.project.Project;
 import com.grouply.backend.project_member.ProjectMember;
 import com.grouply.backend.project_member.dto.ProjectMemberDTO;
+import com.grouply.backend.project_post.ProjectPostDTO;
 import com.grouply.backend.user.Dtos.UserDTO;
 import com.grouply.backend.user.User;
 import java.util.*;
@@ -106,4 +107,31 @@ public class EntityToDtoMapper {
         }
         return result;
     }
+
+
+    public static ProjectPostDTO toProjectPostDto(ProjectPostDTO posting) {
+        if (posting == null) return null;
+
+        return ProjectPostDTO.builder()
+                .id(posting.getId())
+                .title(posting.getTitle())
+                .description(posting.getDescription())
+                .projectDTO(posting.getProjectDTO())
+                .createdAt(posting.getCreatedAt())
+                .build();
+    }
+
+    public static List<ProjectPostDTO> toProjectPostDtos(List<ProjectPostDTO> postings) {
+        List<ProjectPostDTO> result = new ArrayList<>();
+        if (postings != null) {
+            for (ProjectPostDTO posting : postings) {
+                if (posting != null) {
+                    result.add(toProjectPostDto(posting));
+                }
+            }
+        }
+        return result;
+    }
+
+
 }

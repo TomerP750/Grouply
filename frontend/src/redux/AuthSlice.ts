@@ -1,5 +1,5 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit"
-import type { Role } from "../models/enums/Role"
+import type { Role } from "../dtos/enums/Role"
 import { jwtDecode } from "jwt-decode"
 
 export type JwtUser = {
