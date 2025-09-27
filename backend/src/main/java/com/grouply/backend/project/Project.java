@@ -1,6 +1,6 @@
 package com.grouply.backend.project;
 
-import com.grouply.backend.group.Group;
+
 import com.grouply.backend.project_member.ProjectMember;
 import com.grouply.backend.technology.Technology;
 import jakarta.persistence.*;

@@ -9,7 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * Ive decided to speerate the project as finished to prevent any mistake when displaying
+ * Ive decided to separate the project as finished to prevent any mistake when displaying
  * finished projects. safety reasons
  */
 @Entity

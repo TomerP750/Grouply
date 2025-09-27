@@ -26,10 +26,10 @@ public class ProjectMember {
     private User user;
 
     @Enumerated(EnumType.STRING)
-    private ProjectPosition projectPosition;
+    private ProjectPosition projectPosition; // backend / frontend etc..
 
     @Enumerated(EnumType.STRING)
-    private ProjectRole projectRole;
+    private ProjectRole projectRole; // user / owner etc..
 
     @ManyToOne
     private Project project;
