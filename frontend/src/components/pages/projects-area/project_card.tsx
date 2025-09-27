@@ -49,11 +49,11 @@ export function ProjectCard({ projectPost }: ProjectCardProps) {
             {/* Actions + some users*/}
             <div className="flex items-center justify-between w-full px-6 pb-4 mt-auto">
                 <div className="flex -space-x-2 items-center cursor-pointer">
-                    {projectDTO.members.map(m => {
+                    {projectDTO.members.slice(0, 5).map(m => {
                         return <Avatar size={30} key={m.id}/>
                     })}
                     
-                    <span className="ml-2.5">+2</span>
+                    {projectDTO.members.length > 5 && <span className="ml-2.5">+{projectDTO.members.length - 5}</span>}
                 </div>
                 <button className="inline-flex items-center gap-2 cursor-pointer bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg font-medium transition-colors shadow-sm">
                     <span><HiUserAdd size={25}/></span>
