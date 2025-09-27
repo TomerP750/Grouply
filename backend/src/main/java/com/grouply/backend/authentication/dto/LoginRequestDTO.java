@@ -1,4 +1,4 @@
-package com.grouply.backend.authentication;
+package com.grouply.backend.authentication.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

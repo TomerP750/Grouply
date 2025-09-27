@@ -1,10 +1,14 @@
 package com.grouply.backend.authentication;
 
+import com.grouply.backend.authentication.dto.AuthResponseDTO;
+import com.grouply.backend.authentication.dto.LoginRequestDTO;
+import com.grouply.backend.authentication.dto.SignUpRequestDTO;
 import com.grouply.backend.exceptions.InvalidInputException;
 import com.grouply.backend.security.CustomUserDetails;
 import com.grouply.backend.security.JwtService;
 import com.grouply.backend.user.Role;
 import com.grouply.backend.user.User;
+import com.grouply.backend.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -21,9 +25,10 @@ public class AuthService implements IAuthService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder encoder;
+    private final UserRepository userRepository;
 
     @Override
-    public AuthResponseDTO signup(SignUpRequestDTO dto) throws InvalidInputException {
+    public void signup(SignUpRequestDTO dto) throws InvalidInputException {
 
         if (!dto.getPassword().equals(dto.getConfirmPassword())) {
             throw new InvalidInputException("Passwords are not match");
@@ -35,12 +40,13 @@ public class AuthService implements IAuthService {
                 .username(dto.getUsername())
                 .email(dto.getEmail())
                 .password(encoder.encode(dto.getPassword()))
-                .role(Role.USER)
+                .role(Role.ADMIN)
                 .build();
 
+        userRepository.save(user);
 
-        LoginRequestDTO loginRequest = new LoginRequestDTO(dto.getEmail(), dto.getPassword());
-        return login(loginRequest);
+//        LoginRequestDTO loginRequest = new LoginRequestDTO(dto.getEmail(), dto.getPassword());
+//        return login(loginRequest);
     }
 
     @Override
@@ -51,6 +57,7 @@ public class AuthService implements IAuthService {
         );
 
         CustomUserDetails principal = (CustomUserDetails) auth.getPrincipal();
+
         String token = jwtService.generateToken(principal.getId());
         return new AuthResponseDTO(token);
     }

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.NoSuchElementException;
@@ -33,8 +34,7 @@ public class JwtService {
     private long EXPIRATION_MS;
 
     private SecretKey getSignInKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(SECRET);
-        return Keys.hmacShaKeyFor(keyBytes);
+        return Keys.hmacShaKeyFor(SECRET.getBytes(StandardCharsets.UTF_8));
     }
 
     public String generateToken(Long userId) {
@@ -45,10 +45,11 @@ public class JwtService {
                 .issuer("Grouply")
                 .issuedAt(now)
                 .expiration(expiration)
+                .id(String.valueOf(user.getId()))
+                .subject(user.getEmail())
                 .claim("role", user.getRole())
                 .claim("firstName", user.getFirstName())
                 .claim("lastName", user.getLastName())
-                .claim("email", user.getEmail())
                 .signWith(getSignInKey())
                 .compact();
     }

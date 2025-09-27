@@ -8,9 +8,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
+
 public class CustomUserDetails implements UserDetails {
 
-    private User user;
+    private final User user;
 
     public CustomUserDetails(User user) {
         this.user = user;
@@ -29,10 +30,6 @@ public class CustomUserDetails implements UserDetails {
     @Override
     public String getUsername() {
         return user.getUsername();
-    }
-
-    public String getEmail() {
-        return user.getEmail();
     }
 
     public Long getId() {

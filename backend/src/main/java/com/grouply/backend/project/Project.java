@@ -2,7 +2,7 @@ package com.grouply.backend.project;
 
 
 import com.grouply.backend.project_member.ProjectMember;
-import com.grouply.backend.technology.Technology;
+//import com.grouply.backend.technology.Technology;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -42,8 +42,8 @@ public class Project {
     @Enumerated(EnumType.STRING)
     private ProjectStatus status;
 
-    @ManyToMany(mappedBy = "project")
-    private Set<Technology> technologies = new HashSet<>();
+//    @ManyToMany(mappedBy = "project")
+//    private Set<Technology> technologies = new HashSet<>();
 
 
     public void addMember(ProjectMember member) {

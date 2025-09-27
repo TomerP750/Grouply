@@ -2,7 +2,7 @@ package com.grouply.backend.project.Dtos;
 
 import com.grouply.backend.project.ProjectStatus;
 import com.grouply.backend.project_member.ProjectPosition;
-import com.grouply.backend.technology.Technology;
+//import com.grouply.backend.technology.Technology;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -15,7 +15,7 @@ public class UpdateProjectDTO {
     private String name;
     private LocalDateTime createdAt;
     private ProjectStatus status;
-    private Set<Technology> technologies;
+//    private Set<Technology> technologies;
     private ProjectPosition userPosition;
 
 }

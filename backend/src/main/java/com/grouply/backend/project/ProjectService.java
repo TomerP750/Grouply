@@ -46,7 +46,7 @@ public class ProjectService implements IProjectService {
                 .name(dto.getName())
                 .projectMembers(new HashSet<>())
                 .status(ProjectStatus.PREPARATION)
-                .technologies(dto.getTechnologies())
+//                .technologies(dto.getTechnologies())
                 .build();
 
         ProjectMember owner = ProjectMember.builder()
@@ -68,9 +68,9 @@ public class ProjectService implements IProjectService {
         if (!isOwner(userId, dto.getProjectId())) {
             throw new UnauthorizedException("You are not allowed to update the project");
         }
-        if (dto.getTechnologies().isEmpty()) {
-            throw new InvalidInputException("At least one technology is required");
-        }
+//        if (dto.getTechnologies().isEmpty()) {
+//            throw new InvalidInputException("At least one technology is required");
+//        }
 
         User user = fetchUser(userId);
 
@@ -90,7 +90,7 @@ public class ProjectService implements IProjectService {
 
         project.setName(dto.getName());
         project.setStatus(dto.getStatus());
-        project.setTechnologies(dto.getTechnologies());
+//        project.setTechnologies(dto.getTechnologies());
         projectRepository.save(project);
 
     }
