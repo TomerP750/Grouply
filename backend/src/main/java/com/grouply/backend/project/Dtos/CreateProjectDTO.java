@@ -1,6 +1,6 @@
-package com.grouply.backend.project;
+package com.grouply.backend.project.Dtos;
 
-import com.grouply.backend.project_member.ProjectMember;
+import com.grouply.backend.project.ProjectStatus;
 import com.grouply.backend.project_member.ProjectPosition;
 import com.grouply.backend.technology.Technology;
 

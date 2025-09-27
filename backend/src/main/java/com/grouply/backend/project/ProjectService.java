@@ -1,8 +1,11 @@
 package com.grouply.backend.project;
 
+import com.grouply.backend.exceptions.InvalidInputException;
 import com.grouply.backend.exceptions.UnauthorizedException;
 import com.grouply.backend.finished_project.FinishedProject;
 import com.grouply.backend.finished_project.FinishedProjectRepository;
+import com.grouply.backend.project.Dtos.CreateProjectDTO;
+import com.grouply.backend.project.Dtos.UpdateProjectDTO;
 import com.grouply.backend.project_member.ProjectMember;
 import com.grouply.backend.project_member.ProjectMemberRepository;
 import com.grouply.backend.project_member.ProjectPosition;
@@ -12,6 +15,7 @@ import com.grouply.backend.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.NoSuchElementException;
@@ -28,9 +32,13 @@ public class ProjectService implements IProjectService {
 
 
     @Override
-    public void createProject(Long userId ,CreateProjectDTO dto) {
+    @Transactional
+    public void createProject(Long userId , CreateProjectDTO dto) throws InvalidInputException {
 
         //TODO add validations
+        if (dto.getName().isEmpty()) {
+            throw new InvalidInputException("Name is empty");
+        }
 
         User user = fetchUser(userId);
 
@@ -41,78 +49,69 @@ public class ProjectService implements IProjectService {
                 .technologies(dto.getTechnologies())
                 .build();
 
-        ProjectMember projectMember = ProjectMember.builder()
+        ProjectMember owner = ProjectMember.builder()
                 .user(user)
                 .projectPosition(dto.getUserPosition())
                 .projectRole(ProjectRole.OWNER)
                 .project(project)
                 .build();
 
-        projectRepository.save(project);
-        projectMemberRepository.save(projectMember);
+        project.addMember(owner);
+        projectRepository.save(project); // because i put cascade so it automatically saves the project member in the database
 
     }
 
     @Override
-    public void updateProject(Long userId ,UpdateProjectDTO dto) {
+    @Transactional
+    public void updateProject(Long userId , UpdateProjectDTO dto) throws UnauthorizedException, InvalidInputException {
 
-    }
-
-    @Override
-    public void deleteProject(Long userId ,DeleteProjectDTO dto) {
-
-    }
-
-    @Override
-    public void changeStatus(Long userId, Long projectId, ProjectStatus status) throws UnauthorizedException {
-
-        if (!isOwner(userId, projectId)) {
-            throw new UnauthorizedException("You are not allowed to change the status");
+        if (!isOwner(userId, dto.getProjectId())) {
+            throw new UnauthorizedException("You are not allowed to update the project");
         }
-
-        Project project = fetchProject(projectId);
-
-        if (project.getStatus() == ProjectStatus.COMPLETED) {
-            throw new RuntimeException("Cannot invoke completed project");
+        if (dto.getTechnologies().isEmpty()) {
+            throw new InvalidInputException("At least one technology is required");
         }
-
-        if (status == ProjectStatus.COMPLETED) {
-            markAsFinished(userId, projectId);
-            return;
-        }
-
-        project.setStatus(status);
-        projectRepository.save(project);
-
-    }
-
-
-    @Override
-    public void markAsFinished(Long userId ,Long projectId) throws UnauthorizedException {
-
-        Project project = fetchProject(projectId);
 
         User user = fetchUser(userId);
 
-        if (!isOwner(user.getId(), projectId)) {
-            throw new UnauthorizedException("Unauthorized");
-        }
-        if (project.getStatus() == ProjectStatus.COMPLETED) {
-            throw new UnauthorizedException("Project already completed");
+        Project project = fetchProject(dto.getProjectId());
+
+
+        ProjectStatus currentStatus = project.getStatus();
+        ProjectStatus newStatus = dto.getStatus();
+
+        if (!isAllowedTransition(currentStatus, newStatus)) {
+            throw new InvalidInputException("Cannot go backwards");
         }
 
-        project.setStatus(ProjectStatus.COMPLETED);
+        if (newStatus == ProjectStatus.COMPLETED) {
+            markAsFinished(user, project);
+        }
+
+        project.setName(dto.getName());
+        project.setStatus(dto.getStatus());
+        project.setTechnologies(dto.getTechnologies());
         projectRepository.save(project);
-
-
-        FinishedProject finishedProject = FinishedProject.builder()
-                .project(project)
-                .build();
-        finishedProjectRepository.save(finishedProject);
 
     }
 
     @Override
+    @Transactional
+    public void deleteProject(Long userId, Long projectId) throws UnauthorizedException {
+
+        if (!isOwner(userId, projectId)) {
+            throw new UnauthorizedException("You are not allowed to delete this project");
+        }
+
+        projectRepository.deleteById(projectId);
+
+    }
+
+
+
+
+    @Override
+    @Transactional
     public void addUserToProject(Long ownerId, ProjectPosition position, Long projectId, Long userId) throws UnauthorizedException {
 
 
@@ -135,23 +134,30 @@ public class ProjectService implements IProjectService {
         project.getProjectMembers().add(newMember);
         projectRepository.save(project);
     }
-
-    @Override
-    public void removeUserFromProject(Long ownerId, Long memberToRemoveId, Long projectId) throws UnauthorizedException {
-
-        if (!isOwner(ownerId, projectId)) {
-            throw new UnauthorizedException("You are unauthorized to remove user");
-        }
-
-        Project project = fetchProject(projectId);
-        ProjectMember memberToRemove = project.getProjectMembers()
-                .stream()
-                .filter(pm -> pm.getId().equals(memberToRemoveId)).findFirst().orElseThrow(() -> new NoSuchElementException("Not found"));
-        project.getProjectMembers().remove(memberToRemove);
-        projectRepository.save(project);
-
-
-    }
+//
+//    @Override
+//    @Transactional
+//    public void removeUserFromProject(Long ownerId, Long memberToRemoveId, Long projectId) throws UnauthorizedException {
+//
+//        if (!isOwner(ownerId, projectId)) {
+//            throw new UnauthorizedException("You are not authorized to remove user");
+//        }
+//
+//        ProjectMember memberToRemove = fetchProjectMember(memberToRemoveId, projectId);
+//
+//        int ownerCount = projectMemberRepository
+//                .countByProjectIdAndProjectRole(projectId, ProjectRole.OWNER);
+//
+//        if (memberToRemove.getProjectRole() == ProjectRole.OWNER && ownerCount <= 1) {
+//            throw new IllegalStateException("Project must have at least one owner");
+//        }
+//
+//        Project project = fetchProject(projectId);
+//        project.getProjectMembers().remove(memberToRemove);
+//
+//        projectMemberRepository.deleteByIdAndProjectId(memberToRemoveId, projectId);
+//
+//    }
 
 
 
@@ -160,11 +166,8 @@ public class ProjectService implements IProjectService {
     //  ------------------------- HELPER METHODS --------------------------
 
     private boolean isOwner(Long userId, Long projectId) {
-        Project project = fetchProject(projectId);
-        return project
-                .getProjectMembers()
-                .stream()
-                .anyMatch(m -> m.getUser().getId().equals(userId) && m.getProjectRole() == ProjectRole.OWNER);
+        return projectMemberRepository
+                .existsByUserIdAndProjectIdAndProjectRole(userId, projectId, ProjectRole.OWNER);
     }
 
     private ProjectMember fetchProjectMember(Long memberId, Long projectId) {
@@ -184,8 +187,33 @@ public class ProjectService implements IProjectService {
         return ProjectMember.builder()
                 .user(user)
                 .project(project)
-                .projectRole(ProjectRole.USER)
+                .projectRole(ProjectRole.MEMBER)
                 .projectPosition(position)
                 .build();
+    }
+
+    private boolean isAllowedTransition(ProjectStatus currentStatus, ProjectStatus newStatus) {
+        if (currentStatus == newStatus) return true;
+        return (currentStatus == ProjectStatus.PREPARATION  && newStatus == ProjectStatus.IN_PROGRESS) ||
+                (currentStatus == ProjectStatus.IN_PROGRESS  && newStatus == ProjectStatus.COMPLETED);
+    }
+
+    private void markAsFinished(User user, Project project) throws UnauthorizedException {
+
+
+        if (!isOwner(user.getId(), project.getId())) {
+            throw new UnauthorizedException("Unauthorized");
+        }
+        if (project.getStatus() == ProjectStatus.COMPLETED) {
+            throw new UnauthorizedException("Project already completed");
+        }
+
+        project.setStatus(ProjectStatus.COMPLETED);
+
+        FinishedProject finishedProject = FinishedProject.builder()
+                .project(project)
+                .build();
+        finishedProjectRepository.save(finishedProject);
+
     }
 }

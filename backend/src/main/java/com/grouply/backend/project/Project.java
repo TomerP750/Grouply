@@ -13,6 +13,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 @Entity
@@ -45,5 +46,8 @@ public class Project {
     private Set<Technology> technologies = new HashSet<>();
 
 
-
+    public void addMember(ProjectMember member) {
+        projectMembers.add(member);
+        member.setProject(this);
+    }
 }
