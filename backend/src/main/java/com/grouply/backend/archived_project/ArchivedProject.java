@@ -1,6 +1,7 @@
-package com.grouply.backend.group;
+package com.grouply.backend.archived_project;
 
-import com.grouply.backend.group_member.GroupMember;
+import com.grouply.backend.project.Project;
+import com.grouply.backend.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,29 +11,28 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
-@Table(name = "groups")
+@Table(name = "archived_projects")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Builder
 @EntityListeners(AuditingEntityListener.class)
-public class Group {
+public class ArchivedProject {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
-    private String name;
+    @ManyToOne
+    private Project project;
 
-    @OneToMany(mappedBy = "group")
-    private Set<GroupMember> members = new HashSet<>();
+    @ManyToOne
+    private User user;
 
     @CreatedDate
-    private LocalDateTime createdAt;
+    private LocalDateTime archivedAt;
+
 
 }

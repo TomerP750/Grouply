@@ -1,6 +1,7 @@
 package com.grouply.backend.project;
 
 import com.grouply.backend.group.Group;
+import com.grouply.backend.project_member.ProjectMember;
 import com.grouply.backend.technology.Technology;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -28,8 +29,11 @@ public class Project {
     private Long id;
     private String name;
 
-    @ManyToOne
-    private Group group;
+//    @ManyToOne
+//    private Group group;
+
+    @OneToMany(mappedBy = "project")
+    private Set<ProjectMember> projectMembers;
 
     @CreatedDate
     private LocalDateTime createdAt;

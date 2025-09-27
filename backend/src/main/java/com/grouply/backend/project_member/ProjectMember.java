@@ -1,6 +1,5 @@
 package com.grouply.backend.project_member;
 
-import com.grouply.backend.group_member.GroupMember;
 import com.grouply.backend.project.Project;
 import com.grouply.backend.user.User;
 import jakarta.persistence.*;
@@ -8,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
 @Table
@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Builder
+@EntityListeners(AuditingEntityListener.class)
 public class ProjectMember {
 
     @Id
@@ -22,11 +23,16 @@ public class ProjectMember {
     private Long id;
 
     @ManyToOne
-    private GroupMember user;
+    private User user;
+
+    @Enumerated(EnumType.STRING)
+    private ProjectPosition projectPosition;
 
     @Enumerated(EnumType.STRING)
     private ProjectRole projectRole;
 
     @ManyToOne
     private Project project;
+
+
 }
