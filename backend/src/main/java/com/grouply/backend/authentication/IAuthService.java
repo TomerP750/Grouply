@@ -9,6 +9,6 @@ public interface IAuthService {
 
     AuthResponseDTO login(LoginRequestDTO dto);
 
-    void signup(SignUpRequestDTO dto) throws InvalidInputException;
+    AuthResponseDTO signup(SignUpRequestDTO dto) throws InvalidInputException;
 
 }

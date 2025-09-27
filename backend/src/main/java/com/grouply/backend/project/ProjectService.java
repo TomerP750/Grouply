@@ -5,6 +5,7 @@ import com.grouply.backend.exceptions.UnauthorizedException;
 import com.grouply.backend.finished_project.FinishedProject;
 import com.grouply.backend.finished_project.FinishedProjectRepository;
 import com.grouply.backend.project.Dtos.CreateProjectDTO;
+import com.grouply.backend.project.Dtos.ProjectDTO;
 import com.grouply.backend.project.Dtos.UpdateProjectDTO;
 import com.grouply.backend.project_member.ProjectMember;
 import com.grouply.backend.project_member.ProjectMemberRepository;
@@ -12,8 +13,11 @@ import com.grouply.backend.project_member.ProjectPosition;
 import com.grouply.backend.project_member.ProjectRole;
 import com.grouply.backend.user.User;
 import com.grouply.backend.user.UserRepository;
+import com.grouply.backend.util.EntityToDtoMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,6 +33,9 @@ public class ProjectService implements IProjectService {
     private final ProjectMemberRepository projectMemberRepository;
     private final UserRepository userRepository;
     private final FinishedProjectRepository finishedProjectRepository;
+
+
+
 
 
     @Override
@@ -134,6 +141,13 @@ public class ProjectService implements IProjectService {
         project.getProjectMembers().add(newMember);
         projectRepository.save(project);
     }
+
+    @Override
+    public Page<ProjectDTO> getAllProjects(Pageable pageable) {
+        return projectRepository.findAll(pageable).map(EntityToDtoMapper::toProjectDto);
+    }
+
+
 //
 //    @Override
 //    @Transactional

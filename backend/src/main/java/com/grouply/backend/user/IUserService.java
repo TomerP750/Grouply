@@ -3,6 +3,7 @@ package com.grouply.backend.user;
 
 import com.grouply.backend.user.Dtos.DeleteUserDTO;
 import com.grouply.backend.user.Dtos.UpdateUserDTO;
+import com.grouply.backend.user.Dtos.UserDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -12,7 +13,7 @@ public interface IUserService {
 
     void deleteUser(DeleteUserDTO dto);
 
-    Page<User> findAllUsers(Pageable pageable);
+    Page<UserDTO> findAllUsers(Pageable pageable);
 
     User findOneUser(Long id);
 }

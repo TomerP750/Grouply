@@ -2,6 +2,8 @@ package com.grouply.backend.user;
 
 import com.grouply.backend.user.Dtos.DeleteUserDTO;
 import com.grouply.backend.user.Dtos.UpdateUserDTO;
+import com.grouply.backend.user.Dtos.UserDTO;
+import com.grouply.backend.util.EntityToDtoMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -29,9 +31,10 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public Page<User> findAllUsers(Pageable pageable) {
-        return userRepository.findAll(PageRequest.of(0, 5));
+    public Page<UserDTO> findAllUsers(Pageable pageable) {
+        return userRepository.findAll(pageable).map(EntityToDtoMapper::toUserDto);
     }
+
 
     @Override
     public User findOneUser(Long id) {

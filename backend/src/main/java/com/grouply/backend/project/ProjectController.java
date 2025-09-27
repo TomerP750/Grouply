@@ -4,6 +4,7 @@ import com.grouply.backend.exceptions.InvalidInputException;
 import com.grouply.backend.project.Dtos.CreateProjectDTO;
 import com.grouply.backend.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,6 +23,9 @@ public class ProjectController {
         Long userId = userDetails.getId();
         projectService.createProject(userId, dto);
     }
+
+
+
 
 
 

@@ -28,7 +28,7 @@ public class AuthService implements IAuthService {
     private final UserRepository userRepository;
 
     @Override
-    public void signup(SignUpRequestDTO dto) throws InvalidInputException {
+    public AuthResponseDTO signup(SignUpRequestDTO dto) throws InvalidInputException {
 
         if (!dto.getPassword().equals(dto.getConfirmPassword())) {
             throw new InvalidInputException("Passwords are not match");
@@ -40,13 +40,13 @@ public class AuthService implements IAuthService {
                 .username(dto.getUsername())
                 .email(dto.getEmail())
                 .password(encoder.encode(dto.getPassword()))
-                .role(Role.ADMIN)
+                .role(Role.USER)
                 .build();
 
         userRepository.save(user);
 
-//        LoginRequestDTO loginRequest = new LoginRequestDTO(dto.getEmail(), dto.getPassword());
-//        return login(loginRequest);
+        LoginRequestDTO loginRequest = new LoginRequestDTO(dto.getEmail(), dto.getPassword());
+        return login(loginRequest);
     }
 
     @Override

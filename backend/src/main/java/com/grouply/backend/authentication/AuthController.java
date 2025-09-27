@@ -23,8 +23,8 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public void signup(@RequestBody SignUpRequestDTO dto) throws InvalidInputException {
-        authService.signup(dto);
+    public AuthResponseDTO signup(@RequestBody SignUpRequestDTO dto) throws InvalidInputException {
+        return authService.signup(dto);
     }
 
 }

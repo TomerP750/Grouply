@@ -2,6 +2,7 @@ package com.grouply.backend.user;
 
 import com.grouply.backend.user.Dtos.DeleteUserDTO;
 import com.grouply.backend.user.Dtos.UpdateUserDTO;
+import com.grouply.backend.user.Dtos.UserDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,7 +16,7 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/all")
-    public Page<User> allUsers(Pageable pageable) {
+    public Page<UserDTO> allUsers(Pageable pageable) {
         return userService.findAllUsers(pageable);
     }
 
