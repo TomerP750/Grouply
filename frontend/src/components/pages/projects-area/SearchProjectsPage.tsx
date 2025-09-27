@@ -16,7 +16,7 @@ export function SearchProjectsPage() {
     const [projects, setProjects] = useState<undefined>();
 
     return (
-        <main className="min-h-screen bg-slate-900 px-5">
+        <main className="min-h-screen bg-gray-200 dark:bg-slate-900 px-5">
          
             <Navbar/>
             <Filters/>

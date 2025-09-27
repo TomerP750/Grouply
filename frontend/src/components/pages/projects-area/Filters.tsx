@@ -4,10 +4,10 @@ import { BiChevronDown } from "react-icons/bi";
 
 export function Filters() {
     return (
-        <div className="grid grid-cols-5 gap-5 text-white w-full px-5">
+        <div className="grid grid-cols-5 gap-5 dark:text-white w-full px-5">
             <label className="inline-flex flex-col gap-3">
                 Search By Project Name
-                <input type="text" className="border-b border-white focus:outline-none" />
+                <input type="search" className="border-b border-white focus:outline-none" />
             </label>
 
             <label className="inline-flex flex-col gap-3">
