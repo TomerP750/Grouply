@@ -1,7 +1,7 @@
 import type { ProjectPosition } from "../enums/ProjectPosition"
 
 
-export class ProjectPositionDTO {
+export class ProjectPostPositionDTO {
 
     id: number 
     projectPostId: number

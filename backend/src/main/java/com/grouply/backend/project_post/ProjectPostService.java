@@ -20,6 +20,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -94,7 +95,6 @@ public class ProjectPostService implements IProjectPostService {
         Page<ProjectPost> allProjectPosts = projectPostRepository.findAll(pageable);
         return allProjectPosts.map(EntityToDtoMapper::toProjectPostDto);
     }
-
 
     @Override
     public boolean requestToJoinProject(Long userId, Long ownerId, Long projectId) {

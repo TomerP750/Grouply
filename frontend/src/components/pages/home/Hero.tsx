@@ -23,7 +23,7 @@ export function Hero() {
           <span className="inline-block h-2 w-2 rounded-full bg-teal-500" />
           Built for devs who want to build together
         </span>
-        <h1 className="w-4/5 text-4xl sm:text-3xl md:text-5xl lg:text-7xl font-semibold">
+        <h1 className="w-5/6 text-4xl sm:text-3xl md:text-5xl lg:text-7xl font-extrabold">
           Organize study groups with ease.
         </h1>
         <div className="dark:text-gray-400 text-xl text-black">

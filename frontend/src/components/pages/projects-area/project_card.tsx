@@ -7,6 +7,8 @@ import defaultImage from "../../../assets/projectdefault.jpg";
 import type { ProjectPostDTO } from "../../../dtos/models_dtos/ProjectPostDTO";
 import { JoinRequestDTO } from "../../../dtos/models_dtos/request_dto/JoinRequestDTO";
 import { useUserSelector } from "../../../redux/hooks";
+import type { ProjectPostPositionDTO } from "../../../dtos/models_dtos/ProjectPostPositionDTO";
+import joinRequestService from "../../../service/JoinRequestService";
 
 
 
@@ -25,10 +27,17 @@ export function ProjectCard({ projectPost }: ProjectCardProps) {
 
     const user = useUserSelector(state => state.authSlice.user);
 
-    const handleRequestToJoin = () => {
+    const handleRequestToJoin = (position:ProjectPostPositionDTO) => {
         if (user != null) {
-            const joinRequest = new JoinRequestDTO(user.id, projectPost.id);
-
+            const joinRequest = new JoinRequestDTO(user.id, position ,projectPost.id);
+            joinRequestService.createJoinRequest(joinRequest)
+            .then(() => {
+                console.log("success");
+                
+            })
+            .catch(err => {
+                console.log(err.response.data)
+            })
         }
     };
 
@@ -57,13 +66,17 @@ export function ProjectCard({ projectPost }: ProjectCardProps) {
                 <p className="text-gray-600 dark:text-gray-300 text-sm">{trancuatedDesc}</p>
                 {/* TODO make post project have multiple position and map it to position name + button */}
                 <div className="flex flex-col w-full gap-5 items-center py-4">
+
                     {/* Positions buttons to request to join */}
                     {positions.length > 0 && positions.map(p => {
                         return <div key={p.id} className="flex justify-between items-center w-full">
                             <p>{p.position}</p>
-                            <button className="text-sm cursor-pointer bg-blue-500 hover:bg-blue-400 transition-colors px-2 py-1 rounded-lg">Request To Join</button>
+                            <button 
+                            onClick={() => handleRequestToJoin(p)}
+                            className="text-sm cursor-pointer bg-blue-500 hover:bg-blue-400 transition-colors px-2 py-1 rounded-lg">Request To Join</button>
                         </div>
                     })}
+                    
                     {/* If length > 3 then display button view more */}
                     <button className="cursor-pointer hover:font-medium">View More</button>
                 </div>
