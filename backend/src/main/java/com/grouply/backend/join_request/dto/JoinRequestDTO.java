@@ -7,5 +7,7 @@ import lombok.Data;
 @Builder
 public class JoinRequestDTO {
 
+    Long senderId;
+    Long projectPostId;
 
 }

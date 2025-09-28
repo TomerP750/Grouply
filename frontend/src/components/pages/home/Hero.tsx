@@ -19,7 +19,10 @@ export function Hero() {
       <Navbar />
 
       <div className="dark:text-white w-full md:w-2/3 flex-1 flex flex-col items-start justify-center px-10 gap-8">
-
+        <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium shadow-sm dark:border-slate-700 dark:bg-slate-800">
+          <span className="inline-block h-2 w-2 rounded-full bg-teal-500" />
+          Built for devs who want to build together
+        </span>
         <h1 className="w-4/5 text-4xl sm:text-3xl md:text-5xl lg:text-7xl font-semibold">
           Organize study groups with ease.
         </h1>
@@ -33,20 +36,23 @@ export function Hero() {
         </div>
 
         <button className='cursor-pointer text-white 
-        bg-gradient-to-r dark:from-indigo-500 dark:via-indigo-600 dark:to-indigo-700 
-        hover:bg-gradient-to-l dark:hover:from-indigo-500 dark:hover:via-indigo-600 dark:hover:to-indigo-700 
+        bg-gradient-to-r 
+        hover:bg-gradient-to-l 
         px-4 py-2 
+
+        dark:from:teal-700 dark:via-teal-500 dark:to-teal-600 
+        dark:hover:from-teal-700 dark:hover:via-teal-500 dark:hover:to-teal-600 
+
         from-teal-900 via-teal-700 to-teal-800 
-        hover:from-teal-700 
-        hover:via-teal-500 
-        hover:to-teal-600 
+        hover:from-teal-700 hover:via-teal-500 hover:to-teal-600 
+
         rounded-lg font-medium'><NavLink to={"/signup"}>Get Started</NavLink>
         </button>
 
       </div>
 
-      
-      
+
+
     </div>
   );
 }
