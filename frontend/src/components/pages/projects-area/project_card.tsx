@@ -19,10 +19,9 @@ interface ProjectCardProps {
 
 export function ProjectCard({ projectPost }: ProjectCardProps) {
 
+    
     const { title, description, projectDTO, positions } = projectPost;
-
     const trancuatedDesc = description.length > 200 ? description.slice(0, 200) + '...' : description;
-
     const [participantsModalOpen, setParticipantsModalOpen] = useState<boolean>(false);
 
     const user = useUserSelector(state => state.authSlice.user);

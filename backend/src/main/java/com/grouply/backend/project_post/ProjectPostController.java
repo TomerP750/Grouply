@@ -9,6 +9,7 @@ import com.grouply.backend.project_post.dto.UpdateProjectPostDTO;
 import com.grouply.backend.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +24,9 @@ public class ProjectPostController {
     private final ProjectPostService projectPostService;
 
     @GetMapping("/all")
-    public Page<ProjectPostDTO> allPosts(Pageable pageable) {
+    public Page<ProjectPostDTO> allPosts(@RequestParam(value = "page", defaultValue = "0") int page,
+                                         @RequestParam(value = "size", defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
         return projectPostService.getAllProjectPosts(pageable);
     }
 
