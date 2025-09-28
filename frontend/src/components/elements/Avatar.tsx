@@ -1,11 +1,13 @@
 import { FaUserAlt } from "react-icons/fa";
-import type { JwtUser } from "../../redux/AuthSlice";
 import { useNavigate } from "react-router-dom";
+import { UserDTO } from "../../dtos/models_dtos/UserDTO";
+import defaultAvatar from "../../assets/defaultAvatar.png";
 
 interface AvatarProps {
-    user?: JwtUser | null;
+    user?: UserDTO | null;
     size?: number
     onClick?: () => void
+    className?: string
 }
 
 const colors = [
@@ -21,28 +23,41 @@ function getRandomColor() {
     return colors[Math.floor(Math.random() * colors.length)]
 }
 
-export function Avatar({ user, size, onClick }: AvatarProps) {
+export function Avatar({ user, size, onClick, className }: AvatarProps) {
 
     const navigate = useNavigate();
 
 
-    if (!user?.avatar) {
+    if (!user?.avatarUrl) {
         return (
             <div
                 onClick={onClick}
-                style={{ width: size }} className={`aspect-square 
+                style={{ width: size }} 
+                className={`aspect-square 
                 ${getRandomColor()} rounded-full
-                inline-flex items-center justify-center cursor-pointer
+                inline-flex items-center justify-center 
+                ${className}
                 `}> <FaUserAlt size={12} />
             </div>
+
+            // <img src={defaultAvatar} alt="avatar"
+            //     onClick={onClick}
+            //     style={{ width: size }} 
+            //     className={`aspect-square 
+            //     ${getRandomColor()} rounded-full
+            //      object-center object-cover
+            //     ${className}
+            //     `}/> 
         )
     }
     return (
         <div 
         onClick={onClick}
-        style={{ width: size }} className={`aspect-square 
+        style={{ width: size }} 
+        className={`aspect-square 
                 ${getRandomColor()} rounded-full
-                inline-flex items-center justify-center cursor-pointer
+                inline-flex items-center justify-center 
+                ${className}
                 `}> <FaUserAlt size={12} />
         </div>
     )

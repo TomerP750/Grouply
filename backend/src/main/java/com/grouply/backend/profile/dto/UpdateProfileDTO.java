@@ -1,4 +1,4 @@
-package com.grouply.backend.profile;
+package com.grouply.backend.profile.dto;
 
 import lombok.Data;
 

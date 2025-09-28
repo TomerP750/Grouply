@@ -26,18 +26,15 @@ export function ProjectCard({ projectPost }: ProjectCardProps) {
     };
 
     return (
-        <div className="w-115 h-100 bg-gray-100 dark:bg-slate-800 dark:text-white rounded-2xl shadow-lg overflow-hidden flex flex-col">
+        <div className="w-115 min-h-100 bg-gray-100 dark:bg-slate-800 dark:text-white rounded-2xl shadow-lg overflow-hidden flex flex-col">
             {/* Image placeholder */}
             <img src={defaultImage} className="h-[40%] object-center object-cover bg-gradient-to-r from-blue-600 to-blue-500 w-full"/>
 
-            {/* Content */}
+            {/* Description + Buttons to join */}
             <div className="flex flex-col flex-grow w-full px-6 py-4 gap-2">
                 <div className="flex w-full justify-between items-center">
                     <h1 className="font-bold text-2xl text-gray-900 dark:text-white">{projectDTO.name}</h1>
                     <div className="flex gap-3 items-center">
-                        <button title="Read more about the project" className="cursor-pointer hover:text-orange-600 transition-colors">
-                            <HiOutlineBookOpen size={30} />
-                        </button>
                         <button 
                         onClick={() => handleAddToArchive(projectDTO.id)}
                         title="Add to archive" 
@@ -47,6 +44,25 @@ export function ProjectCard({ projectPost }: ProjectCardProps) {
                     </div>
                 </div>
                 <p className="text-gray-600 dark:text-gray-300 text-sm">{description}</p>
+                {/* TODO make post project have multiple position and map it to position name + button */}
+                <div className="flex flex-col w-full gap-5 items-center py-4">
+                    {/* Place holder for row of name and button */}
+                    <div className="flex justify-between items-center w-full">
+                        <p>Backend Developer</p>
+                        <button className="text-sm cursor-pointer bg-blue-500 hover:bg-blue-400 px-2 py-1 rounded-lg">Request To Join</button>
+                    </div>
+                    <div className="flex justify-between items-center w-full">
+                        <p>Frontend Developer</p>
+                        <button className="text-sm cursor-pointer bg-blue-500 hover:bg-blue-400 px-2 py-1 rounded-lg">Request To Join</button>
+                    </div>
+                    <div className="flex justify-between items-center w-full">
+                        <p>Backend Developer</p>
+                        <button className="text-sm cursor-pointer bg-blue-500 hover:bg-blue-400 px-2 py-1 rounded-lg">Request To Join</button>
+                    </div>
+                    {/* If length > 3 then display button view more */}
+                    <button className="cursor-pointer hover:font-medium">View More</button>
+                </div>
+
             </div>
 
             {/* Actions + some users*/}
@@ -58,11 +74,10 @@ export function ProjectCard({ projectPost }: ProjectCardProps) {
                     
                     {projectDTO.members.length > 5 && <span className="ml-2.5">+{projectDTO.members.length - 5}</span>}
                 </div>
+                
                 <button 
-                onClick={() => handleRequestToJoin(projectDTO.id)}
                 className="inline-flex items-center gap-2 cursor-pointer bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg font-medium transition-colors shadow-sm">
-                    <span><HiUserAdd size={25}/></span>
-                    <span>Request To Join</span>
+                    <span>Read More</span>
                 </button>
             </div>
         </div>

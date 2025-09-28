@@ -7,7 +7,7 @@ import { AboutWhatIs } from "./About_What_Is";
 
 export default function About() {
     return (
-        <div className="min-h-screen bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-100">
+        <div className="min-h-screen bg-slate-50 text-slate-800 dark:bg-gradient-to-bl dark:from-indigo-950 dark:via-slate-900 dark:to-indigo-900 dark:text-slate-100">
             
             <AboutHeader/>
         

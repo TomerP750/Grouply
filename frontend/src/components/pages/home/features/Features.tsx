@@ -46,8 +46,9 @@ export function Features() {
         <div className="dark:text-white flex flex-col gap-10 items-center py-20 min-h-120">
             <div className="w-full flex flex-col items-center gap-25">
 
+                {/* Title and subtitle */}
                 <div className="flex flex-col items-center gap-8">
-                    <p className="font-medium text-3xl sm:text-5xl">Designed for Collaboration</p>
+                    <p className="font-extrabold text-3xl sm:text-5xl">Designed for Collaboration</p>
                     <p className="w-3/4 text-sm sm:text-base sm:max-w-1/2 dark:text-gray-300">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Commodi quis reiciendis, perferendis at libero atque illo rerum aspernatur amet consequatur aut. Perferendis illo consequatur, quasi dolor architecto impedit quas deserunt!</p>
                 </div>
                 <div className="w-2/3 grid grid-cols-1 sm:grid-cols-2 gap-x-5 gap-y-20 justify-items-center">

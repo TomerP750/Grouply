@@ -33,14 +33,19 @@ export function Hero() {
         </div>
 
         <button className='cursor-pointer text-white 
-        bg-gradient-to-r from-indigo-500 via-indigo-600 to-indigo-700 
-        hover:bg-gradient-to-l hover:from-indigo-500 hover:via-indigo-600 hover:to-indigo-700 
+        bg-gradient-to-r dark:from-indigo-500 dark:via-indigo-600 dark:to-indigo-700 
+        hover:bg-gradient-to-l dark:hover:from-indigo-500 dark:hover:via-indigo-600 dark:hover:to-indigo-700 
         px-4 py-2 
+        from-teal-900 via-teal-700 to-teal-800 
+        hover:from-teal-700 
+        hover:via-teal-500 
+        hover:to-teal-600 
         rounded-lg font-medium'><NavLink to={"/signup"}>Get Started</NavLink>
         </button>
 
       </div>
 
+      
       
     </div>
   );

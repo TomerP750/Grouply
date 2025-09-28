@@ -47,6 +47,7 @@ public class JwtService {
                 .expiration(expiration)
                 .id(String.valueOf(user.getId()))
                 .subject(user.getEmail())
+                .claim("id", user.getId())
                 .claim("role", user.getRole())
                 .claim("firstName", user.getFirstName())
                 .claim("lastName", user.getLastName())

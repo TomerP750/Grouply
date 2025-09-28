@@ -4,6 +4,7 @@ import { jwtDecode } from "jwt-decode"
 
 export type JwtUser = {
     id: number
+    jti: number
     firstName: string
     lastName: string
     username: string

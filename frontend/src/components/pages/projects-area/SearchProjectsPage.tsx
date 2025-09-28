@@ -4,6 +4,7 @@ import { Filters } from "./Filters";
 import { ProjectCard } from "./project_card";
 import { BiLoaderAlt } from "react-icons/bi";
 import { dummies } from "./dummies";
+import type { ProjectPostDTO } from "../../../dtos/models_dtos/ProjectPostDTO";
 
 
 
@@ -11,7 +12,7 @@ export function SearchProjectsPage() {
 
     const [loading, setLoading] = useState<boolean>(false);
 
-    const [projects, setProjects] = useState<undefined>();
+    const [posts, setPosts] = useState<ProjectPostDTO[]>();
 
     return (
         <main className="min-h-screen bg-gray-200 dark:bg-slate-950 px-5 pb-10">
@@ -26,7 +27,7 @@ export function SearchProjectsPage() {
 
 
             {/* Pagination */}
-            <div className="flex justify-center gap-1 text-white">
+            {dummies.length > 9 && <div className="flex justify-center gap-1 text-white">
                 <button
                     disabled={loading}
                     onClick={() => setLoading(!loading)}
@@ -34,7 +35,7 @@ export function SearchProjectsPage() {
                 hover:bg-blue-800 px-3 py-2 rounded-xl min-w-30 disabled:opacity-50 disabled:cursor-not-allowed`}>
                     {loading ? <BiLoaderAlt size={20} className="animate-spin" /> : "Load More"}
                 </button>
-            </div>
+            </div>}
         </main>
     )
 }

@@ -1,6 +1,5 @@
-package com.grouply.backend.technology;
+package com.grouply.backend.position;
 
-import com.grouply.backend.project.Project;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,17 +7,18 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "technologies")
+@Table(name = "profile_skills")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Builder
-public class Technology {
+public class Position {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false, unique = true)
+    @Column(unique = true, nullable = false)
     private String name;
+
 
 }

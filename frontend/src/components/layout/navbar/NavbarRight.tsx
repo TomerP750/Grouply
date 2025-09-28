@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BiMenu, BiMoon, BiSun } from "react-icons/bi";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useTheme } from "../../../context/ThemeContext";
@@ -36,6 +36,7 @@ export function NavbarRight() {
   const navigate = useNavigate();
   const dispatch = useDispatch()
 
+
   return (
     <nav className="flex items-center gap-5">
       {/* Desktop links */}
@@ -50,7 +51,7 @@ export function NavbarRight() {
 
         {/* Login button */}
         {user
-          ? <Avatar user={user} size={40} onClick={() => navigate(`/profile/${user?.id}`)} />
+          ? <Avatar className="cursor-pointer" user={user} size={40} onClick={() => navigate(`/profile/${user?.id}`)} />
           : <NavLink
             to="/login"
             className="hidden md:inline-flex items-center justify-center 

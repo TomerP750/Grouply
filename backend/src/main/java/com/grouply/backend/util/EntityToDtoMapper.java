@@ -1,6 +1,10 @@
 package com.grouply.backend.util;
 import com.grouply.backend.archived_project.ArchivedProject;
 import com.grouply.backend.archived_project.dto.ArchivedProjectDTO;
+import com.grouply.backend.position.Position;
+import com.grouply.backend.position.dto.PositionDTO;
+import com.grouply.backend.profile.Profile;
+import com.grouply.backend.profile.dto.ProfileDTO;
 import com.grouply.backend.project.Dtos.ProjectDTO;
 import com.grouply.backend.project.Project;
 import com.grouply.backend.project_member.ProjectMember;
@@ -135,4 +139,32 @@ public class EntityToDtoMapper {
     }
 
 
+    public static PositionDTO toPositionDto(Position p) {
+        if (p == null) return null;
+        return PositionDTO.builder()
+                .id(p.getId())
+                .name(p.getName())
+                .build();
+    }
+
+    public static List<PositionDTO> toPositionDtos(List<Position> positions) {
+        List<PositionDTO> result = new ArrayList<>();
+        if (positions != null) {
+            for (Position pos : positions) {
+                if (pos != null) {
+                    result.add(toPositionDto(pos));
+                }
+            }
+        }
+        return result;
+    }
+
+    public static ProfileDTO toProfileDto(Profile profile) {
+        return ProfileDTO.builder()
+                .about(profile.getAbout())
+                .bannerUrl(profile.getBannerUrl())
+                .user(toUserDto(profile.getUser()))
+                .positions(toPositionDtos(profile.getPositions()))
+                .build();
+    }
 }
