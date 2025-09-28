@@ -1,4 +1,4 @@
-package com.grouply.backend.invitation;
+package com.grouply.backend.invitation.dto;
 
 import lombok.*;
 

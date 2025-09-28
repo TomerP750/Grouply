@@ -9,6 +9,8 @@ import com.grouply.backend.project_member.ProjectPosition;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.Optional;
+
 public interface IProjectService {
 
     void createProject(Long userId , CreateProjectDTO dto) throws InvalidInputException;
@@ -19,10 +21,10 @@ public interface IProjectService {
 
 //    void markAsFinished(Long userId ,Long projectId) throws UnauthorizedException;
 
-    void addUserToProject(Long ownerId, ProjectPosition position, Long projectId, Long userId) throws UnauthorizedException;
-
-
     Page<ProjectDTO> getAllProjects(Pageable pageable);
+
+    ProjectDTO getOneProject(Long projectId);
+
 //    void addUserToProject(Long ownerId, ProjectPosition position, Long projectId, Long userId) throws UnauthorizedException;
 //
 //    void removeUserFromProject(Long ownerId, Long userId, Long projectId) throws UnauthorizedException;

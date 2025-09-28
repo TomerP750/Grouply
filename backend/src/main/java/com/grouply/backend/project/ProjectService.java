@@ -115,39 +115,13 @@ public class ProjectService implements IProjectService {
     }
 
 
-
-
-    @Override
-    @Transactional
-    public void addUserToProject(Long ownerId, ProjectPosition position, Long projectId, Long userId) throws UnauthorizedException {
-
-
-        if (!isOwner(ownerId, projectId)) {
-            throw new UnauthorizedException("You are not allowed");
-        }
-
-        User user = fetchUser(userId);
-        Project project = fetchProject(projectId);
-
-
-        boolean alreadyMember = project.getProjectMembers().stream()
-                .anyMatch(pm -> pm.getUser().getId().equals(userId));
-        if (alreadyMember) {
-            throw new IllegalStateException("User is already a member of this project");
-        }
-
-        ProjectMember newMember = buildProjectMember(user, position, project);
-
-        project.getProjectMembers().add(newMember);
-        projectRepository.save(project);
-    }
-
     @Override
     public Page<ProjectDTO> getAllProjects(Pageable pageable) {
         return projectRepository.findAll(pageable).map(EntityToDtoMapper::toProjectDto);
     }
 
 
+    @Override
     public ProjectDTO getOneProject(Long projectId) {
         return EntityToDtoMapper.toProjectDto(fetchProject(projectId));
     }

@@ -1,8 +1,10 @@
 package com.grouply.backend.project;
 
 import com.grouply.backend.exceptions.InvalidInputException;
+import com.grouply.backend.exceptions.UnauthorizedException;
 import com.grouply.backend.project.Dtos.CreateProjectDTO;
 import com.grouply.backend.project.Dtos.ProjectDTO;
+import com.grouply.backend.project.Dtos.UpdateProjectDTO;
 import com.grouply.backend.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -34,6 +36,17 @@ public class ProjectController {
         projectService.createProject(userId, dto);
     }
 
+    @PutMapping("/update")
+    public void updateProject(@AuthenticationPrincipal CustomUserDetails userDetails, @RequestBody UpdateProjectDTO dto) throws InvalidInputException, UnauthorizedException {
+        Long userId = userDetails.getId();
+        projectService.updateProject(userId, dto);
+    }
+
+    @DeleteMapping("/delete/{projectId}")
+    public void deleteProject(@AuthenticationPrincipal CustomUserDetails userDetails ,@PathVariable Long projectId) throws UnauthorizedException {
+        Long userId = userDetails.getId();
+        projectService.deleteProject(userId, projectId);
+    }
 
 
 

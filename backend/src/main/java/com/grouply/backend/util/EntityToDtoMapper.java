@@ -5,7 +5,8 @@ import com.grouply.backend.project.Dtos.ProjectDTO;
 import com.grouply.backend.project.Project;
 import com.grouply.backend.project_member.ProjectMember;
 import com.grouply.backend.project_member.dto.ProjectMemberDTO;
-import com.grouply.backend.project_post.ProjectPostDTO;
+import com.grouply.backend.project_post.ProjectPost;
+import com.grouply.backend.project_post.dto.ProjectPostDTO;
 import com.grouply.backend.user.Dtos.UserDTO;
 import com.grouply.backend.user.User;
 import java.util.*;
@@ -109,22 +110,22 @@ public class EntityToDtoMapper {
     }
 
 
-    public static ProjectPostDTO toProjectPostDto(ProjectPostDTO posting) {
-        if (posting == null) return null;
+    public static ProjectPostDTO toProjectPostDto(ProjectPost post) {
+        if (post == null) return null;
 
         return ProjectPostDTO.builder()
-                .id(posting.getId())
-                .title(posting.getTitle())
-                .description(posting.getDescription())
-                .projectDTO(posting.getProjectDTO())
-                .createdAt(posting.getCreatedAt())
+                .id(post.getId())
+                .title(post.getTitle())
+                .description(post.getDescription())
+                .projectDTO(EntityToDtoMapper.toProjectDto(post.getProject()))
+                .postedAt(post.getPostedAt())
                 .build();
     }
 
-    public static List<ProjectPostDTO> toProjectPostDtos(List<ProjectPostDTO> postings) {
+    public static List<ProjectPostDTO> toProjectPostDtos(List<ProjectPost> posts) {
         List<ProjectPostDTO> result = new ArrayList<>();
-        if (postings != null) {
-            for (ProjectPostDTO posting : postings) {
+        if (posts != null) {
+            for (ProjectPost posting : posts) {
                 if (posting != null) {
                     result.add(toProjectPostDto(posting));
                 }

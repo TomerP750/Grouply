@@ -15,14 +15,14 @@ export function ProjectCard({ projectPost }: ProjectCardProps) {
 
     const { title, description, projectDTO } = projectPost;
 
-    const [participantsOpen, setParticipantsOpen] = useState<boolean>(false);
+    const [participantsModalOpen, setParticipantsModalOpen] = useState<boolean>(false);
 
-    const handleRequestToJoin = () => {
-
+    const handleRequestToJoin = (id: number) => {
+        return null;
     };
 
-    const handleAddToArchive = () => {
-
+    const handleAddToArchive = (id: number) => {
+        return null;
     };
 
     return (
@@ -38,7 +38,10 @@ export function ProjectCard({ projectPost }: ProjectCardProps) {
                         <button title="Read more about the project" className="cursor-pointer hover:text-orange-600 transition-colors">
                             <HiOutlineBookOpen size={30} />
                         </button>
-                        <button title="Add to archive" className="cursor-pointer hover:text-orange-600 transition-colors">
+                        <button 
+                        onClick={() => handleAddToArchive(projectDTO.id)}
+                        title="Add to archive" 
+                        className="cursor-pointer hover:text-orange-600 transition-colors">
                             <MdBookmarkAdd size={30} />
                         </button>
                     </div>
@@ -55,7 +58,9 @@ export function ProjectCard({ projectPost }: ProjectCardProps) {
                     
                     {projectDTO.members.length > 5 && <span className="ml-2.5">+{projectDTO.members.length - 5}</span>}
                 </div>
-                <button className="inline-flex items-center gap-2 cursor-pointer bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg font-medium transition-colors shadow-sm">
+                <button 
+                onClick={() => handleRequestToJoin(projectDTO.id)}
+                className="inline-flex items-center gap-2 cursor-pointer bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg font-medium transition-colors shadow-sm">
                     <span><HiUserAdd size={25}/></span>
                     <span>Request To Join</span>
                 </button>

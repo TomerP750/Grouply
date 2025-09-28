@@ -21,6 +21,10 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
     }
 
+    @ExceptionHandler(ExistsException.class)
+    public ResponseEntity<String> handleExistsException(ExistsException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.FOUND);
+    }
 
 
 }

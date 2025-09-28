@@ -4,6 +4,8 @@ import com.grouply.backend.authentication.dto.AuthResponseDTO;
 import com.grouply.backend.authentication.dto.LoginRequestDTO;
 import com.grouply.backend.authentication.dto.SignUpRequestDTO;
 import com.grouply.backend.exceptions.InvalidInputException;
+import com.grouply.backend.profile.Profile;
+import com.grouply.backend.profile.ProfileRepository;
 import com.grouply.backend.security.CustomUserDetails;
 import com.grouply.backend.security.JwtService;
 import com.grouply.backend.user.Role;
@@ -26,6 +28,7 @@ public class AuthService implements IAuthService {
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder encoder;
     private final UserRepository userRepository;
+    private final ProfileRepository profileRepository;
 
     @Override
     public AuthResponseDTO signup(SignUpRequestDTO dto) throws InvalidInputException {
@@ -44,6 +47,13 @@ public class AuthService implements IAuthService {
                 .build();
 
         userRepository.save(user);
+
+        Profile profile = Profile.builder()
+                .about(null)
+                .bannerUrl(null)
+                .user(user)
+                .build();
+        profileRepository.save(profile);
 
         LoginRequestDTO loginRequest = new LoginRequestDTO(dto.getEmail(), dto.getPassword());
         return login(loginRequest);
