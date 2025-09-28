@@ -50,8 +50,8 @@ public class EntityToDtoMapper {
         return ProjectMemberDTO.builder()
                 .id(pm.getId())
                 .user(toUserDto(pm.getUser()))
-                .projectPosition(pm.getProjectPosition() != null ? pm.getProjectPosition().name() : null)
-                .projectRole(pm.getProjectRole() != null ? pm.getProjectRole().name() : null)
+                .projectPosition(pm.getProjectPosition())
+                .projectRole(pm.getProjectRole())
                 .build();
     }
 

@@ -25,16 +25,18 @@ export function SearchProjectsPage() {
 
     useEffect(() => {
         setLoading(true)
-        
+
         projectPostService.allPosts(page, size)
             .then(res => {
                 setPosts(prev => (page === 0 ? res.content : [...prev, ...res.content]));
                 setTotalPages(res.page.totalPages);
             })
             .catch(err => {
-                console.log(err);
+                console.log(err.response.data, "lol");
             })
-            .finally(() => setLoading(false))
+            .finally(() => {
+                setLoading(false)
+            })
     }, [page, size]);
 
     return (
