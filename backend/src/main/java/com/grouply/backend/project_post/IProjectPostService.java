@@ -21,4 +21,6 @@ public interface IProjectPostService {
     ProjectPostDTO getOneProjectPost(Long postId);
 
     Page<ProjectPostDTO> getAllProjectPosts(Pageable pageable);
+
+    boolean requestToJoinProject(Long userId, Long ownerId, Long projectId);
 }

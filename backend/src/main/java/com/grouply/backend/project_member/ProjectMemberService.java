@@ -46,10 +46,10 @@ public class ProjectMemberService implements IProjectMemberService{
         projectMemberRepository.deleteByIdAndProjectId(memberToRemoveId, projectId);
     }
 
-    @Override
-    public void requestToJoinProject(Long userId, Long ownerId, Long projectId) {
-
-    }
+//    @Override
+//    public void requestToJoinProject(Long userId, Long ownerId, Long projectId) {
+//
+//    }
 
 
 

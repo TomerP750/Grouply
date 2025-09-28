@@ -11,6 +11,8 @@ import com.grouply.backend.project_member.ProjectMember;
 import com.grouply.backend.project_member.dto.ProjectMemberDTO;
 import com.grouply.backend.project_post.ProjectPost;
 import com.grouply.backend.project_post.dto.ProjectPostDTO;
+import com.grouply.backend.project_post_position.ProjectPostPosition;
+import com.grouply.backend.project_post_position.dto.ProjectPostPositionDTO;
 import com.grouply.backend.user.Dtos.UserDTO;
 import com.grouply.backend.user.User;
 import java.util.*;
@@ -123,6 +125,7 @@ public class EntityToDtoMapper {
                 .description(post.getDescription())
                 .projectDTO(EntityToDtoMapper.toProjectDto(post.getProject()))
                 .postedAt(post.getPostedAt())
+                .positions(toProjectPositionDtos(post.getPositions()))
                 .build();
     }
 
@@ -166,5 +169,29 @@ public class EntityToDtoMapper {
                 .user(toUserDto(profile.getUser()))
                 .positions(toPositionDtos(profile.getPositions()))
                 .build();
+    }
+
+
+
+    public static ProjectPostPositionDTO toProjectPositionDto(ProjectPostPosition pos) {
+        if (pos == null) return null;
+
+        Long postId = (pos.getProjectPost() != null) ? pos.getProjectPost().getId() : null;
+
+        return ProjectPostPositionDTO.builder()
+                .id(pos.getId())
+                .projectPostId(postId)
+                .position(pos.getPosition())
+                .build();
+    }
+
+
+    public static List<ProjectPostPositionDTO> toProjectPositionDtos(List<ProjectPostPosition> positions) {
+        if (positions == null || positions.isEmpty()) return Collections.emptyList();
+        List<ProjectPostPositionDTO> result = new ArrayList<>(positions.size());
+        for (ProjectPostPosition p : positions) {
+            if (p != null) result.add(toProjectPositionDto(p));
+        }
+        return result;
     }
 }

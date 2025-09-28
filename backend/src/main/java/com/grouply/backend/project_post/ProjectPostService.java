@@ -96,6 +96,11 @@ public class ProjectPostService implements IProjectPostService {
     }
 
 
+    @Override
+    public boolean requestToJoinProject(Long userId, Long ownerId, Long projectId) {
+        return false;
+    }
+
 
     private User fetchUser(Long userId) {
         return userRepository.findById(userId).orElseThrow(() -> new NoSuchElementException("User not found"));

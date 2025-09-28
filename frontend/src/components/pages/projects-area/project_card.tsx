@@ -13,7 +13,7 @@ interface ProjectCardProps {
 
 export function ProjectCard({ projectPost }: ProjectCardProps) {
 
-    const { title, description, projectDTO } = projectPost;
+    const { title, description, projectDTO, positions } = projectPost;
 
     const [participantsModalOpen, setParticipantsModalOpen] = useState<boolean>(false);
 
@@ -46,19 +46,13 @@ export function ProjectCard({ projectPost }: ProjectCardProps) {
                 <p className="text-gray-600 dark:text-gray-300 text-sm">{description}</p>
                 {/* TODO make post project have multiple position and map it to position name + button */}
                 <div className="flex flex-col w-full gap-5 items-center py-4">
-                    {/* Place holder for row of name and button */}
-                    <div className="flex justify-between items-center w-full">
-                        <p>Backend Developer</p>
+                    {/* Positions buttons to request to join */}
+                    {positions.length > 0 && positions.map(p => {
+                        return <div key={p.id} className="flex justify-between items-center w-full">
+                        <p>{p.position}</p>
                         <button className="text-sm cursor-pointer bg-blue-500 hover:bg-blue-400 px-2 py-1 rounded-lg">Request To Join</button>
                     </div>
-                    <div className="flex justify-between items-center w-full">
-                        <p>Frontend Developer</p>
-                        <button className="text-sm cursor-pointer bg-blue-500 hover:bg-blue-400 px-2 py-1 rounded-lg">Request To Join</button>
-                    </div>
-                    <div className="flex justify-between items-center w-full">
-                        <p>Backend Developer</p>
-                        <button className="text-sm cursor-pointer bg-blue-500 hover:bg-blue-400 px-2 py-1 rounded-lg">Request To Join</button>
-                    </div>
+                    })}
                     {/* If length > 3 then display button view more */}
                     <button className="cursor-pointer hover:font-medium">View More</button>
                 </div>

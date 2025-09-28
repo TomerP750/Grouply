@@ -6,6 +6,6 @@ public interface IProjectMemberService {
 
     void removeMemberFromProject(Long userId, Long memberId, Long projectId) throws UnauthorizedException;
 
-    void requestToJoinProject(Long userId, Long ownerId, Long projectId);
+//    void requestToJoinProject(Long userId, Long ownerId, Long projectId);
 
 }
