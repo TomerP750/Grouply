@@ -10,6 +10,10 @@ import java.util.NoSuchElementException;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
+    @ExceptionHandler(NoSuchElementException.class)
+    public ResponseEntity<String> handleNoSuchElementException(InvalidInputException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+    }
 
     @ExceptionHandler(InvalidInputException.class)
     public ResponseEntity<String> handleInvalidInputException(InvalidInputException e) {
@@ -24,6 +28,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ExistsException.class)
     public ResponseEntity<String> handleExistsException(ExistsException e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.FOUND);
+    }
+
+    //TODO check what status should put
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<String> handleException(Exception e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
 

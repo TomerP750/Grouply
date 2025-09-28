@@ -1,17 +1,19 @@
 import { useState } from "react";
 import { BiMenu, BiMoon, BiSun } from "react-icons/bi";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useTheme } from "../../../context/ThemeContext";
 import { NavbarDrawer } from "./Navbar-Drawer";
 import { useUser, useUserSelector } from "../../../redux/hooks";
 import { Avatar } from "../../elements/Avatar";
+import { useDispatch } from "react-redux";
+import { logout } from "../../../redux/AuthSlice";
 
 
 
 const navbarItems = [
   { to: "/", label: "Home", end: true }, // end=true so "/" doesn't match every route
   { to: "/about", label: "About" },
-  { to: "/search-projects", label: "Search Projects"},
+  { to: "/search-projects", label: "Search Projects" },
   // { to: "/pricing", label: "Pricing" },
 ];
 
@@ -31,6 +33,9 @@ export function NavbarRight() {
 
   const user = useUserSelector(state => state.authSlice.user);
 
+  const navigate = useNavigate();
+  const dispatch = useDispatch()
+
   return (
     <nav className="flex items-center gap-5">
       {/* Desktop links */}
@@ -42,13 +47,22 @@ export function NavbarRight() {
             </NavLink>
           </li>
         ))}
+
         {/* Login button */}
-        <NavLink
-          to="/login"
-          className="hidden md:inline-flex items-center justify-center rounded-3xl bg-[#0f0f10] px-5 py-3 text-white font-bold hover:bg-gray-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400"
-        >
-          Login
-        </NavLink>
+        {user
+          ? <Avatar user={user} size={40} onClick={() => navigate(`/profile/${user?.id}`)} />
+          : <NavLink
+            to="/login"
+            className="hidden md:inline-flex items-center justify-center 
+          rounded-3xl bg-[#0f0f10] px-5 py-3 text-white font-bold hover:bg-gray-800 
+          focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400"
+          >
+            Login
+          </NavLink>}
+
+          {user && <button className="cursor-pointer hover:bg-purple-600" onClick={() => dispatch(logout())}>
+            Logout
+          </button>}
 
         {/* Theme toggle */}
         <button

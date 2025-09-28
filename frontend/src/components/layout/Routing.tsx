@@ -5,6 +5,7 @@ import { NotFound } from "../pages/other-pages/NotFound";
 import About from "../pages/about/About";
 import { SignUpWizard } from "../pages/authentication/signup-wizard/SignUpWizard";
 import { SearchProjectsPage } from "../pages/projects-area/SearchProjectsPage";
+import { Profile } from "../pages/profile/Profile";
 
 
 export function Routing() {
@@ -15,6 +16,8 @@ export function Routing() {
                 <Route path="/about" element={<About/>}/>
                 <Route path="/login" element={<Login/>}/>
                 <Route path="/signup" element={<SignUpWizard/>}/>
+
+                <Route path="/profile/:id" element={<Profile/>}/>
 
                 <Route path="/search-projects" element={<SearchProjectsPage/>}/>
 

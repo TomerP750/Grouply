@@ -52,7 +52,7 @@ public class InvitationService implements IInvitationService{
         Project project = owner.getProject();
 
         Invitation invitation = Invitation.builder()
-                .senderId(owner)
+                .sender(owner)
                 .recipient(recipient)
                 .project(project)
                 .position(dto.getPosition())

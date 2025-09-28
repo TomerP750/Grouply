@@ -8,14 +8,5 @@ import lombok.Data;
 @Data
 public class SignUpRequestDTO {
 
-    private String firstName;
-    private String lastName;
-    @Min(6)
-    private String username;
-    @Email
-    private String email;
-    @Min(6) @Max(12)
-    private String password;
-    private String confirmPassword;
-
+    private AccountDTO accountDetails;
 }

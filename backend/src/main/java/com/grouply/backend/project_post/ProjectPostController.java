@@ -26,8 +26,8 @@ public class ProjectPostController {
     }
 
     @GetMapping("/{postId}")
-    public ProjectPostDTO onePost(@PathVariable Long id) {
-        return projectPostService.getOneProjectPost(id);
+    public ProjectPostDTO onePost(@PathVariable Long postId) {
+        return projectPostService.getOneProjectPost(postId);
     }
 
     @PostMapping("/create")

@@ -23,7 +23,7 @@ public class Invitation {
     private Long id;
 
     @ManyToOne
-    private ProjectMember senderId;
+    private ProjectMember sender;
 
     @ManyToOne
     private User recipient;

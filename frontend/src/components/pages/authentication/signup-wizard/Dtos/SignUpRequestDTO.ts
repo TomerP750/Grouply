@@ -1,6 +1,6 @@
 
 
-type Account = {
+type AccountDTO = {
     firstName: string
     lastName: string
     username: string
@@ -15,12 +15,12 @@ type Profile = {
 
 export class SignUpRequestDTO {
 
-    account: Account
+    accountDetails: AccountDTO
 
     // Profile related
 
-    constructor(account: Account) {
-        this.account = account
+    constructor(accountDetails: AccountDTO) {
+        this.accountDetails = accountDetails
     }
     
 }

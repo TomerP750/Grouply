@@ -3,6 +3,7 @@ import type { Role } from "../dtos/enums/Role"
 import { jwtDecode } from "jwt-decode"
 
 export type JwtUser = {
+    id: number
     firstName: string
     lastName: string
     username: string

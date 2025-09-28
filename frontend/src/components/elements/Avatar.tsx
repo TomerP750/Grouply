@@ -1,36 +1,50 @@
 import { FaUserAlt } from "react-icons/fa";
 import type { JwtUser } from "../../redux/AuthSlice";
+import { useNavigate } from "react-router-dom";
 
 interface AvatarProps {
     user?: JwtUser | null;
     size?: number
+    onClick?: () => void
 }
 
 const colors = [
-  "bg-indigo-400",
-  "bg-pink-400",
-  "bg-green-400",
-  "bg-yellow-400",
-  "bg-red-400",
-  "bg-blue-400",
+    "bg-indigo-400",
+    "bg-pink-400",
+    "bg-green-400",
+    "bg-yellow-400",
+    "bg-red-400",
+    "bg-blue-400",
 ];
 
 function getRandomColor() {
     return colors[Math.floor(Math.random() * colors.length)]
 }
 
-export function Avatar({ user, size }: AvatarProps) {
+export function Avatar({ user, size, onClick }: AvatarProps) {
 
-    if (!user) {
+    const navigate = useNavigate();
+
+
+    if (!user?.avatar) {
         return (
-            <div style={{width: size}} className={`aspect-square 
+            <div
+                onClick={onClick}
+                style={{ width: size }} className={`aspect-square 
                 ${getRandomColor()} rounded-full
-                inline-flex items-center justify-center
-                `}> <FaUserAlt size={12}/> </div>
+                inline-flex items-center justify-center cursor-pointer
+                `}> <FaUserAlt size={12} />
+            </div>
         )
     }
     return (
-        <img src={user.avatar} alt="Avatar" style={{width: size}} className={`aspect-square`}/>
+        <div 
+        onClick={onClick}
+        style={{ width: size }} className={`aspect-square 
+                ${getRandomColor()} rounded-full
+                inline-flex items-center justify-center cursor-pointer
+                `}> <FaUserAlt size={12} />
+        </div>
     )
 
 }

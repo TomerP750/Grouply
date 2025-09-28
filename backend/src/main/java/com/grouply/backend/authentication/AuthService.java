@@ -33,20 +33,22 @@ public class AuthService implements IAuthService {
     @Override
     public AuthResponseDTO signup(SignUpRequestDTO dto) throws InvalidInputException {
 
-        if (!dto.getPassword().equals(dto.getConfirmPassword())) {
+        if (!dto.getAccountDetails().getPassword().equals(dto.getAccountDetails().getConfirmPassword())) {
             throw new InvalidInputException("Passwords are not match");
         }
 
         User user = User.builder()
-                .firstName(dto.getFirstName())
-                .lastName(dto.getLastName())
-                .username(dto.getUsername())
-                .email(dto.getEmail())
-                .password(encoder.encode(dto.getPassword()))
-                .role(Role.USER)
+                .firstName(dto.getAccountDetails().getFirstName())
+                .lastName(dto.getAccountDetails().getLastName())
+                .username(dto.getAccountDetails().getUsername())
+                .email(dto.getAccountDetails().getEmail())
+                .password(encoder.encode(dto.getAccountDetails().getPassword()))
+                .role(Role.ADMIN)
                 .build();
 
         userRepository.save(user);
+
+        System.out.println(user);
 
         Profile profile = Profile.builder()
                 .about(null)
@@ -55,7 +57,7 @@ public class AuthService implements IAuthService {
                 .build();
         profileRepository.save(profile);
 
-        LoginRequestDTO loginRequest = new LoginRequestDTO(dto.getEmail(), dto.getPassword());
+        LoginRequestDTO loginRequest = new LoginRequestDTO(dto.getAccountDetails().getEmail(), dto.getAccountDetails().getPassword());
         return login(loginRequest);
     }
 
