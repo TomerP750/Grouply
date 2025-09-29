@@ -74,10 +74,10 @@ export function ProjectCard({ projectPost }: ProjectCardProps) {
         archivedProjectService.toggleArhiveProject(id)
             .then(res => {
                 if (res === false) {
-                    toast.success("Request Removed!");
+                    toast.success("Removed to archive!");
                 }
                 else {
-                    toast.success("The request has been sent!")
+                    toast.success("Added from archive!")
                 };
                 setArchived(res);
             })

@@ -68,8 +68,8 @@ export function ProjectCardDescription({loading ,projectPost, onArchiveClick, on
             <div className="flex w-full justify-between items-center">
 
                 <div className="flex items-center gap-3 font-bold text-2xl text-gray-900 dark:text-white">
-                    <p>{projectDTO.name}</p>
-                    <span className="text-xs bg-slate-500 px-3 py-1 rounded-full">{isMember && (isOwner ? getMemberTypeTitle(1) : getMemberTypeTitle(2))}</span>
+                    <p>{title}</p>
+                    {isMember && <span className="text-xs bg-slate-500 px-3 py-1 rounded-full">{isOwner ? getMemberTypeTitle(1) : getMemberTypeTitle(2)}</span>}
                 </div>
 
                 {!isMember && <button
