@@ -117,10 +117,10 @@ export function ProjectCard({ projectPost }: ProjectCardProps) {
                     {members.length > 5 && <span className="ml-2.5">+{members.length - 5}</span>}
                 </div>
 
-                {positions.length > 3 && <button
+                <button
                     className="inline-flex items-center gap-2 cursor-pointer bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg font-medium transition-colors shadow-sm">
                     <span>Read More</span>
-                </button>}
+                </button>
 
             </div>
         </div>

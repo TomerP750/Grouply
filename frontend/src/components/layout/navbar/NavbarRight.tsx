@@ -1,12 +1,10 @@
-import { useEffect, useState } from "react";
-import { BiMenu, BiMoon, BiSun } from "react-icons/bi";
-import { NavLink, useNavigate } from "react-router-dom";
-import { useTheme } from "../../../context/ThemeContext";
-import { NavbarDrawer } from "./Navbar-Drawer";
-import { useUser, useUserSelector } from "../../../redux/hooks";
-import { Avatar } from "../../elements/Avatar";
+import { useState } from "react";
+import { BiMenu } from "react-icons/bi";
 import { useDispatch } from "react-redux";
-import { logout } from "../../../redux/AuthSlice";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useUserSelector } from "../../../redux/hooks";
+import { Avatar } from "../../elements/Avatar";
+import { NavbarDrawer } from "./Navbar-Drawer";
 
 
 
@@ -29,13 +27,7 @@ export function NavbarRight() {
 
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
 
-  const { theme, toggle } = useTheme();
-
   const user = useUserSelector(state => state.authSlice.user);
-
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
 
   return (
     <nav className="flex items-center gap-5">
@@ -51,7 +43,7 @@ export function NavbarRight() {
         ))}
 
         {user
-          ? <Avatar className="cursor-pointer" user={user} size={40} onClick={() => navigate(`/profile/${user?.id}`)} />
+          ? <Avatar className="cursor-pointer" user={user} size={40} onClick={() => setMenuOpen(true)} />
           : <NavLink
             to="/login"
             className="hidden md:inline-flex items-center justify-center 
@@ -61,20 +53,9 @@ export function NavbarRight() {
             Login
           </NavLink>}
 
-          {user && <button className="cursor-pointer hover:bg-purple-600" onClick={() => dispatch(logout())}>
-            Logout
-          </button>}
-
+      
      
-        <button
-          onClick={toggle}
-          className={`cursor-pointer hidden md:inline-flex items-center justify-center p-2 rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 ${theme === "dark" ? "text-yellow-400 bg-blue-900" : "bg-black text-white"
-            }`}
-          aria-label="Toggle theme"
-          title="Toggle theme"
-        >
-          {theme === "dark" ? <BiSun size={22} /> : <BiMoon size={22} />}
-        </button>
+       
 
       </ul>
 
@@ -90,7 +71,7 @@ export function NavbarRight() {
       </button>
 
 
-      {menuOpen && <NavbarDrawer onClose={() => setMenuOpen(false)} />}
+      {menuOpen && <NavbarDrawer user={user} open={menuOpen} onClose={() => setMenuOpen(false)} />}
     
     </nav>
   );

@@ -51,6 +51,7 @@ public class JwtService {
                 .claim("role", user.getRole())
                 .claim("firstName", user.getFirstName())
                 .claim("lastName", user.getLastName())
+                .claim("username", user.getUsername())
                 .signWith(getSignInKey())
                 .compact();
     }
