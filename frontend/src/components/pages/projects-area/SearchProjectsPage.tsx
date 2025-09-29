@@ -32,12 +32,20 @@ export function SearchProjectsPage() {
                 setTotalPages(res.page.totalPages);
             })
             .catch(err => {
-                console.log(err.response.data, "lol");
+                console.log(err.response.data);
             })
             .finally(() => {
                 setLoading(false)
             })
     }, [page, size]);
+
+
+    useEffect(() => {
+        if (posts) {
+            console.log("posts", posts);
+            
+        }
+    }, [])
 
     return (
         <main className="min-h-screen bg-gray-200 dark:bg-slate-950 px-5 pb-10">

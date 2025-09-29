@@ -4,8 +4,7 @@ import com.grouply.backend.project_member.ProjectRole;
 import com.grouply.backend.user.Dtos.UserDTO;
 import lombok.*;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder

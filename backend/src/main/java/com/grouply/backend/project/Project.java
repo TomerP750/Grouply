@@ -4,10 +4,7 @@ package com.grouply.backend.project;
 import com.grouply.backend.project_member.ProjectMember;
 //import com.grouply.backend.technology.Technology;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -20,7 +17,8 @@ import java.util.Set;
 @Table(name = "projects")
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 @Builder
 @EntityListeners(AuditingEntityListener.class)
 public class Project {
@@ -34,7 +32,7 @@ public class Project {
 //    private Group group;
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<ProjectMember> projectMembers;
+    private Set<ProjectMember> projectMembers = new HashSet<>();
 
     @CreatedDate
     private LocalDateTime createdAt;

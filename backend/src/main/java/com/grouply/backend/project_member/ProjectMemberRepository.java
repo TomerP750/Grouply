@@ -1,14 +1,19 @@
 package com.grouply.backend.project_member;
 
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface ProjectMemberRepository extends JpaRepository<ProjectMember, Long> {
 
     Optional<ProjectMember> findByIdAndProjectId(Long memberId, Long projectId);
+
+    @EntityGraph(attributePaths = {"user"})
+    List<ProjectMember> findByProjectId(Long projectId);
 
     int countByProjectIdAndProjectRole(Long projectId, ProjectRole role);
 

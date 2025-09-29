@@ -4,6 +4,7 @@ import com.grouply.backend.archived_project.ArchivedProject;
 import com.grouply.backend.exceptions.UnauthorizedException;
 import com.grouply.backend.project.Project;
 import com.grouply.backend.project.ProjectRepository;
+import com.grouply.backend.project_member.dto.ProjectMemberDTO;
 import com.grouply.backend.user.User;
 import com.grouply.backend.user.UserRepository;
 import com.grouply.backend.util.EntityToDtoMapper;
@@ -11,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -22,6 +24,13 @@ public class ProjectMemberService implements IProjectMemberService{
     private final ProjectRepository projectRepository;
     private final UserRepository userRepository;
 
+
+
+    public List<ProjectMemberDTO> allProjectMembers(Long projectId) {
+        return projectMemberRepository.findByProjectId(projectId).stream()
+                .map(EntityToDtoMapper::toProjectMemberDto)
+                .toList();
+    }
 
 
 

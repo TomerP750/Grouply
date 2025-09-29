@@ -13,9 +13,11 @@ import java.time.LocalDateTime;
 public class UserDTO {
 
     private Long id;
+    private String firstName;
+    private String lastName;
     private String username;
     private String email;
     private String avatarUrl;
-    private Role role;           // e.g., "USER", "ADMIN"
+    private Role role;
     private LocalDateTime createdAt;
 }

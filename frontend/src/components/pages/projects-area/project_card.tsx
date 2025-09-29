@@ -2,13 +2,15 @@ import { HiOutlineBookOpen, HiUserAdd } from "react-icons/hi";
 import { MdBookmarkAdd } from "react-icons/md";
 import { NavLink } from "react-router-dom";
 import { Avatar } from "../../elements/Avatar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import defaultImage from "../../../assets/projectdefault.jpg";
 import type { ProjectPostDTO } from "../../../dtos/models_dtos/ProjectPostDTO";
 import { JoinRequestDTO } from "../../../dtos/models_dtos/request_dto/JoinRequestDTO";
 import { useUserSelector } from "../../../redux/hooks";
 import type { ProjectPostPositionDTO } from "../../../dtos/models_dtos/ProjectPostPositionDTO";
 import joinRequestService from "../../../service/JoinRequestService";
+import type { ProjectMemberDTO } from "../../../dtos/models_dtos/ProjectMemberDTO";
+import projectMemberService from "../../../service/ProjectMemberService";
 
 
 
@@ -21,6 +23,19 @@ export function ProjectCard({ projectPost }: ProjectCardProps) {
 
     
     const { title, description, projectDTO, positions } = projectPost;
+
+    const [members, setMembers] = useState<ProjectMemberDTO[]>([]);
+    useEffect(() => {
+        projectMemberService.allMembers(projectDTO.id)
+        .then(res => {
+            setMembers(res)
+        })
+        .catch(err => {
+            console.log(err.response.data);
+        })
+    }, [])
+
+    
     const trancuatedDesc = description.length > 200 ? description.slice(0, 200) + '...' : description;
     const [participantsModalOpen, setParticipantsModalOpen] = useState<boolean>(false);
 
@@ -43,6 +58,13 @@ export function ProjectCard({ projectPost }: ProjectCardProps) {
     const handleAddToArchive = (id: number) => {
         return null;
     };
+
+    
+    useEffect(() => {
+        if (projectPost) {
+            console.log(projectPost)
+        }
+    }, [])
 
     return (
         <div className="w-115 min-h-100 bg-gray-100 dark:bg-slate-800 dark:text-white rounded-2xl shadow-lg overflow-hidden flex flex-col">
@@ -85,17 +107,17 @@ export function ProjectCard({ projectPost }: ProjectCardProps) {
             {/* Actions + some users*/}
             <div className="flex items-center justify-between w-full px-6 pb-4 mt-auto">
                 <div className="flex -space-x-2 items-center cursor-pointer">
-                    {projectDTO.members.slice(0, 5).map(m => {
+                    {members.slice(0, 5).map(m => {
                         return <Avatar size={30} key={m.id} />
                     })}
 
-                    {projectDTO.members.length > 5 && <span className="ml-2.5">+{projectDTO.members.length - 5}</span>}
+                    {members.length > 5 && <span className="ml-2.5">+{members.length - 5}</span>}
                 </div>
 
-                <button
+                {positions.length > 3 && <button
                     className="inline-flex items-center gap-2 cursor-pointer bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg font-medium transition-colors shadow-sm">
                     <span>Read More</span>
-                </button>
+                </button>}
             </div>
         </div>
     );

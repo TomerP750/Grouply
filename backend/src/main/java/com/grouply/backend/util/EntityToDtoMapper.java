@@ -27,6 +27,8 @@ public class EntityToDtoMapper {
         if (entity == null) return null;
         return UserDTO.builder()
                 .id(entity.getId())
+                .firstName(entity.getFirstName())
+                .lastName(entity.getLastName())
                 .username(entity.getUsername())
                 .email(entity.getEmail())
                 .avatarUrl(entity.getAvatarUrl())
@@ -72,11 +74,12 @@ public class EntityToDtoMapper {
         return ProjectDTO.builder()
                 .id(p.getId())
                 .name(p.getName())
-                .status(p.getStatus() != null ? p.getStatus().name() : null)
+                .status(p.getStatus())
                 .createdAt(p.getCreatedAt())
-                .members(p.getProjectMembers() != null
-                        ? toProjectMemberDtos(new ArrayList<>(p.getProjectMembers()))
-                        : List.of())
+//                TODO THIS IS MAKE THE 400 ERROR PROBLEM
+//                .members(p.getProjectMembers() != null
+//                        ? toProjectMemberDtos(new ArrayList<>(p.getProjectMembers()))
+//                        : List.of())
                 .build();
     }
 
