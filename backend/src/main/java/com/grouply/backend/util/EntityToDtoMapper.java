@@ -101,7 +101,7 @@ public class EntityToDtoMapper {
         if (ap == null) return null;
         return ArchivedProjectDTO.builder()
                 .id(ap.getId())
-                .projectId(ap.getProject().getId())
+                .projectPostId(ap.getPost().getId())
                 .userId(ap.getUser().getId())
                 .archivedAt(ap.getArchivedAt())
                 .build();

@@ -20,7 +20,6 @@ public class JoinRequestController {
 
     @PostMapping("/request")
     public boolean requestToJoin(@RequestBody JoinRequestDTO dto) throws UnauthorizedException {
-        System.out.println(dto);
         return joinRequestService.toggleJoinRequest(dto);
     }
 }

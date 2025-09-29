@@ -40,12 +40,13 @@ export function AboutWhatIs() {
                         ))}
                     </ul>
                 </div>
+
                 {/* Feature cards */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {featureData2.map((f) => (
                         <div
                             key={f.title}
-                            className="rounded-2xl  bg-white p-5 shadow-sm transition hover:shadow-md  dark:bg-slate-800"
+                            className="rounded-2xl bg-white p-5 shadow-sm transition hover:shadow-md dark:bg-slate-800"
                         >
                             <div className="flex items-start gap-4">
                                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-500/10">

@@ -12,6 +12,8 @@ import joinRequestService from "../../../service/JoinRequestService";
 import type { ProjectMemberDTO } from "../../../dtos/models_dtos/ProjectMemberDTO";
 import projectMemberService from "../../../service/ProjectMemberService";
 import { toast } from "react-toastify";
+import { BiCheck } from "react-icons/bi";
+import archivedProjectService from "../../../service/ArchivedProjectService";
 
 
 
@@ -22,54 +24,73 @@ interface ProjectCardProps {
 
 export function ProjectCard({ projectPost }: ProjectCardProps) {
 
-    
+    const [loading, setLoading] = useState<boolean>(false);
+
     const { title, description, projectDTO, positions } = projectPost;
 
     const [members, setMembers] = useState<ProjectMemberDTO[]>([]);
     useEffect(() => {
         projectMemberService.allMembers(projectDTO.id)
-        .then(res => {
-            setMembers(res)
-        })
-        .catch(err => {
-            console.log(err.response.data);
-        })
+            .then(res => {
+                setMembers(res)
+            })
+            .catch(err => {
+                console.log(err.response.data);
+            })
     }, [])
 
-    
+
     const trancuatedDesc = description.length > 200 ? description.slice(0, 200) + '...' : description;
     const [participantsModalOpen, setParticipantsModalOpen] = useState<boolean>(false);
 
     const user = useUserSelector(state => state.authSlice.user);
 
     const [sentRequest, setSentRequest] = useState<boolean>(false);
+    const [archived, setArchived] = useState<boolean>(false);
 
     const handleRequestToJoin = (projectPostPositionId: number) => {
         if (user != null) {
 
-            const joinRequest = new JoinRequestDTO(user.id, projectPostPositionId ,projectPost.id);
+            const joinRequest = new JoinRequestDTO(user.id, projectPostPositionId, projectPost.id);
             console.log(joinRequest);
-            
+
             joinRequestService.toggleJoinRequest(joinRequest)
-            .then((res) => {
+                .then((res) => {
+                    if (res === false) {
+                        toast.success("Request Removed!");
+                    }
+                    else {
+                        toast.success("The request has been sent!")
+                    };
+                    setSentRequest(res);
+                })
+                .catch(err => {
+                    toast.error(err.response.data)
+                })
+        }
+    };
+
+    const handleAddToArchive = (id: number) => {
+        setLoading(true);
+        archivedProjectService.toggleArhiveProject(id)
+            .then(res => {
                 if (res === false) {
                     toast.success("Request Removed!");
                 }
                 else {
                     toast.success("The request has been sent!")
                 };
+                setArchived(res);
             })
             .catch(err => {
-                console.log(err.response.data)
+                toast.error(err.response.data);
             })
-        }
+            .finally(() => {
+                setLoading(false);
+            })
     };
 
-    const handleAddToArchive = (id: number) => {
-        return null;
-    };
 
-    
     return (
         <div className="w-115 min-h-100 bg-gray-100 dark:bg-slate-800 dark:text-white rounded-2xl shadow-lg overflow-hidden flex flex-col">
             {/* Image placeholder */}
@@ -81,27 +102,31 @@ export function ProjectCard({ projectPost }: ProjectCardProps) {
                     <h1 className="font-bold text-2xl text-gray-900 dark:text-white">{projectDTO.name}</h1>
                     <div className="flex gap-3 items-center">
                         <button
-                            onClick={() => handleAddToArchive(projectDTO.id)}
-                            title="Add to archive"
-                            className="cursor-pointer hover:text-orange-600 transition-colors">
+                            onClick={() => handleAddToArchive(projectPost.id)}
+                            title={archived ? "Remove from archive" : "Add to archive"}
+                            className={`cursor-pointer ${archived && 'text-yellow-500'}  transition-colors`}>
                             <MdBookmarkAdd size={30} />
                         </button>
                     </div>
                 </div>
                 <p className="text-gray-600 dark:text-gray-300 text-sm">{trancuatedDesc}</p>
-                
+
                 <div className="flex flex-col w-full gap-5 items-center py-4">
 
                     {/* Positions buttons to request to join */}
                     {positions.length > 0 && positions.map(p => {
                         return <div key={p.id} className="flex justify-between items-center w-full">
                             <p>{p.position}</p>
-                            <button 
-                            onClick={() => handleRequestToJoin(p.id)}
-                            className="text-sm cursor-pointer bg-blue-500 hover:bg-blue-400 transition-colors px-2 py-1 rounded-lg">Request To Join</button>
+                            <button
+                                onClick={() => handleRequestToJoin(p.id)}
+                                className={`text-sm cursor-pointer transition-colors px-2 py-1 rounded-lg
+                                ${sentRequest ? 'bg-green-600 hover:bg-green-500' : 'bg-blue-600 hover:bg-blue-500'}
+                                `}>
+                                {sentRequest ? <BiCheck size={20} /> : 'Request To Join'}
+                            </button>
                         </div>
                     })}
-                    
+
                     {/* If length > 3 then display button view more */}
                     <button className="cursor-pointer hover:font-medium">View More</button>
                 </div>

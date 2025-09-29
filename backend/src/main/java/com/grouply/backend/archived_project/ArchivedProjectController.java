@@ -3,7 +3,6 @@ package com.grouply.backend.archived_project;
 import com.grouply.backend.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,10 +16,10 @@ public class ArchivedProjectController {
     private final ArchivedProjectService archivedProjectService;
 
 
-    @PostMapping("/toggle/{projectId}")
-    public boolean toggleArchive(@AuthenticationPrincipal CustomUserDetails userDetails, @PathVariable Long projectId) {
+    @PostMapping("/toggle/{postId}")
+    public boolean toggleArchive(@AuthenticationPrincipal CustomUserDetails userDetails, @PathVariable Long postId) {
         Long userId = userDetails.getId();
-        return archivedProjectService.toggleArchiveProject(userId, projectId);
+        return archivedProjectService.toggleArchiveProject(userId, postId);
     }
 
 }

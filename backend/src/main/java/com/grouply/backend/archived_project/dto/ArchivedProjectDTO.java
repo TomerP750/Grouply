@@ -9,8 +9,11 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class ArchivedProjectDTO {
+
     private Long id;
-    private Long projectId;
+    private Long projectPostId;
     private Long userId;
     private LocalDateTime archivedAt;
+
 }
+
