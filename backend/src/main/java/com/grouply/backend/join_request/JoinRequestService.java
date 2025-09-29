@@ -8,9 +8,8 @@ import com.grouply.backend.project_member.ProjectMemberRepository;
 import com.grouply.backend.project_member.ProjectRole;
 import com.grouply.backend.project_post.ProjectPost;
 import com.grouply.backend.project_post.ProjectPostRepository;
-import com.grouply.backend.project_post.dto.ProjectPostDTO;
 import com.grouply.backend.project_post_position.ProjectPostPosition;
-import com.grouply.backend.project_post_position.dto.ProjectPostPositionDTO;
+import com.grouply.backend.project_post_position.ProjectPostPositionRepository;
 import com.grouply.backend.user.User;
 import com.grouply.backend.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -29,9 +28,17 @@ public class JoinRequestService {
     private final ProjectRepository projectRepository;
     private final UserRepository userRepository;
     private final ProjectMemberRepository projectMemberRepository;
+    private final ProjectPostPositionRepository projectPostPositionRepository;
 
+    /**
+     *
+     * @param dto
+     * @return
+     * @throws UnauthorizedException
+     */
 
-    void createJoinRequest(JoinRequestDTO dto) throws UnauthorizedException {
+    public boolean toggleJoinRequest(JoinRequestDTO dto) throws UnauthorizedException {
+
         User sender = fetchUser(dto.getSenderId());
         ProjectPost post = fetchProjectPost(dto.getProjectPostId());
 
@@ -39,14 +46,29 @@ public class JoinRequestService {
             throw new UnauthorizedException("You must login to request to join");
         }
 
+        if (joinRequestRepository.existsBySenderIdAndProjectPostId(sender.getId(), post.getId())) {
+            JoinRequest existing = joinRequestRepository.findBySenderIdAndProjectPostId(sender.getId(), post.getId());
+            joinRequestRepository.deleteById(existing.getId());
+            return false;
+        }
+
+        ProjectPostPosition position = projectPostPositionRepository
+                .findById(dto.getProjectPostPositionId())
+                .orElseThrow(() -> new NoSuchElementException("Position not found"));
+
         JoinRequest joinRequest = JoinRequest.builder()
-                .user(sender)
+                .sender(sender)
                 .status(RequestStatus.PENDING)
-                .position(toEntity(dto.getPostPositionDTO()))
+                .position(position)
                 .projectPost(post)
                 .build();
 
+        joinRequestRepository.save(joinRequest);
+        return true;
     }
+
+
+//    ----------- HELPER METHODS -----------
 
     private boolean isOwner(Long userId, Long projectId) {
         return projectMemberRepository
@@ -65,10 +87,4 @@ public class JoinRequestService {
         return projectPostRepository.findById(postId).orElseThrow(() -> new NoSuchElementException("Post not found"));
     }
 
-    private ProjectPostPosition toEntity(ProjectPostPositionDTO dto) {
-        return ProjectPostPosition.builder()
-                .position(dto.getPosition())
-                .projectPost(fetchProjectPost(dto.getProjectPostId()))
-                .build();
-    }
 }

@@ -11,6 +11,7 @@ import type { ProjectPostPositionDTO } from "../../../dtos/models_dtos/ProjectPo
 import joinRequestService from "../../../service/JoinRequestService";
 import type { ProjectMemberDTO } from "../../../dtos/models_dtos/ProjectMemberDTO";
 import projectMemberService from "../../../service/ProjectMemberService";
+import { toast } from "react-toastify";
 
 
 
@@ -41,13 +42,22 @@ export function ProjectCard({ projectPost }: ProjectCardProps) {
 
     const user = useUserSelector(state => state.authSlice.user);
 
-    const handleRequestToJoin = (position:ProjectPostPositionDTO) => {
+    const [sentRequest, setSentRequest] = useState<boolean>(false);
+
+    const handleRequestToJoin = (projectPostPositionId: number) => {
         if (user != null) {
-            const joinRequest = new JoinRequestDTO(user.id, position ,projectPost.id);
-            joinRequestService.createJoinRequest(joinRequest)
-            .then(() => {
-                console.log("success");
-                
+
+            const joinRequest = new JoinRequestDTO(user.id, projectPostPositionId ,projectPost.id);
+            console.log(joinRequest);
+            
+            joinRequestService.toggleJoinRequest(joinRequest)
+            .then((res) => {
+                if (res === false) {
+                    toast.success("Request Removed!");
+                }
+                else {
+                    toast.success("The request has been sent!")
+                };
             })
             .catch(err => {
                 console.log(err.response.data)
@@ -60,12 +70,6 @@ export function ProjectCard({ projectPost }: ProjectCardProps) {
     };
 
     
-    useEffect(() => {
-        if (projectPost) {
-            console.log(projectPost)
-        }
-    }, [])
-
     return (
         <div className="w-115 min-h-100 bg-gray-100 dark:bg-slate-800 dark:text-white rounded-2xl shadow-lg overflow-hidden flex flex-col">
             {/* Image placeholder */}
@@ -85,7 +89,7 @@ export function ProjectCard({ projectPost }: ProjectCardProps) {
                     </div>
                 </div>
                 <p className="text-gray-600 dark:text-gray-300 text-sm">{trancuatedDesc}</p>
-                {/* TODO make post project have multiple position and map it to position name + button */}
+                
                 <div className="flex flex-col w-full gap-5 items-center py-4">
 
                     {/* Positions buttons to request to join */}
@@ -93,7 +97,7 @@ export function ProjectCard({ projectPost }: ProjectCardProps) {
                         return <div key={p.id} className="flex justify-between items-center w-full">
                             <p>{p.position}</p>
                             <button 
-                            onClick={() => handleRequestToJoin(p)}
+                            onClick={() => handleRequestToJoin(p.id)}
                             className="text-sm cursor-pointer bg-blue-500 hover:bg-blue-400 transition-colors px-2 py-1 rounded-lg">Request To Join</button>
                         </div>
                     })}

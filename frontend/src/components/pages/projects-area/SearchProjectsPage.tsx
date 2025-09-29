@@ -40,13 +40,6 @@ export function SearchProjectsPage() {
     }, [page, size]);
 
 
-    useEffect(() => {
-        if (posts) {
-            console.log("posts", posts);
-            
-        }
-    }, [])
-
     return (
         <main className="min-h-screen bg-gray-200 dark:bg-slate-950 px-5 pb-10">
 

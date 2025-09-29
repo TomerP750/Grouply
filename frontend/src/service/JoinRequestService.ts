@@ -7,8 +7,8 @@ import { BASE_API } from "../util/base_api";
 
 class JoinRequestService {
 
-    async createJoinRequest(data: JoinRequestDTO) {
-        return (await axios.post(`${BASE_API}/join/request`, data))
+    async toggleJoinRequest(data: JoinRequestDTO) {
+        return (await axios.post(`${BASE_API}/join/request`, data)).data
     }
 
 }

@@ -37,7 +37,7 @@ public class JoinRequest {
     private ProjectPostPosition position;
 
     @ManyToOne
-    private User user;
+    private User sender;
 
     @CreatedDate
     private LocalDateTime requestedAt;

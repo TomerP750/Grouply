@@ -4,12 +4,12 @@ import { ProjectPostPositionDTO } from "../ProjectPostPositionDTO";
 export class JoinRequestDTO {
 
     senderId: number
-    projectPostPosition: ProjectPostPositionDTO;
+    projectPostPositionId: number
     projectPostId: number
 
-    constructor(senderId: number, projectPostPosition: ProjectPostPositionDTO ,projectPostId: number) {
+    constructor(senderId: number, projectPostPositionId: number ,projectPostId: number) {
         this.senderId = senderId;
-        this.projectPostPosition = projectPostPosition;
+        this.projectPostPositionId = projectPostPositionId;
         this.projectPostId = projectPostId;
     }
 }
