@@ -13,7 +13,7 @@ import { logout } from "../../../redux/AuthSlice";
 const navbarItems = [
   { to: "/", label: "Home", end: true }, // end=true so "/" doesn't match every route
   { to: "/about", label: "About" },
-  { to: "/search-projects", label: "Search Projects" },
+  // { to: "/search-projects", label: "Search Projects" },
   // { to: "/pricing", label: "Pricing" },
 ];
 
@@ -34,13 +34,14 @@ export function NavbarRight() {
   const user = useUserSelector(state => state.authSlice.user);
 
   const navigate = useNavigate();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
 
   return (
     <nav className="flex items-center gap-5">
-      {/* Desktop links */}
-      <ul className="hidden md:flex items-center gap-6 text-lg">
+     
+      <ul className="hidden lg:flex items-center gap-6 text-lg">
+        
         {navbarItems.map(({ to, label, end }) => (
           <li key={to}>
             <NavLink to={to} end={end} className={linkClasses}>
@@ -49,7 +50,6 @@ export function NavbarRight() {
           </li>
         ))}
 
-        {/* Login button */}
         {user
           ? <Avatar className="cursor-pointer" user={user} size={40} onClick={() => navigate(`/profile/${user?.id}`)} />
           : <NavLink
@@ -65,7 +65,7 @@ export function NavbarRight() {
             Logout
           </button>}
 
-        {/* Theme toggle */}
+     
         <button
           onClick={toggle}
           className={`cursor-pointer hidden md:inline-flex items-center justify-center p-2 rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 ${theme === "dark" ? "text-yellow-400 bg-blue-900" : "bg-black text-white"
@@ -80,19 +80,18 @@ export function NavbarRight() {
 
 
 
-      {/* Mobile menu button */}
+   
       <button
         onClick={() => setMenuOpen(true)}
-        className="md:hidden p-1 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400"
+        className="block lg:hidden p-1 rounded"
         aria-label="Open menu"
       >
         <BiMenu className="text-current" size={40} />
       </button>
 
 
-
-      {/* Drawer */}
       {menuOpen && <NavbarDrawer onClose={() => setMenuOpen(false)} />}
+    
     </nav>
   );
 }

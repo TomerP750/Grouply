@@ -13,7 +13,7 @@ export function SearchProjectsPage() {
     const [loading, setLoading] = useState<boolean>(false);
 
     const [page, setPage] = useState(0);
-    const [size, setSize] = useState(10);
+    const [size, setSize] = useState(2);
     const [totalPages, setTotalPages] = useState<number | null>(null);
     const [posts, setPosts] = useState<ProjectPostDTO[]>([]);
 
@@ -41,7 +41,7 @@ export function SearchProjectsPage() {
 
 
     return (
-        <main className="min-h-screen bg-gray-200 dark:bg-slate-950 px-5 pb-10">
+        <main className="min-h-screen bg-gray-200 dark:bg-slate-950  pb-10">
 
             <Navbar />
             <Filters />
@@ -53,7 +53,7 @@ export function SearchProjectsPage() {
 
 
             {/* Pagination */}
-            {posts && posts.length > 5 && <div className="flex justify-center gap-1 text-white">
+            {posts && posts.length > 1 && <div className="flex justify-center gap-1 text-white">
                 <button
                     disabled={loading}
                     onClick={loadMore}

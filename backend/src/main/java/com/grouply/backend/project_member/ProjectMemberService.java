@@ -61,15 +61,17 @@ public class ProjectMemberService implements IProjectMemberService{
 //    }
 
 
+    public boolean isMember(Long userId, Long projectId) {
+        return projectMemberRepository.existsByUserIdAndProjectId(userId, projectId);
+    }
 
-
-
-    // HELPER METHODS
-
-    private boolean isOwner(Long userId, Long projectId) {
+    public boolean isOwner(Long userId, Long projectId) {
         return projectMemberRepository
                 .existsByUserIdAndProjectIdAndProjectRole(userId, projectId, ProjectRole.OWNER);
     }
+
+
+    // HELPER METHODS
 
     private ProjectMember fetchProjectMember(Long memberId, Long projectId) {
         return projectMemberRepository

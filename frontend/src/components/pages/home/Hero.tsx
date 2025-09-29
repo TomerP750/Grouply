@@ -19,13 +19,16 @@ export function Hero() {
       <Navbar />
 
       <div className="dark:text-white w-full md:w-2/3 flex-1 flex flex-col items-start justify-center px-10 gap-8">
+        
         <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium shadow-sm dark:border-slate-700 dark:bg-slate-800">
           <span className="inline-block h-2 w-2 rounded-full bg-teal-500" />
           Built for devs who want to build together
         </span>
+
         <h1 className="w-5/6 text-4xl sm:text-3xl md:text-5xl lg:text-7xl font-extrabold">
           Organize study groups with ease.
         </h1>
+        
         <div className="dark:text-gray-400 text-xl text-black">
           <h2 className="text-md max-w-3xl">
             Create sessions, track progress, and keep your peers aligned — all in one place.

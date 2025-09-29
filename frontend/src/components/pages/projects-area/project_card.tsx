@@ -1,19 +1,17 @@
-import { HiOutlineBookOpen, HiUserAdd } from "react-icons/hi";
-import { MdBookmarkAdd } from "react-icons/md";
-import { NavLink } from "react-router-dom";
-import { Avatar } from "../../elements/Avatar";
 import { useEffect, useState } from "react";
+import { BiCheck } from "react-icons/bi";
+import { MdBookmarkAdd } from "react-icons/md";
+import { toast } from "react-toastify";
 import defaultImage from "../../../assets/projectdefault.jpg";
+import type { ProjectMemberDTO } from "../../../dtos/models_dtos/ProjectMemberDTO";
 import type { ProjectPostDTO } from "../../../dtos/models_dtos/ProjectPostDTO";
 import { JoinRequestDTO } from "../../../dtos/models_dtos/request_dto/JoinRequestDTO";
 import { useUserSelector } from "../../../redux/hooks";
-import type { ProjectPostPositionDTO } from "../../../dtos/models_dtos/ProjectPostPositionDTO";
-import joinRequestService from "../../../service/JoinRequestService";
-import type { ProjectMemberDTO } from "../../../dtos/models_dtos/ProjectMemberDTO";
-import projectMemberService from "../../../service/ProjectMemberService";
-import { toast } from "react-toastify";
-import { BiCheck } from "react-icons/bi";
 import archivedProjectService from "../../../service/ArchivedProjectService";
+import joinRequestService from "../../../service/JoinRequestService";
+import projectMemberService from "../../../service/ProjectMemberService";
+import { Avatar } from "../../elements/Avatar";
+import { ProjectRole } from "../../../dtos/enums/ProjectRole";
 
 
 
@@ -25,6 +23,32 @@ interface ProjectCardProps {
 export function ProjectCard({ projectPost }: ProjectCardProps) {
 
     const [loading, setLoading] = useState<boolean>(false);
+
+    const [isOwner, setIsOwner] = useState<boolean>(false);
+    const [isMember, setIsMember] = useState<boolean>(false);
+    const user = useUserSelector(state => state.authSlice.user);
+
+    useEffect(() => {
+        if (user) {
+
+            projectMemberService.isMember(user.id, projectDTO.id)
+                .then(res => {
+                    setIsMember(res);
+                })
+                .catch(err => {
+                    toast.error(err.response.data);
+                })
+
+            projectMemberService.isOwner(user.id, projectDTO.id)
+                .then(res => {
+                    setIsOwner(res);
+                })
+                .catch(err => {
+                    toast.error(err.repsonse.data)
+                })
+
+        }
+    }, []);
 
     const { title, description, projectDTO, positions } = projectPost;
 
@@ -43,12 +67,13 @@ export function ProjectCard({ projectPost }: ProjectCardProps) {
     const trancuatedDesc = description.length > 200 ? description.slice(0, 200) + '...' : description;
     const [participantsModalOpen, setParticipantsModalOpen] = useState<boolean>(false);
 
-    const user = useUserSelector(state => state.authSlice.user);
+
 
     const [sentRequest, setSentRequest] = useState<boolean>(false);
     const [archived, setArchived] = useState<boolean>(false);
 
     const handleRequestToJoin = (projectPostPositionId: number) => {
+
         if (user != null) {
 
             const joinRequest = new JoinRequestDTO(user.id, projectPostPositionId, projectPost.id);
@@ -99,25 +124,34 @@ export function ProjectCard({ projectPost }: ProjectCardProps) {
             {/* Description + Buttons to join */}
             <div className="flex flex-col flex-grow w-full px-6 py-4 gap-2">
                 <div className="flex w-full justify-between items-center">
-                    <h1 className="font-bold text-2xl text-gray-900 dark:text-white">{projectDTO.name}</h1>
-                    <div className="flex gap-3 items-center">
-                        <button
-                            onClick={() => handleAddToArchive(projectPost.id)}
-                            title={archived ? "Remove from archive" : "Add to archive"}
-                            className={`cursor-pointer ${archived && 'text-yellow-500'}  transition-colors`}>
-                            <MdBookmarkAdd size={30} />
-                        </button>
+
+                    <div className="inline-flex items-center gap-3 font-bold text-2xl text-gray-900 dark:text-white">
+                        <p>{projectDTO.name}</p>
+                        {isOwner && <span className="text-xs bg-slate-700 rounded-xl px-3 py-1">Your Project</span>}
                     </div>
+
+                    {!isMember && <button
+                        disabled={loading}
+                        onClick={() => handleAddToArchive(projectPost.id)}
+                        title={archived ? "Remove from archive" : "Add to archive"}
+                        className={`cursor-pointer ${archived && 'text-yellow-500'} disabled:cursor-not-allowed transition-colors`}>
+                        <MdBookmarkAdd size={30} />
+                    </button>
+                    }
+
                 </div>
+
                 <p className="text-gray-600 dark:text-gray-300 text-sm">{trancuatedDesc}</p>
 
                 <div className="flex flex-col w-full gap-5 items-center py-4">
 
                     {/* Positions buttons to request to join */}
-                    {positions.length > 0 && positions.map(p => {
+
+                    {!isMember && positions.length > 0 && positions.map(p => {
                         return <div key={p.id} className="flex justify-between items-center w-full">
                             <p>{p.position}</p>
                             <button
+                                disabled={loading}
                                 onClick={() => handleRequestToJoin(p.id)}
                                 className={`text-sm cursor-pointer transition-colors px-2 py-1 rounded-lg
                                 ${sentRequest ? 'bg-green-600 hover:bg-green-500' : 'bg-blue-600 hover:bg-blue-500'}
@@ -135,6 +169,7 @@ export function ProjectCard({ projectPost }: ProjectCardProps) {
 
             {/* Actions + some users*/}
             <div className="flex items-center justify-between w-full px-6 pb-4 mt-auto">
+
                 <div className="flex -space-x-2 items-center cursor-pointer">
                     {members.slice(0, 5).map(m => {
                         return <Avatar size={30} key={m.id} />
@@ -147,6 +182,7 @@ export function ProjectCard({ projectPost }: ProjectCardProps) {
                     className="inline-flex items-center gap-2 cursor-pointer bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg font-medium transition-colors shadow-sm">
                     <span>Read More</span>
                 </button>}
+
             </div>
         </div>
     );

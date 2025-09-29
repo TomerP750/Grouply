@@ -12,8 +12,10 @@ export function Navbar() {
             <div className="flex items-center gap-4 w-1/3">
                 <NavLink to={"/"} className="cursor-pointer"><AiOutlineTeam size={50} /></NavLink>
                 <input type="search" 
-                className="text-white  
-                rounded-full px-3 py-1 bg-slate-800 w-full focus:ring focus:ring-blue-600 focus:outline-none " 
+                className="text-black dark:text-white  
+                rounded-full px-3 py-1 bg-gray-300 dark:bg-slate-800 
+                hidden lg:block
+                w-full focus:ring focus:ring-blue-600 focus:outline-none " 
                 placeholder="search for users or projects..." />
             </div>
             <NavbarRight />

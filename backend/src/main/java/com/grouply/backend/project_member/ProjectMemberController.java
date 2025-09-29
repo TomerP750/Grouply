@@ -28,4 +28,17 @@ public class ProjectMemberController {
     public List<ProjectMemberDTO> allMembers(@PathVariable Long id) {
         return projectMemberService.allProjectMembers(id);
     }
+
+    @GetMapping("/isMember/{userId}/{projectId}")
+    public boolean isMember(@PathVariable Long userId, @PathVariable Long projectId) {
+        return projectMemberService.isMember(userId, projectId);
+    }
+
+    @GetMapping("/isOwner/{userId}/{projectId}")
+    public boolean isOwner(@PathVariable Long userId, @PathVariable Long projectId) {
+        return projectMemberService.isOwner(userId, projectId);
+    }
+
+
+
 }
