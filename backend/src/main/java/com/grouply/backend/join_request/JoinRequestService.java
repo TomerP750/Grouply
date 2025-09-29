@@ -1,5 +1,6 @@
 package com.grouply.backend.join_request;
 
+import com.grouply.backend.exceptions.ExistsException;
 import com.grouply.backend.exceptions.UnauthorizedException;
 import com.grouply.backend.join_request.dto.JoinRequestDTO;
 import com.grouply.backend.project.Project;
@@ -37,13 +38,17 @@ public class JoinRequestService {
      * @throws UnauthorizedException
      */
 
-    public boolean toggleJoinRequest(JoinRequestDTO dto) throws UnauthorizedException {
+    public boolean toggleJoinRequest(JoinRequestDTO dto) throws UnauthorizedException, ExistsException {
 
         User sender = fetchUser(dto.getSenderId());
         ProjectPost post = fetchProjectPost(dto.getProjectPostId());
 
         if (sender == null) {
             throw new UnauthorizedException("You must login to request to join");
+        }
+
+        if (projectMemberRepository.existsByUserIdAndProjectId(sender.getId(), post.getProject().getId())) {
+            throw new ExistsException("You are already a member in the project");
         }
 
         if (joinRequestRepository.existsBySenderIdAndProjectPostId(sender.getId(), post.getId())) {

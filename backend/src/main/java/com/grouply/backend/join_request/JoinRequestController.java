@@ -1,5 +1,6 @@
 package com.grouply.backend.join_request;
 
+import com.grouply.backend.exceptions.ExistsException;
 import com.grouply.backend.exceptions.UnauthorizedException;
 import com.grouply.backend.join_request.dto.JoinRequestDTO;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,7 @@ public class JoinRequestController {
     private final JoinRequestService joinRequestService;
 
     @PostMapping("/request")
-    public boolean requestToJoin(@RequestBody JoinRequestDTO dto) throws UnauthorizedException {
+    public boolean requestToJoin(@RequestBody JoinRequestDTO dto) throws UnauthorizedException, ExistsException {
         return joinRequestService.toggleJoinRequest(dto);
     }
 }

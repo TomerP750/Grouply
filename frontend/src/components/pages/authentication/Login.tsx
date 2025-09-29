@@ -50,7 +50,7 @@ export function Login() {
 
                 <NavLink
                     to={"/"}
-                    className="mb-8 inline-flex items-center gap-2 rounded-full border border-indigo-500/40 bg-white/70 px-4 py-2 text-sm font-medium text-indigo-700 dark:border-indigo-400/40 dark:hover:bg-slate-900 dark:bg-slate-800/60 dark:text-indigo-300"
+                    className="mb-8 inline-flex items-center gap-2 rounded-full border border-indigo-500/40 bg-white/70 px-4 py-2 text-sm font-medium text-indigo-700 dark:border-teal-400/40 dark:hover:bg-slate-900 dark:bg-slate-800/60 dark:text-teal-300"
                 >
                     <BsArrowLeft /> Return to home
                 </NavLink>
@@ -60,7 +60,7 @@ export function Login() {
                     <div className="rounded-3xl border border-slate-200/70 bg-white/80 p-6 shadow-xl backdrop-blur dark:border-slate-700/60 dark:bg-slate-900/60">
                         {/* Logo / Title */}
                         <div className="mb-6 flex flex-col items-center text-center">
-                            <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-indigo-500 text-white">
+                            <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-teal-500 text-white">
                                 <BiGroup size={30} />
                             </div>
 
@@ -102,7 +102,7 @@ export function Login() {
                                     <label htmlFor="password" className="block text-sm font-medium">
                                         Password
                                     </label>
-                                    <NavLink to="/forgot" className="text-xs text-indigo-600 hover:underline dark:text-indigo-400">
+                                    <NavLink to="/forgot" className="text-xs text-indigo-600 hover:underline dark:text-teal-400">
                                         Forgot password?
                                     </NavLink>
                                 </div>
@@ -145,7 +145,7 @@ export function Login() {
                                 </label>
                                 <span className="text-sm text-slate-600 dark:text-slate-300">
                                     No account?{" "}
-                                    <NavLink to="/signup" className="cursor-pointer font-medium text-indigo-600 hover:underline dark:text-indigo-400">
+                                    <NavLink to="/signup" className="cursor-pointer font-medium text-teal-600 hover:underline dark:text-teal-400">
                                         Sign up
                                     </NavLink>
                                 </span>
@@ -155,7 +155,7 @@ export function Login() {
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className="cursor-pointer mt-2 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-indigo-500 to-indigo-700 hover:from-indigo-600 hover:to-indigo-800 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-indigo-500 disabled:cursor-not-allowed disabled:opacity-70"
+                                className="cursor-pointer mt-2 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-teal-500 to-teal-700 hover:from-teal-600 hover:to-teal-800 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-teal-500 disabled:cursor-not-allowed disabled:opacity-70"
                             >
                                 
                                 {loading ? <BiLoaderAlt size={20} className="animate-spin" /> : 'Sign in'}

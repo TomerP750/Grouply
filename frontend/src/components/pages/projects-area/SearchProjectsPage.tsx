@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Navbar } from "../../layout/navbar/Navbar";
 import { Filters } from "./Filters";
-import { ProjectCard } from "./project_card";
+import { ProjectCard } from "./project_card/project_card";
 import { BiLoaderAlt } from "react-icons/bi";
 import type { ProjectPostDTO } from "../../../dtos/models_dtos/ProjectPostDTO";
 import projectPostService from "../../../service/ProjectPostService";
