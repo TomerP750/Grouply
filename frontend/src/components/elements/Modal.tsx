@@ -42,13 +42,14 @@ export function Modal({ open, onClose, title, children, width, height }: ModalPr
                 {/* Panel */}
                 <div
                     className="
-          relative overflow-y-auto
-          w-full sm:w-3/4 md:w-1/2 lg:w-2/3
-          h-[90vh]  max-h-[90vh]
-          rounded-2xl bg-white dark:bg-slate-900 shadow-xl
-          ring-1 ring-black/5 dark:ring-white/10
-          p-5 sm:p-6 flex flex-col
-        "
+                    pointer-events-auto 
+                    relative 
+                    w-full sm:w-3/4 md:w-1/2 lg:w-2/3
+                    h-[90vh] max-h-[90vh]
+                    rounded-2xl bg-white dark:bg-slate-900 shadow-xl
+                    ring-1 ring-black/5 dark:ring-white/10
+                    p-5 sm:p-6 flex flex-col
+                    "
                 >
                     {/* Close (X) */}
                     <button
@@ -68,8 +69,10 @@ export function Modal({ open, onClose, title, children, width, height }: ModalPr
                         </h2>
                     )}
 
+
+
                     {/* Body */}
-                    <div className="mt-3 max-h-[70vh] overflow-y-auto">{children}</div>
+                    <div className="overflow-y-auto flex-1 scrollbar-thin">{children}</div>
                 </div>
             </div>
         </div>

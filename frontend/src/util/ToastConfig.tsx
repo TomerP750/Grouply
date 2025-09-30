@@ -10,6 +10,7 @@ export function ToastConfig() {
           autoClose={3000} 
           theme={theme === "dark" ? "dark" : "light"}
           newestOnTop
+          hideProgressBar={true}
         />
     )
 }

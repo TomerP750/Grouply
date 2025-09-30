@@ -14,10 +14,11 @@ interface ProjectCardDescriptionProps {
     sentRequest: boolean
     onRequestToJoin: () => void;
     onArchiveClick: () => void;
+    inReadMore?: boolean
 
 }
 
-export function ProjectCardDescription({loading ,projectPost, onArchiveClick, onRequestToJoin ,archived, sentRequest }: ProjectCardDescriptionProps) {
+export function ProjectCardDescription({ loading, projectPost, onArchiveClick, onRequestToJoin, archived, sentRequest, inReadMore }: ProjectCardDescriptionProps) {
 
 
     const [isOwner, setIsOwner] = useState<boolean>(false);
@@ -53,14 +54,89 @@ export function ProjectCardDescription({loading ,projectPost, onArchiveClick, on
 
 
     const getMemberTypeTitle = (num: number) => {
-        
-        switch(num) {
+
+        switch (num) {
             case 1:
                 return "Your Project";
             case 2:
                 return "You Are Member";
         }
-        
+
+    }
+
+    if (inReadMore) {
+        return (
+            <div className="flex flex-col flex-grow w-full px-6 py-6 gap-8">
+                {/* Header */}
+                <div className="flex w-full justify-between items-center">
+                    <div className="flex items-center gap-3">
+                        <h1 className="text-3xl md:text-5xl font-bold text-gray-900 dark:text-white">
+                            {title}
+                        </h1>
+
+                        {isMember && (
+                            <span className="text-xs md:text-sm text-white bg-gradient-to-br from-teal-900 via-teal-800 to-teal-600  px-3 py-1 rounded-full">
+                                {isOwner ? getMemberTypeTitle(1) : getMemberTypeTitle(2)}
+                            </span>
+                        )}
+                    </div>
+
+                    {!isMember && (
+                        <button
+                            disabled={loading}
+                            onClick={onArchiveClick}
+                            title={archived ? "Remove from archive" : "Add to archive"}
+                            className={` 
+                                inline-flex items-center justify-center rounded-full p-2
+                            transition-colors hover:bg-slate-100 dark:hover:bg-slate-800
+                            disabled:cursor-not-allowed
+                            ${archived ? "text-yellow-500" : "text-slate-500"}
+                            `}
+                        >
+                            <MdBookmarkAdd size={28} />
+                        </button>
+                    )}
+                </div>
+
+                {/* Description */}
+                <div className="space-y-4 max-w-3xl">
+                    <p className="text-gray-700 dark:text-gray-300">{description}</p>
+                    <p className="text-gray-700 dark:text-gray-300">
+                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Repudiandae asperiores voluptatum unde? Dolore praesentium rerum, non omnis similique qui temporibus, in ea cupiditate magni maxime quae, accusamus dolorem illum doloremque?
+                    </p>
+                    <p className="text-gray-700 dark:text-gray-300">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae asperiores voluptatum unde? Dolore praesentium rerum, non omnis similique qui temporibus, in ea cupiditate magni maxime quae, accusamus dolorem illum doloremque?
+                    </p>
+                </div>
+
+                {/* Positions */}
+                <div className="flex flex-col w-full gap-4 items-center">
+                    {isMember &&
+                        positions.length > 0 &&
+                        positions.map((p) => (
+                            <div
+                                key={p.id}
+                                className="flex justify-between items-center w-full sm:w-2/3 rounded-lg border border-slate-200 dark:border-slate-700 px-4 py-2"
+                            >
+                                <span className="text-gray-800 dark:text-gray-200">
+                                    {p.position}
+                                </span>
+
+                                <button
+                                    disabled={loading}
+                                    onClick={onRequestToJoin}
+                                    className={`cursor-pointer text-sm font-medium px-3 py-1.5 rounded-md transition-colors ${sentRequest
+                                            ? "bg-green-600 text-white hover:bg-green-500"
+                                            : "bg-blue-600 text-white hover:bg-blue-500"}`}
+                                >
+                                    {sentRequest ? <BiCheck size={18} /> : "Request To Join"}
+                                </button>
+                            </div>
+                        ))} 
+                </div>
+            </div>
+        );
+
     }
 
     return (
@@ -103,8 +179,6 @@ export function ProjectCardDescription({loading ,projectPost, onArchiveClick, on
                     </div>
                 })}
 
-                {/* If length > 3 then display button view more */}
-                {positions.length > 3 && <button className="cursor-pointer hover:font-medium">View More</button>}
             </div>
 
         </div>

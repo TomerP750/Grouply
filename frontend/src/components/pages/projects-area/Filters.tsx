@@ -1,35 +1,48 @@
-
 export function Filters() {
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5 w-full text-slate-900 dark:text-slate-100">
+      
+      {/* Project name */}
+      <label className="flex flex-col gap-2 text-sm">
+        <span className="font-medium">Search by Project Name</span>
+        <input
+          type="search"
+          placeholder="Enter project name..."
+          className="rounded-md border border-slate-300 dark:border-slate-600 
+                     bg-gray-100 dark:bg-slate-800 
+                     px-3 py-2 text-sm 
+                     focus:outline-none focus:ring-2 focus:ring-indigo-500/60"
+        />
+      </label>
 
-    
+      {/* Start date */}
+      <label className="flex flex-col gap-2 text-sm">
+        <span className="font-medium">Search by Start Date</span>
+        <input
+          type="date"
+          className="rounded-md border border-slate-300 dark:border-slate-600 
+                     bg-gray-100 dark:bg-slate-800 
+                     px-3 py-2 text-sm
+                     focus:outline-none focus:ring-2 focus:ring-indigo-500/60"
+        />
+      </label>
 
-
-    return (
-
-        <div className="grid grid-cols-5 gap-5 dark:text-white w-full px-5">
-
-            <label className="inline-flex flex-col gap-3">
-                Search By Project Name
-                <input type="search" className="px-2 py-1 bg-gray-300 dark:bg-slate-800 focus:outline-none" />
-            </label>
-
-            <label className="inline-flex flex-col gap-3">
-                Search By Start Of Project
-                <input type="date" className="bg-gray-300 dark:bg-slate-800 px-2 py-1 focus:outline-none " />
-            </label>
-
-            <select
-            className="w-43 h-1/2 rounded-lg border border-slate-300 
-            bg-gray-300 px-3 text-sm text-slate-700 
-             dark:bg-slate-800 dark:text-slate-200 
-             dark:border-slate-600 appearance-none"
-            >
-                <option value="">Search By Role Demand</option>
-                <option value="backend">Backend</option>
-                <option value="frontend">Frontend</option>
-                <option value="fullstack">Full Stack</option>
-            </select>
-
-        </div>
-    )
+      {/* Role demand */}
+      <label className="flex flex-col gap-2 text-sm">
+        <span className="font-medium">Role Demand</span>
+        <select
+          className="rounded-md border border-slate-300 dark:border-slate-600 
+                     bg-gray-100 dark:bg-slate-800 
+                     px-3 py-2 text-sm 
+                     text-slate-700 dark:text-slate-200
+                     focus:outline-none focus:ring-2 focus:ring-indigo-500/60"
+        >
+          <option value="">Any Role</option>
+          <option value="backend">Backend</option>
+          <option value="frontend">Frontend</option>
+          <option value="fullstack">Full Stack</option>
+        </select>
+      </label>
+    </div>
+  );
 }

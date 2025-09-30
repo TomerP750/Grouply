@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
-import { BiCheck } from "react-icons/bi";
-import { MdBookmarkAdd } from "react-icons/md";
 import { toast } from "react-toastify";
-import defaultImage from "../../../../assets/projectdefault.jpg"
+import defaultImage from "../../../../assets/projectdefault.jpg";
 import type { ProjectMemberDTO } from "../../../../dtos/models_dtos/ProjectMemberDTO";
 import type { ProjectPostDTO } from "../../../../dtos/models_dtos/ProjectPostDTO";
 import { JoinRequestDTO } from "../../../../dtos/models_dtos/request_dto/JoinRequestDTO";
@@ -12,8 +10,8 @@ import joinRequestService from "../../../../service/JoinRequestService";
 import projectMemberService from "../../../../service/ProjectMemberService";
 import { Avatar } from "../../../elements/Avatar";
 import { ProjectCardDescription } from "./project_card_description";
-import { Modal } from "../../../elements/Modal";
 import { ReadMoreModal } from "./ReadMoreModal";
+import { ProjectCardProvider } from "../../../../context/ProjectCardContext";
 
 
 interface ProjectCardProps {
@@ -25,9 +23,9 @@ export function ProjectCard({ projectPost }: ProjectCardProps) {
 
     const [loading, setLoading] = useState<boolean>(false);
     const user = useUserSelector(state => state.authSlice.user);
-   
 
-    
+
+
     const { projectDTO, positions } = projectPost;
 
     const [members, setMembers] = useState<ProjectMemberDTO[]>([]);
@@ -42,7 +40,7 @@ export function ProjectCard({ projectPost }: ProjectCardProps) {
     }, [])
 
 
-    const [modalOpen ,setModalOpen] = useState<boolean>(false);
+    const [modalOpen, setModalOpen] = useState<boolean>(false);
 
 
 
@@ -92,44 +90,55 @@ export function ProjectCard({ projectPost }: ProjectCardProps) {
             })
     };
 
-    
+
 
     return (
-        <div className="w-115 min-h-100 bg-gray-100 dark:bg-slate-800 dark:text-white rounded-2xl shadow-lg overflow-hidden flex flex-col">
-            {/* Image placeholder */}
-            <img src={defaultImage} className="h-[40%] object-center object-cover bg-gradient-to-r from-blue-600 to-blue-500 w-full" />
+        <ProjectCardProvider projectPost={projectPost}>
+            <div className="w-115 min-h-100 bg-gray-100 dark:bg-slate-800 dark:text-white rounded-2xl shadow-lg overflow-hidden flex flex-col">
+                {/* Image placeholder */}
+                <img src={defaultImage} className="h-[40%] object-center object-cover bg-gradient-to-r from-blue-600 to-blue-500 w-full" />
 
-            {/* Description + Buttons to join */}
-            <ProjectCardDescription
-            loading={loading} 
-            archived={archived}
-            sentRequest={sentRequest}
-            onRequestToJoin={() => handleRequestToJoin(projectDTO.id)}
-            onArchiveClick={() => handleAddToArchive(projectPost.id)} 
-            projectPost={projectPost} 
-            />
+                {/* Description + Buttons to join */}
+                <ProjectCardDescription
+                    loading={loading}
+                    archived={archived}
+                    projectPost={projectPost}
+                    sentRequest={sentRequest}
+                    onRequestToJoin={() => handleRequestToJoin(projectDTO.id)}
+                    onArchiveClick={() => handleAddToArchive(projectPost.id)}
+                />
 
-            {/* Actions + some users*/}
-            <div className="flex items-center justify-between w-full px-6 pb-4 mt-auto">
+                {/* Actions + some users*/}
+                <div className="flex items-center justify-between w-full px-6 pb-4 mt-auto">
 
-                <div className="flex -space-x-2 items-center cursor-pointer">
-                    {members.slice(0, 5).map(m => {
-                        return <Avatar size={30} key={m.id} />
-                    })}
+                    <div className="flex -space-x-2 items-center cursor-pointer">
+                        {members.slice(0, 5).map(m => {
+                            return <Avatar size={30} key={m.id} />
+                        })}
 
-                    {members.length > 5 && <span className="ml-2.5">+{members.length - 5}</span>}
+                        {members.length > 5 && <span className="ml-2.5">+{members.length - 5}</span>}
+                    </div>
+
+                    <button
+                        onClick={() => setModalOpen(true)}
+                        className="inline-flex items-center gap-2 cursor-pointer bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg font-medium transition-colors shadow-sm">
+                        <span>Read More</span>
+                    </button>
+
+                    {modalOpen && <ReadMoreModal
+                        onClose={() => setModalOpen(false)}
+                        open={modalOpen}
+                        archived={archived}
+                        loading={loading}
+                        sentRequest={sentRequest}
+                        projectPost={projectPost}
+                        members={members}
+                        onArchiveClick={() => handleAddToArchive(projectPost.id)}
+                        onRequestToJoin={() => handleRequestToJoin(projectDTO.id)} />}
+
                 </div>
-
-                <button
-                    onClick={() => setModalOpen(true)}
-                    className="inline-flex items-center gap-2 cursor-pointer bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg font-medium transition-colors shadow-sm">
-                    <span>Read More</span>
-                </button>
-
-                {modalOpen && <ReadMoreModal  onClose={() => setModalOpen(false)} open={modalOpen} projectPost={projectPost}/>}
-
             </div>
-        </div>
+        </ProjectCardProvider>
     );
 
 }

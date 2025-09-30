@@ -5,10 +5,15 @@ import { ProjectCard } from "./project_card/project_card";
 import { BiLoaderAlt } from "react-icons/bi";
 import type { ProjectPostDTO } from "../../../dtos/models_dtos/ProjectPostDTO";
 import projectPostService from "../../../service/ProjectPostService";
+import { MdPostAdd } from "react-icons/md";
+import { Modal } from "../../elements/Modal";
+import { CreatePostForm } from "./create_post_form";
 
 
 
 export function SearchProjectsPage() {
+
+    const [modalOpen, setModalOpen] = useState<boolean>(false);
 
     const [loading, setLoading] = useState<boolean>(false);
 
@@ -47,13 +52,23 @@ export function SearchProjectsPage() {
 
 
             {/* <div className="flex flex-col items-center w-full mt-10"> */}
-                <Filters />
+            <div className="flex items-center px-10">
+                <div className="flex-1"><Filters /></div>
+                <button 
+                onClick={() => setModalOpen(true)}
+                className="inline-flex gap-1 text-white bg-blue-600 h-1/2 px-3 py-2 cursor-pointer hover:bg-blue-500 transition-colors">
+                <span>Add Post</span> <MdPostAdd size={25}/>
+                </button>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 justify-items-center gap-y-10 py-15">
-                    {posts && posts.map(p => <ProjectCard key={p.id} projectPost={p} />)}
+                {modalOpen && <CreatePostForm open={modalOpen} onClose={() => setModalOpen(false)}/>}
+            </div>
 
-                </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 justify-items-center gap-y-10 py-15">
+                {posts && posts.map(p => <ProjectCard key={p.id} projectPost={p} />)}
+
+            </div>
             {/* </div> */}
+
 
 
             {/* Pagination */}
