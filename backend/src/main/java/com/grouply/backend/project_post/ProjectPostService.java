@@ -39,7 +39,7 @@ public class ProjectPostService implements IProjectPostService {
 
 
     @Override
-    public void createProjectPost(Long userId ,CreateProjectPostDTO dto) throws ExistsException, UnauthorizedException {
+    public ProjectPostDTO createProjectPost(Long userId ,CreateProjectPostDTO dto) throws ExistsException, UnauthorizedException {
 
         if (projectPostRepository.existsByProjectId(dto.getProjectId())) {
             throw new ExistsException("Post on project already exists");
@@ -71,7 +71,7 @@ public class ProjectPostService implements IProjectPostService {
             projectPostPositionRepository.save(postPosition);
         }
 
-
+        return EntityToDtoMapper.toProjectPostDto(newPost);
     }
 
     @Override

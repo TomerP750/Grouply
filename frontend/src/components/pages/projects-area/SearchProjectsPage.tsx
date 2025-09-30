@@ -45,6 +45,15 @@ export function SearchProjectsPage() {
     }, [page, size]);
 
 
+    const handleAdd = (newPost: ProjectPostDTO) => {
+        setPosts(prev => [...prev, newPost]); 
+    };
+
+
+    const handleRemove = (deletePostId: number) => {
+        setPosts(prev => prev.filter(p => p.id !== deletePostId))
+    }
+
     return (
         <main className="min-h-screen bg-gray-200 dark:bg-slate-950 pb-10">
 
@@ -54,17 +63,17 @@ export function SearchProjectsPage() {
             {/* <div className="flex flex-col items-center w-full mt-10"> */}
             <div className="flex items-center px-10">
                 <div className="flex-1"><Filters /></div>
-                <button 
-                onClick={() => setModalOpen(true)}
-                className="inline-flex gap-1 text-white bg-blue-600 h-1/2 px-3 py-2 cursor-pointer hover:bg-blue-500 transition-colors">
-                <span>Add Post</span> <MdPostAdd size={25}/>
+                <button
+                    onClick={() => setModalOpen(true)}
+                    className="inline-flex gap-1 text-white bg-blue-600 h-1/2 px-3 py-2 cursor-pointer hover:bg-blue-500 transition-colors">
+                    <span>Add Post</span> <MdPostAdd size={25} />
                 </button>
 
-                {modalOpen && <CreatePostForm open={modalOpen} onClose={() => setModalOpen(false)}/>}
+                {modalOpen && <CreatePostForm open={modalOpen} onClose={() => setModalOpen(false)} onAdd={(newPost) => handleAdd(newPost)} />}
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 justify-items-center gap-y-10 py-15">
-                {posts && posts.map(p => <ProjectCard key={p.id} projectPost={p} />)}
+                {posts && posts.map(p => <ProjectCard key={p.id} projectPost={p} onRemove={() => handleRemove(p.id)} />)}
 
             </div>
             {/* </div> */}

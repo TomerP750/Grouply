@@ -69,7 +69,7 @@ export function ProjectCardDescription({ loading, projectPost, onArchiveClick, o
             <div className="flex flex-col flex-grow w-full px-6 py-6 gap-8">
                 {/* Header */}
                 <div className="flex w-full justify-between items-center">
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-3 flex-wrap">
                         <h1 className="text-3xl md:text-5xl font-bold text-gray-900 dark:text-white">
                             {title}
                         </h1>
@@ -111,7 +111,7 @@ export function ProjectCardDescription({ loading, projectPost, onArchiveClick, o
 
                 {/* Positions */}
                 <div className="flex flex-col w-full gap-4 items-center">
-                    {isMember &&
+                    {!isMember &&
                         positions.length > 0 &&
                         positions.map((p) => (
                             <div

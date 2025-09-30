@@ -9,13 +9,15 @@ import { toast } from "react-toastify";
 import projectService from "../../../service/ProjectService";
 import { useUser, useUserSelector } from "../../../redux/hooks";
 import projectPostService from "../../../service/ProjectPostService";
+import type { ProjectPostDTO } from "../../../dtos/models_dtos/ProjectPostDTO";
 
 interface CreatePostFormProps {
   open: boolean;
   onClose: () => void;
+  onAdd: (dto: ProjectPostDTO) => void;
 }
 
-export function CreatePostForm({ open, onClose }: CreatePostFormProps) {
+export function CreatePostForm({ open, onClose, onAdd }: CreatePostFormProps) {
   const [ownedProjects, setOwnedProjects] = useState<ProjectDTO[]>([]);
   const [loadingProjects, setLoadingProjects] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -24,34 +26,35 @@ export function CreatePostForm({ open, onClose }: CreatePostFormProps) {
   const [positions, setPositions] = useState<ProjectPosition[]>([]);
   const [selectedPosition, setSelectedPosition] = useState<ProjectPosition>(ProjectPosition.BACKEND);
 
-    const user = useUserSelector(state => state.authSlice.user);
+  const user = useUserSelector(state => state.authSlice.user);
 
-  useEffect(() => {
-    if (!open || !user) return;
-    setLoadingProjects(true);
-    projectService
-      .getUserOwnedProjects(user.id)
-      .then((res) => setOwnedProjects(res))
-      .catch((err) => toast.error(err?.response?.data ?? "Failed to load projects"))
-      .finally(() => setLoadingProjects(false));
-  }, [open]);
+    useEffect(() => {
+      if (!open || !user) return;
+      setLoadingProjects(true);
+      projectService
+        .getUserOwnedProjects()
+        .then((res) => setOwnedProjects(res))
+        .catch((err) => toast.error(err?.response?.data ?? "Failed to load projects"))
+        .finally(() => setLoadingProjects(false));
+    }, [open]);
+  
 
-  const { register, handleSubmit, reset, formState: { errors } } =
-    useForm<CreateProjectPostDTO>();
+  const { register, handleSubmit, reset, formState: { errors } } = useForm<CreateProjectPostDTO>();
 
   const sendCreation = (data: CreateProjectPostDTO) => {
 
-        const dataToSend: CreateProjectPostDTO = new CreateProjectPostDTO(data.title, data.description, positions, data.projectId) 
+    const dataToSend: CreateProjectPostDTO = new CreateProjectPostDTO(data.title, data.description, positions, data.projectId)
 
-        projectPostService.createPost(dataToSend)
-        .then(res => {
-            toast.success("Created Post")
-            onClose()
-        })
-        .catch(err => {
-            toast.error(err.response.data);
-            console.log(err.response.data);
-        })
+    projectPostService.createPost(dataToSend)
+      .then(res => {
+        toast.success("Created Post")
+        onClose()
+        onAdd(res)
+      })
+      .catch(err => {
+        toast.error(err.response.data);
+        console.log(err.response.data);
+      })
 
   };
 

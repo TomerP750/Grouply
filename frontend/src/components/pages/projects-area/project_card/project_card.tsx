@@ -12,14 +12,17 @@ import { Avatar } from "../../../elements/Avatar";
 import { ProjectCardDescription } from "./project_card_description";
 import { ReadMoreModal } from "./ReadMoreModal";
 import { ProjectCardProvider } from "../../../../context/ProjectCardContext";
+import { BiEdit, BiTrash } from "react-icons/bi";
+import projectPostService from "../../../../service/ProjectPostService";
 
 
 interface ProjectCardProps {
     projectPost: ProjectPostDTO
+    onRemove: (id: number) => void
 }
 
 
-export function ProjectCard({ projectPost }: ProjectCardProps) {
+export function ProjectCard({ projectPost, onRemove }: ProjectCardProps) {
 
     const [loading, setLoading] = useState<boolean>(false);
     const user = useUserSelector(state => state.authSlice.user);
@@ -42,10 +45,22 @@ export function ProjectCard({ projectPost }: ProjectCardProps) {
 
     const [modalOpen, setModalOpen] = useState<boolean>(false);
 
-
-
     const [sentRequest, setSentRequest] = useState<boolean>(false);
     const [archived, setArchived] = useState<boolean>(false);
+
+
+    const [isOwner, setIsOwner] = useState<boolean>(false);
+    useEffect(() => {
+        if (user) {
+            projectMemberService.isOwner(user.id, projectDTO.id)
+                .then(res => {
+                    setIsOwner(res);
+                })
+                .catch(err => {
+                    toast.error(err.response.data);
+                })
+        }
+    }, []);
 
     const handleRequestToJoin = (projectPostPositionId: number) => {
 
@@ -90,7 +105,16 @@ export function ProjectCard({ projectPost }: ProjectCardProps) {
             })
     };
 
-
+    const handleDeletePost = (id: number) => {
+        projectPostService.deletePost(id)
+        .then(() => {
+            toast.success("Post deleted");
+            onRemove(id);
+        })
+        .catch(err => {
+            toast.error(err.response.data);   
+        })
+    }
 
     return (
         <ProjectCardProvider projectPost={projectPost}>
@@ -119,11 +143,26 @@ export function ProjectCard({ projectPost }: ProjectCardProps) {
                         {members.length > 5 && <span className="ml-2.5">+{members.length - 5}</span>}
                     </div>
 
-                    <button
+                    {isOwner 
+                    ? 
+                    <div className="flex items-center gap-5">
+                        
+                        <button className="cursor-pointer">
+                            <BiEdit size={25}/>
+                        </button>
+
+                        <button
+                        onClick={() => handleDeletePost(projectPost.id)}
+                        className="cursor-pointer">
+                            <BiTrash size={25}/>
+                        </button>
+
+                    </div> 
+                    : <button
                         onClick={() => setModalOpen(true)}
                         className="inline-flex items-center gap-2 cursor-pointer bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg font-medium transition-colors shadow-sm">
                         <span>Read More</span>
-                    </button>
+                    </button>}
 
                     {modalOpen && <ReadMoreModal
                         onClose={() => setModalOpen(false)}

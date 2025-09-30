@@ -36,9 +36,9 @@ public class ProjectPostController {
     }
 
     @PostMapping("/create")
-    public void createPost(@AuthenticationPrincipal CustomUserDetails userDetails, @RequestBody CreateProjectPostDTO dto) throws ExistsException, UnauthorizedException {
+    public ProjectPostDTO createPost(@AuthenticationPrincipal CustomUserDetails userDetails, @RequestBody CreateProjectPostDTO dto) throws ExistsException, UnauthorizedException {
         Long userId = userDetails.getId();
-        projectPostService.createProjectPost(userId ,dto);
+        return projectPostService.createProjectPost(userId ,dto);
     }
 
     @PutMapping("/update")

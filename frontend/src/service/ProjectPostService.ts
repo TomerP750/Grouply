@@ -10,7 +10,11 @@ class ProjectPostService {
     }
 
     async createPost(data: CreateProjectPostDTO) {
-        return (await axios.post(`${BASE_API}/projPost/create`, data))
+        return (await axios.post(`${BASE_API}/projPost/create`, data)).data
+    }
+
+    async deletePost(id: number) {
+        return (await axios.delete(`${BASE_API}/projPost/delete/${id}`))
     }
 
 }

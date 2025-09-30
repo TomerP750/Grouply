@@ -14,7 +14,7 @@ import java.util.List;
 
 public interface IProjectPostService {
 
-    void createProjectPost(Long userId ,CreateProjectPostDTO dto) throws ExistsException, UnauthorizedException;
+    ProjectPostDTO createProjectPost(Long userId ,CreateProjectPostDTO dto) throws ExistsException, UnauthorizedException;
 
     void updateProjectPost(Long userId ,UpdateProjectPostDTO dto) throws UnauthorizedException, InvalidInputException;
 
