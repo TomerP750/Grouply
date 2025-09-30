@@ -107,13 +107,13 @@ export function ProjectCard({ projectPost, onRemove }: ProjectCardProps) {
 
     const handleDeletePost = (id: number) => {
         projectPostService.deletePost(id)
-        .then(() => {
-            toast.success("Post deleted");
-            onRemove(id);
-        })
-        .catch(err => {
-            toast.error(err.response.data);   
-        })
+            .then(() => {
+                toast.success("Post deleted");
+                onRemove(id);
+            })
+            .catch(err => {
+                toast.error(err.response.data);
+            })
     }
 
     return (
@@ -143,26 +143,26 @@ export function ProjectCard({ projectPost, onRemove }: ProjectCardProps) {
                         {members.length > 5 && <span className="ml-2.5">+{members.length - 5}</span>}
                     </div>
 
-                    {isOwner 
-                    ? 
-                    <div className="flex items-center gap-5">
-                        
-                        <button className="cursor-pointer">
-                            <BiEdit size={25}/>
-                        </button>
+                    <div className="flex gap-3">
+                        {isOwner && <div className="flex items-center gap-2">
 
+                            <button className="cursor-pointer">
+                                <BiEdit size={25} />
+                            </button>
+
+                            <button
+                                onClick={() => handleDeletePost(projectPost.id)}
+                                className="cursor-pointer">
+                                <BiTrash size={25} />
+                            </button>
+
+                        </div>}
                         <button
-                        onClick={() => handleDeletePost(projectPost.id)}
-                        className="cursor-pointer">
-                            <BiTrash size={25}/>
+                            onClick={() => setModalOpen(true)}
+                            className="inline-flex items-center gap-2 cursor-pointer bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg font-medium transition-colors shadow-sm">
+                            <span>Read More</span>
                         </button>
-
-                    </div> 
-                    : <button
-                        onClick={() => setModalOpen(true)}
-                        className="inline-flex items-center gap-2 cursor-pointer bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg font-medium transition-colors shadow-sm">
-                        <span>Read More</span>
-                    </button>}
+                    </div>
 
                     {modalOpen && <ReadMoreModal
                         onClose={() => setModalOpen(false)}

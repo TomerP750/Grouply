@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { BiHome, BiUser, BiCog, BiLogOut, BiLogIn } from "react-icons/bi";
+import { BiHome, BiUser, BiCog, BiLogOut, BiLogIn, BiChat } from "react-icons/bi";
 import { useDispatch } from "react-redux";
 import { logout } from "../../../redux/AuthSlice";
 import { useUserSelector } from "../../../redux/hooks";
@@ -27,9 +27,14 @@ export function BottomNav() {
                     <span className="text-xs">Home</span>
                 </NavLink>
 
-                <NavLink to="/profile" className={({ isActive }) => `${baseClasses} ${isActive ? activeClasses : inactiveClasses}`}>
+                <NavLink to={`/profile/${user.id}`} className={({ isActive }) => `${baseClasses} ${isActive ? activeClasses : inactiveClasses}`}>
                     <BiUser size={22} />
                     <span className="text-xs">Profile</span>
+                </NavLink>
+
+                <NavLink to="/messages" className={({ isActive }) => `${baseClasses} ${isActive ? activeClasses : inactiveClasses}`}>
+                    <BiChat size={22} />
+                    <span className="text-xs">Messages</span>
                 </NavLink>
 
                 <NavLink to="/settings" className={({ isActive }) => `${baseClasses} ${isActive ? activeClasses : inactiveClasses}`}>
