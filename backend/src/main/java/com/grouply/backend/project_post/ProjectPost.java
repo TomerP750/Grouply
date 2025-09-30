@@ -32,7 +32,7 @@ public class ProjectPost {
     @Column(nullable = false)
     private String description;
 
-    @OneToMany(mappedBy = "projectPost")
+    @OneToMany(mappedBy = "projectPost", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProjectPostPosition> positions = new ArrayList<>();
 
     @ManyToOne

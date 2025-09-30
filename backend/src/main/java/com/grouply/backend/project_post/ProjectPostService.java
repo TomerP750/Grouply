@@ -6,11 +6,14 @@ import com.grouply.backend.exceptions.UnauthorizedException;
 import com.grouply.backend.project.Project;
 import com.grouply.backend.project.ProjectRepository;
 import com.grouply.backend.project_member.ProjectMemberRepository;
+import com.grouply.backend.project_member.ProjectPosition;
 import com.grouply.backend.project_member.ProjectRole;
 import com.grouply.backend.project_post.dto.CreateProjectPostDTO;
 //import com.grouply.backend.project_post.dto.DeleteProjectPostDTO;
 import com.grouply.backend.project_post.dto.ProjectPostDTO;
 import com.grouply.backend.project_post.dto.UpdateProjectPostDTO;
+import com.grouply.backend.project_post_position.ProjectPostPosition;
+import com.grouply.backend.project_post_position.ProjectPostPositionRepository;
 import com.grouply.backend.user.User;
 import com.grouply.backend.user.UserRepository;
 import com.grouply.backend.util.EntityToDtoMapper;
@@ -32,6 +35,7 @@ public class ProjectPostService implements IProjectPostService {
     private final UserRepository userRepository;
     private final ProjectMemberRepository projectMemberRepository;
     private final ProjectRepository projectRepository;
+    private final ProjectPostPositionRepository projectPostPositionRepository;
 
 
     @Override
@@ -47,12 +51,26 @@ public class ProjectPostService implements IProjectPostService {
         Project project = projectRepository
                 .findById(dto.getProjectId()).orElseThrow(() -> new NoSuchElementException("Project not found"));
 
+
+
+        // 1. Build the ProjectPost (but not saved yet)
         ProjectPost newPost = ProjectPost.builder()
                 .description(dto.getDescription())
                 .title(dto.getTitle())
                 .project(project)
                 .build();
+
         projectPostRepository.save(newPost);
+
+        for (ProjectPosition p : dto.getPositions()) {
+            ProjectPostPosition postPosition = ProjectPostPosition.builder()
+                    .projectPost(newPost)
+                    .position(p)
+                    .build();
+
+            projectPostPositionRepository.save(postPosition);
+        }
+
 
     }
 

@@ -4,8 +4,8 @@ import { BASE_API } from "../util/base_api";
 
 class ProjectService {
 
-    async getUserOwnedProjects(userId: number) {
-        return (await axios.post(`${BASE_API}/project/owned/${userId}`)).data
+    async getUserOwnedProjects() {
+        return (await axios.get(`${BASE_API}/project/owned`)).data
     }
 
 }

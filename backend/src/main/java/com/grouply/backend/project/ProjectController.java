@@ -12,6 +12,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/project")
 @RequiredArgsConstructor
@@ -49,6 +51,11 @@ public class ProjectController {
     }
 
 
+    @GetMapping("/owned")
+    public List<ProjectDTO> getUserOwnedProjects(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        Long userId = userDetails.getId();
+        return projectService.getUserOwnedProjects(userId);
+    }
 
 
 
