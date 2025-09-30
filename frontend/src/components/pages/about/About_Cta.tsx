@@ -17,7 +17,7 @@ export function AboutCta() {
                         rounded-xl bg-white px-5 py-2.5 
                         text-sm font-semibold hover:bg-slate-50 
                         focus:outline-none focus:ring-2 focus:ring-slate-300 
-                        dark:bg-gradient-to-bl dark:from-indigo-900 dark:via-indigo-700 dark:to-indigo-800"
+                        dark:bg-gradient-to-bl dark:from-teal-900 dark:via-teal-700 dark:to-teal-800"
                     >
                         Sign Up Free
                     </NavLink>

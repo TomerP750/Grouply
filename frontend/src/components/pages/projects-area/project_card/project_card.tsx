@@ -12,6 +12,8 @@ import joinRequestService from "../../../../service/JoinRequestService";
 import projectMemberService from "../../../../service/ProjectMemberService";
 import { Avatar } from "../../../elements/Avatar";
 import { ProjectCardDescription } from "./project_card_description";
+import { Modal } from "../../../elements/Modal";
+import { ReadMoreModal } from "./ReadMoreModal";
 
 
 interface ProjectCardProps {
@@ -23,6 +25,7 @@ export function ProjectCard({ projectPost }: ProjectCardProps) {
 
     const [loading, setLoading] = useState<boolean>(false);
     const user = useUserSelector(state => state.authSlice.user);
+   
 
     
     const { projectDTO, positions } = projectPost;
@@ -39,7 +42,7 @@ export function ProjectCard({ projectPost }: ProjectCardProps) {
     }, [])
 
 
-    const [participantsModalOpen, setParticipantsModalOpen] = useState<boolean>(false);
+    const [modalOpen ,setModalOpen] = useState<boolean>(false);
 
 
 
@@ -118,9 +121,12 @@ export function ProjectCard({ projectPost }: ProjectCardProps) {
                 </div>
 
                 <button
+                    onClick={() => setModalOpen(true)}
                     className="inline-flex items-center gap-2 cursor-pointer bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg font-medium transition-colors shadow-sm">
                     <span>Read More</span>
                 </button>
+
+                {modalOpen && <ReadMoreModal  onClose={() => setModalOpen(false)} open={modalOpen} projectPost={projectPost}/>}
 
             </div>
         </div>

@@ -1,9 +1,11 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { BiMoon, BiSun, BiX, BiUser, BiCog, BiLogOut } from "react-icons/bi";
 import { useTheme } from "../../../context/ThemeContext";
 import { useDispatch } from "react-redux";
 import { logout, type JwtUser } from "../../../redux/AuthSlice";
 import { Avatar } from "../../elements/Avatar";
+import { useNavigate } from "react-router-dom";
+import type { IconType } from "react-icons";
 
 interface NavbarDrawerProps {
     user: JwtUser | null;
@@ -30,6 +32,13 @@ export function NavbarDrawer({ onClose, open, user }: NavbarDrawerProps) {
 
 
     const panelRef = useRef<HTMLDivElement>(null);
+
+    const navigate = useNavigate();
+
+    const handleNavItemClick = (to: string) => {
+        navigate(to)
+        onClose()
+    }
 
     const handleLogout = () => dispatch(logout());
 
@@ -75,8 +84,8 @@ export function NavbarDrawer({ onClose, open, user }: NavbarDrawerProps) {
 
                 {/* Nav */}
                 <nav className="p-2">
-                    <DrawerButton label="Profile" icon={<BiUser size={20} />} onClick={onClose} />
-                    <DrawerButton label="Settings" icon={<BiCog size={20} />} onClick={onClose} />
+                    <DrawerButton label="Profile" icon={<BiUser size={20} />} onClick={() => handleNavItemClick(`/profile/${user?.id}`)} />
+                    <DrawerButton label="Settings" icon={<BiCog size={20} />} onClick={() => handleNavItemClick("/settings")} />
                     <hr className="my-3 border-slate-200 dark:border-slate-800" />
                     <DrawerButton
                         label="Sign out"
@@ -105,13 +114,14 @@ export function NavbarDrawer({ onClose, open, user }: NavbarDrawerProps) {
     );
 }
 
+type DrawerButton = {
+    label: string
+    icon: ReactNode
+    onClick?: () => void 
+    className?: string 
+}
 
-function DrawerButton({ label, icon, onClick, className = "" }: {
-    label: string;
-    icon: React.ReactNode;
-    onClick?: () => void;
-    className?: string;
-}) {
+function DrawerButton({ label, icon, onClick, className}: DrawerButton) {
     return (
         <button
             onClick={onClick}

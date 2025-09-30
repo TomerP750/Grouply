@@ -16,7 +16,7 @@ export function AboutHowItWorks() {
                         key={s.step}
                         className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-800"
                     >
-                        <div className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-indigo-500 text-white font-semibold">
+                        <div className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-r from-teal-500 to-teal-700 text-white font-semibold">
                             {s.step}
                         </div>
                         <h3 className="mt-3 text-base font-semibold">{s.title}</h3>

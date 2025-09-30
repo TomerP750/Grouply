@@ -12,7 +12,7 @@ export function FeatureCard({ feature }: FeatureCardProps) {
     return (
         <div className="w-full flex items-start gap-5 p-5">
 
-            <div className="w-12 aspect-square rounded-xl bg-gradient-to-r from-indigo-500  to-indigo-600 flex items-center justify-center shrink-0">
+            <div className="w-12 aspect-square rounded-xl bg-gradient-to-r from-teal-500  to-teal-600 flex items-center justify-center shrink-0">
                 <Icon className="aspect-square text-white" size={30} /> 
             </div>
             

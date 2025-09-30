@@ -1,5 +1,7 @@
 package com.grouply.backend.project_member;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -12,8 +14,8 @@ public interface ProjectMemberRepository extends JpaRepository<ProjectMember, Lo
 
     Optional<ProjectMember> findByIdAndProjectId(Long memberId, Long projectId);
 
-    @EntityGraph(attributePaths = {"user"})
-    List<ProjectMember> findByProjectId(Long projectId);
+//    @EntityGraph(attributePaths = {"user"})
+//    List<ProjectMember> findByProjectId(Long projectId);
 
     int countByProjectIdAndProjectRole(Long projectId, ProjectRole role);
 
@@ -26,4 +28,8 @@ public interface ProjectMemberRepository extends JpaRepository<ProjectMember, Lo
     ProjectMember findByUserIdAndProjectIdAndProjectRole(Long userId, Long projectId, ProjectRole role);
 
     boolean existsByUserIdAndProjectId(Long userId, Long projectId);
+
+    List<ProjectMember> findByProjectId(Long projectId);
+
+    Page<ProjectMember> findByProjectId(Long projectId, Pageable pageable);
 }

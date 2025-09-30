@@ -8,6 +8,10 @@ class ProjectMemberService {
         return (await axios.get(`${BASE_API}/member/all/${id}`)).data
     }
 
+    async allMembersPagination(id: number, page: number, size: number) {
+        return (await axios.get(`${BASE_API}/member/allPage/${id}?page=${page}&size=${size}`)).data
+    }
+
     async isMember(userId: number, projectId: number) {
         return (await axios.get(`${BASE_API}/member/isMember/${userId}/${projectId}`)).data
     }

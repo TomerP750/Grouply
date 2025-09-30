@@ -82,7 +82,7 @@ export function Login() {
                                     type="email"
                                     autoComplete="email"
                                     placeholder="you@example.com"
-                                    className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm shadow-sm outline-none ring-indigo-400/0 transition placeholder:text-slate-400 focus:ring-2 dark:border-slate-700 dark:bg-slate-800"
+                                    className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm shadow-sm outline-none ring-indigo-400/0 transition placeholder:text-slate-400 focus:ring-1 focus:ring-teal-500 dark:border-slate-700 dark:bg-slate-800"
                                     {...register("email", {
                                         required: "Email is required",
                                         pattern: {
@@ -112,7 +112,7 @@ export function Login() {
                                         type={showPassword ? "text" : "password"}
                                         autoComplete="current-password"
                                         placeholder="••••••••"
-                                        className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 pr-10 text-sm shadow-sm outline-none ring-indigo-400/0 transition placeholder:text-slate-400 focus:ring-2 dark:border-slate-700 dark:bg-slate-800"
+                                        className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 pr-10 text-sm outline-none ring-indigo-400/0 transition placeholder:text-slate-400 focus:ring-1 focus:ring-teal-500 dark:border-slate-700 dark:bg-slate-800"
                                         {...register("password", {
                                             required: "Password is required",
                                             minLength: { value: 6, message: "Minimum 6 characters" },

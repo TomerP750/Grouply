@@ -13,7 +13,7 @@ export function SearchProjectsPage() {
     const [loading, setLoading] = useState<boolean>(false);
 
     const [page, setPage] = useState(0);
-    const [size, setSize] = useState(2);
+    const [size, setSize] = useState(10);
     const [totalPages, setTotalPages] = useState<number | null>(null);
     const [posts, setPosts] = useState<ProjectPostDTO[]>([]);
 
@@ -41,15 +41,19 @@ export function SearchProjectsPage() {
 
 
     return (
-        <main className="min-h-screen bg-gray-200 dark:bg-slate-950  pb-10">
+        <main className="min-h-screen bg-gray-200 dark:bg-slate-950 pb-10">
 
             <Navbar />
-            <Filters />
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 justify-items-center gap-y-10 py-15">
-                {posts && posts.map(p => <ProjectCard key={p.id} projectPost={p} />)}
 
-            </div>
+            {/* <div className="flex flex-col items-center w-full mt-10"> */}
+                <Filters />
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 justify-items-center gap-y-10 py-15">
+                    {posts && posts.map(p => <ProjectCard key={p.id} projectPost={p} />)}
+
+                </div>
+            {/* </div> */}
 
 
             {/* Pagination */}

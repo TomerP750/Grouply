@@ -3,30 +3,33 @@ package com.grouply.backend.project_member;
 import com.grouply.backend.project_member.dto.ProjectMemberDTO;
 import com.grouply.backend.util.EntityToDtoMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.NoSuchElementException;
+
 
 @RestController
 @RequestMapping("/api/member")
 @RequiredArgsConstructor
 public class ProjectMemberController {
 
-    private final ProjectMemberRepository projectMemberRepository;
     private final ProjectMemberService projectMemberService;
 
-    @GetMapping("/{id}")
-    public ProjectMemberDTO getOne(@PathVariable Long id) {
-        return EntityToDtoMapper.toProjectMemberDto(projectMemberRepository.findById(id).orElseThrow(() -> new NoSuchElementException("Not found")));
+    @GetMapping("/all/{id}")
+    public List<ProjectMemberDTO> allMembersByProjectId(@PathVariable Long id) {
+        return projectMemberService.allProjectMembers(id);
     }
 
-    @GetMapping("/all/{id}")
-    public List<ProjectMemberDTO> allMembers(@PathVariable Long id) {
-        return projectMemberService.allProjectMembers(id);
+
+    @GetMapping("/allPage/{id}")
+    public Page<ProjectMemberDTO> allMembersByProjectId(@PathVariable Long id,
+                                                        @RequestParam(value = "page", defaultValue = "0") int page,
+                                                        @RequestParam(value = "size", defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return projectMemberService.allProjectMembersPagination(id, pageable);
     }
 
     @GetMapping("/isMember/{userId}/{projectId}")
@@ -38,6 +41,8 @@ public class ProjectMemberController {
     public boolean isOwner(@PathVariable Long userId, @PathVariable Long projectId) {
         return projectMemberService.isOwner(userId, projectId);
     }
+
+
 
 
 

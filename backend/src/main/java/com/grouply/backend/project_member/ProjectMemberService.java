@@ -10,6 +10,8 @@ import com.grouply.backend.user.UserRepository;
 import com.grouply.backend.util.EntityToDtoMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,13 +27,24 @@ public class ProjectMemberService implements IProjectMemberService{
     private final UserRepository userRepository;
 
 
-
+    /**
+     * This is for post project where i want to fetch all the members at once so no pagination
+     * @param projectId
+     * @return
+     */
     public List<ProjectMemberDTO> allProjectMembers(Long projectId) {
         return projectMemberRepository.findByProjectId(projectId).stream()
                 .map(EntityToDtoMapper::toProjectMemberDto)
                 .toList();
     }
 
+
+    @Override
+    public Page<ProjectMemberDTO> allProjectMembersPagination(Long projectId, Pageable pageable) {
+        return projectMemberRepository
+                .findByProjectId(projectId, pageable)
+                .map(EntityToDtoMapper::toProjectMemberDto);
+    }
 
 
     @Override
@@ -55,10 +68,7 @@ public class ProjectMemberService implements IProjectMemberService{
         projectMemberRepository.deleteByIdAndProjectId(memberToRemoveId, projectId);
     }
 
-//    @Override
-//    public void requestToJoinProject(Long userId, Long ownerId, Long projectId) {
-//
-//    }
+
 
 
     public boolean isMember(Long userId, Long projectId) {

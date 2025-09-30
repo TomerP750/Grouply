@@ -34,7 +34,7 @@ export function AboutWhatIs() {
                     <ul className="mt-2 space-y-2 text-sm">
                         {featureData1.map((item, i) => (
                             <li key={i} className="flex items-start gap-3">
-                                <span className="mt-1 text-indigo-400">{item.icon}</span>
+                                <span className="mt-1 text-teal-400">{item.icon}</span>
                                 <span className="text-slate-700 dark:text-slate-200">{item.text}</span>
                             </li>
                         ))}
@@ -50,7 +50,7 @@ export function AboutWhatIs() {
                         >
                             <div className="flex items-start gap-4">
                                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-500/10">
-                                    <span className="text-indigo-400 dark:text-indigo-400">{f.icon}</span>
+                                    <span className="text-teal-400 dark:text-teal-400">{f.icon}</span>
                                 </div>
                                 <div className="flex-1">
                                     <h3 className="text-base font-semibold">{f.title}</h3>
