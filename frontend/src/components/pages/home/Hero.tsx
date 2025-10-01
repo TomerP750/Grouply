@@ -4,6 +4,7 @@ import heroLight from "../../../assets/heroLight.png";
 import heroDark from "../../../assets/heroDark.png";
 import { useTheme } from "../../../context/ThemeContext";
 import { NavLink } from 'react-router-dom';
+import { FaArrowRight } from 'react-icons/fa';
 
 export function Hero() {
 
@@ -19,7 +20,7 @@ export function Hero() {
       <Navbar />
 
       <div className="dark:text-white w-full md:w-2/3 flex-1 flex flex-col items-start justify-center px-10 gap-8">
-        
+
         <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium shadow-sm dark:border-slate-700 dark:bg-slate-800">
           <span className="inline-block h-2 w-2 rounded-full bg-teal-500" />
           Built for devs who want to build together
@@ -28,7 +29,7 @@ export function Hero() {
         <h1 className="w-5/6 text-4xl sm:text-3xl md:text-5xl lg:text-7xl font-extrabold">
           Organize study groups with ease.
         </h1>
-        
+
         <div className="dark:text-gray-400 text-xl text-black">
           <h2 className="text-md max-w-3xl">
             Create sessions, track progress, and keep your peers aligned — all in one place.
@@ -38,11 +39,11 @@ export function Hero() {
           </h2>
         </div>
 
-        <button className='cursor-pointer text-white 
+        <div className="flex items-center gap-5">
+          <button className='cursor-pointer text-white 
         bg-gradient-to-r 
         hover:bg-gradient-to-l 
         px-4 py-2 
-
         dark:from:teal-700 dark:via-teal-500 dark:to-teal-600 
         dark:hover:from-teal-700 dark:hover:via-teal-500 dark:hover:to-teal-600 
 
@@ -50,7 +51,10 @@ export function Hero() {
         hover:from-teal-700 hover:via-teal-500 hover:to-teal-600 
 
         rounded-lg font-medium'><NavLink to={"/signup"}>Get Started</NavLink>
-        </button>
+          </button>
+          <NavLink to={"/about"} 
+          className='hover:scale-110 duration-200 inline-flex gap-2 items-center'>Learn More <FaArrowRight/></NavLink>
+        </div>
 
       </div>
 

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Navbar } from "../../layout/navbar/Navbar";
 import { Filters } from "./Filters";
 import { ProjectCard } from "./project_card/project_card";
-import { BiLoaderAlt } from "react-icons/bi";
+import { BiLoaderAlt, BiPlus } from "react-icons/bi";
 import type { ProjectPostDTO } from "../../../dtos/models_dtos/ProjectPostDTO";
 import projectPostService from "../../../service/ProjectPostService";
 import { MdPostAdd } from "react-icons/md";
@@ -61,8 +61,8 @@ export function SearchProjectsPage() {
                         <div className="flex max-w-3/4 justify-center">
                             <button
                                 onClick={() => setModalOpen(true)}
-                                className="inline-flex gap-1 text-white bg-blue-600 px-3 py-2 cursor-pointer hover:bg-blue-500 transition-colors">
-                                <span>Add Post</span> <MdPostAdd size={25} />
+                                className="inline-flex items-center gap-1 rounded-lg text-white bg-blue-600 px-3 py-1.5 cursor-pointer hover:bg-blue-500 transition-colors">
+                                <BiPlus size={20}/><span>Add Post</span> 
                             </button>
                         </div>
                         {posts?.map(p => (

@@ -157,18 +157,19 @@ export function ProjectCardDescription({ loading, projectPost, onArchiveClick, o
                             <div className="relative">
                                 <button
                                     onClick={() => setMenuOpen(!menuOpen)}
-                                    className="cursor-pointer relative">
-                                    <BiDotsVertical size={25} />
-                                    {menuOpen &&
-                                        <div className="crud-buttons absolute right-0 -bottom-18 font-light dark:bg-slate-900 bg-white px-2 w-30 py-2 gap-1 dark:text-white flex flex-col items-center text-base">
-                                            <button 
+                                    className="cursor-pointer hover:bg-gray-300/10 focus:bg-gray-300/10 p-2 rounded-full">
+                                    <BiDotsVertical size={25}/>
+                                </button>
+                                {menuOpen &&
+                                    <div className="crud-buttons absolute right-0 -bottom-18 font-light dark:bg-slate-900 bg-white px-2 w-30 py-2 gap-1 dark:text-white flex flex-col items-center text-base">
+                                        <button
                                             onClick={onEdit}
                                             className="cursor-pointer hover:bg-slate-700 w-full">Edit</button>
-                                            <button 
+                                        <button
                                             onClick={onDelete}
                                             className="cursor-pointer hover:bg-slate-700 w-full">Delete</button>
-                                        </div>}
-                                </button>
+                                </div>}
+
                             </div>}
 
                     </div>
