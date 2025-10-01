@@ -148,7 +148,7 @@ export function ProjectCardDescription({ loading, projectPost, onArchiveClick, o
             <div className="flex w-full justify-between items-center">
                 {/* Title + isowner */}
                 <div className="flex flex-col-reverse items-start sm:flex justify-between w-full gap-3 font-bold text-2xl text-gray-900 dark:text-white">
-                    <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl">{title}</h1>
+                    <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl tracking-tight">{title}</h1>
                     <div className="flex justify-between items-center w-full">
                         {isMember && <span className="text-xs bg-slate-500 px-3 py-1 rounded-full">{isOwner ? getMemberTypeTitle(1) : getMemberTypeTitle(2)}</span>}
                         {/* OWNER CRUD BUTTONS MENU */}

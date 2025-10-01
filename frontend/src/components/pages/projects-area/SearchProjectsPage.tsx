@@ -50,25 +50,21 @@ export function SearchProjectsPage() {
 
             <Navbar />
 
-            {/* ADD POST BUTTON */}
-
-            <button
-                onClick={() => setModalOpen(true)}
-                className="inline-flex gap-1 text-white bg-blue-600 h-1/2 px-3 py-2 cursor-pointer hover:bg-blue-500 transition-colors">
-                <span>Add Post</span> <MdPostAdd size={25} />
-            </button>
-
-
             {/* POSTS AND FILTERS */}
-
-
-            <div className="flex flex-col mt-5 md:mt-0 px-5 md:px-0 md:flex-row w-full items-start gap-6">
+            <div className="flex flex-col pt-10 md:pt-0 md:mt-5 px-5 md:px-0 lg:flex-row w-full items-center lg:items-start gap-6">
                 <Filters />
 
                 {/* Main area */}
                 <div className="w-full flex justify-center px-0 sm:px-5 pt-6">
                     {/* Width cap + centered */}
-                    <div className="w-full grid grid-cols-1 gap-y-10">
+                    <div className="w-full grid grid-cols-1 justify-items-center lg:justify-items-start gap-y-10">
+                        <div className="flex max-w-3/4 justify-center">
+                            <button
+                                onClick={() => setModalOpen(true)}
+                                className="inline-flex gap-1 text-white bg-blue-600 px-3 py-2 cursor-pointer hover:bg-blue-500 transition-colors">
+                                <span>Add Post</span> <MdPostAdd size={25} />
+                            </button>
+                        </div>
                         {posts?.map(p => (
                             <ProjectCard
                                 key={p.id}
@@ -79,11 +75,6 @@ export function SearchProjectsPage() {
                     </div>
                 </div>
             </div>
-
-
-
-
-
 
 
             {/* Pagination */}

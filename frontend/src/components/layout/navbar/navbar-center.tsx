@@ -1,5 +1,8 @@
+import { useState } from "react";
+import { BiTask } from "react-icons/bi";
 import { FaHome, FaInfo } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
+import type { JwtUser } from "../../../redux/AuthSlice";
 
 const linkClasses = ({ isActive }: { isActive: boolean }) =>
   [
@@ -9,10 +12,17 @@ const linkClasses = ({ isActive }: { isActive: boolean }) =>
       : "text-gray-600 dark:text-gray-300 hover:text-teal-400",
   ].join(" ");
 
-export function NavbarCenter() {
+interface NavbarCenterProps {
+  user: JwtUser | null;
+}
+
+export function NavbarCenter({ user }: NavbarCenterProps) {
+
+  const [menuOpen, setMenuOpen] = useState<boolean>(false);
+
   return (
     <div>
-      <ul className="hidden lg:flex items-center gap-8 text-lg">
+      <ul className="hidden lg:flex items-center gap-10 text-lg">
         <li>
           <NavLink to="/" className={linkClasses}>
             <FaHome size={22} />
@@ -26,6 +36,16 @@ export function NavbarCenter() {
             <span className="text-sm">About</span>
           </NavLink>
         </li>
+
+        <li>
+          <NavLink to="/about" className={linkClasses}>
+            <BiTask size={22} />
+            <span className="text-sm">Projects</span>
+          </NavLink>
+        </li>
+
+        
+
       </ul>
     </div>
   );

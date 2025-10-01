@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { BiBell, BiChat, BiMenu } from "react-icons/bi";
+import { BiBell, BiChat, BiChevronDown, BiMenu } from "react-icons/bi";
 import { NavLink } from "react-router-dom";
 import { Avatar } from "../../elements/Avatar";
 import { Badge } from "../../elements/Badge";
-import { NavbarDrawer } from "./Navbar-Drawer";
 import type { JwtUser } from "../../../redux/AuthSlice";
+import { UserMenu } from "./user_menu";
 
 
 interface NavbarRightProps {
@@ -22,7 +22,7 @@ export function NavbarRight({ user }: NavbarRightProps) {
   return (
     <nav className="flex items-center gap-5">
 
-      <ul className="hidden lg:flex items-center text-lg">
+      <ul className="hidden md:flex items-center text-lg">
 
 
         {user && <div className="relative hover:bg-gray-500/20">
@@ -48,8 +48,21 @@ export function NavbarRight({ user }: NavbarRightProps) {
 
 
         {user
-          ? <Avatar className="cursor-pointer" user={user} size={40} onClick={() => setMenuOpen(true)} />
-          : <NavLink
+          ?
+          <div className="relative">
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
+              className={"relative inline-flex flex-col items-center gap-1 transition-colors duration-200 cursor-pointer"}>
+              <Avatar size={22} />
+              <div className="text-sm flex items-center">
+                <span>{user?.username}</span>
+                <span><BiChevronDown size={20} className={`${menuOpen && 'rotate-180'} transition duration-200`} /></span>
+              </div>
+            </button>
+            {menuOpen && <UserMenu user={user}/>}
+          </div>
+          :
+          <NavLink
             to="/login"
             className="hidden md:inline-flex items-center justify-center 
           rounded-3xl bg-[#0f0f10] dark:bg-teal-700 dark:hover:bg-teal-600 px-5 py-1 text-white font-bold hover:bg-gray-800 
@@ -62,16 +75,7 @@ export function NavbarRight({ user }: NavbarRightProps) {
 
       </ul>
 
-      <button
-        onClick={() => setMenuOpen(true)}
-        className="block lg:hidden p-1 rounded"
-        aria-label="Open menu"
-      >
-        <BiMenu className="text-current" size={40} />
-      </button>
-
-
-      {menuOpen && <NavbarDrawer user={user} open={menuOpen} onClose={() => setMenuOpen(false)} />}
+      
 
     </nav>
   );
