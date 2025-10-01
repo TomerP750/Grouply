@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import defaultImage from "../../../../assets/projectdefault.jpg";
+import { ProjectCardProvider } from "../../../../context/ProjectCardContext";
 import type { ProjectMemberDTO } from "../../../../dtos/models_dtos/ProjectMemberDTO";
 import type { ProjectPostDTO } from "../../../../dtos/models_dtos/ProjectPostDTO";
 import { JoinRequestDTO } from "../../../../dtos/models_dtos/request_dto/JoinRequestDTO";
@@ -8,12 +9,10 @@ import { useUserSelector } from "../../../../redux/hooks";
 import archivedProjectService from "../../../../service/ArchivedProjectService";
 import joinRequestService from "../../../../service/JoinRequestService";
 import projectMemberService from "../../../../service/ProjectMemberService";
+import projectPostService from "../../../../service/ProjectPostService";
 import { Avatar } from "../../../elements/Avatar";
 import { ProjectCardDescription } from "./project_card_description";
-import { ReadMoreModal } from "./ReadMoreModal";
-import { ProjectCardProvider } from "../../../../context/ProjectCardContext";
-import { BiEdit, BiTrash } from "react-icons/bi";
-import projectPostService from "../../../../service/ProjectPostService";
+import { useNavigate } from "react-router-dom";
 
 
 interface ProjectCardProps {
@@ -27,7 +26,7 @@ export function ProjectCard({ projectPost, onRemove }: ProjectCardProps) {
     const [loading, setLoading] = useState<boolean>(false);
     const user = useUserSelector(state => state.authSlice.user);
 
-
+    const navigate = useNavigate();
 
     const { projectDTO, positions } = projectPost;
 
@@ -42,12 +41,8 @@ export function ProjectCard({ projectPost, onRemove }: ProjectCardProps) {
             })
     }, [])
 
-
-    const [modalOpen, setModalOpen] = useState<boolean>(false);
-
     const [sentRequest, setSentRequest] = useState<boolean>(false);
     const [archived, setArchived] = useState<boolean>(false);
-
 
     const [isOwner, setIsOwner] = useState<boolean>(false);
     useEffect(() => {
@@ -153,22 +148,12 @@ export function ProjectCard({ projectPost, onRemove }: ProjectCardProps) {
                     </div>
 
                     <button
-                        onClick={() => setModalOpen(true)}
+                        onClick={() => navigate(`/post/${projectPost.id}`)}
                         className="inline-flex items-center gap-2 cursor-pointer bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg font-medium transition-colors shadow-sm">
                         <span>Read More</span>
                     </button>
 
-                    {modalOpen && <ReadMoreModal
-                        onClose={() => setModalOpen(false)}
-                        open={modalOpen}
-                        archived={archived}
-                        loading={loading}
-                        sentRequest={sentRequest}
-                        projectPost={projectPost}
-                        members={members}
-                        onArchiveClick={() => handleAddToArchive(projectPost.id)}
-                        onRequestToJoin={() => handleRequestToJoin(projectDTO.id)} />}
-
+                    
                 </div>
             </div>
         </ProjectCardProvider>

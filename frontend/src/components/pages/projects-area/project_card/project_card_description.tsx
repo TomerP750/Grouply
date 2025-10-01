@@ -1,4 +1,4 @@
-import { BiCheck, BiDotsVertical } from "react-icons/bi";
+import { BiCheck, BiDotsVertical, BiGroup } from "react-icons/bi";
 import { MdBookmarkAdd } from "react-icons/md";
 import type { ProjectPostDTO } from "../../../../dtos/models_dtos/ProjectPostDTO";
 import { useState, useEffect } from "react";
@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { useUserSelector } from "../../../../redux/hooks";
 import projectMemberService from "../../../../service/ProjectMemberService";
 import './project_card_css.css';
+import { toTitleCase } from "../../../../util/to_title";
 
 interface ProjectCardDescriptionProps {
 
@@ -15,13 +16,12 @@ interface ProjectCardDescriptionProps {
     sentRequest: boolean
     onRequestToJoin: () => void;
     onArchiveClick: () => void;
-    inReadMore?: boolean
     onEdit: () => void;
     onDelete: () => void;
 
 }
 
-export function ProjectCardDescription({ loading, projectPost, onArchiveClick, onRequestToJoin, onEdit, onDelete, archived, sentRequest, inReadMore }: ProjectCardDescriptionProps) {
+export function ProjectCardDescription({ loading, projectPost, onArchiveClick, onRequestToJoin, onEdit, onDelete, archived, sentRequest}: ProjectCardDescriptionProps) {
 
 
     const [isOwner, setIsOwner] = useState<boolean>(false);
@@ -68,81 +68,6 @@ export function ProjectCardDescription({ loading, projectPost, onArchiveClick, o
 
     }
 
-    if (inReadMore) {
-        return (
-            <div className="flex flex-col flex-grow w-full px-6 py-6 gap-8">
-                {/* Header */}
-                <div className="flex w-full justify-between items-center">
-                    <div className="flex items-center gap-3 flex-wrap">
-                        <h1 className="text-3xl md:text-5xl font-bold text-gray-900 dark:text-white">
-                            {title}
-                        </h1>
-
-                        {isMember && (
-                            <span className="text-xs md:text-sm text-white bg-gradient-to-br from-teal-900 via-teal-800 to-teal-600  px-3 py-1 rounded-full">
-                                {isOwner ? getMemberTypeTitle(1) : getMemberTypeTitle(2)}
-                            </span>
-                        )}
-                    </div>
-
-                    {!isMember && (
-                        <button
-                            disabled={loading}
-                            onClick={onArchiveClick}
-                            title={archived ? "Remove from archive" : "Add to archive"}
-                            className={` 
-                                inline-flex items-center justify-center rounded-full p-2
-                            transition-colors hover:bg-slate-100 dark:hover:bg-slate-800
-                            disabled:cursor-not-allowed
-                            ${archived ? "text-yellow-500" : "text-slate-500"}
-                            `}
-                        >
-                            <MdBookmarkAdd size={28} />
-                        </button>
-                    )}
-                </div>
-
-                {/* Description */}
-                <div className="space-y-4 max-w-3xl">
-                    <p className="text-gray-700 dark:text-gray-300">{description}</p>
-                    <p className="text-gray-700 dark:text-gray-300">
-                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Repudiandae asperiores voluptatum unde? Dolore praesentium rerum, non omnis similique qui temporibus, in ea cupiditate magni maxime quae, accusamus dolorem illum doloremque?
-                    </p>
-                    <p className="text-gray-700 dark:text-gray-300">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Repudiandae asperiores voluptatum unde? Dolore praesentium rerum, non omnis similique qui temporibus, in ea cupiditate magni maxime quae, accusamus dolorem illum doloremque?
-                    </p>
-                </div>
-
-                {/* Positions */}
-                <div className="flex flex-col w-full gap-4 items-center">
-                    {!isMember &&
-                        positions.length > 0 &&
-                        positions.map((p) => (
-                            <div
-                                key={p.id}
-                                className="flex justify-between items-center w-full sm:w-2/3 rounded-lg border border-slate-200 dark:border-slate-700 px-4 py-2"
-                            >
-                                <span className="text-gray-800 dark:text-gray-200">
-                                    {p.position}
-                                </span>
-
-                                <button
-                                    disabled={loading}
-                                    onClick={onRequestToJoin}
-                                    className={`cursor-pointer text-sm font-medium px-3 py-1.5 rounded-md transition-colors ${sentRequest
-                                        ? "bg-green-600 text-white hover:bg-green-500"
-                                        : "bg-blue-600 text-white hover:bg-blue-500"}`}
-                                >
-                                    {sentRequest ? <BiCheck size={18} /> : "Request To Join"}
-                                </button>
-                            </div>
-                        ))}
-                </div>
-            </div>
-        );
-
-    }
-
     return (
         <div className="flex flex-col flex-grow w-full px-6 py-4 gap-2">
             <div className="flex w-full justify-between items-center">
@@ -151,6 +76,7 @@ export function ProjectCardDescription({ loading, projectPost, onArchiveClick, o
                     <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl tracking-tight">{title}</h1>
                     <div className="flex justify-between items-center w-full">
                         {isMember && <span className="text-xs bg-slate-500 px-3 py-1 rounded-full">{isOwner ? getMemberTypeTitle(1) : getMemberTypeTitle(2)}</span>}
+                        
                         {/* OWNER CRUD BUTTONS MENU */}
                         {isOwner
                             &&
@@ -195,7 +121,10 @@ export function ProjectCardDescription({ loading, projectPost, onArchiveClick, o
 
                 {!isMember && positions.length > 0 && positions.map(p => {
                     return <div key={p.id} className="flex justify-between items-center w-full">
-                        <p>{p.position}</p>
+                        <p className="inline-flex items-center gap-2 text-teal-300">
+                            <BiGroup size={20}/> 
+                            {toTitleCase(p.position)}
+                        </p>
                         <button
                             disabled={loading}
                             onClick={onRequestToJoin}

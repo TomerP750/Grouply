@@ -3,6 +3,7 @@ import { BiTask } from "react-icons/bi";
 import { FaHome, FaInfo } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import type { JwtUser } from "../../../redux/AuthSlice";
+import { MdDashboard } from "react-icons/md";
 
 const linkClasses = ({ isActive }: { isActive: boolean }) =>
   [
@@ -41,6 +42,13 @@ export function NavbarCenter({ user }: NavbarCenterProps) {
           <NavLink to="/about" className={linkClasses}>
             <BiTask size={22} />
             <span className="text-sm">Projects</span>
+          </NavLink>
+        </li>
+
+        <li>
+          <NavLink to="/about" className={linkClasses}>
+            <MdDashboard size={22} />
+            <span className="text-sm">Dashboard</span>
           </NavLink>
         </li>
 

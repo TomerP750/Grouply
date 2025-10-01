@@ -7,6 +7,8 @@ import { SignUpWizard } from "../pages/authentication/signup-wizard/SignUpWizard
 import { SearchProjectsPage } from "../pages/projects-area/SearchProjectsPage";
 import { ProfilePage } from "../pages/profile/profile_page";
 import { useUserSelector } from "../../redux/hooks";
+import { PostPage } from "../pages/projects-area/project_info_page/post_page";
+import { Dashboard } from "../pages/dashboard/dashboard";
 
 
 export function Routing() {
@@ -22,7 +24,9 @@ export function Routing() {
                 <Route path="/signup" element={<SignUpWizard/>}/>
 
                 <Route path="/profile/:id" element={<ProfilePage/>}/>
-
+                <Route path="/dashboard/:id" element={<Dashboard/>}/>
+                
+                <Route path="/post/:id" element={<PostPage/>}/>
                 <Route path="/search-projects" element={<SearchProjectsPage/>}/>
 
 

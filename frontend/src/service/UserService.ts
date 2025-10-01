@@ -8,6 +8,10 @@ class UserService {
         return (await axios.get(`${BASE_API}/user/all?page=${page}&size=${size}`)).data
     }
 
+    async getOneUser(id: number) {
+        return (await axios.get(`${BASE_API}/user/${id}`)).data
+    }
+
 }
 
 const userService = new UserService();
