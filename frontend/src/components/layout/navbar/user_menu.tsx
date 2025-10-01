@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { logout, type JwtUser } from '../../../redux/AuthSlice';
 import './user_menu_styles.css';
 import { HiOutlineQuestionMarkCircle, HiQuestionMarkCircle } from 'react-icons/hi';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { MdDashboard } from 'react-icons/md';
 
 interface UserMenuProps {
@@ -19,9 +19,11 @@ export function UserMenu({ user }: UserMenuProps) {
     const fullName = firstName + " " + lastName;
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const handleLogout = () => {
         dispatch(logout());
+        navigate("/");
     };
 
     return (

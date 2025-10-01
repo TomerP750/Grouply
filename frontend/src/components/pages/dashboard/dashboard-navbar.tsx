@@ -3,12 +3,12 @@ import { FaHome } from "react-icons/fa";
 import { NavbarRight } from "../../layout/navbar/NavbarRight";
 import type { JwtUser } from "../../../redux/AuthSlice";
 import logo from "../../../assets/logolight.png";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 
 const baseClasses =
     "cursor-pointer text-gray-300 w-full p-2 inline-flex items-center gap-2 rounded-md transition";
-const activeClasses = "bg-gray-950 text-white font-bolder";
+const activeClasses = "underline decoration-teal-500 decoration-2 underline-offset-10 text-white font-bolder";
 const inactiveClasses = "hover:bg-slate-800/50 text-gray-300";
 
 interface DashboardNavbarProps {
@@ -16,10 +16,13 @@ interface DashboardNavbarProps {
 }
 
 export function DashboardNavbar({ user }: DashboardNavbarProps) {
+
     return (
         <div className="h-30 flex justify-between gap-5 items-center px-10 text-white">
 
-            <img src={logo} alt="logo" className="w-30 aspect-square object-fit object-center" />
+            <NavLink to={"/"}>
+                <img src={logo} alt="logo" className="w-30 aspect-square object-fit object-center" />
+            </NavLink>
 
             <ul className="flex items-center gap-3 w-full p-5 font-medium text-sm tracking-wider">
 

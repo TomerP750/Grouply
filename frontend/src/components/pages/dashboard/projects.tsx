@@ -3,7 +3,7 @@
 
 export function ProjectsDashboard() {
     return (
-        <div>
+        <div className="text-white">
             
         </div>
     )
