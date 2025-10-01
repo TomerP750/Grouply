@@ -1,21 +1,27 @@
+import { useEffect, useState } from "react";
 import { AiOutlineTeam } from "react-icons/ai";
-import { NavbarRight } from "./NavbarRight";
 import { NavLink } from "react-router-dom";
-import './Navbar.css';
-import { useEffect, useMemo, useState, type ChangeEvent } from "react";
+import { toast } from "react-toastify";
+import type { UserDTO } from "../../../dtos/models_dtos/UserDTO";
 import { useUserSelector } from "../../../redux/hooks";
 import userService from "../../../service/UserService";
-import type { UserDTO } from "../../../dtos/models_dtos/UserDTO";
-import { toast } from "react-toastify";
-import type { Page } from "../../../util/Page";
+import { NavbarCenter } from "./navbar-center";
+import './Navbar.css';
+import { NavbarRight } from "./NavbarRight";
+import { SearchBar } from "./search_bar";
+import logoDark from "../../../assets/logodark.png";
+import logoLight from "../../../assets/logolight.png";
+import { useTheme } from "../../../context/ThemeContext";
 
 
 export function Navbar() {
 
+    const { theme } = useTheme();
 
     const [query, setQuery] = useState<string>('');
     const [users, setUsers] = useState<UserDTO[]>([]);
-   
+
+
 
     const user = useUserSelector(state => state.authSlice.user);
 
@@ -48,22 +54,21 @@ export function Navbar() {
         <nav
             className={`hidden Navbar w-full h-30 md:flex justify-between items-center px-5 sm:px-10 text-black dark:text-white `}>
             {/* Left */}
-            <div className="flex items-center gap-4 w-1/3">
-                <NavLink to={"/"} className="cursor-pointer"><AiOutlineTeam size={50} /></NavLink>
+            <div className="flex items-center gap-10 w-1/2">
+                <div className="flex items-center gap-2 w-full">
+                    <NavLink to={"/"}> <img src={theme === "dark" ? logoLight : logoDark}
+                        alt="logo"
+                        className="cursor-pointer w-30 aspect-square object-fit object-center" /></NavLink>
 
-                {/* Search bar */}
-
-                <input type="search"
-                    className="text-black dark:text-white  text-sm
-                rounded-full px-3 py-2 bg-gray-300 dark:bg-slate-800 
-                hidden lg:block
-                w-full focus:ring focus:ring-teal-600 focus:outline-none "
-                    onChange={(e) => setQuery(e.target.value)}
-                    placeholder="search for users or projects..." />
+                    {/* Search bar */}
+                    {user && <SearchBar query={query} setQuery={setQuery} />}
+                </div>
+                <NavbarCenter />
             </div>
 
 
-            <NavbarRight />
+
+            <NavbarRight user={user} />
         </nav>
     )
 }

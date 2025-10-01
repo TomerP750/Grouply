@@ -46,7 +46,7 @@ export function SearchProjectsPage() {
 
 
     const handleAdd = (newPost: ProjectPostDTO) => {
-        setPosts(prev => [...prev, newPost]); 
+        setPosts(prev => [...prev, newPost]);
     };
 
 
@@ -55,12 +55,11 @@ export function SearchProjectsPage() {
     }
 
     return (
-        <main className="min-h-screen bg-gray-200 dark:bg-slate-950 pb-10">
+        <main className="min-h-screen bg-gray-200 dark:bg-gradient-to-r dark:from-slate-900 dark:via-teal-950 dark:to-stone-900 pb-10">
 
             <Navbar />
 
-
-            {/* <div className="flex flex-col items-center w-full mt-10"> */}
+            {/* FILTERS + ADD POST BUTTON */}
             <div className="flex items-center px-10">
                 <div className="flex-1"><Filters /></div>
                 <button
@@ -72,10 +71,12 @@ export function SearchProjectsPage() {
                 {modalOpen && <CreatePostForm open={modalOpen} onClose={() => setModalOpen(false)} onAdd={(newPost) => handleAdd(newPost)} />}
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 justify-items-center gap-y-10 py-15">
-                {posts && posts.map(p => <ProjectCard key={p.id} projectPost={p} onRemove={() => handleRemove(p.id)} />)}
-
-            </div>
+            {/* <div className="flex w-full items-start"> */}
+                {/* POSTS */}
+                <div className="shadow-4xl flex-1 shadow-white grid grid-cols-1 px-5 sm:px-0 justify-items-center gap-y-10 py-15">
+                    {posts && posts.map(p => <ProjectCard key={p.id} projectPost={p} onRemove={() => handleRemove(p.id)} />)}
+                </div>
+                {/* <div className="hidden lg:block  bg-blue-500 w-70 h-90 fixed right-15"></div> */}
             {/* </div> */}
 
 

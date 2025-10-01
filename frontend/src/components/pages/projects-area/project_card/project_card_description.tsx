@@ -1,10 +1,11 @@
-import { BiCheck } from "react-icons/bi";
+import { BiCheck, BiDotsVertical } from "react-icons/bi";
 import { MdBookmarkAdd } from "react-icons/md";
 import type { ProjectPostDTO } from "../../../../dtos/models_dtos/ProjectPostDTO";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { useUserSelector } from "../../../../redux/hooks";
 import projectMemberService from "../../../../service/ProjectMemberService";
+import './project_card_css.css';
 
 interface ProjectCardDescriptionProps {
 
@@ -15,15 +16,18 @@ interface ProjectCardDescriptionProps {
     onRequestToJoin: () => void;
     onArchiveClick: () => void;
     inReadMore?: boolean
+    onEdit: () => void;
+    onDelete: () => void;
 
 }
 
-export function ProjectCardDescription({ loading, projectPost, onArchiveClick, onRequestToJoin, archived, sentRequest, inReadMore }: ProjectCardDescriptionProps) {
+export function ProjectCardDescription({ loading, projectPost, onArchiveClick, onRequestToJoin, onEdit, onDelete, archived, sentRequest, inReadMore }: ProjectCardDescriptionProps) {
 
 
     const [isOwner, setIsOwner] = useState<boolean>(false);
     const [isMember, setIsMember] = useState<boolean>(false);
     const user = useUserSelector(state => state.authSlice.user);
+    const [menuOpen, setMenuOpen] = useState<boolean>(false);
 
     useEffect(() => {
         if (user) {
@@ -126,13 +130,13 @@ export function ProjectCardDescription({ loading, projectPost, onArchiveClick, o
                                     disabled={loading}
                                     onClick={onRequestToJoin}
                                     className={`cursor-pointer text-sm font-medium px-3 py-1.5 rounded-md transition-colors ${sentRequest
-                                            ? "bg-green-600 text-white hover:bg-green-500"
-                                            : "bg-blue-600 text-white hover:bg-blue-500"}`}
+                                        ? "bg-green-600 text-white hover:bg-green-500"
+                                        : "bg-blue-600 text-white hover:bg-blue-500"}`}
                                 >
                                     {sentRequest ? <BiCheck size={18} /> : "Request To Join"}
                                 </button>
                             </div>
-                        ))} 
+                        ))}
                 </div>
             </div>
         );
@@ -142,10 +146,33 @@ export function ProjectCardDescription({ loading, projectPost, onArchiveClick, o
     return (
         <div className="flex flex-col flex-grow w-full px-6 py-4 gap-2">
             <div className="flex w-full justify-between items-center">
+                {/* Title + isowner */}
+                <div className="flex flex-col-reverse items-start sm:flex justify-between w-full gap-3 font-bold text-2xl text-gray-900 dark:text-white">
+                    <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl">{title}</h1>
+                    <div className="flex justify-between items-center w-full">
+                        {isMember && <span className="text-xs bg-slate-500 px-3 py-1 rounded-full">{isOwner ? getMemberTypeTitle(1) : getMemberTypeTitle(2)}</span>}
+                        {/* OWNER CRUD BUTTONS MENU */}
+                        {isOwner
+                            &&
+                            <div className="relative">
+                                <button
+                                    onClick={() => setMenuOpen(!menuOpen)}
+                                    className="cursor-pointer relative">
+                                    <BiDotsVertical size={25} />
+                                    {menuOpen &&
+                                        <div className="crud-buttons absolute right-0 -bottom-18 font-light dark:bg-slate-900 bg-white px-2 w-30 py-2 gap-1 dark:text-white flex flex-col items-center text-base">
+                                            <button 
+                                            onClick={onEdit}
+                                            className="cursor-pointer hover:bg-slate-700 w-full">Edit</button>
+                                            <button 
+                                            onClick={onDelete}
+                                            className="cursor-pointer hover:bg-slate-700 w-full">Delete</button>
+                                        </div>}
+                                </button>
+                            </div>}
 
-                <div className="flex items-center gap-3 font-bold text-2xl text-gray-900 dark:text-white">
-                    <p>{title}</p>
-                    {isMember && <span className="text-xs bg-slate-500 px-3 py-1 rounded-full">{isOwner ? getMemberTypeTitle(1) : getMemberTypeTitle(2)}</span>}
+                    </div>
+
                 </div>
 
                 {!isMember && <button

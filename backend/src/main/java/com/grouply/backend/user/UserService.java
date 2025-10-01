@@ -41,4 +41,8 @@ public class UserService implements IUserService {
         log.info("getting user");
         return userRepository.findById(id).orElseThrow(()->new NoSuchElementException("User not found"));
     }
+
+    public User findByUserName(String username) {
+        return userRepository.findByUsername(username).orElseThrow(() -> new NoSuchElementException("User not found"));
+    }
 }

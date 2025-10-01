@@ -12,11 +12,13 @@
 //
 //    @Override
 //    public void registerStompEndpoints(StompEndpointRegistry registry) {
-//
+//        registry.addEndpoint("/ws");
 //    }
 //
 //    @Override
-//    public void configureMessageBroker(MessageBrokerRegistry registry) {
-//
+//    public void configureMessageBroker(MessageBrokerRegistry config) {
+//        config.enableSimpleBroker("/topic", "/queue");
+//        config.setApplicationDestinationPrefixes("/app");
+//        config.setUserDestinationPrefix("/user");
 //    }
 //}

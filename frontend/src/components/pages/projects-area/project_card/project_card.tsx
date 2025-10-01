@@ -106,19 +106,26 @@ export function ProjectCard({ projectPost, onRemove }: ProjectCardProps) {
     };
 
     const handleDeletePost = (id: number) => {
-        projectPostService.deletePost(id)
-            .then(() => {
-                toast.success("Post deleted");
-                onRemove(id);
-            })
-            .catch(err => {
-                toast.error(err.response.data);
-            })
+        const answer = window.confirm(`Are you sure you want to delete project: ${projectPost.title}?`);
+        if (answer) {
+            projectPostService.deletePost(id)
+                .then(() => {
+                    toast.success("Post deleted");
+                    onRemove(id);
+                })
+                .catch(err => {
+                    toast.error(err.response.data);
+                })
+        }
+    }
+
+    const handleEdit = () => {
+
     }
 
     return (
         <ProjectCardProvider projectPost={projectPost}>
-            <div className="w-115 min-h-100 bg-gray-100 dark:bg-slate-800 dark:text-white rounded-2xl shadow-lg overflow-hidden flex flex-col">
+            <div className="w-full sm:w-1/2 min-h-100 bg-gray-100 dark:bg-slate-800 dark:text-white rounded-2xl shadow-lg overflow-hidden flex flex-col hover:shadow-2xl hover:shadow-teal-800/30 transition-shadow">
                 {/* Image placeholder */}
                 <img src={defaultImage} className="h-[40%] object-center object-cover bg-gradient-to-r from-blue-600 to-blue-500 w-full" />
 
@@ -130,6 +137,8 @@ export function ProjectCard({ projectPost, onRemove }: ProjectCardProps) {
                     sentRequest={sentRequest}
                     onRequestToJoin={() => handleRequestToJoin(projectDTO.id)}
                     onArchiveClick={() => handleAddToArchive(projectPost.id)}
+                    onEdit={handleEdit}
+                    onDelete={() => handleDeletePost(projectPost.id)}
                 />
 
                 {/* Actions + some users*/}
@@ -143,26 +152,11 @@ export function ProjectCard({ projectPost, onRemove }: ProjectCardProps) {
                         {members.length > 5 && <span className="ml-2.5">+{members.length - 5}</span>}
                     </div>
 
-                    <div className="flex gap-3">
-                        {isOwner && <div className="flex items-center gap-2">
-
-                            <button className="cursor-pointer">
-                                <BiEdit size={25} />
-                            </button>
-
-                            <button
-                                onClick={() => handleDeletePost(projectPost.id)}
-                                className="cursor-pointer">
-                                <BiTrash size={25} />
-                            </button>
-
-                        </div>}
-                        <button
-                            onClick={() => setModalOpen(true)}
-                            className="inline-flex items-center gap-2 cursor-pointer bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg font-medium transition-colors shadow-sm">
-                            <span>Read More</span>
-                        </button>
-                    </div>
+                    <button
+                        onClick={() => setModalOpen(true)}
+                        className="inline-flex items-center gap-2 cursor-pointer bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg font-medium transition-colors shadow-sm">
+                        <span>Read More</span>
+                    </button>
 
                     {modalOpen && <ReadMoreModal
                         onClose={() => setModalOpen(false)}

@@ -11,6 +11,19 @@ import { useUser, useUserSelector } from "../../../redux/hooks";
 import projectPostService from "../../../service/ProjectPostService";
 import type { ProjectPostDTO } from "../../../dtos/models_dtos/ProjectPostDTO";
 
+
+
+
+const labelCls = "text-sm font-medium text-slate-700 dark:text-slate-200";
+const inputBase =
+    "w-full rounded-md border bg-white px-3 py-2 text-sm " +
+    "text-slate-900 outline-none transition " +
+    "dark:bg-slate-900 dark:text-slate-100 " +
+    "border-slate-300 dark:border-slate-600 " +
+    "focus:border-teal-500 focus:ring-2 focus:ring-teal-500/60 focus:ring-offset-0";
+const errorCls = "text-xs text-red-500 mt-1";
+
+
 interface CreatePostFormProps {
   open: boolean;
   onClose: () => void;
@@ -20,6 +33,7 @@ interface CreatePostFormProps {
 export function CreatePostForm({ open, onClose, onAdd }: CreatePostFormProps) {
   const [ownedProjects, setOwnedProjects] = useState<ProjectDTO[]>([]);
   const [loadingProjects, setLoadingProjects] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [submitting, setSubmitting] = useState(false);
 
   // store a flat list of enum values; each click adds one entry
@@ -34,7 +48,7 @@ export function CreatePostForm({ open, onClose, onAdd }: CreatePostFormProps) {
       projectService
         .getUserOwnedProjects()
         .then((res) => setOwnedProjects(res))
-        .catch((err) => toast.error(err?.response?.data ?? "Failed to load projects"))
+        .catch((err) => toast.error(err?.response?.data))
         .finally(() => setLoadingProjects(false));
     }, [open]);
   
@@ -42,6 +56,8 @@ export function CreatePostForm({ open, onClose, onAdd }: CreatePostFormProps) {
   const { register, handleSubmit, reset, formState: { errors } } = useForm<CreateProjectPostDTO>();
 
   const sendCreation = (data: CreateProjectPostDTO) => {
+
+    setLoading(true);
 
     const dataToSend: CreateProjectPostDTO = new CreateProjectPostDTO(data.title, data.description, positions, data.projectId)
 
@@ -53,7 +69,9 @@ export function CreatePostForm({ open, onClose, onAdd }: CreatePostFormProps) {
       })
       .catch(err => {
         toast.error(err.response.data);
-        console.log(err.response.data);
+      })
+      .finally(() => {
+        setLoading(false);
       })
 
   };
@@ -67,14 +85,7 @@ export function CreatePostForm({ open, onClose, onAdd }: CreatePostFormProps) {
     setPositions(prev => prev.filter((_, i) => i !== idx));
   };
 
-  const labelCls = "text-sm font-medium text-slate-700 dark:text-slate-200";
-  const inputBase =
-    "w-full rounded-md border bg-white px-3 py-2 text-sm " +
-    "text-slate-900 outline-none transition " +
-    "dark:bg-slate-900 dark:text-slate-100 " +
-    "border-slate-300 dark:border-slate-600 " +
-    "focus:border-teal-500 focus:ring-2 focus:ring-teal-500/60 focus:ring-offset-0";
-  const errorCls = "text-xs text-red-500 mt-1";
+  
 
   return (
     <Modal
@@ -153,7 +164,7 @@ export function CreatePostForm({ open, onClose, onAdd }: CreatePostFormProps) {
             <div className="flex flex-col gap-2 mt-4">
               <span className={labelCls}>Positions Needed</span>
 
-              <div className="flex gap-2">
+              <div className="flex gap-2 w-1/2">
                 {/* Position select */}
                 <select
                   value={selectedPosition}
@@ -171,7 +182,7 @@ export function CreatePostForm({ open, onClose, onAdd }: CreatePostFormProps) {
                 <button
                   type="button"
                   onClick={addPosition}
-                  className="rounded-md bg-teal-600 text-white px-3 py-2 text-sm hover:brightness-110"
+                  className="cursor-pointer rounded-md bg-teal-600 text-white px-3 py-2 text-sm hover:bg-teal-500"
                 >
                   Add
                 </button>
@@ -212,10 +223,10 @@ export function CreatePostForm({ open, onClose, onAdd }: CreatePostFormProps) {
           </button>
           <button
             type="submit"
-            disabled={submitting || loadingProjects}
+            disabled={loading || loadingProjects}
             className="inline-flex items-center justify-center rounded-md bg-teal-600 text-white px-4 py-2 text-sm font-medium hover:brightness-110 disabled:opacity-60 cursor-pointer"
           >
-            {submitting ? <BiLoaderAlt className="animate-spin" /> : "Create Post"}
+            {loading ? <BiLoaderAlt size={20} className="animate-spin" /> : "Create Post"}
           </button>
         </div>
       </form>
