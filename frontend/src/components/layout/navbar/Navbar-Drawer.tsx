@@ -1,11 +1,11 @@
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
-import { BiMoon, BiSun, BiX, BiUser, BiCog, BiLogOut } from "react-icons/bi";
+import { BiMoon, BiSun, BiX, BiUser, BiCog, BiLogOut, BiTask } from "react-icons/bi";
 import { useTheme } from "../../../context/ThemeContext";
 import { useDispatch } from "react-redux";
 import { logout, type JwtUser } from "../../../redux/AuthSlice";
 import { Avatar } from "../../elements/Avatar";
 import { useNavigate } from "react-router-dom";
-import type { IconType } from "react-icons";
+import './drawerStyle.css';
 
 interface NavbarDrawerProps {
     user: JwtUser | null;
@@ -59,7 +59,7 @@ export function NavbarDrawer({ onClose, open, user }: NavbarDrawerProps) {
                 ref={panelRef}
                 role="dialog"
                 aria-modal="true"
-                className={`fixed right-0 top-0 z-[70] h-full w-[22rem] max-w-[90vw]
+                className={`drawer fixed right-0 top-0 z-[70] h-full w-[22rem] max-w-[90vw]
                     bg-white dark:bg-slate-900
                     shadow-2xl border-l border-slate-200/70 dark:border-slate-800
                     transition-transform duration-300
@@ -86,6 +86,9 @@ export function NavbarDrawer({ onClose, open, user }: NavbarDrawerProps) {
                 <nav className="p-2">
                     <DrawerButton label="Profile" icon={<BiUser size={20} />} onClick={() => handleNavItemClick(`/profile/${user?.id}`)} />
                     <DrawerButton label="Settings" icon={<BiCog size={20} />} onClick={() => handleNavItemClick("/settings")} />
+                    <DrawerButton label="Manage your projects" icon={<BiTask size={20} />} onClick={() => handleNavItemClick("/settings")} />
+                    
+                    
                     <hr className="my-3 border-slate-200 dark:border-slate-800" />
                     <DrawerButton
                         label="Sign out"

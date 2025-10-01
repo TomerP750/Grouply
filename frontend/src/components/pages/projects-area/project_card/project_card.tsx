@@ -125,7 +125,7 @@ export function ProjectCard({ projectPost, onRemove }: ProjectCardProps) {
 
     return (
         <ProjectCardProvider projectPost={projectPost}>
-            <div className="w-full sm:w-1/2 min-h-100 bg-gray-100 dark:bg-slate-800 dark:text-white rounded-2xl shadow-lg overflow-hidden flex flex-col hover:shadow-2xl hover:shadow-teal-800/30 transition-shadow">
+            <div className="w-full sm:w-3/4 ml-0 lg:ml-10 min-h-100 bg-gray-100 dark:bg-slate-800 dark:text-white rounded-2xl shadow-lg overflow-hidden flex flex-col hover:shadow-2xl hover:shadow-teal-800/30 transition-shadow">
                 {/* Image placeholder */}
                 <img src={defaultImage} className="h-[40%] object-center object-cover bg-gradient-to-r from-blue-600 to-blue-500 w-full" />
 

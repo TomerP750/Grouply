@@ -23,7 +23,7 @@ export function ProfileBanner({ bannerUrl, avatarSize, user }: ProfileBannerProp
         style={{ width: avatarSize, height: avatarSize }}
       >
         <Avatar
-          size={avatarSize}
+          size={20}
           className="ring-4 ring-white dark:ring-slate-900 rounded-full"
           user={user}
         />
