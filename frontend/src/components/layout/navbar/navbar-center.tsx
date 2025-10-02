@@ -39,14 +39,14 @@ export function NavbarCenter({ user }: NavbarCenterProps) {
         </li>
 
         <li>
-          <NavLink to="/about" className={linkClasses}>
+          <NavLink to={`/dashboard/${user?.id}/projects`} className={linkClasses}>
             <BiTask size={22} />
             <span className="text-sm">Projects</span>
           </NavLink>
         </li>
 
         <li>
-          <NavLink to="/about" className={linkClasses}>
+          <NavLink to={`/dashboard/${user?.id}`} className={linkClasses}>
             <MdDashboard size={22} />
             <span className="text-sm">Dashboard</span>
           </NavLink>

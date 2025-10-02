@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { useUserSelector } from "../../../../redux/hooks";
 import projectMemberService from "../../../../service/ProjectMemberService";
 import './project_card_css.css';
-import { toTitleCase } from "../../../../util/to_title";
+import { toTitleCase } from "../../../../util/util_functions";
 
 interface ProjectCardDescriptionProps {
 

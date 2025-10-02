@@ -1,8 +1,7 @@
 import { useUserSelector } from "../../redux/hooks";
 import { Footer } from "./footer/Footer";
-import { MessageBox } from "./message-box/message_box";
+import { MessageDock } from "./message-box/message_dock";
 import { BottomNav } from "./navbar/BottomNav";
-import { Navbar } from "./navbar/Navbar";
 import { Routing } from "./Routing";
 
 export function Layout() {
@@ -13,7 +12,7 @@ export function Layout() {
         <div className="">
             {/* <Navbar/> */}
             <BottomNav/>
-            {user && <MessageBox/>}
+            {user && <MessageDock/>}
             <Routing/>
             <Footer/>
         </div>

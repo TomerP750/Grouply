@@ -12,3 +12,13 @@
 .crud-buttons {
     animation: bounceUp 0.2s ease forwards;
 }
+
+.crud-buttons::after {
+  content: "";
+  position: absolute;
+  top: -8px; right: 12px;
+  border-width: 8px;
+  border-style: solid;
+  border-color: transparent transparent white transparent;
+  
+}
