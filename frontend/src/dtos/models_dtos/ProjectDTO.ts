@@ -1,5 +1,4 @@
 import type { ProjectStatus } from "../enums/ProjectStatus"
-import type { ProjectMemberDTO } from "./ProjectMemberDTO"
 
 
 

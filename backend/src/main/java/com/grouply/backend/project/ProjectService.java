@@ -11,6 +11,8 @@ import com.grouply.backend.project_member.ProjectMember;
 import com.grouply.backend.project_member.ProjectMemberRepository;
 import com.grouply.backend.project_member.ProjectPosition;
 import com.grouply.backend.project_member.ProjectRole;
+import com.grouply.backend.project_post.ProjectPost;
+import com.grouply.backend.project_post.ProjectPostRepository;
 import com.grouply.backend.user.User;
 import com.grouply.backend.user.UserRepository;
 import com.grouply.backend.util.EntityToDtoMapper;
@@ -34,6 +36,7 @@ public class ProjectService implements IProjectService {
     private final ProjectMemberRepository projectMemberRepository;
     private final UserRepository userRepository;
     private final FinishedProjectRepository finishedProjectRepository;
+    private final ProjectPostRepository projectPostRepository;
 
 
 
@@ -111,6 +114,8 @@ public class ProjectService implements IProjectService {
             throw new UnauthorizedException("You are not allowed to delete this project");
         }
 
+        ProjectPost post = projectPostRepository.findByProjectId(projectId);
+        projectPostRepository.deleteById(post.getId());
         projectRepository.deleteById(projectId);
 
     }

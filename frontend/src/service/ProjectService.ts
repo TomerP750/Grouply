@@ -8,6 +8,10 @@ class ProjectService {
         return (await axios.get(`${BASE_API}/project/owned`)).data
     }
 
+    async deleteProject(id: number) {
+        return (await axios.delete(`${BASE_API}/project/delete/${id}`))
+    }
+
 }
 
 const projectService = new ProjectService();

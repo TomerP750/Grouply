@@ -45,6 +45,7 @@ export function ProjectCard({ projectPost, onRemove }: ProjectCardProps) {
     const [archived, setArchived] = useState<boolean>(false);
 
     const [isOwner, setIsOwner] = useState<boolean>(false);
+    
     useEffect(() => {
         if (user) {
             projectMemberService.isOwner(user.id, projectDTO.id)

@@ -10,7 +10,7 @@ import { useUserSelector } from "../../redux/hooks";
 import { PostPage } from "../pages/projects-area/project_info_page/post_page";
 import { Dashboard } from "../pages/dashboard/dashboard";
 import { Overview } from "../pages/dashboard/overview";
-import { ProjectsDashboard } from "../pages/dashboard/projects";
+import { ProjectsTable } from "../pages/dashboard/projects";
 
 
 export function Routing() {
@@ -28,7 +28,7 @@ export function Routing() {
                 <Route path="/profile/:id" element={<ProfilePage />} />
                 <Route path="/dashboard/:id" element={<Dashboard />}>
                     <Route index element={<Overview />} />
-                    <Route path="projects" element={<ProjectsDashboard />} />
+                    <Route path="projects" element={<ProjectsTable />} />
                 </Route>
 
                 <Route path="/post/:id" element={<PostPage />} />

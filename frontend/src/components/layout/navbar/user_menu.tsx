@@ -27,7 +27,7 @@ export function UserMenu({ user }: UserMenuProps) {
     };
 
     return (
-        <main className="user-menu gap-5 bg-slate-950 flex flex-col items-start py-5 px-4 absolute -bottom-82 right-2 w-85 min-h-64 dark:text-white rounded-2xl shadow-2xl">
+        <main className="z-1000 user-menu gap-5 bg-slate-950 flex flex-col items-start py-5 px-4 absolute -bottom-82 right-2 w-85 min-h-64 dark:text-white rounded-2xl shadow-2xl">
 
             <section className='flex flex-col w-full'>
                 <p>{fullName}</p>
