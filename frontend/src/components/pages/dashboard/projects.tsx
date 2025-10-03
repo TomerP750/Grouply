@@ -15,6 +15,8 @@ import { toast } from "react-toastify";
 import { BiChevronLeft, BiChevronRight, BiLoaderAlt, BiPlus } from "react-icons/bi";
 import type { ProjectMemberDTO } from "../../../dtos/models_dtos/ProjectMemberDTO";
 import { Avatar } from "../../elements/Avatar";
+import projectMemberService from "../../../service/ProjectMemberService";
+import { fmtDate } from "../../../util/util_functions";
 
 
 function StatusBadge({ status }: { status: ProjectStatus }) {
@@ -33,29 +35,32 @@ function StatusBadge({ status }: { status: ProjectStatus }) {
     return <span className={`text-xs px-2 py-1 rounded-full font-medium ${styles}`}>{status}</span>;
 }
 
-function fmtDate(v: unknown) {
-    const d = v instanceof Date ? v : new Date(String(v));
-    return isNaN(d.getTime()) ? "-" : d.toLocaleDateString();
-}
 
 const ch = createColumnHelper<ProjectDTO>();
 
 export function ProjectsTable() {
+
     const [membersByProject, setMembersByProject] = useState<Record<number, ProjectMemberDTO[]>>({});
     const [rows, setRows] = useState<ProjectDTO[]>([]);
     const [loading, setLoading] = useState(true);
     const [sorting, setSorting] = useState<SortingState>([]);
     const [editingId, setEditingId] = useState<number | null>(null);
 
+    const [pageCount, setPageCount] = useState(0);
+    const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 10 });
+
     useEffect(() => {
         projectService
-            .getUserOwnedProjects()
+            .getUserOwnedProjects(pagination.pageIndex, pagination.pageSize)
             .then((res) => {
-                setRows(res);
+                setRows(res.content);
+                setPageCount(res.totalPages);
             })
             .catch((err) => toast.error(err?.response?.data ?? "Failed to load projects"))
             .finally(() => setLoading(false));
-    }, []);
+
+    }, [pagination.pageIndex, pagination.pageSize]);
+
 
     const handleEditProject = () => {
 
@@ -109,41 +114,52 @@ export function ProjectsTable() {
             id: "members",
             header: "Members",
             cell: ({ row }) => {
-                const list = membersByProject[row.original.id] ?? []; // ProjectMemberDTO[]
+                const list = membersByProject[row.original.id] ?? [];
+                const shown = list.slice(0, 5);
+                const extra = Math.max(0, list.length - 5);
+
                 return (
-                    <div className="flex items-center gap-2">
-                        <ul className="flex -space-x-2">
-                            {list.slice(0, 5).map((m) =>
-                                m.user.avatarUrl ? (
+                    <div className="flex items-center gap-2 min-w-[140px]"> {/* 👈 reserve width */}
+                        <div className="flex -space-x-2">
+                            {shown.map((m) =>
+                                m.user?.avatarUrl ? (
                                     <img
                                         key={m.id}
                                         src={m.user.avatarUrl}
                                         alt={m.user.username}
                                         title={m.user.username}
-                                        className="h-6 w-6 rounded-full ring-2 ring-white dark:ring-slate-900 object-cover"
+                                        className="h-6 w-6 rounded-full object-cover ring-2 ring-white dark:ring-slate-900"
                                     />
                                 ) : (
-                                    <Avatar user={m.user}/>
+                                    <Avatar key={m.id} size={25} />
                                 )
                             )}
-                        </ul>
-
+                            {extra > 0 && (
+                                <div
+                                    className="h-6 w-6 rounded-full bg-slate-200 dark:bg-slate-700 text-[10px]
+                                    flex items-center justify-center ring-2 ring-white dark:ring-slate-900"
+                                    title={`${extra} more`}
+                                >
+                                    +{extra}
+                                </div>
+                            )}
+                        </div>
                     </div>
                 );
             },
         }),
 
+
         ch.display({
             id: "actions",
             header: "Actions",
             cell: ({ row }) => (
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 font-medium">
                     <button
                         onClick={(e) => {
                             e.stopPropagation();
-                            console.log("edit", row.original.id);
                         }}
-                        className="rounded border px-2 py-1 text-xs hover:bg-slate-100 dark:hover:bg-slate-800"
+                        className="cursor-pointer rounded text-teal-300  px-2 py-1"
                     >
                         Edit
                     </button>
@@ -153,7 +169,7 @@ export function ProjectsTable() {
                             e.stopPropagation();
                             handleDeleteProject(row.original.id);
                         }}
-                        className="rounded border border-red-300 px-2 py-1 text-xs text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20"
+                        className="cursor-pointer rounded px-2 py-1  text-red-600 "
                     >
                         Delete
                     </button>
@@ -167,11 +183,12 @@ export function ProjectsTable() {
     const table = useReactTable({
         data: rows,
         columns,
-        state: { sorting },
+        state: { sorting, pagination },
         onSortingChange: setSorting,
+        onPaginationChange: setPagination,
         getCoreRowModel: getCoreRowModel(),
         getSortedRowModel: getSortedRowModel(),
-        getPaginationRowModel: getPaginationRowModel()
+        manualPagination: true
     });
 
     useEffect(() => {

@@ -1,3 +1,6 @@
+import type { JSX } from "react";
+import type { ProjectStatus } from "../dtos/enums/ProjectStatus";
+
 export function toTitleCase(str: string): string {
   if (!str) return "";
 
@@ -17,4 +20,11 @@ export function formatRelative(ts: number) {
   if (hrs < 24) return `${hrs}h`;
   const days = Math.round(hrs / 24);
   return `${days}d`;
+}
+
+
+
+export function fmtDate(v: unknown) {
+    const d = v instanceof Date ? v : new Date(String(v));
+    return isNaN(d.getTime()) ? "-" : d.toLocaleDateString();
 }

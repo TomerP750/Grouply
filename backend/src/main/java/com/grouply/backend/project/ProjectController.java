@@ -8,6 +8,7 @@ import com.grouply.backend.project.Dtos.UpdateProjectDTO;
 import com.grouply.backend.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -52,9 +53,12 @@ public class ProjectController {
 
 
     @GetMapping("/owned")
-    public List<ProjectDTO> getUserOwnedProjects(@AuthenticationPrincipal CustomUserDetails userDetails) {
+    public Page<ProjectDTO> getUserOwnedProjects(@AuthenticationPrincipal CustomUserDetails userDetails,
+                                                 @RequestParam(value = "pageIndex", defaultValue = "0") int pageIndex,
+                                                 @RequestParam(value = "size", defaultValue = "10") int size) {
+        PageRequest pageRequest = PageRequest.of(pageIndex, size);
         Long userId = userDetails.getId();
-        return projectService.getUserOwnedProjects(userId);
+        return projectService.getUserOwnedProjects(userId, pageRequest);
     }
 
 

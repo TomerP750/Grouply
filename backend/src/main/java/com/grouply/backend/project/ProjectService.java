@@ -133,11 +133,13 @@ public class ProjectService implements IProjectService {
     }
 
 
-    public List<ProjectDTO> getUserOwnedProjects(Long userId) {
-        return EntityToDtoMapper.toProjectDtos(projectRepository.getUserOwnedProjects(userId, ProjectRole.OWNER));
+    public Page<ProjectDTO> getUserOwnedProjects(Long userId, Pageable pageable) {
+        Page<Project> page = projectRepository.getUserOwnedProjects(userId, ProjectRole.OWNER, pageable);
+        return page.map(EntityToDtoMapper::toProjectDto);
     }
 
-    
+
+
 
     //  ------------------------- HELPER METHODS --------------------------
 

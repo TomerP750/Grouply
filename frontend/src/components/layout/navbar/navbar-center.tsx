@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { BiTask } from "react-icons/bi";
 import { FaHome, FaInfo } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
@@ -18,8 +17,6 @@ interface NavbarCenterProps {
 }
 
 export function NavbarCenter({ user }: NavbarCenterProps) {
-
-  const [menuOpen, setMenuOpen] = useState<boolean>(false);
 
   return (
     <div>
