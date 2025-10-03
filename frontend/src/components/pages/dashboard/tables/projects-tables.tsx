@@ -2,21 +2,20 @@ import {
     createColumnHelper,
     flexRender,
     getCoreRowModel,
-    getSortedRowModel,
     getPaginationRowModel,
+    getSortedRowModel,
     useReactTable,
-    type SortingState,
+    type SortingState
 } from "@tanstack/react-table";
 import { useEffect, useMemo, useState } from "react";
-import type { ProjectDTO } from "../../../dtos/models_dtos/ProjectDTO";
-import { ProjectStatus } from "../../../dtos/enums/ProjectStatus";
-import projectService from "../../../service/ProjectService";
-import { toast } from "react-toastify";
 import { BiChevronLeft, BiChevronRight, BiLoaderAlt, BiPlus } from "react-icons/bi";
-import type { ProjectMemberDTO } from "../../../dtos/models_dtos/ProjectMemberDTO";
-import { Avatar } from "../../elements/Avatar";
-import projectMemberService from "../../../service/ProjectMemberService";
-import { fmtDate } from "../../../util/util_functions";
+import { toast } from "react-toastify";
+import { ProjectStatus } from "../../../../dtos/enums/ProjectStatus";
+import type { ProjectDTO } from "../../../../dtos/models_dtos/ProjectDTO";
+import type { ProjectMemberDTO } from "../../../../dtos/models_dtos/ProjectMemberDTO";
+import projectService from "../../../../service/ProjectService";
+import { fmtDate } from "../../../../util/util_functions";
+import { Avatar } from "../../../elements/Avatar";
 
 
 function StatusBadge({ status }: { status: ProjectStatus }) {
@@ -44,7 +43,7 @@ export function ProjectsTable() {
     const [rows, setRows] = useState<ProjectDTO[]>([]);
     const [loading, setLoading] = useState(true);
     const [sorting, setSorting] = useState<SortingState>([]);
-    const [editingId, setEditingId] = useState<number | null>(null);
+
 
     const [pageCount, setPageCount] = useState(0);
     const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 10 });
@@ -186,15 +185,15 @@ export function ProjectsTable() {
         state: { sorting, pagination },
         onSortingChange: setSorting,
         onPaginationChange: setPagination,
+        manualPagination: true,
+        pageCount, 
         getCoreRowModel: getCoreRowModel(),
-        getSortedRowModel: getSortedRowModel(),
-        manualPagination: true
+        getSortedRowModel: getSortedRowModel(), // keep if you want client sort on current page
+        getPaginationRowModel: getPaginationRowModel(),
     });
 
-    useEffect(() => {
-        table.setPageSize(10);
-    }, [table]);
-
+    
+    
     if (loading) return <div className="p-4 text-sm opacity-75"><BiLoaderAlt size={30} className="animate-spin dark:text-white" /></div>;
 
     return (

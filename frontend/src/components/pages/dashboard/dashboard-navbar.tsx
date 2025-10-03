@@ -4,6 +4,7 @@ import { NavbarRight } from "../../layout/navbar/NavbarRight";
 import type { JwtUser } from "../../../redux/AuthSlice";
 import logo from "../../../assets/logolight.png";
 import { NavLink, useNavigate } from "react-router-dom";
+import { FaUserGroup } from "react-icons/fa6";
 
 
 const baseClasses =
@@ -48,6 +49,18 @@ export function DashboardNavbar({ user }: DashboardNavbarProps) {
                     >
                         <BiTask size={25} />
                         <p>Projects</p>
+                    </NavLink>
+                </li>
+
+                <li>
+                    <NavLink
+                        to={`/dashboard/${user?.id}/users`}
+                        className={({ isActive }) =>
+                            `${baseClasses} ${isActive ? activeClasses : inactiveClasses}`
+                        }
+                    >
+                        <FaUserGroup size={25} />
+                        <p>Users</p>
                     </NavLink>
                 </li>
 

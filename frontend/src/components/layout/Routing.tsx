@@ -10,7 +10,9 @@ import { useUserSelector } from "../../redux/hooks";
 import { PostPage } from "../pages/projects-area/project_info_page/post_page";
 import { Dashboard } from "../pages/dashboard/dashboard";
 import { Overview } from "../pages/dashboard/overview";
-import { ProjectsTable } from "../pages/dashboard/projects";
+import { ProjectsTable } from "../pages/dashboard/tables/projects-tables";
+import { Role } from "../../dtos/enums/Role";
+import { UsersTable } from "../pages/dashboard/tables/users-tabel";
 
 
 export function Routing() {
@@ -29,6 +31,7 @@ export function Routing() {
                 <Route path="/dashboard/:id" element={<Dashboard />}>
                     <Route index element={<Overview />} />
                     <Route path="projects" element={<ProjectsTable />} />
+                    <Route path="users" element={<UsersTable/>} />
                 </Route>
 
                 <Route path="/post/:id" element={<PostPage />} />

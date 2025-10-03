@@ -4,8 +4,9 @@ import { Hero } from "./Hero";
 
 export function Home() {
     return (
-        <main className="relative dark:bg-gradient-to-bl dark:from-indigo-950 dark:via-slate-900 dark:to-indigo-900 bg-[#FFFFFF] text-black dark:text-white ">
-            {/* <Navbar/> */}
+        <main className="relative  bg-gradient-to-b from-blue-50 via-teal-50 to-gray-100 dark:from-gray-900 dark:via-teal-900 dark:to-gray-950
+ text-black dark:text-white ">
+            
             <Hero />
             <Features />
             

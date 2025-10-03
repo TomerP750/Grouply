@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { BiBell, BiChat, BiChevronDown, BiMenu } from "react-icons/bi";
+import { BiBell, BiChat, BiChevronDown } from "react-icons/bi";
 import { NavLink } from "react-router-dom";
+import type { JwtUser } from "../../../redux/AuthSlice";
 import { Avatar } from "../../elements/Avatar";
 import { Badge } from "../../elements/Badge";
-import type { JwtUser } from "../../../redux/AuthSlice";
 import { UserMenu } from "./user_menu";
 
 
@@ -72,6 +72,8 @@ export function NavbarRight({ user }: NavbarRightProps) {
           >
             Login
           </NavLink>}
+
+          
 
       </ul>
 

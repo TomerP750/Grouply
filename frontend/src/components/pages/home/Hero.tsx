@@ -1,21 +1,18 @@
-import './Hero.css'
-import { Navbar } from "../../layout/navbar/Navbar";
-import heroLight from "../../../assets/heroLight.png";
-import heroDark from "../../../assets/heroDark.png";
-import { useTheme } from "../../../context/ThemeContext";
-import { NavLink } from 'react-router-dom';
 import { FaArrowRight } from 'react-icons/fa';
+import { NavLink } from 'react-router-dom';
+import { Navbar } from "../../layout/navbar/Navbar";
+import './Hero.css';
 
 export function Hero() {
 
-  const { theme } = useTheme();
 
   return (
     <div
-      className="Hero min-h-screen flex flex-col bg-cover bg-center pb-10"
-      style={{
-        backgroundImage: `url(${theme === "dark" ? heroDark : heroLight})`,
-      }}
+      className={`Hero min-h-screen shadow-lg shadow-gray-200 dark:shadow-gray-800
+        bg-gradient-to-tr 
+        from-gray-200 via-blue-100 to-gray-300
+        dark:from-gray-900 dark:via-teal-950 dark:to-gray-950
+        flex flex-col bg-cover bg-center pb-10`}
     >
       <Navbar />
 
@@ -26,7 +23,7 @@ export function Hero() {
           Built for devs who want to build together
         </span>
 
-        <h1 className="w-5/6 text-4xl sm:text-3xl md:text-5xl lg:text-7xl font-extrabold">
+        <h1 className="w-5/6 text-4xl sm:text-3xl md:text-5xl lg:text-7xl text-blue-500 dark:text-white font-extrabold">
           Organize study groups with ease.
         </h1>
 
@@ -52,8 +49,8 @@ export function Hero() {
 
         rounded-lg font-medium'><NavLink to={"/signup"}>Get Started</NavLink>
           </button>
-          <NavLink to={"/about"} 
-          className='hover:scale-110 duration-200 inline-flex gap-2 items-center'>Learn More <FaArrowRight/></NavLink>
+          <NavLink to={"/about"}
+            className='hover:scale-110 duration-200 inline-flex gap-2 items-center'>Learn More <FaArrowRight /></NavLink>
         </div>
 
       </div>
