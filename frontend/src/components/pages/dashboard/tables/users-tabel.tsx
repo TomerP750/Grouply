@@ -1,5 +1,3 @@
-
-
 import {
     createColumnHelper,
     flexRender,
@@ -10,7 +8,7 @@ import {
     type SortingState
 } from "@tanstack/react-table";
 import { useEffect, useMemo, useState } from "react";
-import { BiChevronLeft, BiChevronRight, BiLoaderAlt, BiPlus } from "react-icons/bi";
+import { BiChevronDown, BiChevronLeft, BiChevronRight, BiChevronUp, BiLoaderAlt, BiPlus } from "react-icons/bi";
 import { toast } from "react-toastify";
 import { Role } from "../../../../dtos/enums/Role";
 import type { UserDTO } from "../../../../dtos/models_dtos/UserDTO";
@@ -191,8 +189,8 @@ export function UsersTable() {
                                         >
                                             <div className="inline-flex items-center gap-1">
                                                 {flexRender(h.column.columnDef.header, h.getContext())}
-                                                {dir === "asc" && <span>▲</span>}
-                                                {dir === "desc" && <span>▼</span>}
+                                                {dir === "asc" && <span><BiChevronUp/></span>}
+                                                {dir === "desc" && <span><BiChevronDown/></span>}
                                             </div>
                                         </th>
                                     );

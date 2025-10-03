@@ -1,8 +1,10 @@
-import { BiTask } from "react-icons/bi";
 import { FaHome, FaInfo } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import type { JwtUser } from "../../../redux/AuthSlice";
 import { MdDashboard } from "react-icons/md";
+import { BiBell, BiChat } from "react-icons/bi";
+import { Badge } from "../../elements/Badge";
+
 
 const linkClasses = ({ isActive }: { isActive: boolean }) =>
   [
@@ -36,19 +38,29 @@ export function NavbarCenter({ user }: NavbarCenterProps) {
         </li>
 
         <li>
-          <NavLink to={`/dashboard/${user?.id}/projects`} className={linkClasses}>
-            <BiTask size={22} />
-            <span className="text-sm">Projects</span>
-          </NavLink>
-        </li>
-
-        <li>
           <NavLink to={`/dashboard/${user?.id}`} className={linkClasses}>
             <MdDashboard size={22} />
             <span className="text-sm">Dashboard</span>
           </NavLink>
         </li>
 
+
+        <li>
+          <button className="cursor-pointer hover:text-teal-500 inline-flex flex-col items-center gap-1 transition-colors duration-200">
+            {/* <BiChat size={22} /> */}
+            <Badge Icon={BiChat} count={0}/>
+            <span className="text-sm">Messages</span>
+          </button>
+        </li>
+
+        <li>
+          <button className="cursor-pointer hover:text-teal-500 inline-flex flex-col items-center gap-1 transition-colors duration-200">
+            <Badge Icon={BiBell} count={0}/>
+            <span className="text-sm">Notification</span>
+          </button>
+        </li>
+
+        
         
 
       </ul>
