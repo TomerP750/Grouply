@@ -35,7 +35,6 @@ public class UserService implements IUserService {
         return userRepository.findAll(pageable).map(EntityToDtoMapper::toUserDto);
     }
 
-
     @Override
     public User findOneUser(Long id) {
         log.info("getting user");
@@ -44,5 +43,9 @@ public class UserService implements IUserService {
 
     public User findByUserName(String username) {
         return userRepository.findByUsername(username).orElseThrow(() -> new NoSuchElementException("User not found"));
+    }
+
+    public boolean isAdmin(Long userId) {
+        return userRepository.existsByIdAndRole(userId, Role.ADMIN);
     }
 }

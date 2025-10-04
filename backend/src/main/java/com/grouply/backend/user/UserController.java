@@ -1,5 +1,6 @@
 package com.grouply.backend.user;
 
+import com.grouply.backend.security.CustomUserDetails;
 import com.grouply.backend.user.Dtos.DeleteUserDTO;
 import com.grouply.backend.user.Dtos.UpdateUserDTO;
 import com.grouply.backend.user.Dtos.UserDTO;
@@ -7,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -39,6 +41,10 @@ public class UserController {
     }
 
 
-
+    @GetMapping("/admin")
+    public boolean isAdmin(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        Long userId = userDetails.getId();
+        return userService.isAdmin(userId);
+    }
 
 }

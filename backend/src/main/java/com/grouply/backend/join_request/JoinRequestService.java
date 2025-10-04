@@ -33,10 +33,22 @@ public class JoinRequestService {
     private final ProjectPostPositionRepository projectPostPositionRepository;
 
     /**
+     * Toggles a join request for a given post position.
      *
-     * @param dto
-     * @return
-     * @throws UnauthorizedException
+     * Logic summary:
+     * - Validates that the user is authenticated.
+     * - Ensures the user is not already a member of the project.
+     * - If the user has already applied for the same position in the same post,
+     *   an exception is thrown to prevent duplicate requests.
+     * - If a join request already exists for the same user and position row,
+     *   it is deleted (the request is canceled) and false is returned.
+     * - Otherwise, a new join request is created and true is returned.
+     *
+     * @param dto the JoinRequestDTO containing sender ID, post ID, and position ID
+     * @return true if a new join request was created; false if an existing one was removed
+     * @throws UnauthorizedException if the user is not logged in or attempts an invalid duplicate request
+     * @throws ExistsException if the user is already a member of the project
+     * @throws NoSuchElementException if the specified position does not exist
      */
 
     public boolean toggleJoinRequest(JoinRequestDTO dto) throws UnauthorizedException, ExistsException {

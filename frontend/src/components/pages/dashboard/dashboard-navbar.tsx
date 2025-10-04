@@ -1,10 +1,13 @@
+import { useEffect, useState } from "react";
 import { BiTask } from "react-icons/bi";
-import { FaHome } from "react-icons/fa";
-import { NavbarRight } from "../../layout/navbar/NavbarRight";
-import type { JwtUser } from "../../../redux/AuthSlice";
-import logo from "../../../assets/logolight.png";
-import { NavLink, useNavigate } from "react-router-dom";
 import { FaUserGroup } from "react-icons/fa6";
+import { MdAdminPanelSettings, MdDashboard } from "react-icons/md";
+import { NavLink } from "react-router-dom";
+import { toast } from "react-toastify";
+import logo from "../../../assets/logolight.png";
+import type { JwtUser } from "../../../redux/AuthSlice";
+import userService from "../../../service/UserService";
+import { NavbarRight } from "../../layout/navbar/NavbarRight";
 
 
 const baseClasses =
@@ -17,6 +20,25 @@ interface DashboardNavbarProps {
 }
 
 export function DashboardNavbar({ user }: DashboardNavbarProps) {
+
+    const [adminMenuOpen, setAdminMenuOpen] = useState<boolean>(false);
+
+    const [authorized, setAuthorized] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (user)
+            userService.isAdmin()
+                .then(res => {
+                    setAuthorized(res);
+                })
+                .catch(err => {
+                    toast.error(err.response.data);
+                })
+
+    }, []);
+
+
+
 
     return (
         <div className="h-30 flex justify-between gap-5 items-center px-10 text-white">
@@ -35,7 +57,7 @@ export function DashboardNavbar({ user }: DashboardNavbarProps) {
                             `${baseClasses} ${isActive ? activeClasses : inactiveClasses}`
                         }
                     >
-                        <FaHome size={25} />
+                        <MdDashboard size={25} />
                         <p>Dashboard</p>
                     </NavLink>
                 </li>
@@ -52,17 +74,29 @@ export function DashboardNavbar({ user }: DashboardNavbarProps) {
                     </NavLink>
                 </li>
 
-                <li>
-                    <NavLink
-                        to={`/dashboard/${user?.id}/users`}
-                        className={({ isActive }) =>
-                            `${baseClasses} ${isActive ? activeClasses : inactiveClasses}`
-                        }
-                    >
-                        <FaUserGroup size={25} />
-                        <p>Users</p>
-                    </NavLink>
-                </li>
+                {authorized &&
+
+                    <li className="relative">
+                        <button 
+                        onClick={() => setAdminMenuOpen(!adminMenuOpen)}
+                        className="cursor-pointer text-gray-300 w-full p-2 inline-flex items-center gap-2 rounded-md transition">
+                            <MdAdminPanelSettings size={25} />
+                            <p>Admin</p>
+                        </button>
+                        {adminMenuOpen && <div className="absolute  bg-white w-80 h-30"></div>}
+                    </li>
+                    // <li>
+                    //     <NavLink
+                    //         to={`/dashboard/${user?.id}/users`}
+                    //         className={({ isActive }) =>
+                    //             `${baseClasses} ${isActive ? activeClasses : inactiveClasses}`
+                    //         }
+                    //     >
+                    //         <FaUserGroup size={25} />
+                    //         <p>Users</p>
+                    //     </NavLink>
+                    // </li>
+                }
 
 
             </ul>

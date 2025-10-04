@@ -12,6 +12,9 @@ class UserService {
         return (await axios.get(`${BASE_API}/user/${id}`)).data
     }
 
+    async isAdmin() {
+        return (await axios.get(`${BASE_API}/user/admin`)).data
+    }
 }
 
 const userService = new UserService();

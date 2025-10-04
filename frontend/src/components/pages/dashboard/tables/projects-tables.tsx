@@ -14,8 +14,9 @@ import { ProjectStatus } from "../../../../dtos/enums/ProjectStatus";
 import type { ProjectDTO } from "../../../../dtos/models_dtos/ProjectDTO";
 import type { ProjectMemberDTO } from "../../../../dtos/models_dtos/ProjectMemberDTO";
 import projectService from "../../../../service/ProjectService";
-import { fmtDate } from "../../../../util/util_functions";
+import { fmtDate, toNormal } from "../../../../util/util_functions";
 import { Avatar } from "../../../elements/Avatar";
+import { Dialog } from "../../../elements/Dialog";
 
 
 function StatusBadge({ status }: { status: ProjectStatus }) {
@@ -31,7 +32,7 @@ function StatusBadge({ status }: { status: ProjectStatus }) {
             styles = "bg-green-500/15 text-green-500";
             break;
     }
-    return <span className={`text-xs px-2 py-1 rounded-full font-medium ${styles}`}>{status}</span>;
+    return <span className={`text-xs px-2 py-1 rounded-full font-medium ${styles}`}>{toNormal(status)}</span>;
 }
 
 
@@ -44,13 +45,16 @@ export function ProjectsTable() {
     const [loading, setLoading] = useState(true);
     const [sorting, setSorting] = useState<SortingState>([]);
 
+    const [dialogOpen, setDialogOpen] = useState<boolean>(false);
+    const [selectedProjectId, setSelectedProejctId] = useState<number>(0);
+
 
     const [pageCount, setPageCount] = useState(0);
     const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 10 });
 
     useEffect(() => {
         projectService
-            .getUserOwnedProjects(pagination.pageIndex, pagination.pageSize)
+            .getUserOwnedProjectsPagination(pagination.pageIndex, pagination.pageSize)
             .then((res) => {
                 setRows(res.content);
                 setPageCount(res.totalPages);
@@ -166,7 +170,8 @@ export function ProjectsTable() {
                         type="button"
                         onClick={(e) => {
                             e.stopPropagation();
-                            handleDeleteProject(row.original.id);
+                            setDialogOpen(true);
+                            setSelectedProejctId(row.original.id)
                         }}
                         className="cursor-pointer rounded px-2 py-1  text-red-600 "
                     >
@@ -186,14 +191,14 @@ export function ProjectsTable() {
         onSortingChange: setSorting,
         onPaginationChange: setPagination,
         manualPagination: true,
-        pageCount, 
+        pageCount,
         getCoreRowModel: getCoreRowModel(),
         getSortedRowModel: getSortedRowModel(), // keep if you want client sort on current page
         getPaginationRowModel: getPaginationRowModel(),
     });
 
-    
-    
+
+
     if (loading) return <div className="p-4 text-sm opacity-75"><BiLoaderAlt size={30} className="animate-spin dark:text-white" /></div>;
 
     return (
@@ -289,6 +294,10 @@ export function ProjectsTable() {
                     ))}
                 </select>
             </div>
+            {dialogOpen && <Dialog open={dialogOpen}
+                message={"Are you sure you want to delete"}
+                onClose={() => setDialogOpen(false)}
+                onConfirm={() => handleDeleteProject(selectedProjectId)} />}
         </div>
     );
 }

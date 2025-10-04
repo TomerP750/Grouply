@@ -1,26 +1,26 @@
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { BiLoaderAlt, BiTrash } from "react-icons/bi";
+import { toast } from "react-toastify";
 import { ProjectPosition } from "../../../dtos/enums/ProjectPosition";
+import type { PostDTO } from "../../../dtos/models_dtos/PostDTO";
 import { ProjectDTO } from "../../../dtos/models_dtos/ProjectDTO";
 import { CreateProjectPostDTO } from "../../../dtos/models_dtos/request_dto/CreateProjectPostDTO";
-import { Modal } from "../../elements/Modal";
-import { toast } from "react-toastify";
-import projectService from "../../../service/ProjectService";
-import { useUser, useUserSelector } from "../../../redux/hooks";
+import { useUserSelector } from "../../../redux/hooks";
 import projectPostService from "../../../service/PostService";
-import type { PostDTO } from "../../../dtos/models_dtos/PostDTO";
+import projectService from "../../../service/ProjectService";
+import { Modal } from "../../elements/Modal";
 
 
 
 
 const labelCls = "text-sm font-medium text-slate-700 dark:text-slate-200";
 const inputBase =
-    "w-full rounded-md border bg-white px-3 py-2 text-sm " +
-    "text-slate-900 outline-none transition " +
-    "dark:bg-slate-900 dark:text-slate-100 " +
-    "border-slate-300 dark:border-slate-600 " +
-    "focus:border-teal-500 focus:ring-2 focus:ring-teal-500/60 focus:ring-offset-0";
+  "w-full rounded-md border bg-white px-3 py-2 text-sm " +
+  "text-slate-900 outline-none transition " +
+  "dark:bg-slate-900 dark:text-slate-100 " +
+  "border-slate-300 dark:border-slate-600 " +
+  "focus:border-teal-500 focus:ring-2 focus:ring-teal-500/60 focus:ring-offset-0";
 const errorCls = "text-xs text-red-500 mt-1";
 
 
@@ -34,7 +34,6 @@ export function CreatePostForm({ open, onClose, onAdd }: CreatePostFormProps) {
   const [ownedProjects, setOwnedProjects] = useState<ProjectDTO[]>([]);
   const [loadingProjects, setLoadingProjects] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
-  const [submitting, setSubmitting] = useState(false);
 
   // store a flat list of enum values; each click adds one entry
   const [positions, setPositions] = useState<ProjectPosition[]>([]);
@@ -42,18 +41,23 @@ export function CreatePostForm({ open, onClose, onAdd }: CreatePostFormProps) {
 
   const user = useUserSelector(state => state.authSlice.user);
 
-    useEffect(() => {
-      if (!open || !user) return;
-      setLoadingProjects(true);
-      projectService
-        .getAllUserOwnedProjects()
-        .then((res) => setOwnedProjects(res))
-        .catch((err) => toast.error(err?.response?.data))
-        .finally(() => setLoadingProjects(false));
-    }, [open]);
-  
+  useEffect(() => {
+    if (!open || !user) return;
+    setLoadingProjects(true);
+    projectService
+      .getAllUserOwnedProjects()
+      .then((res) => setOwnedProjects(res))
+      .catch((err) => toast.error(err?.response?.data))
+      .finally(() => setLoadingProjects(false));
+  }, [open]);
 
-  const { register, handleSubmit, reset, formState: { errors } } = useForm<CreateProjectPostDTO>();
+
+  const { register, handleSubmit, reset, formState: { errors }, control } = useForm<CreateProjectPostDTO>();
+
+  const description = useWatch({ control, name: "description", defaultValue: "" });
+  const length = description?.length ?? 0;
+
+
 
   const sendCreation = (data: CreateProjectPostDTO) => {
 
@@ -84,8 +88,6 @@ export function CreatePostForm({ open, onClose, onAdd }: CreatePostFormProps) {
   const removePosition = (idx: number) => {
     setPositions(prev => prev.filter((_, i) => i !== idx));
   };
-
-  
 
   return (
     <Modal
@@ -133,6 +135,9 @@ export function CreatePostForm({ open, onClose, onAdd }: CreatePostFormProps) {
               })}
               aria-invalid={!!errors.description}
             />
+
+            <span className="text-right text-gray-300 text-xs">{length} / 500</span>
+
             {errors.description && (
               <span className={errorCls}>{errors.description.message}</span>
             )}

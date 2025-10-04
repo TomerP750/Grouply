@@ -30,6 +30,22 @@ public class AuthService implements IAuthService {
     private final UserRepository userRepository;
     private final ProfileRepository profileRepository;
 
+
+    /**
+     * Registers a new user account and returns an authentication response.
+     *
+     * Steps:
+     * - Validates that the password and confirmPassword fields match.
+     * - Creates and saves a new User with the USER role and an encoded password.
+     * - Creates and saves a Profile linked to the new User.
+     * - Automatically logs the user in using their email and password.
+     * - Returns an AuthResponseDTO containing a generated JWT.
+     *
+     * @param dto the sign-up request containing account details such as first name, last name, username, email, password, and confirmPassword
+     * @return an AuthResponseDTO containing a JWT for the newly created user session
+     * @throws InvalidInputException if the password and confirmPassword do not match
+     */
+
     @Override
     public AuthResponseDTO signup(SignUpRequestDTO dto) throws InvalidInputException {
 
@@ -60,6 +76,19 @@ public class AuthService implements IAuthService {
         LoginRequestDTO loginRequest = new LoginRequestDTO(dto.getAccountDetails().getEmail(), dto.getAccountDetails().getPassword());
         return login(loginRequest);
     }
+
+    /**
+     * Authenticates a user and returns an authentication response.
+     *
+     * Steps:
+     * - Uses the AuthenticationManager to verify the user's credentials.
+     * - On successful authentication, retrieves the CustomUserDetails principal.
+     * - Generates a JWT based on the authenticated user's ID.
+     * - Returns an AuthResponseDTO containing the JWT for future authenticated requests.
+     *
+     * @param dto the login request containing the user's email and password
+     * @return an AuthResponseDTO containing a JWT for the authenticated session
+     */
 
     @Override
     public AuthResponseDTO login(LoginRequestDTO dto) {

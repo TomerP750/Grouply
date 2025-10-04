@@ -1,5 +1,3 @@
-import type { JSX } from "react";
-import type { ProjectStatus } from "../dtos/enums/ProjectStatus";
 
 export function toTitleCase(str: string): string {
   if (!str) return "";
@@ -27,4 +25,10 @@ export function formatRelative(ts: number) {
 export function fmtDate(v: unknown) {
     const d = v instanceof Date ? v : new Date(String(v));
     return isNaN(d.getTime()) ? "-" : d.toLocaleDateString();
+}
+
+
+export function toNormal(str: string) {
+  const s = str.toLowerCase().replace(/_/g, " ");
+  return s.charAt(0).toUpperCase() + s.slice(1);
 }

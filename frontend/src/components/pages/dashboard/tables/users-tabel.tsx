@@ -166,11 +166,6 @@ export function UsersTable() {
             
             <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
                 
-                {/* Create project button */}
-                <div className="flex justify-end mb-8">
-                    <button className="px-2 py-1 bg-teal-500 font-medium mr-2 inline-flex items-center gap-1 cursor-pointer hover:bg-teal-600"><BiPlus size={20} /> Create Project</button>
-                </div>
-
                 <table className="w-full border-collapse text-left text-sm">
                    
                     <thead className="sticky top-0 z-10 bg-slate-50/80 backdrop-blur dark:bg-slate-900/60">
