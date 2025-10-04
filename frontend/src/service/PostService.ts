@@ -3,7 +3,7 @@ import { BASE_API } from "../util/base_api";
 import type { CreateProjectPostDTO } from "../dtos/models_dtos/request_dto/CreateProjectPostDTO";
 
 
-class ProjectPostService {
+class PostService {
 
     async allPosts(page = 0, size = 10) {
         return (await axios.get(`${BASE_API}/post/all?page=${page}&size=${size}`)).data
@@ -23,5 +23,5 @@ class ProjectPostService {
 
 }
 
-const projectPostService = new ProjectPostService();
-export default projectPostService;
+const postService = new PostService();
+export default postService;

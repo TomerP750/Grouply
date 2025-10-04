@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { BiLoaderAlt, BiPlus } from "react-icons/bi";
-import type { ProjectPostDTO } from "../../../dtos/models_dtos/ProjectPostDTO";
-import projectPostService from "../../../service/ProjectPostService";
+import type { PostDTO } from "../../../dtos/models_dtos/PostDTO";
+import projectPostService from "../../../service/PostService";
 import { Navbar } from "../../layout/navbar/Navbar";
 import { CreatePostForm } from "./create_post_form";
 import { Filters } from "./Filters";
@@ -15,7 +15,7 @@ export function SearchProjectsPage() {
 
     const [loading, setLoading] = useState<boolean>(false);
 
-    const [posts, setPosts] = useState<ProjectPostDTO[]>([]);
+    const [posts, setPosts] = useState<PostDTO[]>([]);
 
 
     useEffect(() => {
@@ -34,7 +34,7 @@ export function SearchProjectsPage() {
     }, []);
 
 
-    const handleAdd = (newPost: ProjectPostDTO) => {
+    const handleAdd = (newPost: PostDTO) => {
         setPosts(prev => [...prev, newPost]);
     };
 

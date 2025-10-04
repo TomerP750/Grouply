@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -135,6 +136,11 @@ public class ProjectService implements IProjectService {
     public Page<ProjectDTO> getUserOwnedProjects(Long userId, Pageable pageable) {
         Page<Project> page = projectRepository.getUserOwnedProjects(userId, ProjectRole.OWNER, pageable);
         return page.map(EntityToDtoMapper::toProjectDto);
+    }
+
+    public List<ProjectDTO> getAllUserOwnedProjects(Long userId) {
+        List<Project> projects = projectRepository.getAllUserOwnedProjects(userId, ProjectRole.OWNER);
+        return projects.stream().map(EntityToDtoMapper::toProjectDto).toList();
     }
 
 

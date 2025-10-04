@@ -4,8 +4,12 @@ import { BASE_API } from "../util/base_api";
 
 class ProjectService {
 
-    async getUserOwnedProjects(pageIndex: number, size: number ) {
+    async getUserOwnedProjectsPagination(pageIndex: number, size: number ) {
         return (await axios.get(`${BASE_API}/project/owned?page=${pageIndex}&size=${size}`)).data
+    }
+
+    async getAllUserOwnedProjects() {
+        return (await axios.get(`${BASE_API}/project/owned/all`)).data
     }
 
     async deleteProject(id: number) {

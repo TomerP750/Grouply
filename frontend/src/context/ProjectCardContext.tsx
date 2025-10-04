@@ -1,6 +1,6 @@
 
 import { useState, useContext, createContext, type ReactNode } from "react";
-import type { ProjectPostDTO } from "../dtos/models_dtos/ProjectPostDTO";
+import type { ProjectPostDTO } from "../dtos/models_dtos/PostDTO";
 
 
 type ProjectCardState = {

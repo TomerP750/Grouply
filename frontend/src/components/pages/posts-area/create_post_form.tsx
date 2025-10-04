@@ -8,8 +8,8 @@ import { Modal } from "../../elements/Modal";
 import { toast } from "react-toastify";
 import projectService from "../../../service/ProjectService";
 import { useUser, useUserSelector } from "../../../redux/hooks";
-import projectPostService from "../../../service/ProjectPostService";
-import type { ProjectPostDTO } from "../../../dtos/models_dtos/ProjectPostDTO";
+import projectPostService from "../../../service/PostService";
+import type { PostDTO } from "../../../dtos/models_dtos/PostDTO";
 
 
 
@@ -27,7 +27,7 @@ const errorCls = "text-xs text-red-500 mt-1";
 interface CreatePostFormProps {
   open: boolean;
   onClose: () => void;
-  onAdd: (dto: ProjectPostDTO) => void;
+  onAdd: (dto: PostDTO) => void;
 }
 
 export function CreatePostForm({ open, onClose, onAdd }: CreatePostFormProps) {
@@ -46,7 +46,7 @@ export function CreatePostForm({ open, onClose, onAdd }: CreatePostFormProps) {
       if (!open || !user) return;
       setLoadingProjects(true);
       projectService
-        .getUserOwnedProjects()
+        .getAllUserOwnedProjects()
         .then((res) => setOwnedProjects(res))
         .catch((err) => toast.error(err?.response?.data))
         .finally(() => setLoadingProjects(false));

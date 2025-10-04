@@ -3,20 +3,20 @@ import { toast } from "react-toastify";
 import defaultImage from "../../../../assets/projectdefault.jpg";
 import { ProjectCardProvider } from "../../../../context/ProjectCardContext";
 import type { ProjectMemberDTO } from "../../../../dtos/models_dtos/ProjectMemberDTO";
-import type { ProjectPostDTO } from "../../../../dtos/models_dtos/ProjectPostDTO";
+import type { PostDTO } from "../../../../dtos/models_dtos/PostDTO";
 import { JoinRequestDTO } from "../../../../dtos/models_dtos/request_dto/JoinRequestDTO";
 import { useUserSelector } from "../../../../redux/hooks";
 import archivedProjectService from "../../../../service/ArchivedProjectService";
 import joinRequestService from "../../../../service/JoinRequestService";
 import projectMemberService from "../../../../service/ProjectMemberService";
-import projectPostService from "../../../../service/ProjectPostService";
+import projectPostService from "../../../../service/PostService";
 import { Avatar } from "../../../elements/Avatar";
 import { PostCardDescription } from "./post_card_description";
 import { useNavigate } from "react-router-dom";
 
 
 interface ProjectCardProps {
-    projectPost: ProjectPostDTO
+    projectPost: PostDTO
     onRemove: (id: number) => void
 }
 

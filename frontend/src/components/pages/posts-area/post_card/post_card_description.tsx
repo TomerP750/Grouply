@@ -1,6 +1,6 @@
 import { BiCheck, BiDotsVertical, BiGroup } from "react-icons/bi";
 import { MdBookmarkAdd } from "react-icons/md";
-import type { ProjectPostDTO } from "../../../../dtos/models_dtos/ProjectPostDTO";
+import type { ProjectPostDTO } from "../../../../dtos/models_dtos/PostDTO";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { useUserSelector } from "../../../../redux/hooks";

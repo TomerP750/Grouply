@@ -19,4 +19,11 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
                                        Pageable pageable);
 
 
+    @Query("SELECT p FROM Project p " +
+            "JOIN p.projectMembers pm " +
+            "WHERE pm.user.id = :userId AND pm.projectRole = :projectRole")
+    List<Project> getAllUserOwnedProjects(@Param("userId") Long userId,
+                                       @Param("projectRole") ProjectRole projectRole);
+
+
 }

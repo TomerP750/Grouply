@@ -1,7 +1,7 @@
 import type { ProjectDTO } from "./ProjectDTO"
 import type { ProjectPostPositionDTO } from "./ProjectPostPositionDTO"
 
-export class ProjectPostDTO {
+export class PostDTO {
   id: number
   title: string
   description: string

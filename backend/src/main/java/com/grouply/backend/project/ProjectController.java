@@ -51,7 +51,7 @@ public class ProjectController {
         projectService.deleteProject(userId, projectId);
     }
 
-
+    //TODO merge all and paged in one method
     @GetMapping("/owned")
     public Page<ProjectDTO> getUserOwnedProjects(@AuthenticationPrincipal CustomUserDetails userDetails,
                                                  @RequestParam(value = "pageIndex", defaultValue = "0") int pageIndex,
@@ -59,6 +59,12 @@ public class ProjectController {
         PageRequest pageRequest = PageRequest.of(pageIndex, size);
         Long userId = userDetails.getId();
         return projectService.getUserOwnedProjects(userId, pageRequest);
+    }
+
+    @GetMapping("/owned/all")
+    public List<ProjectDTO> allUserOwnedProjects(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        Long userId = userDetails.getId();
+        return projectService.getAllUserOwnedProjects(userId);
     }
 
 
