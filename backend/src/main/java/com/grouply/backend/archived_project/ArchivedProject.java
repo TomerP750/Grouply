@@ -1,7 +1,6 @@
 package com.grouply.backend.archived_project;
 
-import com.grouply.backend.project.Project;
-import com.grouply.backend.project_post.ProjectPost;
+import com.grouply.backend.post.Post;
 import com.grouply.backend.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -27,7 +26,7 @@ public class ArchivedProject {
     private Long id;
 
     @ManyToOne
-    private ProjectPost post;
+    private Post post;
 
     @ManyToOne
     private User user;

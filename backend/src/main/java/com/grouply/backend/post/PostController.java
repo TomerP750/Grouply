@@ -1,11 +1,11 @@
-package com.grouply.backend.project_post;
+package com.grouply.backend.post;
 
 import com.grouply.backend.exceptions.ExistsException;
 import com.grouply.backend.exceptions.InvalidInputException;
 import com.grouply.backend.exceptions.UnauthorizedException;
-import com.grouply.backend.project_post.dto.CreateProjectPostDTO;
-import com.grouply.backend.project_post.dto.ProjectPostDTO;
-import com.grouply.backend.project_post.dto.UpdateProjectPostDTO;
+import com.grouply.backend.post.dto.CreateProjectPostDTO;
+import com.grouply.backend.post.dto.ProjectPostDTO;
+import com.grouply.backend.post.dto.UpdateProjectPostDTO;
 import com.grouply.backend.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -14,14 +14,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
-@RequestMapping("/api/projPost")
+@RequestMapping("/api/post")
 @RequiredArgsConstructor
-public class ProjectPostController {
+public class PostController {
 
-    private final ProjectPostService projectPostService;
+    private final PostService projectPostService;
 
     @GetMapping("/all")
     public Page<ProjectPostDTO> allPosts(@RequestParam(value = "page", defaultValue = "0") int page,

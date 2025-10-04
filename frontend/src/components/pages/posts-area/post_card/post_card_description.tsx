@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { useUserSelector } from "../../../../redux/hooks";
 import projectMemberService from "../../../../service/ProjectMemberService";
-import './project_card_css.css';
+import './post_card_css.css';
 import { toTitleCase } from "../../../../util/util_functions";
 
 interface ProjectCardDescriptionProps {
@@ -21,7 +21,7 @@ interface ProjectCardDescriptionProps {
 
 }
 
-export function ProjectCardDescription({ loading, projectPost, onArchiveClick, onRequestToJoin, onEdit, onDelete, archived, sentRequest}: ProjectCardDescriptionProps) {
+export function PostCardDescription({ loading, projectPost, onArchiveClick, onRequestToJoin, onEdit, onDelete, archived, sentRequest}: ProjectCardDescriptionProps) {
 
 
     const [isOwner, setIsOwner] = useState<boolean>(false);

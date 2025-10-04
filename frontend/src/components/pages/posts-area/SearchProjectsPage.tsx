@@ -1,13 +1,11 @@
 import { useEffect, useState } from "react";
-import { Navbar } from "../../layout/navbar/Navbar";
-import { Filters } from "./Filters";
-import { ProjectCard } from "./project_card/project_card";
 import { BiLoaderAlt, BiPlus } from "react-icons/bi";
 import type { ProjectPostDTO } from "../../../dtos/models_dtos/ProjectPostDTO";
 import projectPostService from "../../../service/ProjectPostService";
-import { MdPostAdd } from "react-icons/md";
-import { Modal } from "../../elements/Modal";
+import { Navbar } from "../../layout/navbar/Navbar";
 import { CreatePostForm } from "./create_post_form";
+import { Filters } from "./Filters";
+import { PostCard } from "./post_card/post_card";
 
 
 
@@ -66,7 +64,7 @@ export function SearchProjectsPage() {
                             </button>
                         </div>
                         {posts?.map(p => (
-                            <ProjectCard
+                            <PostCard
                                 key={p.id}
                                 projectPost={p}
                                 onRemove={() => handleRemove(p.id)}

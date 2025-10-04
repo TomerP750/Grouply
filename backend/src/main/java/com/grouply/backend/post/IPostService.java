@@ -1,18 +1,16 @@
-package com.grouply.backend.project_post;
+package com.grouply.backend.post;
 
 import com.grouply.backend.exceptions.ExistsException;
 import com.grouply.backend.exceptions.InvalidInputException;
 import com.grouply.backend.exceptions.UnauthorizedException;
-import com.grouply.backend.project_post.dto.CreateProjectPostDTO;
+import com.grouply.backend.post.dto.CreateProjectPostDTO;
 //import com.grouply.backend.project_post.dto.DeleteProjectPostDTO;
-import com.grouply.backend.project_post.dto.ProjectPostDTO;
-import com.grouply.backend.project_post.dto.UpdateProjectPostDTO;
+import com.grouply.backend.post.dto.ProjectPostDTO;
+import com.grouply.backend.post.dto.UpdateProjectPostDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.util.List;
-
-public interface IProjectPostService {
+public interface IPostService {
 
     ProjectPostDTO createProjectPost(Long userId ,CreateProjectPostDTO dto) throws ExistsException, UnauthorizedException;
 

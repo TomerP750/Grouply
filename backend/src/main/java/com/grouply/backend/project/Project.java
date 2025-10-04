@@ -3,6 +3,7 @@ package com.grouply.backend.project;
 
 import com.grouply.backend.project_member.ProjectMember;
 //import com.grouply.backend.technology.Technology;
+import com.grouply.backend.technology.Technology;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -28,9 +29,6 @@ public class Project {
     private Long id;
     private String name;
 
-//    @ManyToOne
-//    private Group group;
-
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ProjectMember> projectMembers = new HashSet<>();
 
@@ -40,9 +38,8 @@ public class Project {
     @Enumerated(EnumType.STRING)
     private ProjectStatus status;
 
-//    @ManyToMany(mappedBy = "project")
+//    @ManyToMany
 //    private Set<Technology> technologies = new HashSet<>();
-
 
     public void addMember(ProjectMember member) {
         projectMembers.add(member);

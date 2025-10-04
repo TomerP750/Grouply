@@ -3,8 +3,8 @@ package com.grouply.backend.archived_project;
 import com.grouply.backend.exceptions.ExistsException;
 import com.grouply.backend.project.ProjectRepository;
 import com.grouply.backend.project_member.ProjectMemberRepository;
-import com.grouply.backend.project_post.ProjectPost;
-import com.grouply.backend.project_post.ProjectPostRepository;
+import com.grouply.backend.post.Post;
+import com.grouply.backend.post.PostRepository;
 import com.grouply.backend.user.User;
 import com.grouply.backend.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ public class ArchivedProjectService implements IArchivedProjectService {
     private final ArchivedProjectRepository archivedProjectRepository;
     private final UserRepository userRepository;
     private final ProjectRepository projectRepository;
-    private final ProjectPostRepository projectPostRepository;
+    private final PostRepository postRepository;
     private final ProjectMemberRepository projectMemberRepository;
 
     /**
@@ -39,7 +39,7 @@ public class ArchivedProjectService implements IArchivedProjectService {
         log.info("entering toggle archive");
 
         User user = userRepository.findById(userId).orElseThrow(() -> new NoSuchElementException("User not found"));
-        ProjectPost post = projectPostRepository.findById(postId).orElseThrow(() -> new NoSuchElementException("Project not found"));
+        Post post = postRepository.findById(postId).orElseThrow(() -> new NoSuchElementException("Project not found"));
 
         if (projectMemberRepository.existsByUserIdAndProjectId(user.getId(), post.getProject().getId())) {
             throw new ExistsException("You are already a member in the project");

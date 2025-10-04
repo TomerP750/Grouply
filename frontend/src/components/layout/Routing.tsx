@@ -4,15 +4,15 @@ import { Login } from "../pages/authentication/Login";
 import { NotFound } from "../pages/other-pages/NotFound";
 import About from "../pages/about/About";
 import { SignUpWizard } from "../pages/authentication/signup-wizard/SignUpWizard";
-import { SearchProjectsPage } from "../pages/projects-area/SearchProjectsPage";
+import { SearchProjectsPage } from "../pages/posts-area/SearchProjectsPage";
 import { ProfilePage } from "../pages/profile/profile_page";
 import { useUserSelector } from "../../redux/hooks";
-import { PostPage } from "../pages/projects-area/project_info_page/post_page";
 import { Dashboard } from "../pages/dashboard/dashboard";
 import { Overview } from "../pages/dashboard/overview";
 import { ProjectsTable } from "../pages/dashboard/tables/projects-tables";
 import { Role } from "../../dtos/enums/Role";
 import { UsersTable } from "../pages/dashboard/tables/users-tabel";
+import { PostPage } from "../pages/posts-area/project_info_page/post_page";
 
 
 export function Routing() {

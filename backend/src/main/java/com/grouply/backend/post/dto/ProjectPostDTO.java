@@ -1,4 +1,4 @@
-package com.grouply.backend.project_post.dto;
+package com.grouply.backend.post.dto;
 
 import com.grouply.backend.project.Dtos.ProjectDTO;
 import com.grouply.backend.project_post_position.dto.ProjectPostPositionDTO;

@@ -1,7 +1,6 @@
 package com.grouply.backend.join_request;
 
-import com.grouply.backend.project_member.ProjectPosition;
-import com.grouply.backend.project_post.ProjectPost;
+import com.grouply.backend.post.Post;
 import com.grouply.backend.project_post_position.ProjectPostPosition;
 import com.grouply.backend.user.User;
 import jakarta.persistence.*;
@@ -28,7 +27,7 @@ public class JoinRequest {
     private Long id;
 
     @ManyToOne
-    private ProjectPost projectPost;
+    private Post post;
 
     @Enumerated(EnumType.STRING)
     private RequestStatus status;

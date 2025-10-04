@@ -11,7 +11,7 @@ import joinRequestService from "../../../../service/JoinRequestService";
 import projectMemberService from "../../../../service/ProjectMemberService";
 import projectPostService from "../../../../service/ProjectPostService";
 import { Avatar } from "../../../elements/Avatar";
-import { ProjectCardDescription } from "./project_card_description";
+import { PostCardDescription } from "./post_card_description";
 import { useNavigate } from "react-router-dom";
 
 
@@ -21,7 +21,7 @@ interface ProjectCardProps {
 }
 
 
-export function ProjectCard({ projectPost, onRemove }: ProjectCardProps) {
+export function PostCard({ projectPost, onRemove }: ProjectCardProps) {
 
     const [loading, setLoading] = useState<boolean>(false);
     const user = useUserSelector(state => state.authSlice.user);
@@ -126,7 +126,7 @@ export function ProjectCard({ projectPost, onRemove }: ProjectCardProps) {
                 <img src={defaultImage} className="h-[40%] object-center object-cover bg-gradient-to-r from-blue-600 to-blue-500 w-full" />
 
                 {/* Description + Buttons to join */}
-                <ProjectCardDescription
+                <PostCardDescription
                     loading={loading}
                     archived={archived}
                     projectPost={projectPost}

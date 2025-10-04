@@ -1,7 +1,7 @@
 package com.grouply.backend.project_post_position;
 
 import com.grouply.backend.project_member.ProjectPosition;
-import com.grouply.backend.project_post.ProjectPost;
+import com.grouply.backend.post.Post;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.Table;
@@ -11,8 +11,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import jakarta.persistence.*;
-
-import java.util.List;
 
 
 @Entity
@@ -29,13 +27,10 @@ public class ProjectPostPosition {
     private Long id;
 
     @ManyToOne
-    private ProjectPost projectPost;
+    private Post post;
 
     @Enumerated(EnumType.STRING)
     private ProjectPosition position;
-
-
-    //TODO maybe add note
 
 
 }

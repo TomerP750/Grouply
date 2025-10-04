@@ -1,4 +1,4 @@
-package com.grouply.backend.project_post.dto;
+package com.grouply.backend.post.dto;
 
 import lombok.Data;
 

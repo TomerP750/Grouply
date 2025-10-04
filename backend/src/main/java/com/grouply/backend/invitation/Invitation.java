@@ -7,7 +7,10 @@ import com.grouply.backend.project_member.ProjectRole;
 import com.grouply.backend.user.User;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "invitations")
@@ -36,5 +39,8 @@ public class Invitation {
 
     @ManyToOne
     private Project project;
+
+    @CreatedDate
+    private LocalDateTime sentAt;
 
 }

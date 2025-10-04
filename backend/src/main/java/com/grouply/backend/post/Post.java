@@ -1,6 +1,5 @@
-package com.grouply.backend.project_post;
+package com.grouply.backend.post;
 
-import com.grouply.backend.join_request.JoinRequest;
 import com.grouply.backend.project.Project;
 import com.grouply.backend.project_post_position.ProjectPostPosition;
 import jakarta.persistence.*;
@@ -22,7 +21,7 @@ import java.util.List;
 @Data
 @Builder
 @EntityListeners(AuditingEntityListener.class)
-public class ProjectPost {
+public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +31,7 @@ public class ProjectPost {
     @Column(nullable = false)
     private String description;
 
-    @OneToMany(mappedBy = "projectPost", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProjectPostPosition> positions = new ArrayList<>();
 
     @ManyToOne
