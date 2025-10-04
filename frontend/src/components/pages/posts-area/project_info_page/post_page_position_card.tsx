@@ -54,7 +54,7 @@ export function PostPositionPageCard({ postPosition, postId }: PostPositionPageC
     };
 
     return (
-        <div className="hover:bg-slate-700 py-2 cursor-pointer flex items-center justify-between px-3">
+        <div className="w-full hover:bg-slate-700 py-2 cursor-pointer flex items-center justify-between px-3">
             <span className="text-teal-500">{postPosition.position}</span>
             <button
                 onClick={handleRequestToJoin}

@@ -18,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -41,25 +42,35 @@ public class JoinRequestService {
     public boolean toggleJoinRequest(JoinRequestDTO dto) throws UnauthorizedException, ExistsException {
 
         User sender = fetchUser(dto.getSenderId());
-        Post post = fetchProjectPost(dto.getProjectPostId());
 
         if (sender == null) {
             throw new UnauthorizedException("You must login to request to join");
         }
 
+        Post post = fetchProjectPost(dto.getProjectPostId());
+        ProjectPostPosition position = projectPostPositionRepository.findById(dto.getProjectPostPositionId()).orElseThrow(() -> new NoSuchElementException("Position not found"));
+
         if (projectMemberRepository.existsByUserIdAndProjectId(sender.getId(), post.getProject().getId())) {
             throw new ExistsException("You are already a member in the project");
         }
 
-        if (joinRequestRepository.existsBySenderIdAndPostId(sender.getId(), post.getId())) {
-            JoinRequest existing = joinRequestRepository.findBySenderIdAndPostId(sender.getId(), post.getId());
-            joinRequestRepository.deleteById(existing.getId());
+        Optional<JoinRequest> existingForThisRow =
+                joinRequestRepository.findBySenderIdAndPositionId(sender.getId(), position.getId());
+
+        if (existingForThisRow.isPresent()) {
+            joinRequestRepository.deleteById(existingForThisRow.get().getId());
             return false;
         }
 
-        ProjectPostPosition position = projectPostPositionRepository
-                .findById(dto.getProjectPostPositionId())
-                .orElseThrow(() -> new NoSuchElementException("Position not found"));
+        boolean sameEnumExists =
+                joinRequestRepository.existsBySenderIdAndPostIdAndPositionPosition(
+                        sender.getId(), post.getId(), position.getPosition());
+
+        if (sameEnumExists) {
+            throw new ExistsException("You have already applied for the " +
+                    position.getPosition() + " position in this post.");
+        }
+
 
         JoinRequest joinRequest = JoinRequest.builder()
                 .sender(sender)
