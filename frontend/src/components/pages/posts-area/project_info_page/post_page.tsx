@@ -9,6 +9,10 @@ import { PostPositionPageCard } from "./post_page_position_card";
 
 export function PostPage() {
 
+    useEffect(() => {
+        window.scrollTo({top: 0, behavior: "instant"})
+    }, []);
+
     const params = useParams();
     const id = +params.id!;
 

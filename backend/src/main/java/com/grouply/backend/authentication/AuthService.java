@@ -43,7 +43,7 @@ public class AuthService implements IAuthService {
                 .username(dto.getAccountDetails().getUsername())
                 .email(dto.getAccountDetails().getEmail())
                 .password(encoder.encode(dto.getAccountDetails().getPassword()))
-                .role(Role.ADMIN)
+                .role(Role.USER)
                 .build();
 
         userRepository.save(user);

@@ -11,6 +11,10 @@ class JoinRequestService {
         return (await axios.post(`${BASE_API}/join/request`, data)).data
     }
 
+    async hasAppliedToPostPosition(postId: number, positionId: number) {
+        return (await axios.get(`${BASE_API}/join/applied/${postId}/${positionId}`)).data
+    }
+
 }
 
 const joinRequestService = new JoinRequestService();

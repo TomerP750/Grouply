@@ -58,28 +58,7 @@ export function PostCard({ projectPost, onRemove }: ProjectCardProps) {
         }
     }, []);
 
-    const handleRequestToJoin = (projectPostPositionId: number) => {
-
-        if (user != null) {
-
-            const joinRequest = new JoinRequestDTO(user.id, projectPostPositionId, projectPost.id);
-            console.log(joinRequest);
-
-            joinRequestService.toggleJoinRequest(joinRequest)
-                .then((res) => {
-                    if (res === false) {
-                        toast.success("Request Removed!");
-                    }
-                    else {
-                        toast.success("The request has been sent!")
-                    };
-                    setSentRequest(res);
-                })
-                .catch(err => {
-                    toast.error(err.response.data)
-                })
-        }
-    };
+    
 
     const handleAddToArchive = (id: number) => {
         setLoading(true);
@@ -127,11 +106,9 @@ export function PostCard({ projectPost, onRemove }: ProjectCardProps) {
 
                 {/* Description + Buttons to join */}
                 <PostCardDescription
-                    loading={loading}
                     archived={archived}
                     projectPost={projectPost}
                     sentRequest={sentRequest}
-                    onRequestToJoin={() => handleRequestToJoin(projectDTO.id)}
                     onArchiveClick={() => handleAddToArchive(projectPost.id)}
                     onEdit={handleEdit}
                     onDelete={() => handleDeletePost(projectPost.id)}

@@ -72,6 +72,16 @@ public class JoinRequestService {
         return true;
     }
 
+    /**
+     * this checks if the user has sent a join request to a specific position in a post
+     * @param userId
+     * @param postId
+     * @param postPositionId
+     * @return
+     */
+    public boolean appliedToPostPosition(Long userId, Long postId, Long postPositionId) {
+        return joinRequestRepository.existsBySenderIdAndPostIdAndPositionId(userId, postId, postPositionId);
+    }
 
 //    ----------- HELPER METHODS -----------
 
