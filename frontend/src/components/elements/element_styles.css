@@ -1,0 +1,22 @@
+@keyframes popUp {
+    0% {
+        opacity: 0;
+        transform: scale(0.8) translateY(20px);
+        filter: blur(6px);
+    }
+
+    60% {
+        opacity: 1;
+        transform: scale(1.05) translateY(-4px);
+        filter: blur(0);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.dialog {
+    animation: popUp 0.3s ease-out forwards;
+}

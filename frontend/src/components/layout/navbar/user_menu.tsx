@@ -32,7 +32,7 @@ export function UserMenu({ user }: UserMenuProps) {
             <section className='flex flex-col w-full'>
                 <p>{fullName}</p>
                 <p className='text-sm'>something</p>
-                <NavLink to={`/profile/${user.id}`} className='inline-flex justify-end text-sm self-end'>View Profile</NavLink>
+                <NavLink to={`/profile/${user.id}`} className='inline-flex hover:underline justify-end text-sm self-end'>View Profile</NavLink>
             </section>
 
             <section className='flex flex-col gap-1 w-full'>

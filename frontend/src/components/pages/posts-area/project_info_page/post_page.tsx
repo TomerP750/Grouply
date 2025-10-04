@@ -47,48 +47,53 @@ export function PostPage() {
                     </NavLink>
                 </div>
 
-                <div className="w-full flex flex-col lg:flex-row items-start justify-end gap-5">
 
-                    <section className="bg-slate-900 w-full border min-h-screen">
+                <section className="bg-slate-900 shadow-xl shadow-slate-900 flex flex-col items-center w-3/4 p-5  min-h-screen">
 
-                    </section>
+                    <p>{post?.title}</p>
+                    <p>{post?.description}</p>
+                    
 
-                    <aside className="w-full lg:w-80 lg:sticky lg:top-20">
-                        {/* Card shell */}
-                        <div className="rounded-xl border border-slate-200/70 dark:border-white/10 bg-white/80 dark:bg-slate-900/40 shadow-sm backdrop-blur overflow-hidden">
+                    {/* Card Container */}
+                    <div className="w-3/4 rounded-xl border border-slate-200/70 dark:border-white/10 bg-white/80 dark:bg-slate-900/40 shadow-sm backdrop-blur overflow-hidden">
 
-                            {/* Header */}
-                            <div className="px-4 py-3 border-b border-slate-200/70 dark:border-white/10">
-                                <p className="text-sm uppercase tracking-wide text-slate-600 dark:text-slate-400">
-                                    Open positions
-                                </p>
-                            </div>
-
-                            {/* Open positions */}
-                            <ul className="overflow-y-auto divide-y divide-slate-200/70 dark:divide-white/10">
-                                {post?.positions?.length ? (
-                                    post.positions.map((p) => (
-                                        <li key={p.id} className="p-2 hover:bg-slate-950/5 dark:hover:bg-white/5 transition-colors">
-                                            <PostCardPositionCard
-                                                postId={post.id}
-                                                postPosition={p}
-                                                user={user}
-                                            />
-                                        </li>
-                                    ))
-                                ) : (
-                                    <li className="px-4 py-6 text-sm text-slate-500 dark:text-slate-400">
-                                        No open positions yet.
-                                    </li>
-                                )}
-                            </ul>
-
-
+                        {/* Header */}
+                        <div className="px-4 py-3 border-b border-slate-200/70 dark:border-white/10">
+                            <p className="text-sm uppercase tracking-wide text-slate-600 dark:text-slate-400">
+                                Open positions
+                            </p>
                         </div>
-                    </aside>
+
+                        {/* Open positions */}
+                        <ul className="overflow-y-auto divide-y divide-slate-200/70 dark:divide-white/10">
+                            {post?.positions?.length ? (
+                                post.positions.map((p) => (
+                                    <li key={p.id} className="p-2 hover:bg-slate-950/5 dark:hover:bg-white/5 transition-colors">
+                                        <PostCardPositionCard
+                                            postId={post.id}
+                                            postPosition={p}
+                                            user={user}
+                                        />
+                                    </li>
+                                ))
+                            ) : (
+                                <li className="px-4 py-6 text-sm text-slate-500 dark:text-slate-400">
+                                    No open positions yet.
+                                </li>
+                            )}
+                        </ul>
 
 
-                </div>
+                    </div>
+                </section>
+
+
+
+
+
+
+
+
             </main>
         </div>
     )

@@ -1,7 +1,8 @@
+import type { ReactNode } from "react";
 import { BiX } from "react-icons/bi";
 
 type PanelProps = {
-  children: React.ReactNode;
+  children: ReactNode;
   onClose: () => void;
   title?: string;
 };

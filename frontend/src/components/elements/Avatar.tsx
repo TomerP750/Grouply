@@ -19,9 +19,6 @@ const colors = [
     "bg-blue-400",
 ];
 
-function getRandomColor() {
-    return colors[Math.floor(Math.random() * colors.length)]
-}
 
 export function Avatar({ user, size, onClick, className }: AvatarProps) {
 
@@ -34,7 +31,7 @@ export function Avatar({ user, size, onClick, className }: AvatarProps) {
                 onClick={onClick}
                 style={{ width: size }} 
                 className={`aspect-square 
-                ${getRandomColor()} rounded-full
+                bg-teal-600 rounded-full
                 inline-flex items-center justify-center 
                 ${className}
                 `}> <FaUserAlt size={12} />
@@ -55,7 +52,7 @@ export function Avatar({ user, size, onClick, className }: AvatarProps) {
         onClick={onClick}
         style={{ width: size }} 
         className={`aspect-square 
-                ${getRandomColor()} rounded-full
+                bg-teal-500 rounded-full
                 inline-flex items-center justify-center 
                 ${className}
                 `}> <FaUserAlt size={12} />

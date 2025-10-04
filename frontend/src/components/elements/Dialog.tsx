@@ -1,5 +1,6 @@
 import { BiX } from "react-icons/bi";
 import { useEffect } from "react";
+import './element_styles.css';
 
 interface DialogProps {
   open: boolean;
@@ -29,7 +30,7 @@ export function Dialog({ open, title = "Confirm Action", message, onClose, onCon
       {/* Dialog box */}
       <main
         role="dialog"
-        className="relative z-10 w-[26rem] max-w-[90vw] rounded-xl bg-slate-800 p-6 shadow-lg border border-white/10 
+        className="dialog relative z-10 w-[26rem] max-w-[90vw] rounded-xl bg-slate-800 p-6 shadow-lg border border-white/10 
                    transform transition-all duration-300 scale-100 opacity-100"
       >
         {/* Header */}

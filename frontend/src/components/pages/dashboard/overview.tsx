@@ -1,9 +1,13 @@
+import { useUser } from "../../../redux/hooks"
 
 
 export function Overview() {
+
+    const user = useUser();
+
     return (
-        <div>
-            
+        <div className="dark:text-white p-5">
+            <h1 className="text-5xl font-bold">Hello, {user.username}</h1>
         </div>
     )
 }
