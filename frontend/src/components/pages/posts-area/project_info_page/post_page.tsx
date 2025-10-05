@@ -7,7 +7,6 @@ import { Navbar } from "../../../layout/navbar/Navbar";
 import { useScrollToTop } from "../../../../util/helper_hooks";
 import { PostCardPositionCard } from "../post_card/post_card_position_card";
 import { useUser } from "../../../../redux/hooks";
-import joinRequestService from "../../../../service/JoinRequestService";
 
 
 export function PostPage() {

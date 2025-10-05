@@ -1,22 +1,50 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { BiLoaderAlt, BiPlus } from "react-icons/bi";
 import type { PostDTO } from "../../../dtos/models_dtos/PostDTO";
 import projectPostService from "../../../service/PostService";
 import { Navbar } from "../../layout/navbar/Navbar";
 import { CreatePostForm } from "./create_post_form";
-import { Filters } from "./Filters";
+import { Filters, type FeedFilters } from "./Filters";
 import { PostCard } from "./post_card/post_card";
 
 
 
-export function SearchProjectsPage() {
+export function Feed() {
+
+    const [posts, setPosts] = useState<PostDTO[]>([]);
+
+    const [filters, setFilters] = useState<FeedFilters>({
+        postTitle: "",
+        startDate: "",
+    })
+
+    const filteredPosts = useMemo(() => {
+        
+        return posts.filter((post) => {
+            
+            const matchProjectName =
+                !filters.postTitle ||
+                post.title
+                    .toLowerCase()
+                    .includes(filters.postTitle.toLowerCase());
+
+            const matchStartDate =
+                !filters.startDate ||
+                new Date(post.postedAt) >= new Date(filters.startDate);
+
+            const matchRole =
+                !filters.roleDemand ||
+                post.positions.some(
+                    (p) => p.position === filters.roleDemand
+                );
+
+            return matchProjectName && matchStartDate && matchRole;
+        });
+    }, [posts, filters]);
 
     const [modalOpen, setModalOpen] = useState<boolean>(false);
 
     const [loading, setLoading] = useState<boolean>(false);
-
-    const [posts, setPosts] = useState<PostDTO[]>([]);
-
 
     useEffect(() => {
         setLoading(true)
@@ -50,7 +78,7 @@ export function SearchProjectsPage() {
 
             {/* POSTS AND FILTERS */}
             <div className="flex flex-col pt-10 md:pt-0 md:mt-5 px-5 md:px-0 lg:flex-row w-full items-center lg:items-start gap-6">
-                <Filters />
+                <Filters value={filters} setValue={setFilters}/>
 
                 {/* Main area */}
                 <div className="w-full flex justify-center px-0 sm:px-5 pt-6">
@@ -60,10 +88,10 @@ export function SearchProjectsPage() {
                             <button
                                 onClick={() => setModalOpen(true)}
                                 className="inline-flex items-center gap-1 rounded-lg text-white bg-blue-600 px-3 py-1.5 cursor-pointer hover:bg-blue-500 transition-colors">
-                                <BiPlus size={20}/><span>Add Post</span> 
+                                <BiPlus size={20} /><span>Add Post</span>
                             </button>
                         </div>
-                        {posts?.map(p => (
+                        {filteredPosts?.map(p => (
                             <PostCard
                                 key={p.id}
                                 projectPost={p}

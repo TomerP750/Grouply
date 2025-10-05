@@ -4,7 +4,7 @@ import { Login } from "../pages/authentication/Login";
 import { NotFound } from "../pages/other-pages/NotFound";
 import About from "../pages/about/About";
 import { SignUpWizard } from "../pages/authentication/signup-wizard/SignUpWizard";
-import { SearchProjectsPage } from "../pages/posts-area/SearchProjectsPage";
+import { Feed } from "../pages/posts-area/Feed";
 import { ProfilePage } from "../pages/profile/profile_page";
 import { useUserSelector } from "../../redux/hooks";
 import { Dashboard } from "../pages/dashboard/dashboard";
@@ -22,7 +22,7 @@ export function Routing() {
     return (
         <div>
             <Routes>
-                <Route path="/" element={user ? <SearchProjectsPage /> : <Home />} />
+                <Route path="/" element={user ? <Feed /> : <Home />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<SignUpWizard />} />
@@ -35,7 +35,7 @@ export function Routing() {
                 </Route>
 
                 <Route path="/post/:id" element={<PostPage />} />
-                <Route path="/search-projects" element={<SearchProjectsPage />} />
+                <Route path="/feed" element={<Feed />} />
 
 
 

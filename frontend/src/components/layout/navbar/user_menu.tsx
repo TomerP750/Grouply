@@ -36,7 +36,7 @@ export function UserMenu({ user }: UserMenuProps) {
             </section>
 
             <section className='flex flex-col gap-1 w-full'>
-                
+
                 {/* Dashboard */}
                 <NavLink to={`/dashboard/${user.id}`} className="flex items-center justify-between hover:bg-slate-700/50 py-1 px-2 cursor-pointer">
                     <div className='flex gap-2'>
@@ -45,7 +45,7 @@ export function UserMenu({ user }: UserMenuProps) {
                     </div>
                     <BiChevronRight size={20} />
                 </NavLink>
-                
+
                 {/* Projects */}
                 <NavLink to={"/"} className="flex items-center justify-between hover:bg-slate-700/50 py-1 px-2 cursor-pointer">
                     <div className='flex gap-2'>
@@ -56,7 +56,8 @@ export function UserMenu({ user }: UserMenuProps) {
                 </NavLink>
 
                 {/* Settings */}
-                <div className="flex items-center justify-between hover:bg-slate-700/50 py-1 px-2 cursor-pointer">
+                <div className="flex items-center justify-between hover:bg-slate-700/50 py-1 px-2 cursor-pointer"
+                    onClick={() => navigate("/settings")}>
                     <div className='flex gap-2'>
                         <BiCog size={20} />
                         <span className='text-sm'>Settings</span>
