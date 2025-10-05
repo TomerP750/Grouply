@@ -1,5 +1,6 @@
 package com.grouply.backend.user;
 
+import com.grouply.backend.exceptions.ExistsException;
 import com.grouply.backend.user.Dtos.DeleteUserDTO;
 import com.grouply.backend.user.Dtos.UpdateUserDTO;
 import com.grouply.backend.user.Dtos.UserDTO;
@@ -21,8 +22,23 @@ public class UserService implements IUserService {
     private final UserRepository userRepository;
 
     @Override
-    public void updateUser(UpdateUserDTO dto) {
+    public void updateUser(Long userId ,UpdateUserDTO dto) throws ExistsException {
 
+        User user = findOneUser(userId);
+
+        if (userRepository.existsByUsername(dto.getUsername())) {
+            throw new ExistsException("Email already in use");
+        }
+        if (userRepository.existsByEmail(dto.getEmail())) {
+            throw new ExistsException("Username already in use");
+        }
+
+        user.setEmail(dto.getEmail());
+        user.setFirstName(dto.getFirstName());
+        user.setLastName(dto.getLastName());
+        user.setUsername(dto.getUsername());
+        user.setAvatarUrl(user.getAvatarUrl());
+        userRepository.save(user);
     }
 
     @Override

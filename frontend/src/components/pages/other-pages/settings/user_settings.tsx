@@ -1,16 +1,32 @@
 import { useForm } from "react-hook-form";
 import { useUser } from "../../../../redux/hooks";
 import { useEffect } from "react";
+import type { UpdateUserDTO } from "../../../../dtos/models_dtos/request_dto/update_user_dto";
+import userService from "../../../../service/UserService";
+import { toast } from "react-toastify";
 
 export function UserSettings() {
 
     const user = useUser();
 
-    // useEffect(() => {
-        
-    // }, []);
+    useEffect(() => {
+        setValue("firstName", user.firstName)
+        setValue("lastName", user.lastName)
+        setValue("username", user.username)
+        setValue("email", user.email)
+    }, []); 
 
-    const { register, handleSubmit, formState: {errors}, setValue } = useForm();
+    const { register, handleSubmit, formState: {errors}, setValue } = useForm<UpdateUserDTO>();
+
+    const updateUser = (data: UpdateUserDTO) => {
+        userService.updateUser(data)
+        .then(() => {
+            toast.success("Settings Updated Successfully!");
+        })
+        .catch(err => {
+            toast.error(err.response.data);
+        })
+    };
 
   return (
     <div className="text-white pb-10">
@@ -21,7 +37,7 @@ export function UserSettings() {
       </nav>
 
       {/* Inputs */}
-      <section className="mt-20 flex flex-col md:flex-row items-center md:items-start px-6 gap-10 overflow-y-auto">
+      <form onSubmit={handleSubmit(updateUser)} className="mt-20 flex flex-col md:flex-row items-center md:items-start px-6 gap-10 overflow-y-auto">
         {/* header */}
         <div className="space-y-2">
           <p className="font-semibold text-lg">Personal Information</p>
@@ -46,8 +62,8 @@ export function UserSettings() {
             <div className="flex flex-col gap-1.5">
               <label>First Name</label>
               <input
-            
-                name="firstName"
+                {...register("firstName")}
+          
                 type="text"
                 className="w-full border border-gray-500/50 bg-gray-800 py-1"
              
@@ -57,32 +73,27 @@ export function UserSettings() {
             <div className="flex flex-col gap-1.5">
               <label>Last Name</label>
               <input
-          
-                name="lastName"
+                {...register("lastName")}
                 type="text"
                 className="w-full border border-gray-500/50 bg-gray-800 py-1"
-              
               />
             </div>
 
             <div className="flex flex-col gap-1.5 col-span-1 lg:col-span-2">
               <label>Email</label>
               <input
-           
-                name="email"
+                {...register("email")}
                 type="email"
                 className="w-full border border-gray-500/50 bg-gray-800 py-1"
-              
               />
             </div>
 
             <div className="flex flex-col gap-1.5 col-span-1 lg:col-span-2">
               <label>Username</label>
               <input
-                name="username"
+                {...register("username")}
                 type="text"
                 className="w-full border border-gray-500/50 bg-gray-800 py-1"
-                
               />
             </div>
           </div>
@@ -91,7 +102,9 @@ export function UserSettings() {
             Save
           </button>
         </div>
-      </section>
+
+      </form>
+
     </div>
   );
 }

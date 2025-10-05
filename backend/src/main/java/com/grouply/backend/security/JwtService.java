@@ -16,6 +16,7 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.NoSuchElementException;
+import java.util.UUID;
 
 @Component
 @Slf4j
@@ -45,13 +46,14 @@ public class JwtService {
                 .issuer("Grouply")
                 .issuedAt(now)
                 .expiration(expiration)
-                .id(String.valueOf(user.getId()))
-                .subject(user.getEmail())
+                .id(UUID.randomUUID().toString())
+                .subject(String.valueOf(user.getId()))
                 .claim("id", user.getId())
                 .claim("role", user.getRole())
                 .claim("firstName", user.getFirstName())
                 .claim("lastName", user.getLastName())
                 .claim("username", user.getUsername())
+                .claim("email", user.getEmail())
                 .signWith(getSignInKey())
                 .compact();
     }
@@ -72,7 +74,7 @@ public class JwtService {
 
     public Long extractId(String token) {
         try {
-            return Long.valueOf(getClaims(token).getId());
+            return Long.valueOf(getClaims(token).getSubject());
         } catch (JwtException e) {
             throw new JwtException("failed extract id");
         }

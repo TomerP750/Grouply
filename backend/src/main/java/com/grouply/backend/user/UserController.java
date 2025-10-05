@@ -1,9 +1,11 @@
 package com.grouply.backend.user;
 
+import com.grouply.backend.exceptions.ExistsException;
 import com.grouply.backend.security.CustomUserDetails;
 import com.grouply.backend.user.Dtos.DeleteUserDTO;
 import com.grouply.backend.user.Dtos.UpdateUserDTO;
 import com.grouply.backend.user.Dtos.UserDTO;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -40,8 +42,9 @@ public class UserController {
     }
 
     @PutMapping("/update")
-    public void updateUser(@RequestBody UpdateUserDTO dto) {
-        userService.updateUser(dto);
+    public void updateUser(@AuthenticationPrincipal CustomUserDetails userDetails ,@Valid @RequestBody UpdateUserDTO dto) throws ExistsException {
+        Long userId = userDetails.getId();
+        userService.updateUser(userId ,dto);
     }
 
     @DeleteMapping("/delete/{id}")
