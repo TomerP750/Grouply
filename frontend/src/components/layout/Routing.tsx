@@ -13,6 +13,8 @@ import { ProjectsTable } from "../pages/dashboard/tables/projects-tables";
 import { Role } from "../../dtos/enums/Role";
 import { UsersTable } from "../pages/dashboard/tables/users-tabel";
 import { PostPage } from "../pages/posts-area/project_info_page/post_page";
+import { SettingsPage } from "../pages/other-pages/settings/SettingsPage";
+import { UserSettings } from "../pages/other-pages/settings/user_settings";
 
 
 export function Routing() {
@@ -26,6 +28,9 @@ export function Routing() {
                 <Route path="/about" element={<About />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<SignUpWizard />} />
+                <Route path="/settings" element={<SettingsPage/>}>
+                    <Route index element={<UserSettings />} />
+                </Route>
 
                 <Route path="/profile/:id" element={<ProfilePage />} />
                 <Route path="/dashboard/:id" element={<Dashboard />}>

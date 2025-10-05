@@ -104,7 +104,7 @@ export function Feed() {
 
 
             {/* Pagination */}
-            {posts && posts.length > 1 && <div className="flex justify-center gap-1 text-white">
+            {posts && posts.length > 3 && <div className="mt-10 flex justify-center gap-1 text-white">
                 <button
                     disabled={loading}
                     className={`inline-flex justify-center cursor-pointer bg-blue-600 

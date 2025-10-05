@@ -30,6 +30,10 @@ public class UserService implements IUserService {
 
     }
 
+    public Page<UserDTO> searchUsers(String query, Pageable pageable) {
+        return userRepository.search(query ,pageable).map(EntityToDtoMapper::toUserDto);
+    }
+
     @Override
     public Page<UserDTO> findAllUsers(Pageable pageable) {
         return userRepository.findAll(pageable).map(EntityToDtoMapper::toUserDto);

@@ -18,6 +18,15 @@ public class UserController {
 
     private final UserService userService;
 
+
+    @GetMapping("search")
+    public Page<UserDTO> searchUsers(@RequestParam(value = "query") String query,
+                                     @RequestParam(value = "page", defaultValue = "0") int page,
+                                     @RequestParam(value = "size", defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return userService.searchUsers(query, pageable);
+    }
+
     @GetMapping("/all")
     public Page<UserDTO> allUsers(@RequestParam(value = "page", defaultValue = "0") int page,
                                   @RequestParam(value = "size", defaultValue = "10") int size) {
