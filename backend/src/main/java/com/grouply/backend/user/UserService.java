@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -27,10 +28,11 @@ public class UserService implements IUserService {
         User user = findOneUser(userId);
 
         if (userRepository.existsByUsername(dto.getUsername())) {
-            throw new ExistsException("Email already in use");
-        }
-        if (userRepository.existsByEmail(dto.getEmail())) {
             throw new ExistsException("Username already in use");
+        }
+
+        if (userRepository.existsByEmailIgnoreCaseAndIdNot(dto.getEmail(), user.getId())) {
+            throw new ExistsException("Email already in use");
         }
 
         user.setEmail(dto.getEmail());

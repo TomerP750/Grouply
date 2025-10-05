@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import type { UpdateUserDTO } from "../../../../dtos/models_dtos/request_dto/update_user_dto";
 import userService from "../../../../service/UserService";
 import { toast } from "react-toastify";
+import defaultImage from "../../../../assets/defaultAvatar.png";
 
 export function UserSettings() {
 
@@ -51,6 +52,7 @@ export function UserSettings() {
           <div className="flex items-start gap-8">
 
             <div className="w-30 aspect-square rounded-lg bg-white" />
+            {/* <img src={defaultImage} className="w-30 aspect-square rounded-lg bg-white" /> */}
             <button className="cursor-pointer bg-gray-700 hover:bg-gray-600 px-3 py-2 rounded-lg">
               Change Avatar
             </button>
@@ -65,7 +67,7 @@ export function UserSettings() {
                 {...register("firstName")}
           
                 type="text"
-                className="w-full border border-gray-500/50 bg-gray-800 py-1"
+                className="w-full border border-gray-500/50 bg-gray-800 px-3 py-1"
              
               />
             </div>
@@ -75,7 +77,7 @@ export function UserSettings() {
               <input
                 {...register("lastName")}
                 type="text"
-                className="w-full border border-gray-500/50 bg-gray-800 py-1"
+                className="w-full border border-gray-500/50 bg-gray-800 px-3 py-1"
               />
             </div>
 
@@ -84,7 +86,7 @@ export function UserSettings() {
               <input
                 {...register("email")}
                 type="email"
-                className="w-full border border-gray-500/50 bg-gray-800 py-1"
+                className="w-full border border-gray-500/50 bg-gray-800 px-3 py-1"
               />
             </div>
 
@@ -93,7 +95,7 @@ export function UserSettings() {
               <input
                 {...register("username")}
                 type="text"
-                className="w-full border border-gray-500/50 bg-gray-800 py-1"
+                className="w-full border border-gray-500/50 bg-gray-800 px-3 py-1"
               />
             </div>
           </div>

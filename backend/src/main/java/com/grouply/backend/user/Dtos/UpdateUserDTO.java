@@ -18,7 +18,7 @@ public class UpdateUserDTO {
     private String lastName;
 
     @NotBlank
-    @Pattern(regexp = "^[a-zA-Z0-9._-]{6,15}$",
+    @Pattern(regexp = "^[a-zA-Z0-9._-]{5,15}$",
             message = "Username must be 6–15 characters and contain only letters, digits, '.', '-', or '_'")
     private String username;
 
