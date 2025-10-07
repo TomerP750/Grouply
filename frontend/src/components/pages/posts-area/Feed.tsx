@@ -81,7 +81,7 @@ export function Feed() {
                 <Filters value={filters} setValue={setFilters}/>
 
                 {/* Main area */}
-                <div className="w-full flex justify-center px-0 sm:px-5 pt-6">
+                <section className="w-full flex justify-center px-0 sm:px-5 pt-6">
                     {/* Width cap + centered */}
                     <div className="w-full grid grid-cols-1 justify-items-center lg:justify-items-start gap-y-10">
                         <div className="flex max-w-3/4 justify-center">
@@ -99,7 +99,7 @@ export function Feed() {
                             />
                         ))}
                     </div>
-                </div>
+                </section>
             </div>
 
 

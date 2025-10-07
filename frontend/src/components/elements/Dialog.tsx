@@ -48,13 +48,13 @@ export function Dialog({ open, title = "Confirm Action", message, onClose, onCon
         <div className="flex justify-end gap-3">
           <button
             onClick={onClose}
-            className="px-3 py-1.5 rounded-md bg-slate-700 hover:bg-slate-600 text-slate-300 transition"
+            className="cursor-pointer px-3 py-1.5 rounded-md bg-slate-700 hover:bg-slate-600 text-slate-300 transition"
           >
             Cancel
           </button>
           <button
             onClick={onConfirm}
-            className="px-3 py-1.5 rounded-md bg-red-600 hover:bg-red-500 text-white transition"
+            className="cursor-pointer px-3 py-1.5 rounded-md bg-red-600 hover:bg-red-500 text-white transition"
           >
             Delete
           </button>
