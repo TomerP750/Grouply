@@ -31,4 +31,11 @@ public class ConnectionRequestController {
         connectionRequestService.declineRequest(userId, senderId);
     }
 
+
+    @GetMapping("/incoming/{visitedId}")
+    public boolean hasPendingRequestByVisitedUser(@AuthenticationPrincipal CustomUserDetails userDetails, @PathVariable Long visitedId) {
+        Long userId = userDetails.getId();
+        return connectionRequestService.hasPendingRequestFromVisitedUser(userId, visitedId);
+    }
+
 }

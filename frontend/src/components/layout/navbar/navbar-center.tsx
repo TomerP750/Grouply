@@ -11,7 +11,7 @@ const linkClasses = ({ isActive }: { isActive: boolean }) =>
     "inline-flex flex-col items-center gap-1 transition-colors duration-200",
     isActive
       ? "text-teal-500 font-semibold"
-      : "text-gray-600 dark:text-gray-300 hover:text-teal-400",
+      : "text-black dark:text-white hover:text-teal-400",
   ].join(" ");
 
 interface NavbarCenterProps {
@@ -46,7 +46,7 @@ export function NavbarCenter({ user }: NavbarCenterProps) {
 
 
         <li>
-          <button className="cursor-pointer hover:text-teal-500 inline-flex flex-col items-center gap-1 transition-colors duration-200">
+          <button className="cursor-pointer inline-flex flex-col items-center gap-1 transition-colors duration-200">
             {/* <BiChat size={22} /> */}
             <Badge Icon={BiChat} count={0}/>
             <span className="text-sm">Messages</span>
@@ -54,7 +54,7 @@ export function NavbarCenter({ user }: NavbarCenterProps) {
         </li>
 
         <li>
-          <button className="cursor-pointer hover:text-teal-500 inline-flex flex-col items-center gap-1 transition-colors duration-200">
+          <button className="cursor-pointer inline-flex flex-col items-center gap-1 transition-colors duration-200">
             <Badge Icon={BiBell} count={0}/>
             <span className="text-sm">Notification</span>
           </button>

@@ -19,6 +19,10 @@ class ConnectionRequestService {
         return (await axios.post(`${CONNECTION_BASE_URL}/decline/${senderId}`));
     };
 
+    async hasPendingRequestByVisitedUser(visitedId: number) {
+        return (await axios.get(`${CONNECTION_BASE_URL}/incoming/${visitedId}`)).data;
+    };
+
 
 
 }

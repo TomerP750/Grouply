@@ -4,7 +4,7 @@ import joinRequestService from "../../../../service/JoinRequestService";
 import { useUserSelector } from "../../../../redux/hooks";
 import { JoinRequestDTO } from "../../../../dtos/models_dtos/request_dto/JoinRequestDTO";
 import { toast } from "react-toastify";
-import { BiCheck } from "react-icons/bi";
+import { BiCheck, BiLoaderAlt } from "react-icons/bi";
 
 interface PostPositionPageCardProps {
     postPosition: ProjectPostPositionDTO
@@ -16,8 +16,10 @@ export function PostPositionPageCard({ postPosition, postId }: PostPositionPageC
 
     const user = useUserSelector(state => state.authSlice.user);
     const [applied, setApplied] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(false);
 
     useEffect(() => {
+        setLoading(true)
         joinRequestService.hasAppliedToPostPosition(postId, postPosition.id)
             .then(res => {
                 setApplied(res);
@@ -25,9 +27,13 @@ export function PostPositionPageCard({ postPosition, postId }: PostPositionPageC
             .catch(err => {
                 toast.error(err.response.data);
             })
+            .finally(() => {
+                setLoading(false);
+            })
+
     }, []);
 
-    const [loading, setLoading] = useState<boolean>(false);
+
 
 
     const handleRequestToJoin = () => {
@@ -57,9 +63,10 @@ export function PostPositionPageCard({ postPosition, postId }: PostPositionPageC
         <div className="w-full hover:bg-slate-700 py-2 cursor-pointer flex items-center justify-between px-3">
             <span className="text-teal-500">{postPosition.position}</span>
             <button
+                disabled={loading}
                 onClick={handleRequestToJoin}
-                className={`py-1 px-2 ${applied ? 'bg-green-600' : 'bg-blue-600'} rounded-lg cursor-pointer`}>
-                {applied ? <BiCheck /> : 'Request to Join'}
+                className={`py-1 px-2 ${applied ? 'bg-green-600' : 'bg-blue-600'} rounded-lg cursor-pointer disabled:opacity-50`}>
+                {loading ? <BiLoaderAlt size={20}/> : applied ? <BiCheck /> : 'Request to Join'}
             </button>
         </div>
     )

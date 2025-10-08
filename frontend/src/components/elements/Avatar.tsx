@@ -27,24 +27,24 @@ export function Avatar({ user, size, onClick, className }: AvatarProps) {
 
     if (!user?.avatarUrl) {
         return (
-            <div
-                onClick={onClick}
-                style={{ width: size }} 
-                className={`aspect-square 
-                bg-teal-600 rounded-full
-                inline-flex items-center justify-center 
-                ${className}
-                `}> <FaUserAlt size={12} />
-            </div>
-
-            // <img src={defaultAvatar} alt="avatar"
+            // <div
             //     onClick={onClick}
             //     style={{ width: size }} 
             //     className={`aspect-square 
-            //     ${getRandomColor()} rounded-full
-            //      object-center object-cover
+            //     bg-teal-600 rounded-full
+            //     inline-flex items-center justify-center 
             //     ${className}
-            //     `}/> 
+            //     `}> <FaUserAlt size={12} />
+            // </div>
+
+            <img src={defaultAvatar} alt="avatar"
+                onClick={onClick}
+                style={{ width: size }} 
+                className={`aspect-square 
+                rounded-full
+                 object-center object-cover
+                ${className}
+                `}/> 
         )
     }
     return (

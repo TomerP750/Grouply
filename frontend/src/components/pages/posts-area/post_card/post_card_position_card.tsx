@@ -24,11 +24,10 @@ export function PostCardPositionCard({ postPosition, postId, user }: PostCardPos
 
     const handleRequestToJoin = (projectPostPositionId: number) => {
 
-        if (user != null) {
+        if (user) {
 
-            const joinRequest = new JoinRequestDTO(user.id, projectPostPositionId, postId);
-            console.log(joinRequest);
-
+            const joinRequest = new JoinRequestDTO(user.id!, projectPostPositionId, postId);
+           
             joinRequestService.toggleJoinRequest(joinRequest)
                 .then((res) => {
                     if (res === false) {

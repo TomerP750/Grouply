@@ -1,67 +1,123 @@
 import { useEffect, useState } from "react";
+import { FaLink } from "react-icons/fa";
+import { HiUserAdd } from "react-icons/hi";
+import { MdMail } from "react-icons/md";
 import { useParams } from "react-router-dom";
 import type { ProfileDTO } from "../../../dtos/models_dtos/ProfileDTO";
 import { useUser } from "../../../redux/hooks";
 import profileService from "../../../service/ProfileService";
 import { Navbar } from "../../layout/navbar/Navbar";
 import { ProfileBanner } from "./profile_banner";
+import connectionService from "../../../service/connection_service";
+import { toast } from "react-toastify";
+import connectionRequestService from "../../../service/connection_request_service";
 
-
+const btn =
+  "font-medium cursor-pointer text-white inline-flex items-center justify-center gap-2 rounded-lg " +
+  "bg-slate-700 hover:bg-slate-600 px-3 py-2  " +
+  "text-sm sm:text-base";
 
 export function ProfilePage() {
+  const params = useParams();
+  const id = Number(params.id);
 
-    const params = useParams();
-    const id = +params.id!;
+  const [profile, setProfile] = useState<ProfileDTO>();
+  const [areConnected, setAreConnected] = useState(false);
+  const [sentRequest, setSentRequest] = useState(false);
 
-    const [profile, setProfile] = useState<ProfileDTO>();
+  const user = useUser();
 
-    const user = useUser();
+  // Fetch profile when route param changes
+  useEffect(() => {
+    if (!id) return;
+    profileService
+      .getOneProfile(id)
+      .then(setProfile)
+      .catch((err) => console.log(err));
+  }, [id]);
 
-    useEffect(() => {
-        profileService.getOneProfile(id)
-            .then(res => {
-                setProfile(res);
-            })
-            .catch(err => {
-                console.log(err);
-            })
+  // Check connection status whenever we know which profile user it is
+  useEffect(() => {
+    const targetId = profile?.user?.id;
+    if (!targetId) return;
+    connectionService
+      .areConnected(targetId)
+      .then(setAreConnected)
+      .catch((err) => toast.error(err?.response?.data ?? "Failed to check connection"));
+  }, [profile?.user?.id]);
 
-    }, []);
+  const handleConnectRequest = () => {
+    const targetId = profile?.user?.id;
+    if (!targetId) return;
+    connectionRequestService
+      .toggleRequest(targetId)
+      .then((res) => {
+        setSentRequest(res);
+        toast.success(res ? "Connect Request Sent!" : "Connect Request Canceled");
+      })
+      .catch((err) => toast.error(err?.response?.data ?? "Action failed"));
+  };
 
+  return (
+    <main className="min-h-screen bg-gray-200 dark:bg-slate-900 dark:text-white">
+      <Navbar />
 
+      {/* Banner */}
+      {profile && <ProfileBanner user={profile.user} />}
 
-    return (
-        <div className="flex flex-col items-center min-h-screen bg-slate-900 text-white">
-            <Navbar />
-            <div className="flex flex-col items-center w-4/5">
-                {/* Banner */}
-                {profile && <ProfileBanner user={profile.user} />}
+      {/* Page container */}
+      <div className="max-w-7xl ml-auto px-4 sm:px-6 min-h-screen">
 
+        {/* Header row: name/handle + actions */}
+        <div className="flex w-3/4 sm:w-full justify-between items-center gap-4 sm:gap-6 md:gap-8 pt-6">
 
-                <div className="flex justify-between w-full p-6">
-                    
-                    <section className="flex justify-center gap-5">
-                        <button className="border px-2 py-1 rounded-lg cursor-pointer">Add Friend</button>
-                        <button className="border px-2 py-1 rounded-lg cursor-pointer">Invite to project</button>
-                    </section>
-                    
-                    {user.id === profile?.user.id
-                        && <button className="cursor-pointer bg-slate-700 font-medium hover:bg-blue-500 rounded-full px-3 py-1">Edit Profile</button>
-                    }
+          {/* Name/handle */}
+          <div>
+            <p className="font-semibold text-2xl sm:text-3xl leading-tight">
+              {profile?.user.firstName} {profile?.user.lastName}
+            </p>
+            <p className="text-gray-800 dark:text-gray-300 text-sm sm:text-base">@{profile?.user.username}</p>
+          </div>
 
-                    
-                </div>
-
-
-
-                <section className="mt-10">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis accusantium optio error voluptates, cum autem quibusdam ut molestiae sunt minus ratione itaque unde cupiditate dolores enim obcaecati veritatis, commodi ex.</p>
-                </section>
-            </div>
-
-
-
-
+          {/* Actions */}
+          <div className="space-x-3">
+            {user.id !== profile?.user.id ? (
+              <>
+                {areConnected ? (
+                  <button className={btn}>
+                    <FaLink /> Remove
+                  </button>
+                ) : (
+                  <button onClick={handleConnectRequest} className={btn}>
+                    <FaLink /> {sentRequest ? "Cancel" : "Connect"}
+                  </button>
+                )}
+                <button className={btn}>
+                  <MdMail /> Message
+                </button>
+                <button className={btn}>
+                  <HiUserAdd /> Invite To Project
+                </button>
+              </>
+            ) : (
+              <button className={btn}>
+                <FaLink /> Edit Profile
+              </button>
+            )}
+          </div>
         </div>
-    )
+
+        {/* content */}
+        <section className="mt-6 sm:mt-10 md:mt-14">
+          <p className="text-base sm:text-lg">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis accusantium optio error
+            voluptates, cum autem quibusdam ut molestiae sunt minus ratione itaque unde cupiditate
+            dolores enim obcaecati veritatis, commodi ex.
+          </p>
+        </section>
+
+        
+      </div>
+    </main>
+  );
 }

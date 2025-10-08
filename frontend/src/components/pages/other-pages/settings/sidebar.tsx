@@ -1,4 +1,5 @@
-import { BiLogOut, BiShield, BiUser } from "react-icons/bi"
+import { BiLogOut, BiShield, BiUser } from "react-icons/bi";
+import { MdDisplaySettings } from "react-icons/md";
 import { NavLink } from "react-router-dom";
 
 
@@ -22,6 +23,13 @@ export function SettingsSidebar() {
                     <NavLink to={"/settings/account"} className={`${menuItem}`}>
                         <BiShield size={25} />
                         <p>Security</p>
+                    </NavLink>
+                </li>
+
+                <li className="w-full">
+                    <NavLink to={"/settings/display"} className={`${menuItem}`}>
+                        <MdDisplaySettings size={25} />
+                        <p>Display</p>
                     </NavLink>
                 </li>
 

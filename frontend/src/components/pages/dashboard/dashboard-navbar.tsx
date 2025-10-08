@@ -4,16 +4,18 @@ import { FaUserGroup } from "react-icons/fa6";
 import { MdAdminPanelSettings, MdDashboard } from "react-icons/md";
 import { NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
-import logo from "../../../assets/logolight.png";
+import logoLight from "../../../assets/logolight.png";
+import logoDark from "../../../assets/logodark.png";
 import type { JwtUser } from "../../../redux/AuthSlice";
 import userService from "../../../service/UserService";
 import { NavbarRight } from "../../layout/navbar/NavbarRight";
+import { useTheme } from "../../../context/ThemeContext";
 
 
 const baseClasses =
-    "cursor-pointer text-gray-300 w-full p-2 inline-flex items-center gap-2 rounded-md transition";
-const activeClasses = "underline decoration-teal-500 decoration-2 underline-offset-10 text-white font-bolder";
-const inactiveClasses = "hover:bg-slate-800/50 text-gray-300";
+    "cursor-pointer dark:text-gray-300 w-full p-2 inline-flex items-center gap-2 rounded-md transition";
+const activeClasses = "underline decoration-teal-500 decoration-2 underline-offset-10 font-bolder";
+const inactiveClasses = "hover:bg-slate-800/50 dark:text-gray-300";
 
 interface DashboardNavbarProps {
     user: JwtUser | null
@@ -24,6 +26,8 @@ export function DashboardNavbar({ user }: DashboardNavbarProps) {
     const [adminMenuOpen, setAdminMenuOpen] = useState<boolean>(false);
 
     const [authorized, setAuthorized] = useState<boolean>(false);
+
+    const {theme} = useTheme();
 
     useEffect(() => {
         if (user)
@@ -41,10 +45,10 @@ export function DashboardNavbar({ user }: DashboardNavbarProps) {
 
 
     return (
-        <div className="h-30 flex justify-between gap-5 items-center px-10 text-white">
+        <div className="h-30 flex justify-between gap-5 items-center px-10 text-black dark:text-gray-300">
 
             <NavLink to={"/"}>
-                <img src={logo} alt="logo" className="w-30 aspect-square object-fit object-center" />
+                <img src={theme === "light" ? logoDark : logoLight} className="w-30 aspect-square object-fit object-center" />
             </NavLink>
 
             <ul className="flex items-center gap-3 w-full p-5 font-medium text-sm tracking-wider">
@@ -79,7 +83,7 @@ export function DashboardNavbar({ user }: DashboardNavbarProps) {
                     <li className="relative">
                         <button 
                         onClick={() => setAdminMenuOpen(!adminMenuOpen)}
-                        className="cursor-pointer text-gray-300 w-full p-2 inline-flex items-center gap-2 rounded-md transition">
+                        className="cursor-pointer dark:text-gray-300 w-full p-2 inline-flex items-center gap-2 rounded-md transition">
                             <MdAdminPanelSettings size={25} />
                             <p>Admin</p>
                         </button>

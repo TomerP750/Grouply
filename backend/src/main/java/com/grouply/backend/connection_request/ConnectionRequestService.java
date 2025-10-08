@@ -2,7 +2,6 @@ package com.grouply.backend.connection_request;
 
 import com.grouply.backend.connection.Connection;
 import com.grouply.backend.connection.ConnectionRepository;
-import com.grouply.backend.exceptions.ExistsException;
 import com.grouply.backend.exceptions.UnauthorizedException;
 import com.grouply.backend.user.User;
 import com.grouply.backend.user.UserRepository;
@@ -21,6 +20,13 @@ public class ConnectionRequestService implements IConnectionRequestService{
     private final ConnectionRepository connectionRepository;
     private final UserRepository userRepository;
 
+
+    @Override
+    public boolean hasPendingRequestFromVisitedUser(Long visitorId, Long visitedId) {
+        return connectionRequestRepository
+                .existsBySenderIdAndRecipientId(visitedId, visitorId);
+    }
+
     @Override
     public boolean toggleConnectionRequest(Long senderId ,Long recipientId) throws UnauthorizedException {
 
@@ -33,16 +39,6 @@ public class ConnectionRequestService implements IConnectionRequestService{
             connectionRequestRepository.deleteById(existing.getId());
             return false;
         }
-
-//        ConnectionRequest reverse = connectionRequestRepository
-//                .findBySenderIdAndRecipientId(recipientId, senderId)
-//                .orElse(null);
-//
-//        if (reverse != null && reverse.getStatus() == ConnectionRequestStatus.PENDING) {
-//            createConnectionPair(senderId, recipientId);
-//            connectionRequestRepository.deleteById(reverse.getId());
-//            return true;
-//        }
 
         User sender = fetchUser(senderId);
         User recipient = fetchUser(recipientId);

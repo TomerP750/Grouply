@@ -42,19 +42,21 @@ export function PostPage() {
                         to="/"
                         className="inline-flex items-center gap-2 text-teal-700 dark:text-teal-400 hover:scale-110 duration-200"
                     >
-                        ← Back to home
+                        Back to home
                     </NavLink>
                 </div>
 
 
-                <section className="bg-slate-900 shadow-xl shadow-slate-900 flex flex-col items-center w-3/4 p-5  min-h-screen">
+                <section className="bg-slate-900 shadow-xl shadow-slate-900 flex flex-col items-center w-4/5 p-5  min-h-screen">
 
-                    <p>{post?.title}</p>
-                    <p>{post?.description}</p>
-                    
+                    <div className="w-9/10 sm:w-4/5 space-y-2 py-10">
+                        <p className="text-lg sm:text-3xl font-semibold">{post?.title}</p>
+                        <p className="text-gray-300">{post?.description}</p>
+                    </div>
 
-                    {/* Card Container */}
-                    <div className="w-3/4 rounded-xl border border-slate-200/70 dark:border-white/10 bg-white/80 dark:bg-slate-900/40 shadow-sm backdrop-blur overflow-hidden">
+
+                    {/* Positions Card Container */}
+                    <div className="w-full sm:w-4/5 rounded-xl border border-slate-200/70 dark:border-white/10 bg-white/80 dark:bg-slate-900/40 shadow-sm backdrop-blur overflow-hidden">
 
                         {/* Header */}
                         <div className="px-4 py-3 border-b border-slate-200/70 dark:border-white/10">

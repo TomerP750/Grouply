@@ -15,6 +15,7 @@ import { UsersTable } from "../pages/dashboard/tables/users-tabel";
 import { PostPage } from "../pages/posts-area/project_info_page/post_page";
 import { SettingsPage } from "../pages/other-pages/settings/SettingsPage";
 import { UserSettings } from "../pages/other-pages/settings/user_settings";
+import { DisplaySettings } from "../pages/other-pages/settings/display_settings";
 
 
 export function Routing() {
@@ -30,6 +31,7 @@ export function Routing() {
                 <Route path="/signup" element={<SignUpWizard />} />
                 <Route path="/settings" element={<SettingsPage/>}>
                     <Route index element={<UserSettings />} />
+                    <Route path="display" element={<DisplaySettings />} />
                 </Route>
 
                 <Route path="/profile/:id" element={<ProfilePage />} />

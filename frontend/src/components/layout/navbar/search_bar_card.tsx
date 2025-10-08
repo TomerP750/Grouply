@@ -3,10 +3,10 @@ import type { UserDTO } from "../../../dtos/models_dtos/UserDTO";
 
 interface SearchbarCardProps {
     user: UserDTO
-    onOpen: () => void;
+    onClose: () => void;
 }
 
-export function SearchbarCard({ user, onOpen }: SearchbarCardProps) {
+export function SearchbarCard({ user, onClose }: SearchbarCardProps) {
 
     const navigate = useNavigate();
 
@@ -16,7 +16,7 @@ export function SearchbarCard({ user, onOpen }: SearchbarCardProps) {
                            hover:bg-slate-50 dark:hover:bg-slate-800"
             onClick={() => {
                 navigate(`/profile/${user.id}`) 
-                onOpen;
+                onClose;
             }}
         >
             {/* avatar (falls back to initials) */}

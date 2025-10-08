@@ -89,7 +89,7 @@ export function SearchBar() {
           {/* list */}
           <ul className="max-h-72 overflow-auto divide-y divide-slate-200 dark:divide-slate-800">
             {!loading && users.map(u => {
-                return <SearchbarCard key={u.id} user={u} onOpen={() => setOpen(true)}/>
+                return <SearchbarCard key={u.id} user={u} onClose={() => setOpen(false)}/>
             })}
 
             {/* empty state */}
