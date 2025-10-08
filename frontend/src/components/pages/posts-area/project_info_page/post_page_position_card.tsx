@@ -1,26 +1,40 @@
 import { useEffect, useState } from "react";
 import type { ProjectPostPositionDTO } from "../../../../dtos/models_dtos/ProjectPostPositionDTO";
 import joinRequestService from "../../../../service/JoinRequestService";
-import { useUserSelector } from "../../../../redux/hooks";
+import { useUser } from "../../../../redux/hooks";
 import { JoinRequestDTO } from "../../../../dtos/models_dtos/request_dto/JoinRequestDTO";
 import { toast } from "react-toastify";
 import { BiCheck, BiLoaderAlt } from "react-icons/bi";
+import projectMemberService from "../../../../service/ProjectMemberService";
+import type { PostDTO } from "../../../../dtos/models_dtos/PostDTO";
 
 interface PostPositionPageCardProps {
     postPosition: ProjectPostPositionDTO
-    postId: number
+    post: PostDTO
     onApply?: () => void;
 }
 
-export function PostPositionPageCard({ postPosition, postId }: PostPositionPageCardProps) {
+export function PostPositionPageCard({ postPosition, post }: PostPositionPageCardProps) {
 
-    const user = useUserSelector(state => state.authSlice.user);
+    const user = useUser();
     const [applied, setApplied] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
+    const [isMember, setIsMember] = useState<boolean>(false);
+
+
+    useEffect(() => {
+        projectMemberService.isMember(user.sub, post.projectDTO.id)
+        .then(res => {
+            setIsMember(res);
+        })
+        .catch(err => {
+            toast.error(err.response.data);
+        })
+    }, []);
 
     useEffect(() => {
         setLoading(true)
-        joinRequestService.hasAppliedToPostPosition(postId, postPosition.id)
+        joinRequestService.hasAppliedToPostPosition(post.id, postPosition.id)
             .then(res => {
                 setApplied(res);
             })
@@ -38,10 +52,10 @@ export function PostPositionPageCard({ postPosition, postId }: PostPositionPageC
 
     const handleRequestToJoin = () => {
 
-        if (user != null) {
+        if (user) {
 
-            const joinRequest = new JoinRequestDTO(user.id, postPosition.id, postId);
-            console.log(joinRequest);
+            const joinRequest = new JoinRequestDTO(user.sub, postPosition.id, post.id);
+            
 
             joinRequestService.toggleJoinRequest(joinRequest)
                 .then((res) => {
@@ -60,12 +74,12 @@ export function PostPositionPageCard({ postPosition, postId }: PostPositionPageC
     };
 
     return (
-        <div className="w-full hover:bg-slate-700 py-2 cursor-pointer flex items-center justify-between px-3">
+        <div className="w-full  py-1 cursor-pointer flex items-center justify-between px-3">
             <span className="text-teal-500">{postPosition.position}</span>
             <button
-                disabled={loading}
+                disabled={loading || isMember}
                 onClick={handleRequestToJoin}
-                className={`py-1 px-2 ${applied ? 'bg-green-600' : 'bg-blue-600'} rounded-lg cursor-pointer disabled:opacity-50`}>
+                className={`py-1 px-2 ${applied ? 'bg-green-600' : 'bg-blue-600'} rounded-lg cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed`}>
                 {loading ? <BiLoaderAlt size={20}/> : applied ? <BiCheck /> : 'Request to Join'}
             </button>
         </div>

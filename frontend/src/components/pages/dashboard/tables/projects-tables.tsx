@@ -17,6 +17,9 @@ import projectService from "../../../../service/ProjectService";
 import { fmtDate, toNormal } from "../../../../util/util_functions";
 import { Avatar } from "../../../elements/Avatar";
 import { Dialog } from "../../../elements/Dialog";
+import { NavLink, useNavigate } from "react-router-dom";
+import projectMemberService from "../../../../service/ProjectMemberService";
+import { useUser } from "../../../../redux/hooks";
 
 
 function StatusBadge({ status }: { status: ProjectStatus }) {
@@ -40,7 +43,9 @@ const ch = createColumnHelper<ProjectDTO>();
 
 export function ProjectsTable() {
 
-    const [membersByProject, setMembersByProject] = useState<Record<number, ProjectMemberDTO[]>>({});
+    const navigate = useNavigate();
+    const user = useUser();
+
     const [rows, setRows] = useState<ProjectDTO[]>([]);
     const [loading, setLoading] = useState(true);
     const [sorting, setSorting] = useState<SortingState>([]);
@@ -63,6 +68,8 @@ export function ProjectsTable() {
             .finally(() => setLoading(false));
 
     }, [pagination.pageIndex, pagination.pageSize]);
+
+    
 
 
     const handleEditProject = () => {
@@ -117,35 +124,10 @@ export function ProjectsTable() {
             id: "members",
             header: "Members",
             cell: ({ row }) => {
-                const list = membersByProject[row.original.id] ?? [];
-                const shown = list.slice(0, 5);
-                const extra = Math.max(0, list.length - 5);
-
                 return (
-                    <div className="flex items-center gap-2 min-w-[140px]"> {/* 👈 reserve width */}
+                    <div className="flex items-center gap-2 min-w-[140px] cursor-pointer"> 
                         <div className="flex -space-x-2">
-                            {shown.map((m) =>
-                                m.user?.avatarUrl ? (
-                                    <img
-                                        key={m.id}
-                                        src={m.user.avatarUrl}
-                                        alt={m.user.username}
-                                        title={m.user.username}
-                                        className="h-6 w-6 rounded-full object-cover ring-2 ring-white dark:ring-slate-900"
-                                    />
-                                ) : (
-                                    <Avatar key={m.id} size={25} />
-                                )
-                            )}
-                            {extra > 0 && (
-                                <div
-                                    className="h-6 w-6 rounded-full bg-slate-200 dark:bg-slate-700 text-[10px]
-                                    flex items-center justify-center ring-2 ring-white dark:ring-slate-900"
-                                    title={`${extra} more`}
-                                >
-                                    +{extra}
-                                </div>
-                            )}
+                            <button className="cursor-pointer hover:underline" onClick={()=>navigate(`/dashboard/${user.sub}/project-members/${row.original.id}`)}>View Members</button>
                         </div>
                     </div>
                 );
@@ -239,7 +221,7 @@ export function ProjectsTable() {
                         {table.getRowModel().rows.map((row) => (
                             <tr
                                 key={row.id}
-                                className="even:bg-slate-50/60 dark:even:bg-slate-800/30 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                                className="even:bg-slate-50/60 dark:even:bg-slate-500/30  transition-colors"
                             >
                                 {row.getVisibleCells().map((cell) => (
                                     <td key={cell.id} className="px-3 py-2 border-b border-slate-200 dark:border-slate-800">
@@ -283,7 +265,7 @@ export function ProjectsTable() {
                     Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount() || 1}
                 </span>
                 <select
-                    className="ml-2 px-2 py-1 border rounded text-sm bg-white dark:bg-slate-900"
+                    className="ml-2 px-4 py-1 border rounded text-sm bg-white dark:bg-slate-900 appearance-none"
                     value={table.getState().pagination.pageSize}
                     onChange={(e) => table.setPageSize(Number(e.target.value))}
                 >

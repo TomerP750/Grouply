@@ -7,6 +7,7 @@ import { Navbar } from "../../../layout/navbar/Navbar";
 import { useScrollToTop } from "../../../../util/helper_hooks";
 import { PostCardPositionCard } from "../post_card/post_card_position_card";
 import { useUser } from "../../../../redux/hooks";
+import { PostPositionPageCard } from "./post_page_position_card";
 
 
 export function PostPage() {
@@ -50,7 +51,7 @@ export function PostPage() {
                 <section className="bg-slate-900 shadow-xl shadow-slate-900 flex flex-col items-center w-4/5 p-5  min-h-screen">
 
                     <div className="w-9/10 sm:w-4/5 space-y-2 py-10">
-                        <p className="text-lg sm:text-3xl font-semibold">{post?.title}</p>
+                        <p className="text-lg sm:text-4xl font-semibold mb-8">{post?.title}</p>
                         <p className="text-gray-300">{post?.description}</p>
                     </div>
 
@@ -70,11 +71,7 @@ export function PostPage() {
                             {post?.positions?.length ? (
                                 post.positions.map((p) => (
                                     <li key={p.id} className="p-2 hover:bg-slate-950/5 dark:hover:bg-white/5 transition-colors">
-                                        <PostCardPositionCard
-                                            postId={post.id}
-                                            postPosition={p}
-                                            user={user}
-                                        />
+                                        <PostPositionPageCard postPosition={p} post={post} />
                                     </li>
                                 ))
                             ) : (

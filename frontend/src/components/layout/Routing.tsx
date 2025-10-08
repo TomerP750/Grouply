@@ -16,6 +16,7 @@ import { PostPage } from "../pages/posts-area/project_info_page/post_page";
 import { SettingsPage } from "../pages/other-pages/settings/SettingsPage";
 import { UserSettings } from "../pages/other-pages/settings/user_settings";
 import { DisplaySettings } from "../pages/other-pages/settings/display_settings";
+import { ProjectMembersTable } from "../pages/dashboard/tables/project_members_table";
 
 
 export function Routing() {
@@ -39,6 +40,7 @@ export function Routing() {
                     <Route index element={<Overview />} />
                     <Route path="projects" element={<ProjectsTable />} />
                     <Route path="users" element={<UsersTable/>} />
+                    <Route path="project-members/:id" element={<ProjectMembersTable/>} />
                 </Route>
 
                 <Route path="/post/:id" element={<PostPage />} />
