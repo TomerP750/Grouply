@@ -24,6 +24,10 @@ class UserService {
         return (await axios.put(`${BASE_API}/user/update`, data))
     }
 
+    async deleteUser() {
+        return (await axios.delete(`${BASE_API}/user/delete`))
+    }
+
     async checkUsernameAvailability(username: string) {
         return (await axios.get(`${BASE_API}/user/available/${username}`)).data
     }
@@ -35,6 +39,8 @@ class UserService {
     async changePassword(data: ChangePasswordDTO) {
         return (await axios.patch(`${BASE_API}/user/change`, data))
     }
+
+    
 }
 
 const userService = new UserService();

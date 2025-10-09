@@ -14,7 +14,7 @@ import { Role } from "../../dtos/enums/Role";
 import { UsersTable } from "../pages/dashboard/tables/users-tabel";
 import { PostPage } from "../pages/posts-area/project_info_page/post_page";
 import { SettingsPage } from "../pages/other-pages/settings/SettingsPage";
-import { UserSettings } from "../pages/other-pages/settings/user_settings";
+import { UserSettings } from "../pages/other-pages/settings/user_settings_area/user_settings";
 import { DisplaySettings } from "../pages/other-pages/settings/display_settings";
 import { ProjectMembersTable } from "../pages/dashboard/tables/project_members_table";
 import { SecuritySettings } from "../pages/other-pages/settings/security_settings";

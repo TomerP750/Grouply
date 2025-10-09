@@ -1,18 +1,16 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import defaultImage from "../../../../assets/projectdefault.jpg";
 import { ProjectCardProvider } from "../../../../context/ProjectCardContext";
-import type { ProjectMemberDTO } from "../../../../dtos/models_dtos/ProjectMemberDTO";
 import type { PostDTO } from "../../../../dtos/models_dtos/PostDTO";
-import { JoinRequestDTO } from "../../../../dtos/models_dtos/request_dto/JoinRequestDTO";
+import type { ProjectMemberDTO } from "../../../../dtos/models_dtos/ProjectMemberDTO";
 import { useUserSelector } from "../../../../redux/hooks";
 import archivedProjectService from "../../../../service/ArchivedProjectService";
-import joinRequestService from "../../../../service/JoinRequestService";
-import projectMemberService from "../../../../service/ProjectMemberService";
 import projectPostService from "../../../../service/PostService";
+import projectMemberService from "../../../../service/ProjectMemberService";
 import { Avatar } from "../../../elements/Avatar";
 import { PostCardDescription } from "./post_card_description";
-import { useNavigate } from "react-router-dom";
 
 
 interface ProjectCardProps {
@@ -48,7 +46,7 @@ export function PostCard({ projectPost, onRemove }: ProjectCardProps) {
     
     useEffect(() => {
         if (user) {
-            projectMemberService.isOwner(user.id, projectDTO.id)
+            projectMemberService.isOwner(user.sub, projectDTO.id)
                 .then(res => {
                     setIsOwner(res);
                 })

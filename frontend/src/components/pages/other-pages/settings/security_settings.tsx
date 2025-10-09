@@ -36,31 +36,55 @@ export function SecuritySettings() {
                 <div className="flex flex-col items-start w-full gap-5">
 
                     <div className="relative flex flex-col gap-1.5">
-                        <label>Password</label>
+                        <label className="font-medium">Password</label>
                         <input
-                            {...register("password")}
-
+                            {...register("password", {
+                                required: "Password is required",
+                                minLength: { value: 6, message: "At least 6 characters" },
+                                maxLength: { value: 15, message: "No more than 15 characters" },
+                            })}
                             type={showPassword ? "text" : "password"}
-                            className={`${inputStyle}`}
-
+                            className={`${inputStyle} pr-10 focus:ring-2 focus:ring-teal-500 focus:outline-none`}
                         />
                         <button
+                            type="button"
                             onClick={() => setShowPassword(!showPassword)}
-                            className="absolute right-3 top-10 cursor-pointer">{showPassword ? <FiEye size={15} /> : <FiEyeOff size={15} />}</button>
+                            className="absolute right-3 top-9 text-gray-500 hover:text-gray-300 dark:text-gray-400 dark:hover:text-white cursor-pointer"
+                        >
+                            {showPassword ? <FiEye size={18} /> : <FiEyeOff size={18} />}
+                        </button>
+                        {errors.password && (
+                            <span className="text-sm text-red-400 mt-0.5">{errors.password.message}</span>
+                        )}
                     </div>
 
                     <div className="relative flex flex-col gap-1.5">
-                        <label>Confirm Password</label>
+                        <label className="font-medium">Confirm Password</label>
                         <input
-                            {...register("confirmPassword")}
+                            {...register("confirmPassword", {
+                                required: "Please confirm your password",
+                                minLength: { value: 6, message: "At least 6 characters" },
+                                maxLength: { value: 15, message: "No more than 15 characters" },
+                                validate: (val) =>
+                                    val === watch("password") || "Passwords do not match",
+                            })}
                             type={showConfirmPassword ? "text" : "password"}
-                            className={`${inputStyle}`}
+                            className={`${inputStyle} pr-10 focus:ring-2 focus:ring-teal-500 focus:outline-none`}
                         />
                         <button
+                            type="button"
                             onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                            className="absolute right-3 top-10 cursor-pointer">{showConfirmPassword ? <FiEye size={15} /> : <FiEyeOff size={15} />}</button>
-
+                            className="absolute right-3 top-9 text-gray-500 hover:text-gray-300 dark:text-gray-400 dark:hover:text-white cursor-pointer"
+                        >
+                            {showConfirmPassword ? <FiEye size={18} /> : <FiEyeOff size={18} />}
+                        </button>
+                        {errors.confirmPassword && (
+                            <span className="text-sm text-red-400 mt-0.5">
+                                {errors.confirmPassword.message}
+                            </span>
+                        )}
                     </div>
+
 
                     <button className="text-white cursor-pointer rounded-lg hover:bg-teal-500 bg-teal-600 px-4 py-2">
                         Save

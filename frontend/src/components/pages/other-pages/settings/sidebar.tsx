@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 const menuItem =
   "dark:text-gray-300 hover:text-white cursor-pointer inline-flex items-center gap-3 hover:bg-gray-500/30 w-full py-2 px-2 rounded-md transition-colors";
 const active =
-  "bg-gray-400/30 dark:bg-teal-600/20 text-teal-600 dark:text-teal-400";
+  "bg-gray-400/30 dark:bg-gray-600/30 text-gray-600 font-bold dark:text-white";
 
 export function SettingsSidebar() {
   return (

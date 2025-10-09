@@ -46,7 +46,7 @@ function applyHtmlClass(theme: Theme) {
 
 export function ThemeProvider({ children }: ThemeProviderProps) {
 
-    const [theme, setTheme] = useState<Theme>("dark");
+    const [theme, setTheme] = useState<Theme>(getInitialTheme());
 
 
     useEffect(() => {

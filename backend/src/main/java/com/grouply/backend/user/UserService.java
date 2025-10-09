@@ -1,6 +1,8 @@
 package com.grouply.backend.user;
 
 import com.grouply.backend.exceptions.ExistsException;
+import com.grouply.backend.exceptions.InvalidInputException;
+import com.grouply.backend.user.Dtos.ChangePasswordRequestDTO;
 import com.grouply.backend.user.Dtos.DeleteUserDTO;
 import com.grouply.backend.user.Dtos.UpdateUserDTO;
 import com.grouply.backend.user.Dtos.UserDTO;
@@ -10,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.NoSuchElementException;
@@ -21,6 +24,7 @@ import java.util.Optional;
 public class UserService implements IUserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder encoder;
 
     @Override
     public void updateUser(Long userId ,UpdateUserDTO dto) throws ExistsException {
@@ -43,9 +47,32 @@ public class UserService implements IUserService {
         userRepository.save(user);
     }
 
-    @Override
-    public void deleteUser(DeleteUserDTO dto) {
+    public void changePassword(Long userId, ChangePasswordRequestDTO dto) throws InvalidInputException {
 
+        if (!dto.getPassword().equals(dto.getConfirmPassword())) {
+            throw new InvalidInputException("Passwords do not match");
+        }
+
+        User user = findOneUser(userId);
+        String encodedPassword = encoder.encode(dto.getPassword());
+        user.setPassword(encodedPassword);
+        userRepository.save(user);
+    }
+
+    @Override
+    public void deleteUser(Long userId ,DeleteUserDTO dto) throws InvalidInputException {
+
+        if (!dto.getPassword().equals(dto.getConfirmPassword())) {
+            throw new InvalidInputException("Passwords are not match");
+        }
+        User user = findOneUser(userId);
+        if (!user.getPassword().equals(dto.getPassword())) {
+            throw new InvalidInputException("Password is wrong");
+        }
+
+        log.info("Deleting user");
+        userRepository.deleteById(user.getId());
+        log.info("Successfully deleted user");
     }
 
     public Page<UserDTO> searchUsers(String query, Pageable pageable) {

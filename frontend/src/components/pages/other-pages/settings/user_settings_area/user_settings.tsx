@@ -1,10 +1,10 @@
 import { useForm } from "react-hook-form";
-import { useUser } from "../../../../redux/hooks";
+import { useUser } from "../../../../../redux/hooks";
 import { useEffect, useState } from "react";
-import type { UpdateUserDTO } from "../../../../dtos/models_dtos/request_dto/update_user_dto";
-import userService from "../../../../service/UserService";
+import type { UpdateUserDTO } from "../../../../../dtos/models_dtos/request_dto/update_user_dto";
+import userService from "../../../../../service/UserService";
 import { toast } from "react-toastify";
-import defaultImage from "../../../../assets/defaultAvatar.png";
+import { DeleteAccount } from "./delete_account";
 
 
 const inputStyle = "w-full rounded-lg border border-gray-500/50 bg-gray-400 dark:bg-gray-800 px-3 py-1";
@@ -88,7 +88,7 @@ export function UserSettings() {
           {/* Inputs section */}
           <div className="grid grid-cols-1 lg:grid-cols-2 w-full gap-5">
             <div className="flex flex-col gap-1.5">
-              <label>First Name</label>
+              <label className="font-medium ">First Name</label>
               <input
                 {...register("firstName")}
 
@@ -137,7 +137,7 @@ export function UserSettings() {
                     setValue("username", e.target.value);
                     setUsernameChecked(false);
                   }}
-                  className="rounded-lg border border-gray-500/50 bg-gray-400 dark:bg-gray-800 px-3 py-1" />
+                  className="border-b-2 border-black dark:border-gray-500/50  px-3 py-1" />
 
                 <button
                   type="button"
@@ -171,6 +171,11 @@ export function UserSettings() {
         </div>
 
       </form>
+
+      <hr className="border-0 h-px bg-gradient-to-r from-transparent via-gray-400 to-transparent dark:via-gray-600 my-15 rounded-full" />
+
+      {/* Delete account */}
+      <DeleteAccount />
 
     </div>
   );

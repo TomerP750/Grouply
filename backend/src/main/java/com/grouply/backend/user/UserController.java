@@ -1,7 +1,9 @@
 package com.grouply.backend.user;
 
 import com.grouply.backend.exceptions.ExistsException;
+import com.grouply.backend.exceptions.InvalidInputException;
 import com.grouply.backend.security.CustomUserDetails;
+import com.grouply.backend.user.Dtos.ChangePasswordRequestDTO;
 import com.grouply.backend.user.Dtos.DeleteUserDTO;
 import com.grouply.backend.user.Dtos.UpdateUserDTO;
 import com.grouply.backend.user.Dtos.UserDTO;
@@ -47,9 +49,16 @@ public class UserController {
         userService.updateUser(userId ,dto);
     }
 
-    @DeleteMapping("/delete/{id}")
-    public void deleteUser(@RequestBody DeleteUserDTO dto) {
-        userService.deleteUser(dto);
+    @PatchMapping("/changeP")
+    public void changePassword(@AuthenticationPrincipal CustomUserDetails userDetails, @RequestBody ChangePasswordRequestDTO dto) throws InvalidInputException {
+        Long userId = userDetails.getId();
+        userService.changePassword(userId, dto);
+    }
+
+    @DeleteMapping("/delete")
+    public void deleteUser(@AuthenticationPrincipal CustomUserDetails userDetails ,@RequestBody DeleteUserDTO dto) throws InvalidInputException {
+        Long userId = userDetails.getId();
+        userService.deleteUser(userId ,dto);
     }
 
     @GetMapping("/available/{username}")
