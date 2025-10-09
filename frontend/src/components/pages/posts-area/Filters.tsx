@@ -24,7 +24,7 @@ export function Filters({ value, setValue }: FiltersProps) {
     setValue(prev => ({ ...prev, roleDemand: v }));
 
   return (
-    <aside className="lg:sticky top-50 left-6 w-2/3 lg:w-1/4 p-4 rounded-xl 
+    <aside className="lg:sticky top-50 left-0 w-2/3 lg:w-1/4 p-4 rounded-xl 
                       bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-100 
                       shadow-lg space-y-4">
       <h3 className="text-sm font-semibold tracking-wide mb-2">Filters</h3>

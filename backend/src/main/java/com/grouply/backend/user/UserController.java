@@ -52,6 +52,10 @@ public class UserController {
         userService.deleteUser(dto);
     }
 
+    @GetMapping("/available/{username}")
+    public boolean usernameAvailable(@PathVariable String username) {
+        return userService.checkUsernameAvailability(username);
+    }
 
     @GetMapping("/admin")
     public boolean isAdmin(@AuthenticationPrincipal CustomUserDetails userDetails) {

@@ -1,59 +1,85 @@
 import { useForm } from "react-hook-form";
 import { useUser } from "../../../../redux/hooks";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import type { UpdateUserDTO } from "../../../../dtos/models_dtos/request_dto/update_user_dto";
 import userService from "../../../../service/UserService";
 import { toast } from "react-toastify";
 import defaultImage from "../../../../assets/defaultAvatar.png";
 
+
+const inputStyle = "w-full rounded-lg border border-gray-500/50 bg-gray-400 dark:bg-gray-800 px-3 py-1";
+
+
 export function UserSettings() {
 
-    const user = useUser();
+  const { register, handleSubmit, formState: { errors }, setValue, getValues, watch } = useForm<UpdateUserDTO>();
 
-    useEffect(() => {
-        setValue("firstName", user.firstName)
-        setValue("lastName", user.lastName)
-        setValue("username", user.username)
-        setValue("email", user.email)
-    }, []); 
+  const user = useUser();
+  const [usernameChecked, setUsernameChecked] = useState<boolean>(false);
+  const [isTaken, setIsTaken] = useState<boolean>(false);
+  const usernameQuery = watch("username", user.username ?? "");
 
-    const { register, handleSubmit, formState: {errors}, setValue } = useForm<UpdateUserDTO>();
 
-    const updateUser = (data: UpdateUserDTO) => {
-        userService.updateUser(data)
-        .then(() => {
-            toast.success("Settings Updated Successfully!");
-        })
-        .catch(err => {
-            toast.error(err.response.data);
-        })
-    };
+  useEffect(() => {
+    setValue("firstName", user.firstName)
+    setValue("lastName", user.lastName)
+    setValue("username", user.username)
+    setValue("email", user.email)
+  }, []);
+
+
+
+  const updateUser = (data: UpdateUserDTO) => {
+    userService.updateUser(data)
+      .then(() => {
+        toast.success("Settings Updated Successfully!");
+      })
+      .catch(err => {
+        toast.error(err.response.data);
+      })
+  };
+
+  const checkUsername = () => {
+
+    const trimmedQuery = getValues("username").trim().toLowerCase();
+
+    if (!trimmedQuery) return;
+
+    userService.checkUsernameAvailability(trimmedQuery)
+      .then(res => {
+        setUsernameChecked(true)
+        setIsTaken(res);
+      })
+      .catch(err => {
+        toast.error(err.response.data);
+      })
+  }
 
   return (
-    <div className="text-white pb-10">
+    <div className="pb-10">
       {/* Nav */}
-      <nav className="h-20 border-b border-gray-500/60 flex justify-start items-center gap-6 px-8 text-sm font-medium text-white">
+      <nav className="h-20 border-b border-gray-500/60 flex justify-start items-center gap-6 px-8 text-sm font-medium dark:text-white">
         <span>User</span>
         <span>Notifications</span>
       </nav>
 
       {/* Inputs */}
-      <form onSubmit={handleSubmit(updateUser)} className="mt-20 flex flex-col md:flex-row items-center md:items-start px-6 gap-10 overflow-y-auto">
+      <form onSubmit={handleSubmit(updateUser)} className="mt-20 flex flex-col md:flex-row items-center md:items-start px-6 gap-10 overflow-y-auto text-black dark:text-white">
         {/* header */}
-        <div className="space-y-2">
+        <div className="space-y-2 dark:text-white">
           <p className="font-semibold text-lg">Personal Information</p>
           <p className="text-gray-400">Settings for update user information</p>
         </div>
 
         {/* Main area */}
-        <div className="flex-1 flex flex-col items-start gap-8 px-5 text-white">
-          
+        <div className="flex-1 flex flex-col items-start gap-8 px-5 dark:text-white">
+
           {/* avatar upload */}
           <div className="flex items-start gap-8">
 
             <div className="w-30 aspect-square rounded-lg bg-white" />
             {/* <img src={defaultImage} className="w-30 aspect-square rounded-lg bg-white" /> */}
-            <button className="cursor-pointer bg-gray-700 hover:bg-gray-600 px-3 py-2 rounded-lg">
+            <button className="text-white cursor-pointer bg-gray-700 hover:bg-gray-600 px-3 py-2 rounded-lg">
               Change Avatar
             </button>
 
@@ -65,10 +91,10 @@ export function UserSettings() {
               <label>First Name</label>
               <input
                 {...register("firstName")}
-          
+
                 type="text"
-                className="w-full border border-gray-500/50 bg-gray-800 px-3 py-1"
-             
+                className={`${inputStyle}`}
+
               />
             </div>
 
@@ -77,7 +103,7 @@ export function UserSettings() {
               <input
                 {...register("lastName")}
                 type="text"
-                className="w-full border border-gray-500/50 bg-gray-800 px-3 py-1"
+                className={`${inputStyle}`}
               />
             </div>
 
@@ -86,7 +112,7 @@ export function UserSettings() {
               <input
                 {...register("email")}
                 type="email"
-                className="w-full border border-gray-500/50 bg-gray-800 px-3 py-1"
+                className={`${inputStyle}`}
               />
             </div>
 
@@ -95,12 +121,51 @@ export function UserSettings() {
               <input
                 {...register("username")}
                 type="text"
-                className="w-full border border-gray-500/50 bg-gray-800 px-3 py-1"
+                className={`${inputStyle}`}
               />
+
             </div>
+
+            {/* Check username */}
+            <div className="flex flex-col gap-2 items-start justify-start w-full cursor-pointer">
+              <div className="flex gap-2">
+
+                <input
+                  type="text"
+                  value={usernameQuery}
+                  onChange={(e) => {
+                    setValue("username", e.target.value);
+                    setUsernameChecked(false);
+                  }}
+                  className="rounded-lg border border-gray-500/50 bg-gray-400 dark:bg-gray-800 px-3 py-1" />
+
+                <button
+                  type="button"
+                  disabled={usernameQuery === user.username || !usernameQuery}
+                  onClick={checkUsername}
+                  className="text-sm cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed">Check Avilability</button>
+
+                <button
+                  type="button"
+                  disabled={usernameQuery === user.username}
+                  onClick={() => {
+                    setValue("username", user.username ?? "");
+                    setUsernameChecked(false);
+                  }} className="text-sm cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed">Reset</button>
+
+              </div>
+
+              {usernameChecked && (
+                isTaken
+                  ? <span className="text-red-500">Username Not Available</span>
+                  : <span className="text-green-500">Username Available</span>
+              )}
+
+            </div>
+
           </div>
 
-          <button className="cursor-pointer rounded-lg hover:bg-teal-500 bg-teal-600 px-4 py-2">
+          <button className="text-white cursor-pointer rounded-lg hover:bg-teal-500 bg-teal-600 px-4 py-2">
             Save
           </button>
         </div>

@@ -15,7 +15,7 @@ import { useTheme } from "../../../context/ThemeContext";
 const baseClasses =
     "cursor-pointer dark:text-gray-300 w-full p-2 inline-flex items-center gap-2 rounded-md transition";
 const activeClasses = "underline decoration-teal-500 decoration-2 underline-offset-10 font-bolder";
-const inactiveClasses = "hover:bg-slate-800/50 dark:text-gray-300";
+const inactiveClasses = "hover:bg-gray-300/50 dark:text-gray-300";
 
 interface DashboardNavbarProps {
     user: JwtUser | null

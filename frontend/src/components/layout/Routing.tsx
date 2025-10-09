@@ -17,6 +17,7 @@ import { SettingsPage } from "../pages/other-pages/settings/SettingsPage";
 import { UserSettings } from "../pages/other-pages/settings/user_settings";
 import { DisplaySettings } from "../pages/other-pages/settings/display_settings";
 import { ProjectMembersTable } from "../pages/dashboard/tables/project_members_table";
+import { SecuritySettings } from "../pages/other-pages/settings/security_settings";
 
 
 export function Routing() {
@@ -33,6 +34,7 @@ export function Routing() {
                 <Route path="/settings" element={<SettingsPage/>}>
                     <Route index element={<UserSettings />} />
                     <Route path="display" element={<DisplaySettings />} />
+                    <Route path="security" element={<SecuritySettings />} />
                 </Route>
 
                 <Route path="/profile/:id" element={<ProfilePage />} />

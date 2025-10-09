@@ -67,6 +67,10 @@ public class UserService implements IUserService {
         return userRepository.findByUsername(username).orElseThrow(() -> new NoSuchElementException("User not found"));
     }
 
+    public boolean checkUsernameAvailability(String username) {
+        return userRepository.existsByUsername(username);
+    }
+
     public boolean isAdmin(Long userId) {
         return userRepository.existsByIdAndRole(userId, Role.ADMIN);
     }
