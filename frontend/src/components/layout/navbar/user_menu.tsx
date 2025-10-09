@@ -1,14 +1,16 @@
-import { BiChevronRight, BiCog, BiFolder, BiLogOut, BiMoon, BiQuestionMark, BiSun } from 'react-icons/bi';
+import { useState } from 'react';
+import { BiChevronRight, BiCog, BiFolder, BiLogOut } from 'react-icons/bi';
+import { HiOutlineQuestionMarkCircle } from 'react-icons/hi';
+import { IoColorPaletteOutline } from 'react-icons/io5';
+import { MdDashboard } from 'react-icons/md';
 import { useDispatch } from 'react-redux';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { useTheme } from '../../../context/ThemeContext';
 import { logout, type JwtUser } from '../../../redux/AuthSlice';
 import './user_menu_styles.css';
-import { HiOutlineQuestionMarkCircle, HiQuestionMarkCircle } from 'react-icons/hi';
-import { NavLink, useNavigate } from 'react-router-dom';
-import { MdDashboard } from 'react-icons/md';
-import { useTheme } from '../../../context/ThemeContext';
-import { IoColorPaletteOutline } from 'react-icons/io5';
-import { useState } from 'react';
-import { toTitleCase } from '../../../util/util_functions';
+
+
+const rowStyle = "flex items-center justify-between hover:bg-gray-300/50 py-1 px-2 cursor-pointer";
 
 interface UserMenuProps {
     user: JwtUser | null;
@@ -46,7 +48,7 @@ export function UserMenu({ user }: UserMenuProps) {
             <section className='flex flex-col gap-1 w-full'>
 
                 {/* Dashboard */}
-                <NavLink to={`/dashboard/${user.id}`} className="flex items-center justify-between hover:bg-slate-700/50 py-1 px-2 cursor-pointer">
+                <NavLink to={`/dashboard/${user.id}`} className={`${rowStyle}`}>
                     <div className='flex gap-2'>
                         <MdDashboard size={20} />
                         <span className='text-sm'>Dashboard</span>
@@ -55,7 +57,7 @@ export function UserMenu({ user }: UserMenuProps) {
                 </NavLink>
 
                 {/* Projects */}
-                <NavLink to={"/"} className="flex items-center justify-between hover:bg-slate-700/50 py-1 px-2 cursor-pointer">
+                <NavLink to={"/"} className={`${rowStyle}`}>
                     <div className='flex gap-2'>
                         <BiFolder size={20} />
                         <span className='text-sm'>Projects</span>
@@ -64,7 +66,7 @@ export function UserMenu({ user }: UserMenuProps) {
                 </NavLink>
 
                 {/* Settings */}
-                <div className="flex items-center hover:bg-slate-700/50 py-1 px-2 cursor-pointer"
+                <div className={`${rowStyle}`}
                     onClick={() => navigate("/settings")}>
                     <div className='flex gap-2'>
                         <BiCog size={20} />

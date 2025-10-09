@@ -1,6 +1,12 @@
 package com.grouply.backend.util;
 import com.grouply.backend.archived_project.ArchivedProject;
 import com.grouply.backend.archived_project.dto.ArchivedProjectDTO;
+import com.grouply.backend.chat_member.ChatMember;
+import com.grouply.backend.chat_member.dto.ChatMemberDTO;
+import com.grouply.backend.chat_message.ChatMessage;
+import com.grouply.backend.chat_message.dto.ChatMessageDTO;
+import com.grouply.backend.chat_room.ChatRoom;
+import com.grouply.backend.chat_room.dto.ChatRoomDTO;
 import com.grouply.backend.position.Position;
 import com.grouply.backend.position.dto.PositionDTO;
 import com.grouply.backend.profile.Profile;
@@ -16,7 +22,7 @@ import com.grouply.backend.project_post_position.dto.ProjectPostPositionDTO;
 import com.grouply.backend.user.Dtos.UserDTO;
 import com.grouply.backend.user.User;
 import java.util.*;
-
+import java.util.stream.Collectors;
 
 
 public class EntityToDtoMapper {
@@ -197,4 +203,52 @@ public class EntityToDtoMapper {
         }
         return result;
     }
+
+
+
+    public static ChatMemberDTO toChatMemberDto(ChatMember entity) {
+        if (entity == null) return null;
+
+        return ChatMemberDTO.builder()
+                .id(entity.getId())
+                .projectMemberId(entity.getMember().getId())
+                .userId(entity.getMember().getUser().getId())
+                .username(entity.getMember().getUser().getUsername())
+                .avatarUrl(entity.getMember().getUser().getAvatarUrl())
+                .build();
+    }
+
+    public static ChatMessageDTO toChatMessageDto(ChatMessage entity) {
+        if (entity == null) return null;
+
+        return ChatMessageDTO.builder()
+                .id(entity.getId())
+                .content(entity.getContent())
+                .status(entity.getStatus())
+                .sentAt(entity.getSentAt())
+                .chatRoomId(entity.getChatRoom().getId())
+                .sender(toChatMemberDto(entity.getMember()))
+                .build();
+    }
+
+
+    public static ChatRoomDTO toChatRoomDto(ChatRoom entity) {
+        if (entity == null) return null;
+
+        List<ChatMemberDTO> memberDtos = null;
+        if (entity.getMembers() != null) {
+            memberDtos = entity.getMembers().stream()
+                    .map(EntityToDtoMapper::toChatMemberDto)
+                    .collect(Collectors.toList());
+        }
+
+        return ChatRoomDTO.builder()
+                .id(entity.getId())
+                .name(entity.getName())
+                .projectId(entity.getProject() != null ? entity.getProject().getId() : null)
+                .members(memberDtos)
+                .build();
+    }
+
+
 }

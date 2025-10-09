@@ -8,6 +8,7 @@ import { useScrollToTop } from "../../../../util/helper_hooks";
 import { PostCardPositionCard } from "../post_card/post_card_position_card";
 import { useUser } from "../../../../redux/hooks";
 import { PostPositionPageCard } from "./post_page_position_card";
+import { toNormal } from "../../../../util/util_functions";
 
 
 export function PostPage() {
@@ -31,6 +32,7 @@ export function PostPage() {
             })
     }, []);
 
+    
     return (
         <div className="min-h-screen bg-gray-100 dark:bg-gradient-to-r dark:from-slate-900 dark:via-teal-950 dark:to-stone-900 text-slate-900 dark:text-white">
             <Navbar />
@@ -51,8 +53,8 @@ export function PostPage() {
                 <section className="bg-slate-900 shadow-xl shadow-slate-900 flex flex-col items-center w-4/5 p-5  min-h-screen">
 
                     <div className="w-9/10 sm:w-4/5 space-y-2 py-10">
-                        <p className="text-lg sm:text-4xl font-semibold mb-8">{post?.title}</p>
-                        <p className="text-gray-300">{post?.description}</p>
+                        <p className="text-lg sm:text-4xl font-semibold mb-8">{post && toNormal(post?.title)}</p>
+                        <p className="text-gray-300">{post && toNormal(post?.description)}</p>
                     </div>
 
 
