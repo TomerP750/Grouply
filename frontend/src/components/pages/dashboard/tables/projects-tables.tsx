@@ -20,6 +20,8 @@ import { Dialog } from "../../../elements/Dialog";
 import { NavLink, useNavigate } from "react-router-dom";
 import projectMemberService from "../../../../service/ProjectMemberService";
 import { useUser } from "../../../../redux/hooks";
+import { Modal } from "../../../elements/Modal";
+import { CreateProjectForm } from "../forms/create_project_form";
 
 
 function StatusBadge({ status }: { status: ProjectStatus }) {
@@ -42,6 +44,8 @@ function StatusBadge({ status }: { status: ProjectStatus }) {
 const ch = createColumnHelper<ProjectDTO>();
 
 export function ProjectsTable() {
+
+    const [modalOpen, setModalOpen] = useState<boolean>(false);
 
     const navigate = useNavigate();
     const user = useUser();
@@ -69,7 +73,7 @@ export function ProjectsTable() {
 
     }, [pagination.pageIndex, pagination.pageSize]);
 
-    
+
 
 
     const handleEditProject = () => {
@@ -125,9 +129,9 @@ export function ProjectsTable() {
             header: "Members",
             cell: ({ row }) => {
                 return (
-                    <div className="flex items-center gap-2 min-w-[140px] cursor-pointer"> 
+                    <div className="flex items-center gap-2 min-w-[140px] cursor-pointer">
                         <div className="flex -space-x-2">
-                            <button className="cursor-pointer hover:underline" onClick={()=>navigate(`/dashboard/${user.sub}/project-members/${row.original.id}`)}>View Members</button>
+                            <button className="cursor-pointer hover:underline" onClick={() => navigate(`/dashboard/${user.sub}/project-members/${row.original.id}`)}>View Members</button>
                         </div>
                     </div>
                 );
@@ -187,7 +191,12 @@ export function ProjectsTable() {
         <div className="w-full p-4 dark:text-white">
             <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
                 <div className="flex justify-end mb-2">
-                    <button className="px-2 py-1 bg-teal-500 font-medium mr-2 inline-flex items-center gap-1 cursor-pointer hover:bg-teal-600"><BiPlus size={20} /> Create Project</button>
+                    <button
+                        onClick={() => setModalOpen(true)}
+                        className="px-2 py-1 bg-teal-500 font-medium mr-2 inline-flex items-center gap-1 cursor-pointer hover:bg-teal-600"><BiPlus size={20} /> 
+                        Create Project
+                    </button>
+                    {modalOpen && <Modal open={modalOpen} onClose={() => setModalOpen(false)}><CreateProjectForm/></Modal>}
                 </div>
                 <table className="w-full border-collapse text-left text-sm">
                     {/* sticky header (light/dark) */}
@@ -280,6 +289,8 @@ export function ProjectsTable() {
                 message={"Are you sure you want to delete"}
                 onClose={() => setDialogOpen(false)}
                 onConfirm={() => handleDeleteProject(selectedProjectId)} />}
+
+
         </div>
     );
 }

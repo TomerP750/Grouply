@@ -1,10 +1,12 @@
 package com.grouply.backend.technology;
 
 import com.grouply.backend.exceptions.InvalidInputException;
+import com.grouply.backend.technology.dto.TechnologyDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -13,6 +15,11 @@ import java.util.NoSuchElementException;
 public class TechnologyService implements ITechnologyService {
 
     private final TechnologyRepository technologyRepository;
+
+    @Override
+    public List<TechnologyDTO> allTechnologies() {
+        return technologyRepository.findAll().stream().map(this::toDto).toList();
+    }
 
     @Override
     public void addTechnology(String name) throws InvalidInputException {
@@ -38,5 +45,13 @@ public class TechnologyService implements ITechnologyService {
         }
         technologyRepository.deleteById(techId);
         log.info("Successfully delete technology");
+    }
+
+
+    private TechnologyDTO toDto(Technology entity) {
+        return TechnologyDTO.builder()
+                .id(entity.getId())
+                .name(entity.getName())
+                .build();
     }
 }

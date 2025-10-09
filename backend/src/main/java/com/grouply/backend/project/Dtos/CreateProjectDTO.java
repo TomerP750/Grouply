@@ -15,9 +15,9 @@ import java.util.Set;
 public class CreateProjectDTO {
 
     private String name;
-    private LocalDateTime createdAt;
     private ProjectStatus status;
 //    private Set<Technology> technologies;
+    // this is for user to select his position its not actually related to the project
     private ProjectPosition userPosition;
 
 }

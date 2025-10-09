@@ -66,14 +66,14 @@ export function ProfilePage() {
       {profile && <ProfileBanner user={profile.user} />}
 
       {/* Page container */}
-      <div className="max-w-7xl ml-auto px-4 sm:px-6 min-h-screen">
+      <div className="w-full lg:max-w-7xl mt-10 lg:mt-0 ml-auto px-4 sm:px-6 min-h-screen">
 
-        {/* Header row: name/handle + actions */}
-        <div className="flex w-3/4 sm:w-full justify-between items-center gap-4 sm:gap-6 md:gap-8 pt-6">
+        {/* Header  */}
+        <div className="flex w-full justify-between items-center gap-4 sm:gap-6 md:gap-8 pt-6">
 
           {/* Name/handle */}
           <div>
-            <p className="font-semibold text-2xl sm:text-3xl leading-tight">
+            <p className="font-semibold text-2xl sm:text-3xl leading-tight max-w-1/2">
               {profile?.user.firstName} {profile?.user.lastName}
             </p>
             <p className="text-gray-800 dark:text-gray-300 text-sm sm:text-base">@{profile?.user.username}</p>
