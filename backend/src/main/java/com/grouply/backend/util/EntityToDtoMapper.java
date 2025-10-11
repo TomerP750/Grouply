@@ -19,6 +19,8 @@ import com.grouply.backend.post.Post;
 import com.grouply.backend.post.dto.ProjectPostDTO;
 import com.grouply.backend.project_post_position.ProjectPostPosition;
 import com.grouply.backend.project_post_position.dto.ProjectPostPositionDTO;
+import com.grouply.backend.technology.Technology;
+import com.grouply.backend.technology.dto.TechnologyDTO;
 import com.grouply.backend.user.Dtos.UserDTO;
 import com.grouply.backend.user.User;
 import java.util.*;
@@ -82,10 +84,7 @@ public class EntityToDtoMapper {
                 .name(p.getName())
                 .status(p.getStatus())
                 .createdAt(p.getCreatedAt())
-//                TODO THIS IS MAKE THE 400 ERROR PROBLEM
-//                .members(p.getProjectMembers() != null
-//                        ? toProjectMemberDtos(new ArrayList<>(p.getProjectMembers()))
-//                        : List.of())
+                .technologies(toTechnologiesDtos(p.getTechnologies()))
                 .build();
     }
 
@@ -200,6 +199,22 @@ public class EntityToDtoMapper {
         List<ProjectPostPositionDTO> result = new ArrayList<>(positions.size());
         for (ProjectPostPosition p : positions) {
             if (p != null) result.add(toProjectPositionDto(p));
+        }
+        return result;
+    }
+
+    public static TechnologyDTO toTechnologyDto(Technology entity) {
+        return TechnologyDTO.builder()
+                .id(entity.getId())
+                .name(entity.getName())
+                .build();
+    }
+
+    public static Set<TechnologyDTO> toTechnologiesDtos(Set<Technology> entities) {
+        if (entities == null || entities.isEmpty()) return Collections.emptySet();
+        Set<TechnologyDTO> result = new HashSet<>(entities.size());
+        for (Technology t : entities) {
+            if (t != null) result.add(toTechnologyDto(t));
         }
         return result;
     }

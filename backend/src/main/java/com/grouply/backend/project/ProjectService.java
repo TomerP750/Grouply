@@ -13,6 +13,9 @@ import com.grouply.backend.project_member.ProjectPosition;
 import com.grouply.backend.project_member.ProjectRole;
 import com.grouply.backend.post.Post;
 import com.grouply.backend.post.PostRepository;
+import com.grouply.backend.technology.Technology;
+import com.grouply.backend.technology.TechnologyRepository;
+import com.grouply.backend.technology.dto.TechnologyDTO;
 import com.grouply.backend.user.User;
 import com.grouply.backend.user.UserRepository;
 import com.grouply.backend.util.EntityToDtoMapper;
@@ -23,9 +26,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -37,7 +39,7 @@ public class ProjectService implements IProjectService {
     private final UserRepository userRepository;
     private final FinishedProjectRepository finishedProjectRepository;
     private final PostRepository postRepository;
-
+    private final TechnologyRepository technologyRepository;
 
 
 
@@ -57,7 +59,7 @@ public class ProjectService implements IProjectService {
                 .name(dto.getName())
                 .projectMembers(new HashSet<>())
                 .status(ProjectStatus.PREPARATION)
-//                .technologies(dto.getTechnologies())
+                .technologies(resolveTechnologies(dto.getTechnologies()))
                 .build();
 
         ProjectMember owner = ProjectMember.builder()
@@ -197,6 +199,28 @@ public class ProjectService implements IProjectService {
                 .project(project)
                 .build();
         finishedProjectRepository.save(finishedProject);
+
+    }
+
+
+    private Set<Technology> resolveTechnologies(Set<TechnologyDTO> dtos) throws InvalidInputException {
+
+        if (dtos == null || dtos.isEmpty()) {
+            throw new InvalidInputException("Technologies list is empty");
+        }
+
+        Set<Long> ids = dtos.stream()
+                .map(TechnologyDTO::getId)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toSet());
+
+        List<Technology> technologies = technologyRepository.findAllById(ids);
+
+        if (technologies.size() != ids.size()) {
+            throw new NoSuchElementException("Some technologies were not found");
+        }
+
+        return new HashSet<>(technologies);
 
     }
 }

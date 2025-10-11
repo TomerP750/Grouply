@@ -38,8 +38,8 @@ public class Project {
     @Enumerated(EnumType.STRING)
     private ProjectStatus status;
 
-//    @ManyToMany
-//    private Set<Technology> technologies = new HashSet<>();
+    @ManyToMany
+    private Set<Technology> technologies = new HashSet<>();
 
     public void addMember(ProjectMember member) {
         projectMembers.add(member);

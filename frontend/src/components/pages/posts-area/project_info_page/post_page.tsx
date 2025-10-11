@@ -32,7 +32,13 @@ export function PostPage() {
             })
     }, []);
 
-    
+    const techs = post?.projectDTO.technologies;
+
+    if (post) {
+        console.log(post.projectDTO);
+        
+    }
+
     return (
         <div className="min-h-screen bg-gray-100 dark:bg-gradient-to-r dark:from-slate-900 dark:via-teal-950 dark:to-stone-900 text-slate-900 dark:text-white">
             <Navbar />
@@ -55,6 +61,13 @@ export function PostPage() {
                     <div className="w-9/10 sm:w-4/5 space-y-2 py-10">
                         <p className="text-lg sm:text-4xl font-semibold mb-8">{post && toNormal(post?.title)}</p>
                         <p className="text-gray-300">{post && toNormal(post?.description)}</p>
+                        <p>Project's Technologies:</p>
+                        <ul>
+                            {techs && techs?.length > 0
+                                && post?.projectDTO.technologies.map(t => {
+                                    return <li key={t.id}>{t.name}</li>
+                                })}
+                        </ul>
                     </div>
 
 
