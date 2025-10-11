@@ -7,7 +7,9 @@ import lombok.Data;
 @Builder
 public class TechnologyDTO {
 
-    Long id;
-    String name;
+    private Long id;
+    private String name;
+    private String slug;
+    private String color;
 
 }

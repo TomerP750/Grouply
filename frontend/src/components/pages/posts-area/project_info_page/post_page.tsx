@@ -8,7 +8,7 @@ import { useScrollToTop } from "../../../../util/helper_hooks";
 import { PostCardPositionCard } from "../post_card/post_card_position_card";
 import { useUser } from "../../../../redux/hooks";
 import { PostPositionPageCard } from "./post_page_position_card";
-import { toNormal } from "../../../../util/util_functions";
+import { technologyIconMap, toNormal } from "../../../../util/util_functions";
 
 
 export function PostPage() {
@@ -34,10 +34,6 @@ export function PostPage() {
 
     const techs = post?.projectDTO.technologies;
 
-    if (post) {
-        console.log(post.projectDTO);
-        
-    }
 
     return (
         <div className="min-h-screen bg-gray-100 dark:bg-gradient-to-r dark:from-slate-900 dark:via-teal-950 dark:to-stone-900 text-slate-900 dark:text-white">
@@ -62,11 +58,21 @@ export function PostPage() {
                         <p className="text-lg sm:text-4xl font-semibold mb-8">{post && toNormal(post?.title)}</p>
                         <p className="text-gray-300">{post && toNormal(post?.description)}</p>
                         <p>Project's Technologies:</p>
-                        <ul>
-                            {techs && techs?.length > 0
-                                && post?.projectDTO.technologies.map(t => {
-                                    return <li key={t.id}>{t.name}</li>
-                                })}
+                        <ul className="flex items-center gap-3">
+                            {techs?.map((t) => {
+                                const Icon = technologyIconMap[t.slug] ?? null;
+                                console.log("t: ", t);
+                                
+                                return (
+                                    <li
+                                        key={t.id}
+                                        className="flex items-center gap-2 bg-slate-700/30 text-slate-300 px-3 py-1 rounded-full text-sm"
+                                    >
+                                        {Icon && <Icon color={t.color ?? "#38bdf8"} size={18} />}
+                                        <span>{t.name}</span>
+                                    </li>
+                                );
+                            })}
                         </ul>
                     </div>
 

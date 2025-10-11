@@ -21,4 +21,11 @@ public class Technology {
     @Column(nullable = false, unique = true)
     private String name;
 
+    @Column(nullable = false, unique = true, length = 64)
+    private String slug; // this will help me for fetch api/get/react for example
+
+    @Column(length = 7)
+    private String color;
+
+
 }

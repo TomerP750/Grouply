@@ -207,6 +207,8 @@ public class EntityToDtoMapper {
         return TechnologyDTO.builder()
                 .id(entity.getId())
                 .name(entity.getName())
+                .slug(entity.getSlug())
+                .color(entity.getColor())
                 .build();
     }
 
