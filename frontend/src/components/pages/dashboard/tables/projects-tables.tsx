@@ -81,17 +81,16 @@ export function ProjectsTable() {
     };
 
     const handleDeleteProject = (id: number) => {
-        const confirm = window.confirm("are you sure you want to delete?");
-        if (confirm) {
-            projectService.deleteProject(id)
-                .then(() => {
-                    setRows((prev) => prev.filter(p => p.id !== id));
-                    toast.success(`Project Deleted!`);
-                })
-                .catch(err => {
-                    toast.error(err.response.data);
-                })
-        }
+
+        projectService.deleteProject(id)
+            .then(() => {
+                setRows((prev) => prev.filter(p => p.id !== id));
+                toast.success(`Project Deleted!`);
+            })
+            .catch(err => {
+                toast.error(err.response.data);
+            })
+        setDialogOpen(false);
     };
 
     const columns = useMemo(() => [
@@ -193,10 +192,16 @@ export function ProjectsTable() {
                 <div className="flex justify-end mb-2">
                     <button
                         onClick={() => setModalOpen(true)}
-                        className="px-2 py-1 bg-teal-500 font-medium mr-2 inline-flex items-center gap-1 cursor-pointer hover:bg-teal-600"><BiPlus size={20} /> 
+                        className="px-2 py-1 bg-teal-500 font-medium mr-2 inline-flex items-center gap-1 cursor-pointer hover:bg-teal-600"><BiPlus size={20} />
                         Create Project
                     </button>
-                    {modalOpen && <Modal open={modalOpen} onClose={() => setModalOpen(false)}><CreateProjectForm/></Modal>}
+                    {
+                        modalOpen &&
+                        <Modal open={modalOpen}
+                            onClose={() => setModalOpen(false)}>
+                            <CreateProjectForm onClose={() => setModalOpen(false)} />
+                        </Modal>
+                    }
                 </div>
                 <table className="w-full border-collapse text-left text-sm">
                     {/* sticky header (light/dark) */}

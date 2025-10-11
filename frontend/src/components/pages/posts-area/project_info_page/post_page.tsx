@@ -61,8 +61,7 @@ export function PostPage() {
                         <ul className="flex items-center gap-3">
                             {techs?.map((t) => {
                                 const Icon = technologyIconMap[t.slug] ?? null;
-                                console.log("t: ", t);
-                                
+                            
                                 return (
                                     <li
                                         key={t.id}

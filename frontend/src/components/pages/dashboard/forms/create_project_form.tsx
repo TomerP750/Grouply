@@ -7,6 +7,7 @@ import { TechnologyDTO } from "../../../../dtos/models_dtos/TechnologyDTO";
 import technologyService from "../../../../service/technology_service";
 import { toast } from "react-toastify";
 import { TechSelectChips } from "./tech_select_chip";
+import projectService from "../../../../service/ProjectService";
 
 
 const inputBase =
@@ -15,11 +16,18 @@ const inputBase =
     "focus:ring-2 focus:ring-teal-500/40 focus:border-teal-500";
   const labelBase = "text-sm font-medium text-gray-200 select-none";
   const errorText = "text-xs text-rose-400 mt-1";
-export function CreateProjectForm() {
+
+
+interface CreateProjectFormProps {
+  onClose: () => void
+}
+
+export function CreateProjectForm({ onClose }: CreateProjectFormProps) {
 
     const [technologies, setTechnologies] = useState<TechnologyDTO[]>([]);
 
     useEffect(() => {
+        
         technologyService.allTechnologies()
         .then(res => {
             setTechnologies(res);
@@ -27,18 +35,23 @@ export function CreateProjectForm() {
         .catch(err => {
             toast.error(err.response.data)
         })
+        
     }, []);
 
-    if (technologies) {
-        console.log("Techs", technologies);
-        
-    }
-
     const { register, handleSubmit, formState: { errors, isSubmitting }, reset, control } = useForm<CreateProjectDTO>();
-
+    
     const sendData = (data: CreateProjectDTO) => {
-
-    }
+        
+        projectService.createProject(data)
+        .then(() => {
+          toast.success("Project Created");
+          onClose();
+        })
+        .catch(err => {
+          toast.error(err.response.data);
+        })
+    
+    };
 
     return (
     <form className="w-full" onSubmit={handleSubmit(sendData)}>
@@ -136,7 +149,7 @@ export function CreateProjectForm() {
           </button>
           <button
             type="submit"
-            className="cursor-pointer px-4 py-2 rounded-md text-sm bg-teal-600 text-white hover:bg-teal-700 transition disabled:opacity-60"
+            className="cursor-pointer disabled:cursor-not-allowed  px-4 py-2 rounded-md text-sm bg-teal-600 text-white hover:bg-teal-700 transition disabled:opacity-60"
             disabled={isSubmitting}
           >
             {isSubmitting ? <BiLoaderAlt size={20} className="animate-spin"/> : "Create Project"}

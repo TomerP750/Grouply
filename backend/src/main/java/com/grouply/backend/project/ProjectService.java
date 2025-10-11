@@ -117,7 +117,9 @@ public class ProjectService implements IProjectService {
         }
 
         Post post = postRepository.findByProjectId(projectId);
-        postRepository.deleteById(post.getId());
+        if (post != null) {
+            postRepository.deleteById(post.getId());
+        }
         projectRepository.deleteById(projectId);
 
     }
