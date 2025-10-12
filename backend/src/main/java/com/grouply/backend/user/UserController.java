@@ -2,6 +2,7 @@ package com.grouply.backend.user;
 
 import com.grouply.backend.exceptions.ExistsException;
 import com.grouply.backend.exceptions.InvalidInputException;
+import com.grouply.backend.exceptions.UnauthorizedException;
 import com.grouply.backend.security.CustomUserDetails;
 import com.grouply.backend.user.Dtos.ChangePasswordRequestDTO;
 import com.grouply.backend.user.Dtos.DeleteUserDTO;
@@ -50,7 +51,7 @@ public class UserController {
     }
 
     @PatchMapping("/changeP")
-    public void changePassword(@AuthenticationPrincipal CustomUserDetails userDetails, @RequestBody ChangePasswordRequestDTO dto) throws InvalidInputException {
+    public void changePassword(@AuthenticationPrincipal CustomUserDetails userDetails, @RequestBody ChangePasswordRequestDTO dto) throws InvalidInputException, UnauthorizedException {
         Long userId = userDetails.getId();
         userService.changePassword(userId, dto);
     }

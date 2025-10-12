@@ -2,6 +2,7 @@ import axios from "axios";
 import { BASE_API } from "../util/base_api";
 import type { UpdateUserDTO } from "../dtos/models_dtos/request_dto/update_user_dto";
 import type { ChangePasswordDTO } from "../components/pages/other-pages/settings/security_settings";
+import type { DeleteUserRequestDTO } from "../components/pages/other-pages/settings/user_settings_area/delete_account";
 
 
 class UserService {
@@ -24,8 +25,10 @@ class UserService {
         return (await axios.put(`${BASE_API}/user/update`, data))
     }
 
-    async deleteUser() {
-        return (await axios.delete(`${BASE_API}/user/delete`))
+    async deleteUser(data: DeleteUserRequestDTO) {
+        return (await axios.delete(`${BASE_API}/user/delete`, {
+            data
+        }))
     }
 
     async checkUsernameAvailability(username: string) {

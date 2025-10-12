@@ -11,6 +11,7 @@ import projectPostService from "../../../../service/PostService";
 import projectMemberService from "../../../../service/ProjectMemberService";
 import { Avatar } from "../../../elements/Avatar";
 import { PostCardDescription } from "./post_card_description";
+import { Dialog } from "../../../elements/Dialog";
 
 
 interface ProjectCardProps {
@@ -22,6 +23,7 @@ interface ProjectCardProps {
 export function PostCard({ projectPost, onRemove }: ProjectCardProps) {
 
     const [loading, setLoading] = useState<boolean>(false);
+
     const user = useUserSelector(state => state.authSlice.user);
 
     const navigate = useNavigate();
@@ -43,7 +45,7 @@ export function PostCard({ projectPost, onRemove }: ProjectCardProps) {
     const [archived, setArchived] = useState<boolean>(false);
 
     const [isOwner, setIsOwner] = useState<boolean>(false);
-    
+
     useEffect(() => {
         if (user) {
             projectMemberService.isOwner(user.sub, projectDTO.id)
@@ -56,7 +58,7 @@ export function PostCard({ projectPost, onRemove }: ProjectCardProps) {
         }
     }, []);
 
-    
+
 
     const handleAddToArchive = (id: number) => {
         setLoading(true);
@@ -79,17 +81,16 @@ export function PostCard({ projectPost, onRemove }: ProjectCardProps) {
     };
 
     const handleDeletePost = (id: number) => {
-        const answer = window.confirm(`Are you sure you want to delete project: ${projectPost.title}?`);
-        if (answer) {
-            projectPostService.deletePost(id)
-                .then(() => {
-                    toast.success("Post deleted");
-                    onRemove(id);
-                })
-                .catch(err => {
-                    toast.error(err.response.data);
-                })
-        }
+        
+        projectPostService.deletePost(id)
+            .then(() => {
+                toast.success("Post deleted");
+                onRemove(id);
+            })
+            .catch(err => {
+                toast.error(err.response.data);
+            })
+
     }
 
     const handleEdit = () => {
@@ -129,7 +130,6 @@ export function PostCard({ projectPost, onRemove }: ProjectCardProps) {
                         <span>Read More</span>
                     </button>
 
-                    
                 </div>
             </div>
         </ProjectCardProvider>

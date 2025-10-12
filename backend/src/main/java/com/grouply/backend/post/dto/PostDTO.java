@@ -10,7 +10,7 @@ import java.util.List;
 
 @Data
 @Builder
-public class ProjectPostDTO {
+public class PostDTO {
 
     private Long id;
     private String title;

@@ -2,6 +2,7 @@ package com.grouply.backend.user;
 
 import com.grouply.backend.exceptions.ExistsException;
 import com.grouply.backend.exceptions.InvalidInputException;
+import com.grouply.backend.exceptions.UnauthorizedException;
 import com.grouply.backend.user.Dtos.ChangePasswordRequestDTO;
 import com.grouply.backend.user.Dtos.DeleteUserDTO;
 import com.grouply.backend.user.Dtos.UpdateUserDTO;
@@ -47,13 +48,18 @@ public class UserService implements IUserService {
         userRepository.save(user);
     }
 
-    public void changePassword(Long userId, ChangePasswordRequestDTO dto) throws InvalidInputException {
+    public void changePassword(Long userId, ChangePasswordRequestDTO dto) throws InvalidInputException, UnauthorizedException {
+
+        User user = findOneUser(userId);
+
+        if (!user.getPassword().equals(dto.getCurrentPassword())) {
+            throw new UnauthorizedException("You are not authorized change password");
+        }
 
         if (!dto.getPassword().equals(dto.getConfirmPassword())) {
             throw new InvalidInputException("Passwords do not match");
         }
 
-        User user = findOneUser(userId);
         String encodedPassword = encoder.encode(dto.getPassword());
         user.setPassword(encodedPassword);
         userRepository.save(user);
@@ -62,9 +68,6 @@ public class UserService implements IUserService {
     @Override
     public void deleteUser(Long userId ,DeleteUserDTO dto) throws InvalidInputException {
 
-        if (!dto.getPassword().equals(dto.getConfirmPassword())) {
-            throw new InvalidInputException("Passwords are not match");
-        }
         User user = findOneUser(userId);
         if (!user.getPassword().equals(dto.getPassword())) {
             throw new InvalidInputException("Password is wrong");

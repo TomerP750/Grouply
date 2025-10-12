@@ -1,6 +1,5 @@
 package com.grouply.backend.technology;
 
-import com.grouply.backend.project.Project;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

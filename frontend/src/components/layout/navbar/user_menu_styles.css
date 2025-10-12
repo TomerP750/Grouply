@@ -19,11 +19,17 @@
 .user-menu::before {
   content: "";
   position: absolute;
-  top: -8px;       
-  right: 1.5rem;   
+  top: -8px;
+  right: 1.5rem;
   width: 0;
   height: 0;
   border-left: 8px solid transparent;
   border-right: 8px solid transparent;
-  border-bottom: 8px solid white; 
+  border-bottom: 8px solid #e5e7eb; 
 }
+
+
+.dark .user-menu::before {
+  border-bottom-color: #14b8a6; 
+}
+

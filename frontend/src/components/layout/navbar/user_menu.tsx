@@ -10,7 +10,7 @@ import { logout, type JwtUser } from '../../../redux/AuthSlice';
 import './user_menu_styles.css';
 
 
-const rowStyle = "flex items-center justify-between hover:bg-gray-300/50 py-1 px-2 cursor-pointer";
+const rowStyle = "flex items-center justify-between hover:bg-gray-300/20 py-1 px-2 cursor-pointer";
 
 interface UserMenuProps {
     user: JwtUser | null;
@@ -20,13 +20,12 @@ export function UserMenu({ user }: UserMenuProps) {
 
     if (!user) return null;
 
-    const { firstName, lastName, email } = user;
+    const { firstName, lastName } = user;
 
     const fullName = firstName + " " + lastName;
 
     const { theme, toggle } = useTheme();
-    const [themeOptionOpen, setThemeOptionOpen] = useState<boolean>(false);
-
+    
     const dispatch = useDispatch();
     const navigate = useNavigate();
 

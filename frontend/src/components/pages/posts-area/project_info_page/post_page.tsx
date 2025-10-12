@@ -51,12 +51,12 @@ export function PostPage() {
                     </NavLink>
                 </div>
 
-
-                <section className="bg-slate-900 shadow-xl shadow-slate-900 flex flex-col items-center w-4/5 p-5  min-h-screen">
+                {/* Card */}
+                <section className="bg-gray-200 dark:bg-slate-900 shadow-xl shadow-gray-500 dark:shadow-slate-900 flex flex-col items-center w-4/5 p-5  min-h-screen">
 
                     <div className="w-9/10 sm:w-4/5 space-y-2 py-10">
                         <p className="text-lg sm:text-4xl font-semibold mb-8">{post && toNormal(post?.title)}</p>
-                        <p className="text-gray-300">{post && toNormal(post?.description)}</p>
+                        <p className="dark:text-gray-300">{post && toNormal(post?.description)}</p>
                         <p>Project's Technologies:</p>
                         <ul className="flex items-center gap-3">
                             {techs?.map((t) => {
@@ -65,7 +65,7 @@ export function PostPage() {
                                 return (
                                     <li
                                         key={t.id}
-                                        className="flex items-center gap-2 bg-slate-700/30 text-slate-300 px-3 py-1 rounded-full text-sm"
+                                        className="flex items-center gap-2 bg-slate-700 text-white font-medium dark:bg-slate-700/30 dark:text-slate-300 px-3 py-1 rounded-full text-sm"
                                     >
                                         {Icon && <Icon color={t.color ?? "#38bdf8"} size={18} />}
                                         <span>{t.name}</span>

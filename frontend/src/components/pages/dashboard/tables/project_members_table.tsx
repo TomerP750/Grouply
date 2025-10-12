@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { toNormal } from "../../../../util/util_functions";
 
 
-const columns = ["id","Username", "Position", "Role"];
+const columns = ["First Name", "Last Name" ,"Username", "Position", "Role", "Actions"];
 
 
 export function ProjectMembersTable() {
@@ -26,26 +26,34 @@ export function ProjectMembersTable() {
             })
     }, []);
 
+    
     return (
-        <div className="w-full p-4 min-h-screen">
+        <div className="w-full p-4 min-h-screen overflow-x-auto">
 
             <table className="text-white w-full">
-                <thead className="grid grid-cols-4 bg-slate-900 px-5 py-2">
-                    {columns.map(c => {
-                        return <p key={c}>{c}</p>
-                    })}
+                
+                <thead className="bg-slate-900">
+                    <tr className="grid grid-cols-6 px-5 py-2">
+                        {columns.map(c => (
+                            <th key={c} className="text-left font-medium text-slate-300">
+                                {c}
+                            </th>
+                        ))}
+                    </tr>
                 </thead>
 
-                <tbody>
-                    {members.map(m => {
-                        return <div key={m.id} className="grid grid-cols-4 px-5 py-5">
-                            <span>{m.id}</span>
-                            <span>{m.user.username}</span>
-                            <span>{toNormal(m.projectPosition)}</span>
-                            <span>{toNormal(m.projectRole)}</span>
-                        </div>
-                    })}
+                <tbody className="divide-y divide-slate-800">
+                    {members.map(m => (
+                        <tr key={m.id} className="grid grid-cols-6 px-5 py-5 text-slate-300">
+                            <td>{m.user.firstName}</td>
+                            <td>{m.user.lastName}</td>
+                            <td>{m.user.username}</td>
+                            <td>{m.projectPosition}</td>
+                            <td>{m.projectRole}</td>
+                        </tr>
+                    ))}
                 </tbody>
+
             </table>
 
 

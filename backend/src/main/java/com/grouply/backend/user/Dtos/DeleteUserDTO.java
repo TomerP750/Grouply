@@ -8,7 +8,6 @@ public class DeleteUserDTO {
 
     @NotBlank
     private String password;
-    @NotBlank
-    private String confirmPassword;
+
 
 }

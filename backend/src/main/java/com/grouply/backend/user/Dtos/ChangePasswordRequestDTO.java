@@ -7,6 +7,9 @@ import org.hibernate.validator.constraints.Length;
 @Data
 public class ChangePasswordRequestDTO {
 
+    @NotBlank
+    private String currentPassword;
+
     @Length(min = 6, max = 15, message = "Needs to be at least 6 characters or 15 maximum characters")
     @NotBlank
     private String password;

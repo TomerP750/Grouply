@@ -8,6 +8,7 @@ import projectMemberService from "../../../../service/ProjectMemberService";
 import './post_card_css.css';
 import { PostCardPositionCard } from "./post_card_position_card";
 import { toNormal, toTitleCase } from "../../../../util/util_functions";
+import { Dialog } from "../../../elements/Dialog";
 
 
 
@@ -39,6 +40,8 @@ export function PostCardDescription({ projectPost, onArchiveClick, onEdit, onDel
     const [isMember, setIsMember] = useState<boolean>(false);
     const user = useUserSelector(state => state.authSlice.user);
     const [menuOpen, setMenuOpen] = useState<boolean>(false);
+    const [dialogOpen, setDialogOpen] = useState<boolean>(false);
+
 
     useEffect(() => {
         if (user) {
@@ -91,7 +94,7 @@ export function PostCardDescription({ projectPost, onArchiveClick, onEdit, onDel
                                             onClick={onEdit}
                                             className="cursor-pointer hover:bg-slate-700 w-full">Edit</button>
                                         <button
-                                            onClick={onDelete}
+                                            onClick={() => setDialogOpen(true)}
                                             className="cursor-pointer hover:bg-slate-700 w-full">Delete</button>
                                     </div>}
 
@@ -119,15 +122,18 @@ export function PostCardDescription({ projectPost, onArchiveClick, onEdit, onDel
                 {/* Positions buttons to request to join */}
 
                 {!isMember && positions.length > 0 && positions.map(p => {
-                    return <PostCardPositionCard 
-                    key={p.id} 
-                    postId={projectPost.id} 
-                    postPosition={p}
-                    user={user}
+                    return <PostCardPositionCard
+                        key={p.id}
+                        postId={projectPost.id}
+                        postPosition={p}
+                        user={user}
                     />
                 })}
 
             </div>
+
+            {dialogOpen && <Dialog onConfirm={onDelete} open={dialogOpen} message={"Are you sure you want to delete this post?"} onClose={() => setDialogOpen(false)}/>}
+
 
         </div>
     )

@@ -4,7 +4,7 @@ import com.grouply.backend.exceptions.ExistsException;
 import com.grouply.backend.exceptions.InvalidInputException;
 import com.grouply.backend.exceptions.UnauthorizedException;
 import com.grouply.backend.post.dto.CreateProjectPostDTO;
-import com.grouply.backend.post.dto.ProjectPostDTO;
+import com.grouply.backend.post.dto.PostDTO;
 import com.grouply.backend.post.dto.UpdateProjectPostDTO;
 import com.grouply.backend.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
@@ -22,33 +22,33 @@ public class PostController {
     private final PostService projectPostService;
 
     @GetMapping("/all")
-    public Page<ProjectPostDTO> allPosts(@RequestParam(value = "page", defaultValue = "0") int page,
-                                         @RequestParam(value = "size", defaultValue = "10") int size) {
+    public Page<PostDTO> allPosts(@RequestParam(value = "page", defaultValue = "0") int page,
+                                  @RequestParam(value = "size", defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size);
-        return projectPostService.getAllProjectPosts(pageable);
+        return projectPostService.getAllPosts(pageable);
     }
 
     @GetMapping("/{postId}")
-    public ProjectPostDTO onePost(@PathVariable Long postId) {
-        return projectPostService.getOneProjectPost(postId);
+    public PostDTO onePost(@PathVariable Long postId) {
+        return projectPostService.getOnePost(postId);
     }
 
     @PostMapping("/create")
-    public ProjectPostDTO createPost(@AuthenticationPrincipal CustomUserDetails userDetails, @RequestBody CreateProjectPostDTO dto) throws ExistsException, UnauthorizedException {
+    public PostDTO createPost(@AuthenticationPrincipal CustomUserDetails userDetails, @RequestBody CreateProjectPostDTO dto) throws ExistsException, UnauthorizedException {
         Long userId = userDetails.getId();
-        return projectPostService.createProjectPost(userId ,dto);
+        return projectPostService.createPost(userId ,dto);
     }
 
     @PutMapping("/update")
     public void updatePost(@AuthenticationPrincipal CustomUserDetails userDetails, @RequestBody UpdateProjectPostDTO dto) throws InvalidInputException, UnauthorizedException {
         Long userId = userDetails.getId();
-        projectPostService.updateProjectPost(userId, dto);
+        projectPostService.updatePost(userId, dto);
     }
 
     @DeleteMapping("/delete/{postId}")
     public void deletePostId(@AuthenticationPrincipal CustomUserDetails userDetails, @PathVariable Long postId) throws UnauthorizedException {
         Long userId = userDetails.getId();
-        projectPostService.deleteProjectPost(userId, postId);
+        projectPostService.deletePost(userId, postId);
     }
 
 }

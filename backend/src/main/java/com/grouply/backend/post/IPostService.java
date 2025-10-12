@@ -5,22 +5,22 @@ import com.grouply.backend.exceptions.InvalidInputException;
 import com.grouply.backend.exceptions.UnauthorizedException;
 import com.grouply.backend.post.dto.CreateProjectPostDTO;
 //import com.grouply.backend.project_post.dto.DeleteProjectPostDTO;
-import com.grouply.backend.post.dto.ProjectPostDTO;
+import com.grouply.backend.post.dto.PostDTO;
 import com.grouply.backend.post.dto.UpdateProjectPostDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface IPostService {
 
-    ProjectPostDTO createProjectPost(Long userId ,CreateProjectPostDTO dto) throws ExistsException, UnauthorizedException;
+    PostDTO createPost(Long userId , CreateProjectPostDTO dto) throws ExistsException, UnauthorizedException;
 
-    void updateProjectPost(Long userId ,UpdateProjectPostDTO dto) throws UnauthorizedException, InvalidInputException;
+    void updatePost(Long userId ,UpdateProjectPostDTO dto) throws UnauthorizedException, InvalidInputException;
 
-    void deleteProjectPost(Long userId, Long postId) throws UnauthorizedException;
+    void deletePost(Long userId, Long postId) throws UnauthorizedException;
 
-    ProjectPostDTO getOneProjectPost(Long postId);
+    PostDTO getOnePost(Long postId);
 
-    Page<ProjectPostDTO> getAllProjectPosts(Pageable pageable);
+    Page<PostDTO> getAllPosts(Pageable pageable);
 
     boolean requestToJoinProject(Long userId, Long ownerId, Long projectId);
 }

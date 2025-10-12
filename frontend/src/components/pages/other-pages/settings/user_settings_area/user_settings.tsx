@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import { DeleteAccount } from "./delete_account";
 
 
-const inputStyle = "w-full rounded-lg border border-gray-500/50 bg-gray-400 dark:bg-gray-800 px-3 py-1";
+const inputStyle = "rounded-lg border border-gray-500/50 bg-gray-400 dark:bg-gray-800 px-3 py-1";
 
 
 export function UserSettings() {
@@ -115,29 +115,22 @@ export function UserSettings() {
                 className={`${inputStyle}`}
               />
             </div>
+          </div>
 
-            <div className="flex flex-col gap-1.5 col-span-1 lg:col-span-2">
-              <label>Username</label>
+          {/* username input and check*/}
+          <div className="flex flex-col gap-1.5 w-full">
+            <label>Username</label>
+
+            {/* Input and check */}
+            <div className="flex flex-col md:flex-row items-start md:items-center gap-5 w-full">
               <input
                 {...register("username")}
                 type="text"
-                className={`${inputStyle}`}
+                className={`${inputStyle} w-full md:w-1/2`}
               />
 
-            </div>
-
-            {/* Check username */}
-            <div className="flex flex-col gap-2 items-start justify-start w-full cursor-pointer">
+              {/* Username check */}
               <div className="flex gap-2">
-
-                <input
-                  type="text"
-                  value={usernameQuery}
-                  onChange={(e) => {
-                    setValue("username", e.target.value);
-                    setUsernameChecked(false);
-                  }}
-                  className="border-b-2 border-black dark:border-gray-500/50  px-3 py-1" />
 
                 <button
                   type="button"
@@ -154,14 +147,13 @@ export function UserSettings() {
                   }} className="text-sm cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed">Reset</button>
 
               </div>
-
-              {usernameChecked && (
-                isTaken
-                  ? <span className="text-red-500">Username Not Available</span>
-                  : <span className="text-green-500">Username Available</span>
-              )}
-
             </div>
+
+            {usernameChecked && (
+              isTaken
+                ? <span className="text-red-500">Username Not Available</span>
+                : <span className="text-green-500">Username Available</span>
+            )}
 
           </div>
 

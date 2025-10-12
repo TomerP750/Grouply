@@ -3,6 +3,7 @@ package com.grouply.backend.post;
 import com.grouply.backend.exceptions.ExistsException;
 import com.grouply.backend.exceptions.InvalidInputException;
 import com.grouply.backend.exceptions.UnauthorizedException;
+import com.grouply.backend.post.dto.PostFilters;
 import com.grouply.backend.project.Project;
 import com.grouply.backend.project.ProjectRepository;
 import com.grouply.backend.project_member.ProjectMemberRepository;
@@ -10,7 +11,7 @@ import com.grouply.backend.project_member.ProjectPosition;
 import com.grouply.backend.project_member.ProjectRole;
 import com.grouply.backend.post.dto.CreateProjectPostDTO;
 //import com.grouply.backend.project_post.dto.DeleteProjectPostDTO;
-import com.grouply.backend.post.dto.ProjectPostDTO;
+import com.grouply.backend.post.dto.PostDTO;
 import com.grouply.backend.post.dto.UpdateProjectPostDTO;
 import com.grouply.backend.project_post_position.ProjectPostPosition;
 import com.grouply.backend.project_post_position.ProjectPostPositionRepository;
@@ -21,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.NoSuchElementException;
@@ -37,8 +39,12 @@ public class PostService implements IPostService {
     private final ProjectPostPositionRepository projectPostPositionRepository;
 
 
+    public Page<PostDTO> searchProjects(PostFilters filters, Pageable pageable) {
+        return null;
+    }
+
     @Override
-    public ProjectPostDTO createProjectPost(Long userId ,CreateProjectPostDTO dto) throws ExistsException, UnauthorizedException {
+    public PostDTO createPost(Long userId , CreateProjectPostDTO dto) throws ExistsException, UnauthorizedException {
 
         if (postRepository.existsByProjectId(dto.getProjectId())) {
             throw new ExistsException("Post on project already exists");
@@ -74,7 +80,7 @@ public class PostService implements IPostService {
     }
 
     @Override
-    public void updateProjectPost(Long userId ,UpdateProjectPostDTO dto) throws UnauthorizedException, InvalidInputException {
+    public void updatePost(Long userId ,UpdateProjectPostDTO dto) throws UnauthorizedException, InvalidInputException {
 
         Post post = fetchProjectPost(dto.getPostId());
 
@@ -91,7 +97,7 @@ public class PostService implements IPostService {
     }
 
     @Override
-    public void deleteProjectPost(Long userId ,Long postId) throws UnauthorizedException {
+    public void deletePost(Long userId ,Long postId) throws UnauthorizedException {
         Post post = fetchProjectPost(postId);
         User user = fetchUser(userId);
 
@@ -103,12 +109,12 @@ public class PostService implements IPostService {
     }
 
     @Override
-    public ProjectPostDTO getOneProjectPost(Long postId) {
+    public PostDTO getOnePost(Long postId) {
         return EntityToDtoMapper.toProjectPostDto(fetchProjectPost(postId));
     }
 
     @Override
-    public Page<ProjectPostDTO> getAllProjectPosts(Pageable pageable) {
+    public Page<PostDTO> getAllPosts(Pageable pageable) {
         Page<Post> allProjectPosts = postRepository.findAll(pageable);
         return allProjectPosts.map(EntityToDtoMapper::toProjectPostDto);
     }

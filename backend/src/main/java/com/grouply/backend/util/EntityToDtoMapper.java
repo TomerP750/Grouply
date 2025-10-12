@@ -16,7 +16,7 @@ import com.grouply.backend.project.Project;
 import com.grouply.backend.project_member.ProjectMember;
 import com.grouply.backend.project_member.dto.ProjectMemberDTO;
 import com.grouply.backend.post.Post;
-import com.grouply.backend.post.dto.ProjectPostDTO;
+import com.grouply.backend.post.dto.PostDTO;
 import com.grouply.backend.project_post_position.ProjectPostPosition;
 import com.grouply.backend.project_post_position.dto.ProjectPostPositionDTO;
 import com.grouply.backend.technology.Technology;
@@ -24,7 +24,6 @@ import com.grouply.backend.technology.dto.TechnologyDTO;
 import com.grouply.backend.user.Dtos.UserDTO;
 import com.grouply.backend.user.User;
 import java.util.*;
-import java.util.stream.Collectors;
 
 
 public class EntityToDtoMapper {
@@ -124,10 +123,10 @@ public class EntityToDtoMapper {
     }
 
 
-    public static ProjectPostDTO toProjectPostDto(Post post) {
+    public static PostDTO toProjectPostDto(Post post) {
         if (post == null) return null;
 
-        return ProjectPostDTO.builder()
+        return PostDTO.builder()
                 .id(post.getId())
                 .title(post.getTitle())
                 .description(post.getDescription())
@@ -137,8 +136,8 @@ public class EntityToDtoMapper {
                 .build();
     }
 
-    public static List<ProjectPostDTO> toProjectPostDtos(List<Post> posts) {
-        List<ProjectPostDTO> result = new ArrayList<>();
+    public static List<PostDTO> toProjectPostDtos(List<Post> posts) {
+        List<PostDTO> result = new ArrayList<>();
         if (posts != null) {
             for (Post posting : posts) {
                 if (posting != null) {

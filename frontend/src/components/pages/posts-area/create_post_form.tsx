@@ -52,7 +52,7 @@ export function CreatePostForm({ open, onClose, onAdd }: CreatePostFormProps) {
   }, [open]);
 
 
-  const { register, handleSubmit, reset, formState: { errors }, control } = useForm<CreateProjectPostDTO>();
+  const { register, handleSubmit, reset, formState: { errors }, control, resetField } = useForm<CreateProjectPostDTO>();
 
   const description = useWatch({ control, name: "description", defaultValue: "" });
   const length = description?.length ?? 0;
@@ -123,9 +123,13 @@ export function CreatePostForm({ open, onClose, onAdd }: CreatePostFormProps) {
 
           {/* Description */}
           <label className="flex flex-col gap-2">
-            <span className={labelCls}>Description</span>
+            <div className="flex justify-between items-center">
+              <span className={labelCls}>Description</span>
+              <button type="button" onClick={() => resetField("description")} className="text-white px-2 py-1 bg-teal-600 rounded-lg hover:bg-teal-500 cursor-pointer">Reset</button>
+            </div>
             <textarea
               rows={8}
+              readOnly={length > 500}
               placeholder="Describe the project and what you’re looking for…"
               className={`${inputBase} resize-none leading-relaxed`}
               {...register("description", {
