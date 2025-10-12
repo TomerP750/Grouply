@@ -13,6 +13,8 @@ import com.grouply.backend.project_member.ProjectPosition;
 import com.grouply.backend.project_member.ProjectRole;
 import com.grouply.backend.post.Post;
 import com.grouply.backend.post.PostRepository;
+import com.grouply.backend.statistics.Statistics;
+import com.grouply.backend.statistics.StatisticsRepository;
 import com.grouply.backend.technology.Technology;
 import com.grouply.backend.technology.TechnologyRepository;
 import com.grouply.backend.technology.dto.TechnologyDTO;
@@ -40,6 +42,7 @@ public class ProjectService implements IProjectService {
     private final FinishedProjectRepository finishedProjectRepository;
     private final PostRepository postRepository;
     private final TechnologyRepository technologyRepository;
+    private final StatisticsRepository statisticsRepository;
 
 
 
@@ -68,6 +71,9 @@ public class ProjectService implements IProjectService {
                 .projectRole(ProjectRole.OWNER)
                 .project(project)
                 .build();
+
+        updateActiveProjectsStats(userId, '+');
+
 
         project.addMember(owner);
         projectRepository.save(project); // because i put cascade so it automatically saves the project member in the database
@@ -122,6 +128,15 @@ public class ProjectService implements IProjectService {
         }
         projectRepository.deleteById(projectId);
 
+        Project project = fetchProject(projectId);
+
+        project.getProjectMembers().forEach(m -> {
+            Statistics stats = fetchStats(m.getUser().getId());
+            stats.setCompletedProjects(stats.getCompletedProjects() + 1);
+        });
+
+        updateActiveProjectsStats(userId, '-');
+
     }
 
 
@@ -170,6 +185,26 @@ public class ProjectService implements IProjectService {
         return userRepository.findById(userId).orElseThrow(()->new NoSuchElementException("User not found"));
     }
 
+    private Statistics fetchStats(Long userId) {
+        return statisticsRepository.findByUserId(userId).orElseThrow(() -> new NoSuchElementException("Stats not found"));
+    }
+
+    private void updateActiveProjectsStats(Long userId, char op) {
+
+        Statistics stats = fetchStats(userId);
+
+        switch (op) {
+            case '+':
+                stats.setActiveProjects(stats.getActiveProjects() + 1);
+                break;
+            case '-':
+                stats.setActiveProjects(stats.getActiveProjects() - 1);
+                break;
+        }
+
+        statisticsRepository.save(stats);
+    }
+
     private ProjectMember buildProjectMember(User user, ProjectPosition position, Project project) {
         return ProjectMember.builder()
                 .user(user)
@@ -196,6 +231,11 @@ public class ProjectService implements IProjectService {
         }
 
         project.setStatus(ProjectStatus.COMPLETED);
+
+        project.getProjectMembers().forEach(m -> {
+            Statistics stats = fetchStats(m.getUser().getId());
+            stats.setCompletedProjects(stats.getCompletedProjects() + 1);
+        });
 
         FinishedProject finishedProject = FinishedProject.builder()
                 .project(project)

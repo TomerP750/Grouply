@@ -3,6 +3,8 @@ package com.grouply.backend.connection_request;
 import com.grouply.backend.connection.Connection;
 import com.grouply.backend.connection.ConnectionRepository;
 import com.grouply.backend.exceptions.UnauthorizedException;
+import com.grouply.backend.statistics.Statistics;
+import com.grouply.backend.statistics.StatisticsRepository;
 import com.grouply.backend.user.User;
 import com.grouply.backend.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +21,7 @@ public class ConnectionRequestService implements IConnectionRequestService{
     private final ConnectionRequestRepository connectionRequestRepository;
     private final ConnectionRepository connectionRepository;
     private final UserRepository userRepository;
+    private final StatisticsRepository statisticsRepository;
 
 
     @Override
@@ -100,6 +103,14 @@ public class ConnectionRequestService implements IConnectionRequestService{
 
         connectionRepository.save(connectionSender);
         connectionRepository.save(connectionRecipient);
+
+        Statistics senderStats = statisticsRepository.findByUserId(senderId).orElseThrow(() -> new NoSuchElementException("Sender id not found"));
+        senderStats.setConnections(senderStats.getConnections() + 1);
+        statisticsRepository.save(senderStats);
+
+        Statistics recipientStats = statisticsRepository.findByUserId(recipientId).orElseThrow(() -> new NoSuchElementException("Recipient id not found"));
+        recipientStats.setConnections(recipientStats.getConnections() + 1);
+        statisticsRepository.save(recipientStats);
 
     }
 

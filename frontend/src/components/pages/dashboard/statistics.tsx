@@ -3,6 +3,7 @@ import { useUser } from "../../../redux/hooks";
 import type { StatisticsDTO } from "../../../dtos/models_dtos/statistics_dto";
 import statisticsService from "../../../service/statistics_service";
 import { toast } from "react-toastify";
+import { HiHandRaised } from "react-icons/hi2";
 
 export function Overview() {
   
@@ -22,8 +23,9 @@ export function Overview() {
     return (
     <div className="p-6 lg:p-8 dark:text-white">
       {/* Greeting */}
-      <h1 className="text-4xl font-bold mb-8">
-        Hello, <span className="text-teal-500">{user.username}</span> 👋
+      <h1 className="text-4xl font-bold mb-8 flex items-center gap-2">
+        Hello, <span className="text-teal-500">{user.username}</span> 
+        <span><HiHandRaised/></span>
       </h1>
 
       {/* Stats grid */}
@@ -56,21 +58,21 @@ export function Overview() {
       <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-5">
         <div className="rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 shadow-sm">
           <h2 className="text-lg font-semibold mb-2">Recent Activity</h2>
-          <p className="text-slate-500 dark:text-slate-400">
+          {/* <p className="text-slate-500 dark:text-slate-400">
             You joined <span className="font-semibold text-teal-500">2</span>{" "}
             new projects this week and gained{" "}
             <span className="font-semibold text-indigo-500">3</span> new
             connections.
-          </p>
+          </p> */}
         </div>
 
         <div className="rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 shadow-sm">
           <h2 className="text-lg font-semibold mb-2">Highlights</h2>
-          <p className="text-slate-500 dark:text-slate-400">
+          {/* <p className="text-slate-500 dark:text-slate-400">
             Your top project is <span className="font-semibold">Grouply</span>{" "}
             with <span className="font-semibold text-amber-500">92%</span>{" "}
             activity this month.
-          </p>
+          </p> */}
         </div>
       </div>
     </div>

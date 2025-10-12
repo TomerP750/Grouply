@@ -58,6 +58,21 @@ export function ProfilePage() {
       .catch((err) => toast.error(err?.response?.data ?? "Action failed"));
   };
 
+  const handleRemoveConnection = () => {
+    const targetId = profile?.user.id;
+    if (!targetId) return;
+    connectionService.removeConnection(targetId)
+    .then(res => {
+        setAreConnected(res);
+        toast.success("Removed connection");
+    })
+    .catch(err => {
+        toast.error(err.response.data);
+    })
+
+
+  }
+
   return (
     <main className="min-h-screen bg-gray-200 dark:bg-slate-900 dark:text-white">
       <Navbar />
@@ -84,7 +99,7 @@ export function ProfilePage() {
             {user.id !== profile?.user.id ? (
               <>
                 {areConnected ? (
-                  <button className={btn}>
+                  <button onClick={handleRemoveConnection} className={btn}>
                     <FaLink /> Remove
                   </button>
                 ) : (
@@ -116,7 +131,7 @@ export function ProfilePage() {
           </p>
         </section>
 
-        
+
       </div>
     </main>
   );
