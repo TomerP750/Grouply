@@ -8,7 +8,7 @@ import { Feed } from "../pages/posts-area/Feed";
 import { ProfilePage } from "../pages/profile/profile_page";
 import { useUserSelector } from "../../redux/hooks";
 import { Dashboard } from "../pages/dashboard/dashboard";
-import { Overview } from "../pages/dashboard/overview";
+import { Overview } from "../pages/dashboard/statistics";
 import { ProjectsTable } from "../pages/dashboard/tables/projects-tables";
 import { Role } from "../../dtos/enums/Role";
 import { UsersTable } from "../pages/dashboard/tables/users-tabel";

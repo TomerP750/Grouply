@@ -79,10 +79,10 @@ export function UserMenu({ user }: UserMenuProps) {
                 <button onClick={toggle} className="text-sm cursor-pointer hover:underline">Theme: {theme === "dark" ? "Dark" : "Light"}</button>
             </div>
 
-            <div className="flex items-center gap-2 px-2 py-1 cursor-pointer hover:bg-slate-700/50">
+            <NavLink to={"/about"} className="flex w-full items-center gap-2 px-2 py-1 cursor-pointer hover:bg-slate-700/50">
                 <HiOutlineQuestionMarkCircle size={20} />
                 <span className='text-sm'>Help and About</span>
-            </div>
+            </NavLink>
 
 
             <button

@@ -8,6 +8,8 @@ import com.grouply.backend.profile.Profile;
 import com.grouply.backend.profile.ProfileRepository;
 import com.grouply.backend.security.CustomUserDetails;
 import com.grouply.backend.security.JwtService;
+import com.grouply.backend.statistics.Statistics;
+import com.grouply.backend.statistics.StatisticsRepository;
 import com.grouply.backend.user.Role;
 import com.grouply.backend.user.User;
 import com.grouply.backend.user.UserRepository;
@@ -29,6 +31,7 @@ public class AuthService implements IAuthService {
     private final PasswordEncoder encoder;
     private final UserRepository userRepository;
     private final ProfileRepository profileRepository;
+    private final StatisticsRepository statisticsRepository;
 
 
     /**
@@ -72,6 +75,15 @@ public class AuthService implements IAuthService {
                 .user(user)
                 .build();
         profileRepository.save(profile);
+
+        Statistics statistics = Statistics.builder()
+                .completedProjects(0)
+                .activeProjects(0)
+                .connections(0)
+                .user(user)
+                .build();
+
+        statisticsRepository.save(statistics);
 
         LoginRequestDTO loginRequest = new LoginRequestDTO(dto.getAccountDetails().getEmail(), dto.getAccountDetails().getPassword());
         return login(loginRequest);

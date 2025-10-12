@@ -1,5 +1,4 @@
 import { useUserSelector } from "../../../redux/hooks";
-import { NavbarCenter } from "./navbar-center";
 import './Navbar.css';
 import { NavbarLeft } from "./navbar_left";
 import { NavbarRight } from "./NavbarRight";

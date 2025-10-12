@@ -8,9 +8,10 @@ interface ModalProps {
     children?: ReactNode;
     width?: string
     height?: string
+    className?: string
 }
 
-export function Modal({ open, onClose, title, children, width, height }: ModalProps) {
+export function Modal({ open, onClose, title, children, width, height, className }: ModalProps) {
     // Early return: no mount when closed
     if (!open) return null;
 
@@ -41,7 +42,8 @@ export function Modal({ open, onClose, title, children, width, height }: ModalPr
             <div className="fixed inset-0 flex items-center justify-center p-4 sm:p-6 pointer-events-none">
                 {/* Panel */}
                 <div
-                    className="
+                    className={`
+                    ${className}
                     pointer-events-auto 
                     relative 
                     w-full sm:w-3/4 md:w-1/2 lg:w-2/3
@@ -49,7 +51,7 @@ export function Modal({ open, onClose, title, children, width, height }: ModalPr
                     rounded-2xl bg-white dark:bg-slate-900 shadow-xl
                     ring-1 ring-black/5 dark:ring-white/10
                     p-5 sm:p-6 flex flex-col
-                    "
+                    `}
                 >
                     {/* Close (X) */}
                     <button

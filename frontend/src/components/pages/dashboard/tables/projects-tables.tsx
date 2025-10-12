@@ -197,7 +197,7 @@ export function ProjectsTable() {
                     </button>
                     {
                         modalOpen &&
-                        <Modal open={modalOpen}
+                        <Modal className="dark:bg-gradient-to-br dark:from-slate-900 via-teal-950 to-slate-800"   open={modalOpen}
                             onClose={() => setModalOpen(false)}>
                             <CreateProjectForm onClose={() => setModalOpen(false)} />
                         </Modal>

@@ -18,8 +18,10 @@ public class Statistics {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Integer projectsParticipated;
-    private Integer projectParticipating;
+    private Integer completedProjects;
+    private Integer activeProjects;
+
+    private Integer connections;
 
     @OneToOne
     private User user;
