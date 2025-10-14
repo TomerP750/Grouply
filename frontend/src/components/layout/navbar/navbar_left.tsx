@@ -28,10 +28,10 @@ export function NavbarLeft({ user }: NavbarLeftProps) {
 
             <NavLink to={"/"}> <img src={theme === "dark" ? logoLight : logoDark}
                 alt="logo"
-                className="cursor-pointer w-30 aspect-square object-fit object-center" />
+                className="cursor-pointer w-30 mt-4 aspect-square object-fit object-center" />
             </NavLink>
 
-            {user && <ul className="hidden lg:flex items-center gap-5 text-lg mb-5">
+            {user && <ul className="hidden lg:flex items-center gap-5 text-lg ">
                 <li>
                     <NavLink to="/" className={linkClasses}>
                         <span className="text-sm">Home</span>
@@ -39,9 +39,9 @@ export function NavbarLeft({ user }: NavbarLeftProps) {
                 </li>
 
                 <li>
-                    <NavLink to="/about" className={linkClasses}>
+                    <NavLink to="/archived" className={linkClasses}>
 
-                        <span className="text-sm">About</span>
+                        <span className="text-sm">Archived</span>
                     </NavLink>
                 </li>
 

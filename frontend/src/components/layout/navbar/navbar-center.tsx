@@ -12,7 +12,7 @@ interface NavbarCenterProps {
 export function NavbarCenter({ user }: NavbarCenterProps) {
 
   return (
-    <div className="">
+    <div className="w-1/2">
       {user && <SearchBar />}
     </div>
   );

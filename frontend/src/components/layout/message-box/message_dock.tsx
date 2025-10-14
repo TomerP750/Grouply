@@ -66,7 +66,7 @@ export function MessageDock() {
     }
 
     return (
-        <div className="text-black dark:text-white">
+        <div className=" text-black dark:text-white">
             {getPanel(state, {
                 chats: mockChats,
                 onOpen: () => setState({ view: "list" }),
