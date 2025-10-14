@@ -3,33 +3,66 @@ import type { ConnectionRequestDTO } from "../../../../dtos/models_dtos/request_
 import connectionRequestService from "../../../../service/connection_request_service";
 import { toast } from "react-toastify";
 import { ConnectionRequestCard } from "./connection_request_card";
+import { BiGroup } from "react-icons/bi";
+import { NavLink } from "react-router-dom";
+import { Menu } from "../../../elements/Menu";
 
 
 export function ConnectionMenu() {
 
     const [requests, setRequests] = useState<ConnectionRequestDTO[]>([]);
     const pageSize = 5;
-    
 
     useEffect(() => {
         connectionRequestService.allRequests(0, pageSize)
-        .then(res => {
-            setRequests(res.content);
-        })
-        .catch(err => {
-            toast.error(err.response.data);
-        })
+            .then(res => {
+                setRequests(res.content);
+            })
+            .catch(err => {
+                toast.error(err.response.data);
+            })
     }, []);
 
-    requests && console.log("reqs", requests)
+    const handleResponse = (deletedId: number) => {
+        setRequests(prev => prev.filter(r => r.id !== deletedId));
+    };
+
+
+    if (requests.length > 0) {
+
+        return (
+            <Menu className="bg-gray-200 dark:bg-slate-950 py-5 px-4 absolute top-0 mt-15 -right-2 w-95 max-w-95 min-h-64 rounded-2xl shadow-2xl dark:text-gray-300">
+                <div className="w-full flex min-h-64 flex-col">
+
+                    {/* List */}
+                    <div className="flex-1 overflow-y-auto gap-3 pr-1">
+                        {requests.map(r => (
+                            <ConnectionRequestCard
+                                key={r.id}
+                                connectionRequest={r}
+                                onResponse={() => handleResponse(r.id)}
+                            />
+                        ))}
+                    </div>
+
+                    <NavLink to="/" className="mt-3 text-sm self-center hover:underline">
+                        View More
+                    </NavLink>
+                </div>
+            </Menu>
+        );
+
+    }
 
     return (
-        <menu className="p-3 w-full">
+        <Menu className="bg-gray-200 flex items-center justify-center dark:bg-slate-950 py-5 px-4 absolute top-0 mt-15 -right-2 w-95 max-w-95 min-h-64 rounded-2xl shadow-2xl dark:text-gray-300">
 
-            {requests.map(r => {
-                return <ConnectionRequestCard key={r.id} connectionRequest={r}/>
-            })}
+            <menu className="w-full flex flex-col items-center">
 
-        </menu>
+                <BiGroup size={40} />
+                <p className="text-sm text-center">No Pending Requests</p>
+
+            </menu>
+        </Menu>
     )
 }

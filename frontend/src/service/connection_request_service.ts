@@ -19,7 +19,7 @@ class ConnectionRequestService {
     };
 
     async declineRequest(senderId: number) {
-        return (await axios.post(`${CONNECTION_BASE_URL}/decline/${senderId}`));
+        return (await axios.delete(`${CONNECTION_BASE_URL}/decline/${senderId}`));
     };
 
     async hasPendingRequestByVisitedUser(visitedId: number) {

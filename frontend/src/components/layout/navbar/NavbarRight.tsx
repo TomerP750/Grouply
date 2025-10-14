@@ -41,10 +41,8 @@ export function NavbarRight({ user }: NavbarRightProps) {
           }}>
             <Badge Icon={HiOutlineGlobeAlt} size={28} className="cursor-pointer p-3" />
           </button>
-          {connectionsOpen &&
-            <Menu className=" gap-5 bg-gray-200 dark:bg-slate-950 flex flex-col items-start py-5 px-4 absolute top-0 mt-15 -right-2 w-95 max-w-95 min-h-64 rounded-2xl shadow-2xl dark:text-gray-300">
-              <ConnectionMenu />
-            </Menu>}
+          
+          {connectionsOpen && <ConnectionMenu />}
         </div>}
 
         {/* Notifications Menu */}

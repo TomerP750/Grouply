@@ -88,6 +88,14 @@ public class ConnectionRequestService implements IConnectionRequestService{
 
         createConnectionPair(senderId, recipientId);
 
+
+        //TODO maybe remove this
+        ConnectionRequest request = connectionRequestRepository
+                .findBySenderIdAndRecipientId(senderId, recipientId)
+                .orElseThrow(() -> new NoSuchElementException("Request not found"));
+
+        connectionRequestRepository.deleteById(request.getId());
+
         User recipient = fetchUser(recipientId);
 
 //        notificationService.sendUserNotification(
