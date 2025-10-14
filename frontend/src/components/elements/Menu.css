@@ -1,0 +1,32 @@
+@keyframes bounceUp {
+  from {
+    transform: translateY(20%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+
+.menu {
+  animation: bounceUp 0.25s ease forwards;
+}
+
+
+.menu::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  right: 1.5rem;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 8px solid #e5e7eb; 
+}
+
+
+.dark .menu::before {
+  border-bottom-color: #14b8a6; 
+}

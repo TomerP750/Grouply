@@ -7,6 +7,9 @@ import { Avatar } from "../../elements/Avatar";
 import { Badge } from "../../elements/Badge";
 import { SearchBar } from "./search_bar";
 import { UserMenu } from "./user_menu";
+import { Menu } from "../../elements/Menu";
+import { ConnectionMenu } from "./menus/connections_menu";
+import { NotificationMenu } from "./menus/notification_menu";
 
 
 interface NavbarRightProps {
@@ -19,6 +22,7 @@ export function NavbarRight({ user }: NavbarRightProps) {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
 
   const [notificationOpen, setNotificationOpen] = useState<boolean>(false);
+  const [connectionsOpen, setConnectionOpen] = useState<boolean>(false);
   const [messageOpen, setMessageOpen] = useState<boolean>(false);
 
   return (
@@ -28,27 +32,37 @@ export function NavbarRight({ user }: NavbarRightProps) {
 
         {user && <SearchBar />}
 
+        {/* Connection Menu */}
         {user && <div className="relative hover:bg-gray-500/20">
           <button onClick={() => {
-            setNotificationOpen(!notificationOpen)
-            setMessageOpen(false)
+            setConnectionOpen(!connectionsOpen);
+            setMessageOpen(false);
+            setNotificationOpen(false);
           }}>
             <Badge Icon={HiOutlineGlobeAlt} size={28} className="cursor-pointer p-3" />
           </button>
-          {notificationOpen && <div className="absolute right-0 mt-2 bg-white w-60 max-w-70 min-h-30" />}
+          {connectionsOpen &&
+            <Menu className=" gap-5 bg-gray-200 dark:bg-slate-950 flex flex-col items-start py-5 px-4 absolute top-0 mt-15 -right-2 w-95 max-w-95 min-h-64 rounded-2xl shadow-2xl dark:text-gray-300">
+              <ConnectionMenu />
+            </Menu>}
         </div>}
 
+        {/* Notifications Menu */}
         {user && <div className="relative hover:bg-gray-500/20">
           <button onClick={() => {
-            setNotificationOpen(!notificationOpen)
-            setMessageOpen(false)
+            setNotificationOpen(!notificationOpen);
+            setConnectionOpen(false);
+            setMessageOpen(false);
           }}>
             <Badge Icon={BiBell} size={28} className="cursor-pointer p-3" />
           </button>
-          {notificationOpen && <div className="absolute right-0 mt-2 bg-white w-60 max-w-70 min-h-30" />}
+          {notificationOpen &&
+            <Menu className=" gap-5 bg-gray-200 dark:bg-slate-950 flex flex-col flex-wrap items-start py-5 px-4 absolute top-0 mt-15 -right-2 w-95 max-w-95 min-h-64 rounded-2xl shadow-2xl dark:text-gray-300">
+              <NotificationMenu />
+            </Menu>}
         </div>}
 
-        {user && <div className="relative hover:bg-gray-500/20 mr-3">
+        {/* {user && <div className="relative hover:bg-gray-500/20 mr-3">
           <button onClick={() => {
             setMessageOpen(!messageOpen)
             setNotificationOpen(false)
@@ -56,13 +70,13 @@ export function NavbarRight({ user }: NavbarRightProps) {
             <Badge Icon={BiChat} size={28} className="cursor-pointer p-3" />
           </button>
           {messageOpen && <div className="absolute right-0 mt-2 bg-white w-60 max-w-70 min-h-30" />}
-        </div>}
+        </div>} */}
 
 
         {/* Avatar / Login */}
         {user
           ?
-          <div className="relative">
+          <div className="relative ml-3 mt-3">
             <button
               onClick={() => setMenuOpen(!menuOpen)}
               className={"relative inline-flex flex-col items-center gap-1 transition-colors duration-200 cursor-pointer"}>

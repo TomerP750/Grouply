@@ -19,7 +19,8 @@ export function NavbarLeft({ user }: NavbarLeftProps) {
 
             <NavLink to={"/"}> <img src={theme === "dark" ? logoLight : logoDark}
                 alt="logo"
-                className="cursor-pointer w-30 aspect-square object-fit object-center" /></NavLink>
+                className="cursor-pointer w-30 aspect-square object-fit object-center" />
+            </NavLink>
 
             {user && <NavbarCenter user={user} />}
         </div>
