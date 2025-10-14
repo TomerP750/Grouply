@@ -1,8 +1,12 @@
 package com.grouply.backend.connection_request;
 
+import com.grouply.backend.connection_request.dto.ConnectionRequestDTO;
 import com.grouply.backend.exceptions.UnauthorizedException;
 import com.grouply.backend.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,6 +16,15 @@ import org.springframework.web.bind.annotation.*;
 public class ConnectionRequestController {
 
     private final ConnectionRequestService connectionRequestService;
+
+    @GetMapping("/all")
+    public Page<ConnectionRequestDTO> allRequests(@AuthenticationPrincipal CustomUserDetails userDetails,
+                                                  @RequestParam(value = "page", defaultValue = "0") int page,
+                                                  @RequestParam(value = "size", defaultValue = "10") int size) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+        Long userId = userDetails.getId();
+        return connectionRequestService.allConnectionRequests(userId, pageRequest);
+    }
 
     @PostMapping("/toggle/{recipientId}")
     public boolean toggleRequest(@AuthenticationPrincipal CustomUserDetails userDetails, @PathVariable Long recipientId) throws UnauthorizedException {

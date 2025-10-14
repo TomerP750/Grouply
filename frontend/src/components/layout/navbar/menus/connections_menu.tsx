@@ -1,31 +1,34 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import type { ConnectionRequestDTO } from "../../../../dtos/models_dtos/request_dto/connection_request_dto";
+import connectionRequestService from "../../../../service/connection_request_service";
+import { toast } from "react-toastify";
+import { ConnectionRequestCard } from "./connection_request_card";
 
-const baseBtn = "cursor-pointer px-3 py-2 rounded-lg text-white"
 
 export function ConnectionMenu() {
 
-    const [requests, setRequests] = useState();
+    const [requests, setRequests] = useState<ConnectionRequestDTO[]>([]);
+    const pageSize = 5;
+    
 
-    const handleAccept = () => {
-        
-    }
+    useEffect(() => {
+        connectionRequestService.allRequests(0, pageSize)
+        .then(res => {
+            setRequests(res.content);
+        })
+        .catch(err => {
+            toast.error(err.response.data);
+        })
+    }, []);
 
-    const handleDecline = () => {
-
-    }
+    requests && console.log("reqs", requests)
 
     return (
         <menu className="p-3 w-full">
 
-            <div className="flex justify-between items-center mb-3">
-                <p className="text-sm">TheAdmin </p>
-                <p className="text-xs">20 mins ago</p>
-            </div>
-            <div className="text-sm space-x-3">
-                <button onClick={handleAccept} className={`${baseBtn} bg-green-600 hover:bg-green-500`}>Accept</button>
-                <button onClick={handleDecline} className={`${baseBtn} `}>Decline</button>
-            </div>
-
+            {requests.map(r => {
+                return <ConnectionRequestCard key={r.id} connectionRequest={r}/>
+            })}
 
         </menu>
     )

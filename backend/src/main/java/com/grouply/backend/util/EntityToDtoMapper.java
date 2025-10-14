@@ -7,6 +7,8 @@ import com.grouply.backend.archived_project.dto.ArchivedProjectDTO;
 //import com.grouply.backend.chat_message.dto.ChatMessageDTO;
 //import com.grouply.backend.chat_room.ChatRoom;
 //import com.grouply.backend.chat_room.dto.ChatRoomDTO;
+import com.grouply.backend.connection_request.ConnectionRequest;
+import com.grouply.backend.connection_request.dto.ConnectionRequestDTO;
 import com.grouply.backend.position.Position;
 import com.grouply.backend.position.dto.PositionDTO;
 import com.grouply.backend.profile.Profile;
@@ -218,6 +220,15 @@ public class EntityToDtoMapper {
             if (t != null) result.add(toTechnologyDto(t));
         }
         return result;
+    }
+
+    public static ConnectionRequestDTO toConnectionRequestDto(ConnectionRequest entity) {
+        return ConnectionRequestDTO.builder()
+                .id(entity.getId())
+                .recipient(toUserDto(entity.getRecipient()))
+                .sender(toUserDto(entity.getSender()))
+                .sentAt(entity.getSentAt())
+                .build();
     }
 
 

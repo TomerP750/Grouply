@@ -3,7 +3,7 @@ package com.grouply.backend.join_request;
 import com.grouply.backend.exceptions.ExistsException;
 import com.grouply.backend.exceptions.UnauthorizedException;
 import com.grouply.backend.join_request.dto.JoinRequestDTO;
-import com.grouply.backend.notification.NotificationService;
+//import com.grouply.backend.notification.NotificationService;
 import com.grouply.backend.notification.NotificationType;
 import com.grouply.backend.project.Project;
 import com.grouply.backend.project.ProjectRepository;
@@ -33,7 +33,7 @@ public class JoinRequestService {
     private final UserRepository userRepository;
     private final ProjectMemberRepository projectMemberRepository;
     private final ProjectPostPositionRepository projectPostPositionRepository;
-    private final NotificationService notificationService;
+//    private final NotificationService notificationService;
 
     /**
      * Toggles a join request for a given post position.

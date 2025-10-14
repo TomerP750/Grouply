@@ -2,15 +2,19 @@ package com.grouply.backend.connection_request;
 
 import com.grouply.backend.connection.Connection;
 import com.grouply.backend.connection.ConnectionRepository;
+import com.grouply.backend.connection_request.dto.ConnectionRequestDTO;
 import com.grouply.backend.exceptions.UnauthorizedException;
-import com.grouply.backend.notification.NotificationService;
+//import com.grouply.backend.notification.NotificationService;
 import com.grouply.backend.notification.NotificationType;
 import com.grouply.backend.statistics.Statistics;
 import com.grouply.backend.statistics.StatisticsRepository;
 import com.grouply.backend.user.User;
 import com.grouply.backend.user.UserRepository;
+import com.grouply.backend.util.EntityToDtoMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,8 +29,14 @@ public class ConnectionRequestService implements IConnectionRequestService{
     private final ConnectionRepository connectionRepository;
     private final UserRepository userRepository;
     private final StatisticsRepository statisticsRepository;
-    private final NotificationService notificationService;
+//    private final NotificationService notificationService;
 
+
+    public Page<ConnectionRequestDTO> allConnectionRequests(Long recipientId, Pageable pageable) {
+        return connectionRequestRepository
+                .findByRecipientId(recipientId, pageable)
+                .map(EntityToDtoMapper::toConnectionRequestDto);
+    }
 
     @Override
     public boolean hasPendingRequestFromVisitedUser(Long visitorId, Long visitedId) {
@@ -59,12 +69,12 @@ public class ConnectionRequestService implements IConnectionRequestService{
         connectionRequestRepository.save(newRequest);
 
 
-        notificationService.sendUserNotification(
-                recipientId,
-                NotificationType.CONNECTION_REQUEST,
-                senderId,
-                sender.getUsername() + " Sent you connection request."
-        );
+//        notificationService.sendUserNotification(
+//                recipientId,
+//                NotificationType.CONNECTION_REQUEST,
+//                senderId,
+//                sender.getUsername() + " Sent you connection request."
+//        );
 
         return true;
     }
@@ -80,12 +90,12 @@ public class ConnectionRequestService implements IConnectionRequestService{
 
         User recipient = fetchUser(recipientId);
 
-        notificationService.sendUserNotification(
-                senderId,
-                NotificationType.ACCEPTED_CONNECTION,
-                recipientId,
-                recipient.getUsername() + " accepted your connection request."
-        );
+//        notificationService.sendUserNotification(
+//                senderId,
+//                NotificationType.ACCEPTED_CONNECTION,
+//                recipientId,
+//                recipient.getUsername() + " accepted your connection request."
+//        );
 
     }
 

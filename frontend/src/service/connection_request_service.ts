@@ -6,6 +6,9 @@ const CONNECTION_BASE_URL = `${BASE_API}/connection-request`;
 
 class ConnectionRequestService {
 
+    async allRequests(page: number, size: number) {
+        return (await axios.get(`${CONNECTION_BASE_URL}/all?page=${page}&size=${size}`)).data
+    }
 
     async toggleRequest(recipientId: number) {
         return (await axios.post(`${CONNECTION_BASE_URL}/toggle/${recipientId}`)).data;
