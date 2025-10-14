@@ -106,7 +106,7 @@ export function PostCard({ projectPost, onRemove }: ProjectCardProps) {
                 {/* Description + Buttons to join */}
                 <PostCardDescription
                     archived={archived}
-                    projectPost={projectPost}
+                    post={projectPost}
                     sentRequest={sentRequest}
                     onArchiveClick={() => handleAddToArchive(projectPost.id)}
                     onEdit={handleEdit}

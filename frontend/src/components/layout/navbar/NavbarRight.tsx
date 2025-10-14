@@ -30,8 +30,6 @@ export function NavbarRight({ user }: NavbarRightProps) {
 
       <ul className="hidden md:flex items-center text-lg">
 
-        {user && <SearchBar />}
-
         {/* Connection Menu */}
         {user && <div className="relative hover:bg-gray-500/20">
           <button onClick={() => {
@@ -39,9 +37,9 @@ export function NavbarRight({ user }: NavbarRightProps) {
             setMessageOpen(false);
             setNotificationOpen(false);
           }}>
-            <Badge Icon={HiOutlineGlobeAlt} size={28} className="cursor-pointer p-3" />
+            <Badge Icon={HiOutlineGlobeAlt} size={28} count={2} className="cursor-pointer p-3" />
           </button>
-          
+
           {connectionsOpen && <ConnectionMenu />}
         </div>}
 
@@ -52,7 +50,7 @@ export function NavbarRight({ user }: NavbarRightProps) {
             setConnectionOpen(false);
             setMessageOpen(false);
           }}>
-            <Badge Icon={BiBell} size={28} className="cursor-pointer p-3" />
+            <Badge Icon={BiBell} size={28} count={3} className="cursor-pointer p-3" />
           </button>
           {notificationOpen &&
             <Menu className=" gap-5 bg-gray-200 dark:bg-slate-950 flex flex-col flex-wrap items-start py-5 px-4 absolute top-0 mt-15 -right-2 w-95 max-w-95 min-h-64 rounded-2xl shadow-2xl dark:text-gray-300">

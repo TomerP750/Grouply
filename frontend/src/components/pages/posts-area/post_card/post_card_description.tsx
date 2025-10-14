@@ -3,21 +3,22 @@ import { BiDotsVertical } from "react-icons/bi";
 import { MdBookmarkAdd } from "react-icons/md";
 import { toast } from "react-toastify";
 import type { PostDTO } from "../../../../dtos/models_dtos/PostDTO";
-import { useUserSelector } from "../../../../redux/hooks";
+import { useUser, useUserSelector } from "../../../../redux/hooks";
 import projectMemberService from "../../../../service/ProjectMemberService";
 import './post_card_css.css';
 import { PostCardPositionCard } from "./post_card_position_card";
-import { toNormal, toTitleCase } from "../../../../util/util_functions";
+import { timeAgo, toNormal, toTitleCase } from "../../../../util/util_functions";
 import { Dialog } from "../../../elements/Dialog";
 
 
+type MemberType = "member" | "owner"
 
-export const getMemberTypeTitle = (num: number) => {
+export const getMemberTypeTitle = (type: MemberType) => {
 
-    switch (num) {
-        case 1:
+    switch (type) {
+        case "owner":
             return "Your Project";
-        case 2:
+        case "member":
             return "You Are Member";
     }
 
@@ -25,7 +26,7 @@ export const getMemberTypeTitle = (num: number) => {
 
 
 interface ProjectCardDescriptionProps {
-    projectPost: PostDTO;
+    post: PostDTO;
     archived: boolean
     sentRequest: boolean
     onArchiveClick: () => void;
@@ -33,12 +34,12 @@ interface ProjectCardDescriptionProps {
     onDelete: () => void;
 }
 
-export function PostCardDescription({ projectPost, onArchiveClick, onEdit, onDelete, archived, sentRequest }: ProjectCardDescriptionProps) {
+export function PostCardDescription({ post, onArchiveClick, onEdit, onDelete, archived, sentRequest }: ProjectCardDescriptionProps) {
 
     const [loading, setLoading] = useState<boolean>(false);
     const [isOwner, setIsOwner] = useState<boolean>(false);
     const [isMember, setIsMember] = useState<boolean>(false);
-    const user = useUserSelector(state => state.authSlice.user);
+    const user = useUser();
     const [menuOpen, setMenuOpen] = useState<boolean>(false);
     const [dialogOpen, setDialogOpen] = useState<boolean>(false);
 
@@ -66,18 +67,19 @@ export function PostCardDescription({ projectPost, onArchiveClick, onEdit, onDel
     }, []);
 
 
-    const { title, description, projectDTO, positions } = projectPost;
+    const { title, description, projectDTO, positions, postedAt } = post;
 
     const trancuatedDesc = description.length > 200 ? description.slice(0, 200) + '...' : description;
 
     return (
         <div className="flex flex-col flex-grow w-full px-6 py-4 gap-2">
+            <p className="text-sm text-gray-300">{timeAgo(postedAt)}</p>
             <div className="flex w-full justify-between items-center">
                 {/* Title + isowner */}
                 <div className="flex flex-col-reverse items-start sm:flex justify-between w-full gap-3 font-bold text-2xl text-gray-900 dark:text-white">
                     <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl tracking-tight">{toNormal(title)}</h1>
                     <div className="flex justify-between items-center w-full">
-                        {isMember && <span className="text-xs text-white bg-slate-500 px-3 py-1 rounded-full">{isOwner ? getMemberTypeTitle(1) : getMemberTypeTitle(2)}</span>}
+                        {isMember && <span className="text-xs text-white bg-slate-500 px-3 py-1 rounded-full">{isOwner ? getMemberTypeTitle("owner") : getMemberTypeTitle("member")}</span>}
 
                         {/* OWNER CRUD BUTTONS MENU */}
                         {isOwner
@@ -124,7 +126,7 @@ export function PostCardDescription({ projectPost, onArchiveClick, onEdit, onDel
                 {!isMember && positions.length > 0 && positions.map(p => {
                     return <PostCardPositionCard
                         key={p.id}
-                        postId={projectPost.id}
+                        postId={post.id}
                         postPosition={p}
                         user={user}
                     />

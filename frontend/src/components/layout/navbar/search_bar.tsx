@@ -40,7 +40,7 @@ export function SearchBar() {
     <form
       ref={formRef}
       onSubmit={handleSearch}
-      className="relative w-2/3 max-w-md hidden xl:block"
+      className="relative hidden xl:block"
       role="search"
     >
       <input
@@ -100,7 +100,7 @@ export function SearchBar() {
             )}
           </ul>
 
-          {/* footer: view all / go to advanced */}
+          {/*  view all */}
           <div className="flex w-full items-center justify-center gap-2 px-3 py-2 ">
             <button
               type="button"
