@@ -11,15 +11,35 @@ import { ProfileBanner } from "./profile_banner";
 import connectionService from "../../../service/connection_service";
 import { toast } from "react-toastify";
 import connectionRequestService from "../../../service/connection_request_service";
+import { useThrottleClick } from "../../../util/helper_hooks";
 
-const btn =
-  "font-medium cursor-pointer text-white inline-flex items-center justify-center gap-2 rounded-lg " +
-  "bg-slate-700 hover:bg-slate-600 px-3 py-2  " +
-  "text-sm sm:text-base";
+
+const baseBtn =
+  "cursor-pointer inline-flex items-center gap-2 px-4 py-3 rounded-xl text-sm font-medium " +
+  "border border-white/10 bg-white/5 hover:bg-white/10 active:bg-white/15 " +
+  "backdrop-blur-md shadow-sm transition-all duration-200 " +
+  "focus:outline-none focus:ring-2 focus:ring-teal-400/40 " +
+  "disabled:opacity-60 disabled:cursor-not-allowed";
+
+const primaryBtn =
+  baseBtn +
+  " text-white " +
+  "ring-0";
+
+const dangerBtn =
+  baseBtn +
+  " text-white border-rose-500/30 bg-rose-500/15 hover:bg-rose-500/25 " +
+  "focus:ring-rose-400/40";
+
+const subtleBtn =
+  baseBtn + " text-slate-200 hover:text-white";
 
 export function ProfilePage() {
   const params = useParams();
   const id = Number(params.id);
+
+  const { run: throttleConnect, cooling: coolingConnect } = useThrottleClick(5000);
+  const { run: throttleRemove, cooling: coolingRemove } = useThrottleClick(5000);
 
   const [profile, setProfile] = useState<ProfileDTO>();
   const [areConnected, setAreConnected] = useState(false);
@@ -46,31 +66,38 @@ export function ProfilePage() {
       .catch((err) => toast.error(err?.response?.data ?? "Failed to check connection"));
   }, [profile?.user?.id]);
 
+
   const handleConnectRequest = () => {
-    const targetId = profile?.user?.id;
-    if (!targetId) return;
-    connectionRequestService
-      .toggleRequest(targetId)
-      .then((res) => {
-        setSentRequest(res);
-        toast.success(res ? "Connect Request Sent!" : "Connect Request Canceled");
-      })
-      .catch((err) => toast.error(err?.response?.data ?? "Action failed"));
+
+    throttleConnect(() => {
+      const targetId = profile?.user?.id;
+      if (!targetId) return;
+      connectionRequestService
+        .toggleRequest(targetId)
+        .then((res) => {
+          setSentRequest(res);
+          toast.success(res ? "Connect Request Sent!" : "Connect Request Canceled");
+        })
+        .catch((err) => toast.error(err?.response?.data ?? "Action failed"));
+    })
+
+
   };
 
   const handleRemoveConnection = () => {
-    const targetId = profile?.user.id;
-    if (!targetId) return;
-    connectionService.removeConnection(targetId)
-    .then(res => {
-        setAreConnected(res);
-        toast.success("Removed connection");
-    })
-    .catch(err => {
-        toast.error(err.response.data);
-    })
 
-
+    throttleRemove(() => {
+      const targetId = profile?.user.id;
+      if (!targetId) return;
+      connectionService.removeConnection(targetId)
+        .then(res => {
+          setAreConnected(res);
+          toast.success("Removed connection");
+        })
+        .catch(err => {
+          toast.error(err.response.data);
+        })
+    })
   }
 
   return (
@@ -95,28 +122,35 @@ export function ProfilePage() {
           </div>
 
           {/* Actions */}
-          <div className="space-x-3">
+          <div className="flex flex-wrap items-center justify-end gap-3">
             {user.id !== profile?.user.id ? (
               <>
                 {areConnected ? (
-                  <button onClick={handleRemoveConnection} className={btn}>
-                    <FaLink /> Remove
+                  <button onClick={handleRemoveConnection} disabled={coolingRemove} className={dangerBtn}>
+                    <FaLink size={16} />
+                    Remove
                   </button>
                 ) : (
-                  <button onClick={handleConnectRequest} className={btn}>
-                    <FaLink /> {sentRequest ? "Cancel" : "Connect"}
+                  <button onClick={handleConnectRequest} disabled={coolingConnect} className={primaryBtn}>
+                    <FaLink size={16} />
+                    {sentRequest ? "Cancel" : "Connect"}
                   </button>
                 )}
-                <button className={btn}>
-                  <MdMail /> Message
+
+                <button className={subtleBtn}>
+                  <MdMail size={18} />
+                  Message
                 </button>
-                <button className={btn}>
-                  <HiUserAdd /> Invite To Project
+
+                <button className={subtleBtn}>
+                  <HiUserAdd size={18} />
+                  Invite To Project
                 </button>
               </>
             ) : (
-              <button className={btn}>
-                <FaLink /> Edit Profile
+              <button className={primaryBtn}>
+                <FaLink size={16} />
+                Edit Profile
               </button>
             )}
           </div>

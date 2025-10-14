@@ -3,6 +3,8 @@ package com.grouply.backend.connection_request;
 import com.grouply.backend.connection.Connection;
 import com.grouply.backend.connection.ConnectionRepository;
 import com.grouply.backend.exceptions.UnauthorizedException;
+import com.grouply.backend.notification.NotificationService;
+import com.grouply.backend.notification.NotificationType;
 import com.grouply.backend.statistics.Statistics;
 import com.grouply.backend.statistics.StatisticsRepository;
 import com.grouply.backend.user.User;
@@ -10,6 +12,7 @@ import com.grouply.backend.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.NoSuchElementException;
 
@@ -22,6 +25,7 @@ public class ConnectionRequestService implements IConnectionRequestService{
     private final ConnectionRepository connectionRepository;
     private final UserRepository userRepository;
     private final StatisticsRepository statisticsRepository;
+    private final NotificationService notificationService;
 
 
     @Override
@@ -31,6 +35,7 @@ public class ConnectionRequestService implements IConnectionRequestService{
     }
 
     @Override
+    @Transactional
     public boolean toggleConnectionRequest(Long senderId ,Long recipientId) throws UnauthorizedException {
 
         if (senderId.equals(recipientId)) {
@@ -52,6 +57,15 @@ public class ConnectionRequestService implements IConnectionRequestService{
                 .status(ConnectionRequestStatus.PENDING)
                 .build();
         connectionRequestRepository.save(newRequest);
+
+
+        notificationService.sendUserNotification(
+                recipientId,
+                NotificationType.CONNECTION_REQUEST,
+                senderId,
+                sender.getUsername() + " Sent you connection request."
+        );
+
         return true;
     }
 
@@ -63,6 +77,15 @@ public class ConnectionRequestService implements IConnectionRequestService{
         }
 
         createConnectionPair(senderId, recipientId);
+
+        User recipient = fetchUser(recipientId);
+
+        notificationService.sendUserNotification(
+                senderId,
+                NotificationType.ACCEPTED_CONNECTION,
+                recipientId,
+                recipient.getUsername() + " accepted your connection request."
+        );
 
     }
 
@@ -104,6 +127,7 @@ public class ConnectionRequestService implements IConnectionRequestService{
         connectionRepository.save(connectionSender);
         connectionRepository.save(connectionRecipient);
 
+
         Statistics senderStats = statisticsRepository.findByUserId(senderId).orElseThrow(() -> new NoSuchElementException("Sender id not found"));
         senderStats.setConnections(senderStats.getConnections() + 1);
         statisticsRepository.save(senderStats);
@@ -111,6 +135,8 @@ public class ConnectionRequestService implements IConnectionRequestService{
         Statistics recipientStats = statisticsRepository.findByUserId(recipientId).orElseThrow(() -> new NoSuchElementException("Recipient id not found"));
         recipientStats.setConnections(recipientStats.getConnections() + 1);
         statisticsRepository.save(recipientStats);
+
+
 
     }
 

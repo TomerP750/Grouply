@@ -8,7 +8,7 @@ import {
     type SortingState
 } from "@tanstack/react-table";
 import { useEffect, useMemo, useState } from "react";
-import { BiChevronLeft, BiChevronRight, BiLoaderAlt, BiPlus } from "react-icons/bi";
+import { BiChevronLeft, BiChevronRight, BiLoaderAlt, BiPencil, BiPlus, BiTrash } from "react-icons/bi";
 import { toast } from "react-toastify";
 import { ProjectStatus } from "../../../../dtos/enums/ProjectStatus";
 import type { ProjectDTO } from "../../../../dtos/models_dtos/ProjectDTO";
@@ -147,9 +147,10 @@ export function ProjectsTable() {
                         onClick={(e) => {
                             e.stopPropagation();
                         }}
-                        className="cursor-pointer rounded text-teal-300  px-2 py-1"
+                        className="inline-flex gap-1 items-center cursor-pointer rounded px-2 py-1 hover:underline"
                     >
-                        Edit
+                        <span><BiPencil size={20}/></span>
+                        <span>Edit</span> 
                     </button>
                     <button
                         type="button"
@@ -158,9 +159,10 @@ export function ProjectsTable() {
                             setDialogOpen(true);
                             setSelectedProejctId(row.original.id)
                         }}
-                        className="cursor-pointer rounded px-2 py-1  text-red-600 "
+                        className="inline-flex items-center gap-1 cursor-pointer rounded px-2 py-1 text-red-600 hover:underline "
                     >
-                        Delete
+                        <span><BiTrash size={20}/></span>
+                        <span>Delete</span>
                     </button>
                 </div>
             ),

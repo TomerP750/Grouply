@@ -29,6 +29,8 @@ public class Profile {
     @ManyToMany
     private List<Position> positions = new ArrayList<>();
 
+
+
     //TODO add project participant in
 
     @OneToOne

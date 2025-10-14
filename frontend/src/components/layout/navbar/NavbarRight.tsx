@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { BiBell, BiChat, BiChevronDown } from "react-icons/bi";
+import { BiBell, BiChat } from "react-icons/bi";
+import { HiOutlineGlobeAlt } from "react-icons/hi";
 import { NavLink } from "react-router-dom";
 import type { JwtUser } from "../../../redux/AuthSlice";
 import { Avatar } from "../../elements/Avatar";
 import { Badge } from "../../elements/Badge";
+import { SearchBar } from "./search_bar";
 import { UserMenu } from "./user_menu";
 
 
@@ -24,6 +26,17 @@ export function NavbarRight({ user }: NavbarRightProps) {
 
       <ul className="hidden md:flex items-center text-lg">
 
+        {user && <SearchBar />}
+
+        {user && <div className="relative hover:bg-gray-500/20">
+          <button onClick={() => {
+            setNotificationOpen(!notificationOpen)
+            setMessageOpen(false)
+          }}>
+            <Badge Icon={HiOutlineGlobeAlt} size={28} className="cursor-pointer p-3" />
+          </button>
+          {notificationOpen && <div className="absolute right-0 mt-2 bg-white w-60 max-w-70 min-h-30" />}
+        </div>}
 
         {user && <div className="relative hover:bg-gray-500/20">
           <button onClick={() => {
@@ -46,20 +59,20 @@ export function NavbarRight({ user }: NavbarRightProps) {
         </div>}
 
 
-
+        {/* Avatar / Login */}
         {user
           ?
           <div className="relative">
             <button
               onClick={() => setMenuOpen(!menuOpen)}
               className={"relative inline-flex flex-col items-center gap-1 transition-colors duration-200 cursor-pointer"}>
-              <Avatar size={22} />
-              <div className="text-sm flex items-center">
+              <Avatar size={40} />
+              {/* <div className="text-sm flex items-center">
                 <span>{user?.username}</span>
                 <span><BiChevronDown size={20} className={`${menuOpen && 'rotate-180'} transition duration-200`} /></span>
-              </div>
+              </div> */}
             </button>
-            {menuOpen && <UserMenu user={user}/>}
+            {menuOpen && <UserMenu user={user} />}
           </div>
           :
           <NavLink
@@ -73,11 +86,11 @@ export function NavbarRight({ user }: NavbarRightProps) {
             Login
           </NavLink>}
 
-          
+
 
       </ul>
 
-      
+
 
     </nav>
   );

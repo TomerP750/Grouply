@@ -10,7 +10,7 @@ const linkClasses = ({ isActive }: { isActive: boolean }) =>
   [
     "inline-flex flex-col items-center gap-1 transition-colors duration-200",
     isActive
-      ? "text-teal-500 font-semibold"
+      ? "underline decoration-teal-500 underline-offset-2 font-semibold"
       : "text-black dark:text-white hover:text-teal-400",
   ].join(" ");
 
@@ -44,21 +44,21 @@ export function NavbarCenter({ user }: NavbarCenterProps) {
           </NavLink>
         </li>
 
-
+{/* 
         <li>
-          <button className="cursor-pointer inline-flex flex-col items-center gap-1 transition-colors duration-200">
+          <button className="cursor-pointer inline-flex flex-col items-center gap-1 transition-colors duration-200"> */}
             {/* <BiChat size={22} /> */}
-            <Badge Icon={BiChat} count={0}/>
+            {/* <Badge Icon={BiChat} count={0}/>
             <span className="text-sm">Messages</span>
           </button>
-        </li>
+        </li> */}
 
-        <li>
+        {/* <li>
           <button className="cursor-pointer inline-flex flex-col items-center gap-1 transition-colors duration-200">
             <Badge Icon={BiBell} count={0}/>
             <span className="text-sm">Notification</span>
           </button>
-        </li>
+        </li> */}
 
         
         

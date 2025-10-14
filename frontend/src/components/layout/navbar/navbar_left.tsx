@@ -15,14 +15,12 @@ export function NavbarLeft({ user }: NavbarLeftProps) {
     const { theme } = useTheme();
 
     return (
-        <div className="hidden lg:flex items-center w-full">
-            <div className="flex items-center w-2/3 gap-3">
-                <NavLink to={"/"}> <img src={theme === "dark" ? logoLight : logoDark}
-                    alt="logo"
-                    className="cursor-pointer w-30 aspect-square object-fit object-center" /></NavLink>
+        <div className="hidden lg:flex items-center gap-5 w-full">
 
-                {user && <SearchBar/>}
-            </div>
+            <NavLink to={"/"}> <img src={theme === "dark" ? logoLight : logoDark}
+                alt="logo"
+                className="cursor-pointer w-30 aspect-square object-fit object-center" /></NavLink>
+
             {user && <NavbarCenter user={user} />}
         </div>
     )
