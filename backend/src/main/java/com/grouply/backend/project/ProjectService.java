@@ -165,6 +165,7 @@ public class ProjectService implements IProjectService {
 
 
 
+
     //  ------------------------- HELPER METHODS --------------------------
 
     private boolean isOwner(Long userId, Long projectId) {

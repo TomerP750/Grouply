@@ -12,6 +12,7 @@ import connectionService from "../../../service/connection_service";
 import { toast } from "react-toastify";
 import connectionRequestService from "../../../service/connection_request_service";
 import { useThrottleClick } from "../../../util/helper_hooks";
+import { InviteToProjectModal } from "./invite_to_project_modal";
 
 
 const baseBtn =
@@ -45,9 +46,11 @@ export function ProfilePage() {
   const [areConnected, setAreConnected] = useState(false);
   const [sentRequest, setSentRequest] = useState(false);
 
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+
   const user = useUser();
 
-  // Fetch profile when route param changes
+  
   useEffect(() => {
     if (!id) return;
     profileService
@@ -56,7 +59,7 @@ export function ProfilePage() {
       .catch((err) => console.log(err));
   }, [id]);
 
-  // Check connection status whenever we know which profile user it is
+  
   useEffect(() => {
     const targetId = profile?.user?.id;
     if (!targetId) return;
@@ -66,7 +69,7 @@ export function ProfilePage() {
       .catch((err) => toast.error(err?.response?.data ?? "Failed to check connection"));
   }, [profile?.user?.id]);
 
-
+// To disabled the button for 5 seconds
   const handleConnectRequest = () => {
 
     throttleConnect(() => {
@@ -80,7 +83,6 @@ export function ProfilePage() {
         })
         .catch((err) => toast.error(err?.response?.data ?? "Action failed"));
     })
-
 
   };
 
@@ -142,10 +144,12 @@ export function ProfilePage() {
                   Message
                 </button>
 
-                <button className={subtleBtn}>
-                  <HiUserAdd size={18} />
+                <button onClick={() => setModalOpen(true)} className={subtleBtn}>
+                  <MdMail size={18} />
                   Invite To Project
                 </button>
+
+                {modalOpen && <InviteToProjectModal recipientId={id} open={modalOpen} onClose={() => setModalOpen(false)}/>}
               </>
             ) : (
               <button className={primaryBtn}>

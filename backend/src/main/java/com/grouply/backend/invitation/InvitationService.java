@@ -33,17 +33,17 @@ public class InvitationService implements IInvitationService{
      * @throws UnauthorizedException
      */
     @Override
-    public boolean toggleInviteUserToProject(InviteUserToProjectDTO dto) throws UnauthorizedException {
+    public boolean toggleInviteUserToProject(Long senderId ,InviteUserToProjectDTO dto) throws UnauthorizedException {
 
-        ProjectMember owner = projectMemberRepository.findByUserIdAndProjectIdAndProjectRole(dto.getSenderId(), dto.getProjectId(), ProjectRole.OWNER);
+        ProjectMember owner = projectMemberRepository.findByUserIdAndProjectIdAndProjectRole(senderId, dto.getProjectId(), ProjectRole.OWNER);
 
         if (!isOwner(owner.getId(), owner.getProject().getId())) {
             throw new UnauthorizedException("You are not allowed to invite");
         }
 
-        boolean invitationExists = invitationRepository.existsBySenderIdAndRecipientIdAndProjectId(dto.getSenderId(), dto.getRecipientId(), dto.getProjectId());
+        boolean invitationExists = invitationRepository.existsBySenderIdAndRecipientIdAndProjectId(senderId, dto.getRecipientId(), dto.getProjectId());
         if (invitationExists) {
-           Invitation existing = invitationRepository.findBySenderIdAndRecipientIdAndProjectId(dto.getSenderId(), dto.getRecipientId(), dto.getProjectId());
+           Invitation existing = invitationRepository.findBySenderIdAndRecipientIdAndProjectId(senderId, dto.getRecipientId(), dto.getProjectId());
            invitationRepository.deleteById(existing.getId());
            return false;
         }
@@ -61,6 +61,17 @@ public class InvitationService implements IInvitationService{
         invitationRepository.save(invitation);
         return true;
     }
+
+//    public List<ProjectDTO> projectsToInvite(Long ownerId ,Long recipientId) {
+////        List<Project> projects = projectRepository.findOwnedProjectsWhereUserNotMember(ownerId, recipientId, ProjectRole.OWNER);
+////        List<Project> ownedProjects = projectRepository.getAllUserOwnedProjects(ownerId, ProjectRole.OWNER);
+//        return EntityToDtoMapper.toProjectDtos(ownedProjects);
+//    }
+
+    public boolean hasSentInviteToProject(Long recipientId, Long projectId) {
+        return false;
+    }
+
 
 
     /**

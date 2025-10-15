@@ -6,7 +6,6 @@ import lombok.Data;
 @Data
 public class InviteUserToProjectDTO {
 
-    private Long senderId;
     private Long recipientId;
     private Long projectId;
     private ProjectPosition position;

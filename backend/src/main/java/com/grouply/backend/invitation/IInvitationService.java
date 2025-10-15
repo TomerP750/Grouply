@@ -6,7 +6,7 @@ import com.grouply.backend.invitation.dto.InviteUserToProjectDTO;
 
 public interface IInvitationService {
 
-    boolean toggleInviteUserToProject(InviteUserToProjectDTO dto) throws UnauthorizedException;
+    boolean toggleInviteUserToProject(Long senderId ,InviteUserToProjectDTO dto) throws UnauthorizedException;
 
     void responseToInvitation(InvitationResponseDTO dto);
 
