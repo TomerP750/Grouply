@@ -9,6 +9,7 @@ import './post_card_css.css';
 import { PostCardPositionCard } from "./post_card_position_card";
 import { timeAgo, toNormal, toTitleCase } from "../../../../util/util_functions";
 import { Dialog } from "../../../elements/Dialog";
+import { EditPostFormModal } from "../edit_post_form";
 
 
 type MemberType = "member" | "owner"
@@ -42,6 +43,7 @@ export function PostCardDescription({ post, onArchiveClick, onEdit, onDelete, ar
     const user = useUser();
     const [menuOpen, setMenuOpen] = useState<boolean>(false);
     const [dialogOpen, setDialogOpen] = useState<boolean>(false);
+    const [editModalOpen, setEditModalOpen] = useState<boolean>(false);
 
 
     useEffect(() => {
@@ -93,7 +95,7 @@ export function PostCardDescription({ post, onArchiveClick, onEdit, onDelete, ar
                                 {menuOpen &&
                                     <div className="crud-buttons absolute right-0 -bottom-18 font-light dark:bg-slate-900 bg-white px-2 w-30 py-2 gap-1 dark:text-white flex flex-col items-center text-base">
                                         <button
-                                            onClick={onEdit}
+                                            onClick={() => setEditModalOpen(true)}
                                             className="cursor-pointer hover:bg-slate-700 w-full">Edit</button>
                                         <button
                                             onClick={() => setDialogOpen(true)}
@@ -101,6 +103,8 @@ export function PostCardDescription({ post, onArchiveClick, onEdit, onDelete, ar
                                     </div>}
 
                             </div>}
+
+                            {editModalOpen && <EditPostFormModal post={post} open={editModalOpen} onClose={() => setEditModalOpen(false)}/>}
 
                     </div>
 

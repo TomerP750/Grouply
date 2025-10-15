@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 
 public interface InvitationRepository extends JpaRepository<Invitation, Long> {
 
-    boolean existsBySenderIdAndRecipientIdAndProjectId(Long senderId, Long recipientId, Long projectId);
+    boolean existsByRecipientIdAndProjectId(Long recipientId, Long projectId);
 
     Invitation findBySenderIdAndRecipientIdAndProjectId(Long senderId, Long recipientId, Long projectId);
 
@@ -21,4 +21,6 @@ public interface InvitationRepository extends JpaRepository<Invitation, Long> {
     void clearExpiredInvitations(@Param("threshold") LocalDateTime now);
 
     boolean existsByRecipientIdAndProjectIdAndPosition(Long recipientId, Long projectId, ProjectPosition position);
+
+    Invitation findByRecipientIdAndProjectIdAndPosition(Long recipientId, Long projectId, ProjectPosition position);
 }

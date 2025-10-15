@@ -35,15 +35,17 @@ public class InvitationService implements IInvitationService{
     @Override
     public boolean toggleInviteUserToProject(Long senderId ,InviteUserToProjectDTO dto) throws UnauthorizedException {
 
-        ProjectMember owner = projectMemberRepository.findByUserIdAndProjectIdAndProjectRole(senderId, dto.getProjectId(), ProjectRole.OWNER);
+        ProjectMember owner = projectMemberRepository
+                .findByUserIdAndProjectIdAndProjectRole(senderId, dto.getProjectId(), ProjectRole.OWNER)
+                .orElseThrow(() -> new NoSuchElementException("Owner not found"));
 
-        if (!isOwner(owner.getId(), owner.getProject().getId())) {
+        if (!isOwner(senderId, owner.getProject().getId())) {
             throw new UnauthorizedException("You are not allowed to invite");
         }
 
-        boolean invitationExists = invitationRepository.existsBySenderIdAndRecipientIdAndProjectId(senderId, dto.getRecipientId(), dto.getProjectId());
-        if (invitationExists) {
-           Invitation existing = invitationRepository.findBySenderIdAndRecipientIdAndProjectId(senderId, dto.getRecipientId(), dto.getProjectId());
+        boolean alreadyExists = hasSentInviteToProject(dto.getRecipientId(), dto.getProjectId(), dto.getPosition());
+        if (alreadyExists) {
+           Invitation existing = invitationRepository.findByRecipientIdAndProjectIdAndPosition(dto.getRecipientId(), dto.getProjectId(), dto.getPosition());
            invitationRepository.deleteById(existing.getId());
            return false;
         }

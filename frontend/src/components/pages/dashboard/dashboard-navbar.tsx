@@ -10,6 +10,7 @@ import type { JwtUser } from "../../../redux/AuthSlice";
 import userService from "../../../service/UserService";
 import { NavbarRight } from "../../layout/navbar/NavbarRight";
 import { useTheme } from "../../../context/ThemeContext";
+import { AdminMenu } from "./admin_menu";
 
 
 const baseClasses =
@@ -51,7 +52,7 @@ export function DashboardNavbar({ user }: DashboardNavbarProps) {
                 <img src={theme === "light" ? logoDark : logoLight} className="w-30 aspect-square object-fit object-center" />
             </NavLink>
 
-            <ul className="flex items-center gap-3 w-full p-5 font-medium text-sm tracking-wider">
+            <ul className="flex items-center gap-3 p-5 font-medium text-sm tracking-wider">
 
                 <li>
                     <NavLink
@@ -83,11 +84,11 @@ export function DashboardNavbar({ user }: DashboardNavbarProps) {
                     <li className="relative">
                         <button 
                         onClick={() => setAdminMenuOpen(!adminMenuOpen)}
-                        className="cursor-pointer dark:text-gray-300 w-full p-2 inline-flex items-center gap-2 rounded-md transition">
+                        className="hover:bg-gray-300/30 cursor-pointer dark:text-gray-300 w-full p-2 inline-flex items-center gap-2 rounded-md transition">
                             <MdAdminPanelSettings size={25} />
                             <p>Admin</p>
                         </button>
-                        {adminMenuOpen && <div className="absolute  bg-white w-80 h-30"></div>}
+                        {adminMenuOpen && <AdminMenu/>}
                     </li>
                     // <li>
                     //     <NavLink
@@ -105,7 +106,7 @@ export function DashboardNavbar({ user }: DashboardNavbarProps) {
 
             </ul>
 
-            <NavbarRight user={user} />
+            <NavbarRight  user={user} />
 
 
 

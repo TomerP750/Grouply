@@ -36,6 +36,7 @@ export function InviteProjectCard({ project }: InviteProjectCardProps) {
 
     const handleInvite = () => {
         if (!selectedPosition) return;
+        setLoading(true);
         const data: InviteUserToProjectRequestDTO = {
             recipientId: recipientId,
             projectId: project.id,
@@ -50,7 +51,7 @@ export function InviteProjectCard({ project }: InviteProjectCardProps) {
                 toast.error(err.response.data);
             })
             .finally(() => {
-
+                setLoading(false);
             })
     };
 
@@ -67,7 +68,7 @@ export function InviteProjectCard({ project }: InviteProjectCardProps) {
     }, [selectedPosition])
 
     return (
-        <li className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between p-3 hover:bg-slate-50 dark:hover:bg-slate-900/60 transition-colors">
+        <li className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between p-3 hover:bg-slate-50 dark:hover:bg-slate-900/60 transition-colors">
             <div className="min-w-0">
                 <p className="font-medium text-slate-900 dark:text-slate-100">{toNormal(name)}</p>
 
@@ -79,7 +80,9 @@ export function InviteProjectCard({ project }: InviteProjectCardProps) {
                 )}
             </div>
 
-            <div className="flex items-center gap-3">
+
+            {/* Button and select */}
+            <div className="flex flex-col items-start sm:items-center sm:flex-row justify-between lg:justify-normal gap-3">
 
                 <select
                     value={selectedPosition}
@@ -89,7 +92,7 @@ export function InviteProjectCard({ project }: InviteProjectCardProps) {
                     <option value="">Select Position</option>
                     {Object.values(ProjectPosition).map((pp) => (
                         <option key={pp} value={pp}>
-                            {pp}
+                            {toNormal(pp)}
                         </option>
                     ))}
                 </select>

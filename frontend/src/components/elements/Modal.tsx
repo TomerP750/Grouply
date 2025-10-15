@@ -65,7 +65,7 @@ export function Modal({ open, onClose, title, children, width, height, className
                     {title && (
                         <h2
                             id="modal-title"
-                            className="pr-10 text-lg sm:text-xl font-semibold text-slate-900 dark:text-slate-100"
+                            className="pr-10 text-lg sm:text-xl text-slate-900 dark:text-slate-100"
                         >
                             {title}
                         </h2>

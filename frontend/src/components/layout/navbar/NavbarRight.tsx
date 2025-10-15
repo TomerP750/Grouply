@@ -14,16 +14,17 @@ import { NotificationMenu } from "./menus/notification_menu";
 
 interface NavbarRightProps {
   user: JwtUser | null;
+  className?: string
 }
 
 
-export function NavbarRight({ user }: NavbarRightProps) {
+export function NavbarRight({ user, className }: NavbarRightProps) {
 
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
 
   const [notificationOpen, setNotificationOpen] = useState<boolean>(false);
   const [connectionsOpen, setConnectionOpen] = useState<boolean>(false);
-  const [messageOpen, setMessageOpen] = useState<boolean>(false);
+ 
 
   return (
     <nav className="flex items-center gap-5">
@@ -34,21 +35,22 @@ export function NavbarRight({ user }: NavbarRightProps) {
         {user && <div className="relative hover:bg-gray-500/20">
           <button onClick={() => {
             setConnectionOpen(!connectionsOpen);
-            setMessageOpen(false);
+            setMenuOpen(false);
             setNotificationOpen(false);
           }}>
             <Badge Icon={HiOutlineGlobeAlt} size={28} count={2} className="cursor-pointer p-3" />
           </button>
 
           {connectionsOpen && <ConnectionMenu />}
+
         </div>}
 
         {/* Notifications Menu */}
         {user && <div className="relative hover:bg-gray-500/20">
           <button onClick={() => {
             setNotificationOpen(!notificationOpen);
+            setMenuOpen(false);
             setConnectionOpen(false);
-            setMessageOpen(false);
           }}>
             <Badge Icon={BiBell} size={28} count={3} className="cursor-pointer p-3" />
           </button>
@@ -58,29 +60,18 @@ export function NavbarRight({ user }: NavbarRightProps) {
             </Menu>}
         </div>}
 
-        {/* {user && <div className="relative hover:bg-gray-500/20 mr-3">
-          <button onClick={() => {
-            setMessageOpen(!messageOpen)
-            setNotificationOpen(false)
-          }}>
-            <Badge Icon={BiChat} size={28} className="cursor-pointer p-3" />
-          </button>
-          {messageOpen && <div className="absolute right-0 mt-2 bg-white w-60 max-w-70 min-h-30" />}
-        </div>} */}
-
-
         {/* Avatar / Login */}
         {user
           ?
           <div className="relative ml-3 mt-3">
             <button
-              onClick={() => setMenuOpen(!menuOpen)}
+              onClick={() => {
+                setMenuOpen(!menuOpen)
+                setConnectionOpen(false);
+                setNotificationOpen(false);
+              }}
               className={"relative inline-flex flex-col items-center gap-1 transition-colors duration-200 cursor-pointer"}>
               <Avatar size={40} />
-              {/* <div className="text-sm flex items-center">
-                <span>{user?.username}</span>
-                <span><BiChevronDown size={20} className={`${menuOpen && 'rotate-180'} transition duration-200`} /></span>
-              </div> */}
             </button>
             {menuOpen && <UserMenu user={user} />}
           </div>

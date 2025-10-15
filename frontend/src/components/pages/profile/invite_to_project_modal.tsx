@@ -54,7 +54,7 @@ export function InviteToProjectModal({ open, onClose, recipientId }: InviteToPro
                             value={query}
                             onChange={(e) => setQuery(e.target.value)}
                             placeholder="Search projects..."
-                            className="w-full pl-9 pr-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 shadow-sm outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                            className="w-3/4 lg:w-full pl-9 pr-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 shadow-sm outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                         />
                     </div>
 
@@ -65,7 +65,7 @@ export function InviteToProjectModal({ open, onClose, recipientId }: InviteToPro
                     <div className="mt-4 flex justify-end">
                         <button
                             onClick={onClose}
-                            className="px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 hover:bg-slate-50 dark:hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-slate-400"
+                            className="mr-1 px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-100 hover:bg-slate-50 dark:hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-slate-400"
                         >
                             Close
                         </button>
