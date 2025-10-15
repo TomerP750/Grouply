@@ -32,8 +32,10 @@ export function InviteToProjectModal({ open, onClose, recipientId }: InviteToPro
 
     return (
         <InviteToProjectProvider initRecipientId={recipientId}>
+            
             <Modal open={open} onClose={onClose}>
-                <div className="w-[92vw] max-w-2xl">
+                <div className="">
+                    
                     {/* Header */}
                     <div className="flex items-center justify-between mb-4">
                         <div>
@@ -68,8 +70,10 @@ export function InviteToProjectModal({ open, onClose, recipientId }: InviteToPro
                             Close
                         </button>
                     </div>
+
                 </div>
             </Modal>
+
         </InviteToProjectProvider>
     );
 }

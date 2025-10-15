@@ -62,14 +62,9 @@ public class InvitationService implements IInvitationService{
         return true;
     }
 
-//    public List<ProjectDTO> projectsToInvite(Long ownerId ,Long recipientId) {
-////        List<Project> projects = projectRepository.findOwnedProjectsWhereUserNotMember(ownerId, recipientId, ProjectRole.OWNER);
-////        List<Project> ownedProjects = projectRepository.getAllUserOwnedProjects(ownerId, ProjectRole.OWNER);
-//        return EntityToDtoMapper.toProjectDtos(ownedProjects);
-//    }
 
-    public boolean hasSentInviteToProject(Long recipientId, Long projectId) {
-        return false;
+    public boolean hasSentInviteToProject(Long recipientId, Long projectId, ProjectPosition position) {
+        return invitationRepository.existsByRecipientIdAndProjectIdAndPosition(recipientId, projectId, position);
     }
 
 

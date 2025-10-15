@@ -1,13 +1,13 @@
 package com.grouply.backend.invitation;
 
+import com.grouply.backend.exceptions.UnauthorizedException;
+import com.grouply.backend.invitation.dto.InviteUserToProjectDTO;
 import com.grouply.backend.project.Dtos.ProjectDTO;
+import com.grouply.backend.project_member.ProjectPosition;
 import com.grouply.backend.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,11 +19,17 @@ public class InvitationController {
     private final InvitationService invitationService;
 
 
-//    @GetMapping("/all/{recipientId}")
-//    public List<ProjectDTO> allProjectsToInvite(@AuthenticationPrincipal CustomUserDetails userDetails,
-//                                                @PathVariable Long recipientId) {
-//        Long userId = userDetails.getId();
-//        return invitationService.projectsToInvite(userId, recipientId);
-//    }
+    @GetMapping("/exists/{recipientId}")
+    public boolean hasExistsInvitation(@PathVariable Long recipientId,
+                                       @RequestParam(value = "projectId") Long projectId,
+                                       @RequestParam(value = "position")ProjectPosition position) {
+        return invitationService.hasSentInviteToProject(recipientId, projectId, position);
+    }
+
+    @PostMapping("/toggle")
+    public boolean toggleInvite(@AuthenticationPrincipal CustomUserDetails userDetails, @RequestBody InviteUserToProjectDTO dto) throws UnauthorizedException {
+        Long userId = userDetails.getId();
+        return invitationService.toggleInviteUserToProject(userId, dto);
+    }
 
 }

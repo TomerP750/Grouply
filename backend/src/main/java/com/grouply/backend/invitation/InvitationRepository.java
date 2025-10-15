@@ -1,5 +1,6 @@
 package com.grouply.backend.invitation;
 
+import com.grouply.backend.project_member.ProjectPosition;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -19,4 +20,5 @@ public interface InvitationRepository extends JpaRepository<Invitation, Long> {
     @Query("DELETE from Invitation i where i.status = 'PENDING' AND i.sentAt <= :threshold  ")
     void clearExpiredInvitations(@Param("threshold") LocalDateTime now);
 
+    boolean existsByRecipientIdAndProjectIdAndPosition(Long recipientId, Long projectId, ProjectPosition position);
 }
