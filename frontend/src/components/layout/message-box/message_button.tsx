@@ -27,7 +27,7 @@ export function MessageButton({ chats, onOpen, }: MessageButtonProps) {
                    text-white shadow-xl hover:scale-110 duration-200
                    focus:outline-none focus:ring-4 focus:ring-teal-500/40"
       >
-        <Badge Icon={BiChat} size={30} count={totalUnread} />
+        <Badge Icon={BiChat} size={25} count={0} countPosition="tr"/>
       </button>
     </div>
   );
