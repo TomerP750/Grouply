@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BiBell, BiChat } from "react-icons/bi";
+import { BiBell, BiChat, BiChevronDown } from "react-icons/bi";
 import { HiOutlineGlobeAlt } from "react-icons/hi";
 import { NavLink } from "react-router-dom";
 import type { JwtUser } from "../../../redux/AuthSlice";
@@ -29,7 +29,7 @@ export function NavbarRight({ user, className }: NavbarRightProps) {
   return (
     <nav className="flex items-center gap-5">
 
-      <ul className="hidden md:flex items-center text-lg">
+      <ul className="hidden lg:flex items-center text-lg">
 
         {/* Connection Menu */}
         {user && <div className="relative hover:bg-gray-500/20">
@@ -70,8 +70,11 @@ export function NavbarRight({ user, className }: NavbarRightProps) {
                 setConnectionOpen(false);
                 setNotificationOpen(false);
               }}
-              className={"relative inline-flex flex-col items-center gap-1 transition-colors duration-200 cursor-pointer"}>
-              <Avatar size={40} />
+              className={"relative inline-flex items-center gap-1 transition-colors duration-200 cursor-pointer"}>
+              
+              <Avatar size={40} className="rounded-lg"/>
+              <BiChevronDown/>
+              
             </button>
             {menuOpen && <UserMenu user={user} />}
           </div>

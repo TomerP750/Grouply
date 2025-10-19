@@ -1,8 +1,6 @@
 package com.grouply.backend.authentication;
 
-import com.grouply.backend.authentication.dto.AuthResponseDTO;
-import com.grouply.backend.authentication.dto.LoginRequestDTO;
-import com.grouply.backend.authentication.dto.SignUpRequestDTO;
+import com.grouply.backend.authentication.dto.*;
 import com.grouply.backend.exceptions.InvalidInputException;
 import com.grouply.backend.profile.Profile;
 import com.grouply.backend.profile.ProfileRepository;
@@ -113,6 +111,35 @@ public class AuthService implements IAuthService {
 
         String token = jwtService.generateToken(principal.getId());
         return new AuthResponseDTO(token);
+    }
+
+    @Override
+    public AuthResponseDTO recruiterLogin(RecruiterLoginRequestDTO dto) {
+
+//        Authentication authentication = authenticationManager.authenticate(
+//                new UsernamePasswordAuthenticationToken(dto.getEmail(), dto.getPassword())
+//        );
+//
+//        CustomUserDetails principal = (CustomUserDetails) authentication.getPrincipal();
+//
+//        String token = jwtService.generateToken(principal.getId());
+//
+//        return new AuthResponseDTO(token);
+
+        return null;
+
+    }
+
+    @Override
+    public AuthResponseDTO recruiterSignup(RecruiterSignupRequestDTO dto) throws InvalidInputException {
+        if (!dto.getPassword().equals(dto.getConfirmPassword())) {
+            throw new InvalidInputException("Passwords are not match");
+        }
+
+
+        return null;
+//        RecruiterLoginRequestDTO loginRequest = new RecruiterLoginRequestDTO(dto.getEmail(), dto.getPassword());
+//        return recruiterLogin(loginRequest);
     }
 
 

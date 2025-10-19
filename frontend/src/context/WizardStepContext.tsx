@@ -6,16 +6,19 @@ type WizardStepState = {
 
 type WizardStepValue = WizardStepState & {
     increment: () => void,
-    decrement: () => void 
+    decrement: () => void,
+     
 };
 
 export const WizardStepContext = createContext<WizardStepValue | undefined>(undefined);
 
 interface WizardStepProviderProps {
     children: ReactNode;
+    initialStep?: number
+    totalSteps?: number
 };
 
-export function WizardStepContextProvider({ children }:WizardStepProviderProps) {
+export function WizardStepContextProvider({ children, initialStep = 1, totalSteps = 2 }:WizardStepProviderProps) {
     
     const [step, setStep] = useState<number>(1);
 
@@ -25,7 +28,6 @@ export function WizardStepContextProvider({ children }:WizardStepProviderProps) 
 
     const decrement = () => setStep(prev => Math.max(1, prev - 1));
 
-    
     const ctx = {step, increment, decrement}; 
 
     return (

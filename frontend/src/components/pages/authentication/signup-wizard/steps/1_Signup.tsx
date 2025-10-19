@@ -3,12 +3,13 @@ import { useForm } from "react-hook-form";
 import { BiLoaderAlt } from "react-icons/bi";
 import { BsArrowLeft } from "react-icons/bs";
 import { FiEye, FiEyeOff } from "react-icons/fi";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { useWizardStep } from "../../../../../context/WizardStepContext";
 import authService from "../../../../../service/AuthService";
 import { useDispatch } from "react-redux";
 import { login } from "../../../../../redux/AuthSlice";
 import type { SignUpRequestDTO } from "../Dtos/SignUpRequestDTO";
+import { ProgressBar } from "../progress_bar";
 
 export function SignUp() {
   const [loading, setLoading] = useState(false);
@@ -19,7 +20,6 @@ export function SignUp() {
 
   const { increment } = useWizardStep();
 
-  // Switch this signup to step wizard
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -48,6 +48,7 @@ export function SignUp() {
           <BsArrowLeft /> Return to home
         </NavLink>
 
+        
         <div className="w-full max-w-xl">
           {/* Card */}
           <div className="rounded-3xl border border-slate-200/70 bg-white/80 p-6 shadow-xl backdrop-blur dark:border-slate-700/60 dark:bg-slate-900/60">
@@ -139,7 +140,7 @@ export function SignUp() {
                   <button
                     type="button"
                     onClick={() => setShowPassword((s) => !s)}
-                    className="absolute inset-y-0 right-2 flex items-center rounded-md px-2 text-slate-500 hover:text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:text-slate-300"
+                    className="absolute inset-y-0 right-2 flex items-center rounded-md px-2 text-slate-500 hover:text-slate-400 dark:text-slate-300"
                     aria-label={showPassword ? "Hide password" : "Show password"}
                   >
                     {showPassword ? <FiEyeOff size={18} /> : <FiEye size={18} />}
@@ -167,7 +168,7 @@ export function SignUp() {
                   <button
                     type="button"
                     onClick={() => setShowConfirmPassword((s) => !s)}
-                    className="absolute inset-y-0 right-2 flex items-center rounded-md px-2 text-slate-500 hover:text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-400 dark:text-slate-300"
+                    className="absolute inset-y-0 right-2 flex items-center rounded-md px-2 text-slate-500 hover:text-slate-400  dark:text-slate-300"
                     aria-label={showConfirmPassword ? "Hide password" : "Show password"}
                   >
                     {showConfirmPassword ? <FiEyeOff size={18} /> : <FiEye size={18} />}
@@ -178,7 +179,7 @@ export function SignUp() {
 
               {/* Submit */}
               <div className="sm:col-span-2">
-                <button
+                {/* <button
                   type="submit"
                   disabled={loading}
                   className="cursor-pointer mt-1 inline-flex w-full 
@@ -188,9 +189,13 @@ export function SignUp() {
                                     disabled:cursor-not-allowed disabled:opacity-70"
                 >
                   {loading ? <BiLoaderAlt size={20} className="animate-spin" /> : 'Create Account'}
-                </button>
+                </button> */}
 
-                {/* <button onClick={increment}>Next Step</button> ** FOR WIZARD */}
+                <button type="button" className="cursor-pointer mt-1 inline-flex  
+                                    items-center gap-2 rounded-xl 
+                                    bg-gradient-to-r from-teal-500 to-teal-700 hover:from-teal-600 hover:to-teal-800 
+                                    px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-teal-500 
+                                    disabled:cursor-not-allowed disabled:opacity-70" onClick={increment}>Next Step</button> 
               </div>
 
               {/* Alt */}

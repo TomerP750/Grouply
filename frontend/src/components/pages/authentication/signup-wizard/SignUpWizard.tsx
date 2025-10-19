@@ -11,7 +11,7 @@ export function SignUpWizard() {
     const { register, handleSubmit, formState: { errors } } = useForm<SignUpRequestDTO>();
 
     return (
-        <WizardStepContextProvider>
+        <WizardStepContextProvider initialStep={1} totalSteps={2}>
             <WizardContent />
         </WizardStepContextProvider>
     )

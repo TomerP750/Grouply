@@ -1,6 +1,6 @@
 package com.grouply.backend.util;
-import com.grouply.backend.archived_project.ArchivedProject;
-import com.grouply.backend.archived_project.dto.ArchivedProjectDTO;
+import com.grouply.backend.archived_post.ArchivedPost;
+import com.grouply.backend.archived_post.dto.ArchivedPostDTO;
 //import com.grouply.backend.chat_member.ChatMember;
 //import com.grouply.backend.chat_member.dto.ChatMemberDTO;
 //import com.grouply.backend.chat_message.ChatMessage;
@@ -103,9 +103,9 @@ public class EntityToDtoMapper {
 
 
 
-    public static ArchivedProjectDTO toArchivedProjectDto(ArchivedProject ap) {
+    public static ArchivedPostDTO toArchivedProjectDto(ArchivedPost ap) {
         if (ap == null) return null;
-        return ArchivedProjectDTO.builder()
+        return ArchivedPostDTO.builder()
                 .id(ap.getId())
                 .projectPostId(ap.getPost().getId())
                 .userId(ap.getUser().getId())
@@ -114,10 +114,10 @@ public class EntityToDtoMapper {
     }
 
 
-    public static List<ArchivedProjectDTO> toArchivedProjectDtos(List<ArchivedProject> archived) {
-        List<ArchivedProjectDTO> result = new ArrayList<>();
+    public static List<ArchivedPostDTO> toArchivedProjectDtos(List<ArchivedPost> archived) {
+        List<ArchivedPostDTO> result = new ArrayList<>();
         if (archived != null) {
-            for (ArchivedProject ap : archived) {
+            for (ArchivedPost ap : archived) {
                 if (ap != null) result.add(toArchivedProjectDto(ap));
             }
         }

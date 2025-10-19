@@ -1,5 +1,9 @@
 // Filters.tsx
-import type { ProjectPosition } from "../../../dtos/enums/ProjectPosition";
+import { useEffect, useState } from "react";
+import { ProjectPosition } from "../../../dtos/enums/ProjectPosition";
+import type { TechnologyDTO } from "../../../dtos/models_dtos/TechnologyDTO";
+import technologyService from "../../../service/technology_service";
+import { toast } from "react-toastify";
 
 export type FeedFilters = {
   postTitle: string;
@@ -13,6 +17,18 @@ type FiltersProps = {
 };
 
 export function Filters({ value, setValue }: FiltersProps) {
+
+  const [technologes, setTechnologies] = useState<TechnologyDTO[]>([]);
+
+  useEffect(() => {
+    technologyService.allTechnologies()
+    .then(res => {
+      setTechnologies(res);
+    })
+    .catch(err => {
+      toast.error(err.response.data);
+    })
+  }, []);
   
   const setPostTitle = (v: string) =>
     setValue(prev => ({ ...prev, postTitle: v }));
@@ -29,7 +45,7 @@ export function Filters({ value, setValue }: FiltersProps) {
                       shadow-lg space-y-4">
       <h3 className="text-sm font-semibold tracking-wide mb-2">Filters</h3>
 
-      <label className="flex flex-col gap-1 text-sm">
+      {/* <label className="flex flex-col gap-1 text-sm">
         <span className="font-medium">Post Title</span>
         <input
           type="search"
@@ -40,7 +56,7 @@ export function Filters({ value, setValue }: FiltersProps) {
                      bg-white dark:bg-slate-700 px-3 py-2 text-sm 
                      focus:outline-none focus:ring-2 focus:ring-teal-500"
         />
-      </label>
+      </label> */}
 
       <label className="flex flex-col gap-1 text-sm">
         <span className="font-medium">Start Date</span>
@@ -59,16 +75,33 @@ export function Filters({ value, setValue }: FiltersProps) {
         <select
           value={value.roleDemand ?? ""}
           onChange={(e) => setRoleDemand(e.target.value ? (e.target.value as ProjectPosition) : undefined)}
-          className="rounded-md border border-slate-300 dark:border-slate-600 
+          className="rounded-md border border-slate-300 dark:border-slate-600 overflow-y-auto
                      bg-white dark:bg-slate-700 px-3 py-2 text-sm 
                      focus:outline-none focus:ring-2 focus:ring-teal-500"
         >
           <option value="">Any Role</option>
-          <option value="BACKEND">Backend</option>
-          <option value="FRONTEND">Frontend</option>
-          <option value="FULLSTACK">Full Stack</option>
+          {Object.values(ProjectPosition).map(pp => {
+            return <option value={pp} key={pp}>{pp}</option>
+          })}
         </select>
       </label>
+
+      <label className="flex flex-col gap-1 text-sm">
+        <span className="font-medium">Technologies</span>
+        <select
+          className="rounded-md border border-slate-300 dark:border-slate-600 overflow-y-auto
+                     bg-white dark:bg-slate-700 px-3 py-2 text-sm 
+                     focus:outline-none focus:ring-2 focus:ring-teal-500"
+        >
+          <option value="">Any Technology</option>
+          {technologes?.map(t => {
+            return <option key={t.id}>{t.name}</option>
+          })}
+        </select>
+      </label>
+
+
+    
     </aside>
   );
 }

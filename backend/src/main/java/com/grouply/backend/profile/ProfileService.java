@@ -19,6 +19,11 @@ public class ProfileService implements IProfileService {
     private final ProfileRepository profileRepository;
     private final UserRepository userRepository;
 
+    /**
+     * this fetches profile when the user enters a specific profile
+     * @param userId
+     * @return
+     */
     @Override
     public ProfileDTO getOneProfile(Long userId) {
         log.info("getting profile");

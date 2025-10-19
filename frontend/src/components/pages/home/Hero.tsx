@@ -38,12 +38,9 @@ export function Hero() {
 
         <div className="flex items-center gap-5">
           <button className='cursor-pointer text-white 
-        bg-gradient-to-r 
-        hover:bg-gradient-to-l 
+        bg-teal-600 hover:bg-teal-500 transition-colors duration-200
         px-4 py-2 
-        dark:from:teal-700 dark:via-teal-500 dark:to-teal-600 
-        dark:hover:from-teal-700 dark:hover:via-teal-500 dark:hover:to-teal-600 
-
+        
         from-teal-900 via-teal-700 to-teal-800 
         hover:from-teal-700 hover:via-teal-500 hover:to-teal-600 
 
@@ -52,6 +49,10 @@ export function Hero() {
           <NavLink to={"/about"}
             className='hover:scale-110 duration-200 inline-flex gap-2 items-center'>Learn More <FaArrowRight /></NavLink>
         </div>
+
+        <p className={"text-gray-400 inline-flex items-center gap-2"}>Recruiter and looking for talent? 
+          <NavLink to={"/recruiter/signup"} className='text-white cursor-pointer bg-teal-600 hover:bg-teal-500 transition-colors duration-200 px-3 py-2 rounded-lg'>Register Here</NavLink>
+          </p>
 
       </div>
 

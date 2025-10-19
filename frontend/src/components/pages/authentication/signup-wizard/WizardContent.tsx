@@ -19,8 +19,10 @@ export function WizardContent() {
     }
   };
 
+  
   return (
     <div className="">
+    
       {getStepComponent(step)}
 
       

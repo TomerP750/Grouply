@@ -5,15 +5,7 @@ import { useTheme } from "../../../context/ThemeContext";
 import type { JwtUser } from "../../../redux/AuthSlice";
 
 
-const linkClasses = ({ isActive }: { isActive: boolean }) =>
-  [
-    "relative px-3 py-1 text-base font-light transition-all duration-200",
-    "text-slate-600 dark:text-slate-300 hover:text-teal-500", 
-    "after:content-[''] after:absolute after:left-0 after:-bottom-3 after:h-[2px] after:w-0 after:bg-teal-500 after:rounded-full after:transition-all after:duration-300 hover:after:w-full", 
-    isActive
-      ? "text-teal-500 after:w-full after:bg-teal-500" 
-      : "",
-  ].join(" ");
+
 
 interface NavbarLeftProps {
     user: JwtUser | null
@@ -31,32 +23,7 @@ export function NavbarLeft({ user }: NavbarLeftProps) {
                 className="cursor-pointer w-30 mt-4 aspect-square object-fit object-center" />
             </NavLink>
 
-            {user && <ul className="hidden lg:flex items-center gap-5 text-lg ">
-                <li>
-                    <NavLink to="/" className={linkClasses}>
-                        <span className="text-sm">Home</span>
-                    </NavLink>
-                </li>
-
-                <li>
-                    <NavLink to="/archived" className={linkClasses}>
-
-                        <span className="text-sm">Archived</span>
-                    </NavLink>
-                </li>
-
-                <li>
-                    <NavLink to={`/dashboard/${user?.id}`} className={linkClasses}>
-                        <span className="text-sm">Dashboard</span>
-                    </NavLink>
-                </li>
-
-                
-
-
-
-
-            </ul>}
+            
         </div>
     )
 }

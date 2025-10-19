@@ -1,6 +1,5 @@
 package com.grouply.backend.project_member;
 
-import com.grouply.backend.archived_project.ArchivedProject;
 import com.grouply.backend.exceptions.UnauthorizedException;
 import com.grouply.backend.project.Project;
 import com.grouply.backend.project.ProjectRepository;

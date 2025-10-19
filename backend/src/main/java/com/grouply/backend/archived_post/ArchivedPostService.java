@@ -1,4 +1,4 @@
-package com.grouply.backend.archived_project;
+package com.grouply.backend.archived_post;
 
 import com.grouply.backend.exceptions.ExistsException;
 import com.grouply.backend.project.ProjectRepository;
@@ -16,9 +16,9 @@ import java.util.NoSuchElementException;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class ArchivedProjectService implements IArchivedProjectService {
+public class ArchivedPostService implements IArchivedPostService {
 
-    private final ArchivedProjectRepository archivedProjectRepository;
+    private final ArchivedPostRepository archivedPostRepository;
     private final UserRepository userRepository;
     private final ProjectRepository projectRepository;
     private final PostRepository postRepository;
@@ -45,21 +45,21 @@ public class ArchivedProjectService implements IArchivedProjectService {
             throw new ExistsException("You are already a member in the project");
         }
 
-        boolean archiveExists = archivedProjectRepository.existsByUserIdAndPostId(userId, postId);
+        boolean archiveExists = archivedPostRepository.existsByUserIdAndPostId(userId, postId);
         if (archiveExists) {
-            ArchivedProject archivedProject = archivedProjectRepository
+            ArchivedPost archivedPost = archivedPostRepository
                     .findByUserIdAndPostId(userId, postId)
                     .orElseThrow(() -> new NoSuchElementException("Project not found"));
 
-            archivedProjectRepository.deleteById(archivedProject.getId());
+            archivedPostRepository.deleteById(archivedPost.getId());
             return false;
         }
 
-        ArchivedProject archivedProject = ArchivedProject.builder()
+        ArchivedPost archivedPost = ArchivedPost.builder()
                 .user(user)
                 .post(post)
                 .build();
-        archivedProjectRepository.save(archivedProject);
+        archivedPostRepository.save(archivedPost);
         log.info("Successful added project to archive!");
         return true;
     }

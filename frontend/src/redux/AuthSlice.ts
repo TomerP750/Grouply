@@ -3,7 +3,7 @@ import type { Role } from "../dtos/enums/Role"
 import { jwtDecode } from "jwt-decode"
 
 export type JwtUser = {
-    id?: number // i will delete this later cuz it used in a lot of places
+    id?: number // legacy
     sub: number
     email: string
     firstName: string

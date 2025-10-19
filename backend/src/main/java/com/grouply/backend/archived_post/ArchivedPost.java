@@ -1,4 +1,4 @@
-package com.grouply.backend.archived_project;
+package com.grouply.backend.archived_post;
 
 import com.grouply.backend.post.Post;
 import com.grouply.backend.user.User;
@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 @EntityListeners(AuditingEntityListener.class)
-public class ArchivedProject {
+public class ArchivedPost {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

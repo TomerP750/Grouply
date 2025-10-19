@@ -2,11 +2,14 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { NavLink, useNavigate } from "react-router-dom";
-import authService from "../../../service/AuthService";
+
 import { BsArrowLeft } from "react-icons/bs";
 import { useDispatch } from "react-redux";
-import { login } from "../../../redux/AuthSlice";
+
 import { BiGroup, BiLoader, BiLoaderAlt } from "react-icons/bi";
+import authService from "../../../../service/AuthService";
+import { login } from "../../../../redux/AuthSlice";
+import { toast } from "react-toastify";
 
 export type LoginRequestDTO = {
     email: string;
@@ -35,7 +38,7 @@ export function Login() {
                 navigate("/");
             })
             .catch(err => {
-
+                toast.error(err.response.data);
             })
             .finally(() => {
                 setLoading(false);
@@ -145,7 +148,7 @@ export function Login() {
                                 </label>
                                 <span className="text-sm text-slate-600 dark:text-slate-300">
                                     No account?{" "}
-                                    <NavLink to="/signup" className="cursor-pointer font-medium text-teal-600 hover:underline dark:text-teal-400">
+                                    <NavLink to={`/signup`} className="cursor-pointer font-medium text-teal-600 hover:underline dark:text-teal-400">
                                         Sign up
                                     </NavLink>
                                 </span>

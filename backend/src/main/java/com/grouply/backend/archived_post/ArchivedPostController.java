@@ -1,4 +1,4 @@
-package com.grouply.backend.archived_project;
+package com.grouply.backend.archived_post;
 
 import com.grouply.backend.exceptions.ExistsException;
 import com.grouply.backend.security.CustomUserDetails;
@@ -12,15 +12,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/archived")
 @RequiredArgsConstructor
-public class ArchivedProjectController {
+public class ArchivedPostController {
 
-    private final ArchivedProjectService archivedProjectService;
+    private final ArchivedPostService archivedPostService;
 
 
     @PostMapping("/toggle/{postId}")
     public boolean toggleArchive(@AuthenticationPrincipal CustomUserDetails userDetails, @PathVariable Long postId) throws ExistsException {
         Long userId = userDetails.getId();
-        return archivedProjectService.toggleArchiveProject(userId, postId);
+        return archivedPostService.toggleArchiveProject(userId, postId);
     }
 
 
