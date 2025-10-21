@@ -4,6 +4,8 @@ import com.grouply.backend.authentication.dto.*;
 import com.grouply.backend.exceptions.InvalidInputException;
 import com.grouply.backend.profile.Profile;
 import com.grouply.backend.profile.ProfileRepository;
+import com.grouply.backend.recruiter.Recruiter;
+import com.grouply.backend.recruiter.RecruiterRepository;
 import com.grouply.backend.security.CustomUserDetails;
 import com.grouply.backend.security.JwtService;
 import com.grouply.backend.statistics.Statistics;
@@ -30,6 +32,7 @@ public class AuthService implements IAuthService {
     private final UserRepository userRepository;
     private final ProfileRepository profileRepository;
     private final StatisticsRepository statisticsRepository;
+    private final RecruiterRepository recruiterRepository;
 
 
     /**
@@ -116,17 +119,16 @@ public class AuthService implements IAuthService {
     @Override
     public AuthResponseDTO recruiterLogin(RecruiterLoginRequestDTO dto) {
 
-//        Authentication authentication = authenticationManager.authenticate(
-//                new UsernamePasswordAuthenticationToken(dto.getEmail(), dto.getPassword())
-//        );
-//
-//        CustomUserDetails principal = (CustomUserDetails) authentication.getPrincipal();
-//
-//        String token = jwtService.generateToken(principal.getId());
-//
-//        return new AuthResponseDTO(token);
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(dto.getEmail(), dto.getPassword())
+        );
 
-        return null;
+        CustomUserDetails principal = (CustomUserDetails) authentication.getPrincipal();
+
+        String token = jwtService.generateToken(principal.getId());
+
+        return new AuthResponseDTO(token);
+
 
     }
 
@@ -136,10 +138,26 @@ public class AuthService implements IAuthService {
             throw new InvalidInputException("Passwords are not match");
         }
 
+        User user = User.builder()
+                .firstName(dto.getFirstName())
+                .lastName(dto.getLastName())
+                .username(dto.getUsername())
+                .email(dto.getEmail())
+                .password(encoder.encode(dto.getPassword()))
+                .role(Role.RECRUITER)
+                .build();
 
-        return null;
-//        RecruiterLoginRequestDTO loginRequest = new RecruiterLoginRequestDTO(dto.getEmail(), dto.getPassword());
-//        return recruiterLogin(loginRequest);
+        Recruiter recruiter = Recruiter.builder()
+                .companyName(dto.getCompanyName())
+                .user(user)
+                .build();
+
+        userRepository.save(user);
+        recruiterRepository.save(recruiter);
+
+
+        RecruiterLoginRequestDTO loginRequest = new RecruiterLoginRequestDTO(dto.getEmail(), dto.getPassword());
+        return recruiterLogin(loginRequest);
     }
 
 

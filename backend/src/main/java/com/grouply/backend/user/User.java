@@ -42,7 +42,7 @@ public class User {
 
     private String avatarUrl;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 32)
     @Enumerated(EnumType.STRING)
     private Role role;
 

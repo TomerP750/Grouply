@@ -19,6 +19,7 @@ import { UserSettings } from "../pages/other-pages/settings/user_settings_area/u
 import { Feed } from "../pages/posts-area/Feed";
 import { PostPage } from "../pages/posts-area/project_info_page/post_page";
 import { ProfilePage } from "../pages/profile/profile_page";
+import { RecruiterLogin } from "../pages/authentication/recruiter-auth/recruiter_login";
 
 
 
@@ -34,7 +35,7 @@ export function Routing() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<SignUpWizard />} />
                 <Route path="/recruiter/signup" element={<RecruiterSignUp/>}/>
-                <Route path="/recruiter/login" element={<RecruiterSignUp/>}/>
+                <Route path="/recruiter/login" element={<RecruiterLogin/>}/>
                 <Route path="/settings" element={<SettingsPage/>}>
                     <Route index element={<UserSettings />} />
                     <Route path="display" element={<DisplaySettings />} />

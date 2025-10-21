@@ -1,6 +1,7 @@
 import { Features } from "./features/Features";
 
 import { Hero } from "./Hero";
+import { RecruiterFeatures } from "./recruiter_featuers/recruiter_features";
 
 export function Home() {
     return (
@@ -9,6 +10,7 @@ export function Home() {
             
             <Hero />
             <Features />
+            <RecruiterFeatures/>
             
            
         </main>

@@ -12,6 +12,7 @@ export interface RecruiterSignUpRequestDTO {
 
     firstName: string
     lastName: string
+    username: string
     email: string
     password: string
     confirmPassword: string
@@ -93,6 +94,24 @@ export function RecruiterSignUp() {
                                     {...register("lastName", { required: "Last name is required", maxLength: { value: 40, message: "Max 40 chars" } })}
                                 />
                                 {errors.lastName && <p className="mt-1 text-xs text-rose-500">{errors.lastName.message}</p>}
+                            </div>
+
+                            {/* User Name */}
+                            <div className="sm:col-span-2">
+                                <label htmlFor="email" className="mb-1 block text-sm font-medium">User name</label>
+                                <input
+                                    id="username"
+                                    type="text"
+                                
+                                    className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm shadow-sm outline-none ring-indigo-400/0 transition placeholder:text-slate-400 focus:ring-2 dark:border-slate-700 dark:bg-slate-800"
+                                    {...register("username", {
+                                        required: "User name is required",
+                                        maxLength: {value: 15, message: "Less then 15 characters"},
+                                        minLength: {value: 5, message: "At least 5 characters"}
+                                        
+                                    })}
+                                />
+                                {errors.email && <p className="mt-1 text-xs text-rose-500">{errors.email.message}</p>}
                             </div>
 
                             {/* Company Name */}
