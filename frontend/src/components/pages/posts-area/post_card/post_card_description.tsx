@@ -10,6 +10,7 @@ import { PostCardPositionCard } from "./post_card_position_card";
 import { timeAgo, toNormal, toTitleCase } from "../../../../util/util_functions";
 import { Dialog } from "../../../elements/Dialog";
 import { EditPostFormModal } from "../edit_post_form";
+import archivedPostService from "../../../../service/ArchivedProjectService";
 
 
 type MemberType = "member" | "owner"
@@ -28,14 +29,12 @@ export const getMemberTypeTitle = (type: MemberType) => {
 
 interface ProjectCardDescriptionProps {
     post: PostDTO;
-    archived: boolean
     sentRequest: boolean
-    onArchiveClick: () => void;
     onEdit: () => void;
     onDelete: () => void;
 }
 
-export function PostCardDescription({ post, onArchiveClick, onEdit, onDelete, archived, sentRequest }: ProjectCardDescriptionProps) {
+export function PostCardDescription({ post, onEdit, onDelete, sentRequest }: ProjectCardDescriptionProps) {
 
     const [loading, setLoading] = useState<boolean>(false);
     const [isOwner, setIsOwner] = useState<boolean>(false);
@@ -45,6 +44,17 @@ export function PostCardDescription({ post, onArchiveClick, onEdit, onDelete, ar
     const [dialogOpen, setDialogOpen] = useState<boolean>(false);
     const [editModalOpen, setEditModalOpen] = useState<boolean>(false);
 
+    const [archived, setArchived] = useState<boolean>(false);
+
+    useEffect(() => {
+        archivedPostService.isPostArchived(post.id)
+        .then(res => {
+            setArchived(res);
+        })
+        .catch(err => {
+            toast.error(err.response.data);
+        })
+    })
 
     useEffect(() => {
         if (user) {
@@ -67,6 +77,27 @@ export function PostCardDescription({ post, onArchiveClick, onEdit, onDelete, ar
 
         }
     }, []);
+
+    const handleToggleArchive = (id: number) => {
+        setLoading(true);
+        archivedPostService.toggleArhiveProject(id)
+            .then(res => {
+                if (res === false) {
+                    toast.success("Removed to archive!");
+                    // onRemoveFromArchive?.(id);
+                }
+                else {
+                    toast.success("Added from archive!")
+                };
+                setArchived(res);
+            })
+            .catch(err => {
+                toast.error(err.response.data);
+            })
+            .finally(() => {
+                setLoading(false);
+            })
+    };
 
 
     const { title, description, projectDTO, positions, postedAt } = post;
@@ -112,7 +143,7 @@ export function PostCardDescription({ post, onArchiveClick, onEdit, onDelete, ar
 
                 {!isMember && <button
                     disabled={loading}
-                    onClick={onArchiveClick}
+                    onClick={() => handleToggleArchive(post.id)}
                     title={archived ? "Remove from archive" : "Add to archive"}
                     className={`cursor-pointer ${archived && 'text-yellow-500'} disabled:cursor-not-allowed transition-colors`}>
                     <MdBookmarkAdd size={30} />

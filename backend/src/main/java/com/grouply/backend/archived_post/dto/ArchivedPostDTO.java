@@ -1,4 +1,5 @@
 package com.grouply.backend.archived_post.dto;
+import com.grouply.backend.post.dto.PostDTO;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -11,7 +12,7 @@ import java.time.LocalDateTime;
 public class ArchivedPostDTO {
 
     private Long id;
-    private Long projectPostId;
+    private PostDTO projectPost;
     private Long userId;
     private LocalDateTime archivedAt;
 

@@ -13,6 +13,7 @@ export type JwtUser = {
     avatar: string
 }
 
+
 type AuthState = {
     user: JwtUser | null;
 }

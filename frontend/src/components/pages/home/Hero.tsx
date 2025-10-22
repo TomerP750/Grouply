@@ -8,8 +8,8 @@ export function Hero() {
 
   return (
     <div
-      className={`Hero min-h-screen shadow-lg shadow-gray-200 dark:shadow-gray-800
-        bg-gradient-to-tr 
+      className={`lg:sticky lg:top-0 lg:z-0 Hero min-h-screen shadow-lg shadow-gray-200 dark:shadow-gray-800
+        bg-gradient-to-tr
         from-gray-200 via-blue-100 to-gray-300
         dark:from-gray-900 dark:via-teal-950 dark:to-gray-950
         flex flex-col bg-cover bg-center pb-10`}

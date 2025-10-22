@@ -20,6 +20,7 @@ import { Feed } from "../pages/posts-area/Feed";
 import { PostPage } from "../pages/posts-area/project_info_page/post_page";
 import { ProfilePage } from "../pages/profile/profile_page";
 import { RecruiterLogin } from "../pages/authentication/recruiter-auth/recruiter_login";
+import { ArchivedPostsFeed } from "../pages/archived_posts-area/archived_posts_feed";
 
 
 
@@ -52,6 +53,7 @@ export function Routing() {
 
                 <Route path="/post/:id" element={<PostPage />} />
                 <Route path="/feed" element={<Feed />} />
+                <Route path="/archived" element={<ArchivedPostsFeed/>}/>
 
 
 

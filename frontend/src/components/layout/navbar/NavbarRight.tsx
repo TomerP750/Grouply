@@ -79,16 +79,28 @@ export function NavbarRight({ user, className }: NavbarRightProps) {
             {menuOpen && <UserMenu user={user} />}
           </div>
           :
+          <div className="flex items-center gap-3">
           <NavLink
             to="/login"
             className="hidden md:inline-flex items-center justify-center 
           rounded-3xl bg-[#0f0f10] dark:bg-teal-700 dark:hover:bg-teal-600 px-5 py-1 text-white font-bold hover:bg-gray-800 
           focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400
-          transition-colors
+          transition-all hover:scale-110 
           "
           >
             Login
-          </NavLink>}
+          </NavLink>
+          <NavLink
+            to="/recruiter/login"
+            className="hidden md:inline-flex items-center justify-center 
+          rounded-3xl bg-[#0f0f10] dark:bg-teal-700 dark:hover:bg-teal-600 px-5 py-1 text-white font-bold hover:bg-gray-800 
+          focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400
+          transition-all hover:scale-110
+          "
+          >
+            Recruiter Login
+          </NavLink>
+          </div>}
 
 
 

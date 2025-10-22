@@ -43,7 +43,7 @@ const featuresData: FeatureData[] = [
 
 export function Features() {
     return (
-        <div className="dark:text-white flex flex-col gap-10 items-center py-20 min-h-120">
+        <div className="lg:sticky lg:top-0 lg:z-10 bg-gray-500 dark:text-white flex flex-col gap-10 items-center py-20 min-h-120">
             <div className="w-full flex flex-col items-center gap-25">
 
                 {/* Title and subtitle */}

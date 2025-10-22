@@ -14,13 +14,14 @@ import { PostCardDescription } from "./post_card_description";
 import { Dialog } from "../../../elements/Dialog";
 
 
-interface ProjectCardProps {
+interface PostCardProps {
     projectPost: PostDTO
-    onRemove: (id: number) => void
+    onRemove?: (id: number) => void
+    onRemoveFromArchive?: (id: number) => void;
 }
 
 
-export function PostCard({ projectPost, onRemove }: ProjectCardProps) {
+export function PostCard({ projectPost, onRemove, onRemoveFromArchive }: PostCardProps) {
 
     const [loading, setLoading] = useState<boolean>(false);
 
@@ -60,32 +61,14 @@ export function PostCard({ projectPost, onRemove }: ProjectCardProps) {
 
 
 
-    const handleAddToArchive = (id: number) => {
-        setLoading(true);
-        archivedProjectService.toggleArhiveProject(id)
-            .then(res => {
-                if (res === false) {
-                    toast.success("Removed to archive!");
-                }
-                else {
-                    toast.success("Added from archive!")
-                };
-                setArchived(res);
-            })
-            .catch(err => {
-                toast.error(err.response.data);
-            })
-            .finally(() => {
-                setLoading(false);
-            })
-    };
+    
 
     const handleDeletePost = (id: number) => {
         
         projectPostService.deletePost(id)
             .then(() => {
                 toast.success("Post deleted");
-                onRemove(id);
+                onRemove?.(id);
             })
             .catch(err => {
                 toast.error(err.response.data);
@@ -105,10 +88,8 @@ export function PostCard({ projectPost, onRemove }: ProjectCardProps) {
 
                 {/* Description + Buttons to join */}
                 <PostCardDescription
-                    archived={archived}
                     post={projectPost}
                     sentRequest={sentRequest}
-                    onArchiveClick={() => handleAddToArchive(projectPost.id)}
                     onEdit={handleEdit}
                     onDelete={() => handleDeletePost(projectPost.id)}
                 />

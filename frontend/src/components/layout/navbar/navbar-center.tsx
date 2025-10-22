@@ -47,7 +47,7 @@ export function NavbarCenter({ user }: NavbarCenterProps) {
         </li>
 
         <li>
-          <NavLink to="/archived" className={linkClasses}>
+          <NavLink to="/challenges" className={linkClasses}>
             <FaCode size={22} />
             <span className="text-sm">Challanges</span>
           </NavLink>

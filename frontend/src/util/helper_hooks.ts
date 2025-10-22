@@ -2,13 +2,15 @@ import { useEffect } from "react";
 
 
 export function useScrollToTop() {
-    useEffect(() => {
-        window.scrollTo({top: 0, behavior: "auto"})
-    }, []);
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "auto" })
+  }, []);
 }
 
 
 import { useRef, useState } from "react";
+import { useUser } from "../redux/hooks";
+import { Role } from "../dtos/enums/Role";
 
 export function useThrottleClick(delay = 1000) {
   const lastClick = useRef(0);
@@ -28,3 +30,8 @@ export function useThrottleClick(delay = 1000) {
   return { run, cooling };
 }
 
+
+export function useRecruiterRole() {
+  const user = useUser();
+  return user.role === Role.RECRUITER;
+}
