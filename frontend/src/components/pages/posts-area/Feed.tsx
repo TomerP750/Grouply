@@ -6,6 +6,7 @@ import { Navbar } from "../../layout/navbar/Navbar";
 import { CreatePostForm } from "./create_post_form";
 import { Filters, type FeedFilters } from "./filters_area/filters";
 import { PostCard } from "./post_card/post_card";
+import { FilterProvider } from "../../../context/filter_context";
 
 
 
@@ -49,51 +50,53 @@ export function Feed() {
     }
 
     return (
-        <main className="min-h-screen bg-gray-200 dark:bg-gradient-to-r dark:from-slate-900 dark:via-teal-950 dark:to-stone-900 pb-10">
+        <FilterProvider>
+            <main className="min-h-screen bg-gray-200 dark:bg-gradient-to-r dark:from-slate-900 dark:via-teal-950 dark:to-stone-900 pb-10">
 
-            <Navbar />
+                <Navbar />
 
-            {/* POSTS AND FILTERS */}
-            <div className="flex flex-col pt-10 md:pt-0 md:mt-5 px-5 md:px-0 lg:flex-row w-full items-center lg:items-start gap-6">
-                <Filters/>
+                {/* POSTS AND FILTERS */}
+                <div className="flex flex-col pt-10 md:pt-0 md:mt-5 px-5 md:px-0 lg:flex-row w-full items-center lg:items-start gap-6">
+                    <Filters />
 
-                {/* Main area */}
-                <section className="w-full flex justify-center px-0 sm:px-5 pt-6">
-                    {/* Width cap + centered */}
-                    <div className="w-full grid grid-cols-1 justify-items-center lg:justify-items-start gap-y-10">
-                        <div className="flex max-w-3/4 justify-center">
-                            <button
-                                onClick={() => setModalOpen(true)}
-                                className="inline-flex items-center gap-1 rounded-lg text-white bg-blue-600 px-3 py-1.5 cursor-pointer hover:bg-blue-500 transition-colors">
-                                <BiPlus size={20} /><span>Add Post</span>
-                            </button>
+                    {/* Main area */}
+                    <section className="w-full flex justify-center px-0 sm:px-5 pt-6">
+                        {/* Width cap + centered */}
+                        <div className="w-full grid grid-cols-1 justify-items-center lg:justify-items-start gap-y-10">
+                            <div className="flex max-w-3/4 justify-center">
+                                <button
+                                    onClick={() => setModalOpen(true)}
+                                    className="inline-flex items-center gap-1 rounded-lg text-white bg-blue-600 px-3 py-1.5 cursor-pointer hover:bg-blue-500 transition-colors">
+                                    <BiPlus size={20} /><span>Add Post</span>
+                                </button>
+                            </div>
+                            {posts?.map(p => (
+                                <PostCard
+                                    key={p.id}
+                                    projectPost={p}
+                                    onRemove={() => handleRemove(p.id)}
+                                />
+                            ))}
                         </div>
-                        {posts?.map(p => (
-                            <PostCard
-                                key={p.id}
-                                projectPost={p}
-                                onRemove={() => handleRemove(p.id)}
-                            />
-                        ))}
-                    </div>
-                </section>
-            </div>
+                    </section>
+                </div>
 
 
-            {/* Pagination */}
-            {hasMore && <div className="mt-10 flex justify-center gap-1 text-white">
-                <button
-                    disabled={loading}
-                    className={`inline-flex justify-center cursor-pointer bg-blue-600 
+                {/* Pagination */}
+                {hasMore && <div className="mt-10 flex justify-center gap-1 text-white">
+                    <button
+                        disabled={loading}
+                        className={`inline-flex justify-center cursor-pointer bg-blue-600 
                 hover:bg-blue-800 px-3 py-2 rounded-xl min-w-30 disabled:opacity-50 disabled:cursor-not-allowed`}>
-                    {loading ? <BiLoaderAlt size={20} className="animate-spin" /> : "Load More"}
-                </button>
-            </div>}
+                        {loading ? <BiLoaderAlt size={20} className="animate-spin" /> : "Load More"}
+                    </button>
+                </div>}
 
 
 
-            {modalOpen && <CreatePostForm open={modalOpen} onClose={() => setModalOpen(false)} onAdd={(newPost) => handleAdd(newPost)} />}
+                {modalOpen && <CreatePostForm open={modalOpen} onClose={() => setModalOpen(false)} onAdd={(newPost) => handleAdd(newPost)} />}
 
-        </main>
+            </main>
+        </FilterProvider>
     )
 }

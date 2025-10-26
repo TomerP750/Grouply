@@ -54,10 +54,7 @@ export function NavbarRight({ user, className }: NavbarRightProps) {
           }}>
             <Badge Icon={BiBell} size={28} count={3} className="cursor-pointer p-3" />
           </button>
-          {notificationOpen &&
-            <Menu className=" gap-5 bg-gray-200 dark:bg-slate-950 flex flex-col flex-wrap items-start py-5 px-4 absolute top-0 mt-15 -right-2 w-95 max-w-95 min-h-64 rounded-2xl shadow-2xl dark:text-gray-300">
-              <NotificationMenu />
-            </Menu>}
+          {notificationOpen && <NotificationMenu />}
         </div>}
 
         {/* Avatar / Login */}

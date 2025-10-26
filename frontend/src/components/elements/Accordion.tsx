@@ -9,21 +9,19 @@ interface AccordionProps {
 
 export function Accordion({ children, title }: AccordionProps) {
 
-    const [open, setOpen] = useState<boolean>(false);
+    const [open, setOpen] = useState<boolean>(true);
 
     return (
         <div className="">
             
-            <Hr />
-
-            <button onClick={() => setOpen(!open)} className="cursor-pointer w-full inline-flex justify-between items-center mb-5">
+            <button onClick={() => setOpen(!open)} className={`cursor-pointer w-full inline-flex justify-between items-center ${open && `mb-5`}`}>
                 <p className="text-lg">{title}</p>
                 <span className={`${open && 'rotate-180'} transition-all duration-300`}>{<BiChevronDown size={22}/>}</span>
             </button>
 
             {open && children}
 
-            <Hr/>
+           
         </div>
     )
 }

@@ -23,8 +23,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -114,10 +116,14 @@ public class PostService implements IPostService {
     }
 
     @Override
-    public Page<PostDTO> getAllPosts(Pageable pageable) {
-        Page<Post> allProjectPosts = postRepository.findAll(pageable);
-        return allProjectPosts.map(EntityToDtoMapper::toProjectPostDto);
+    public Page<PostDTO> getAllPosts(Pageable pageable, @Nullable List<ProjectPosition> roles) {
+        Page<Post> page = (roles == null || roles.isEmpty())
+                ? postRepository.findAllByOrderByPostedAtDesc(pageable)
+                : postRepository.findAllFiltered(roles, pageable);
+
+        return page.map(EntityToDtoMapper::toProjectPostDto);
     }
+
 
     @Override
     public boolean requestToJoinProject(Long userId, Long ownerId, Long projectId) {

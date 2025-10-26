@@ -19,25 +19,7 @@ export function SortGroup() {
     return (
         <Accordion title="Sort By">
         <ul className="flex flex-col items-start gap-5">
-          <label className="inline-flex items-center gap-2 cursor-pointer">
-            <input
-              type="radio"
-              name="sort"
-              value="lth"
-              className={`${inputStyle}`}
-            />
-            <span className="text-slate-800 dark:text-slate-200">Low to High</span>
-          </label>
-
-          <label className="inline-flex items-center gap-2 cursor-pointer">
-            <input
-              type="radio"
-              name="sort"
-              value="htl"
-              className={`${inputStyle}`}
-            />
-            <span className="text-slate-800 dark:text-slate-200">High to Low</span>
-          </label>
+          
 
           <label className="inline-flex items-center gap-2 cursor-pointer">
             <input
@@ -47,7 +29,17 @@ export function SortGroup() {
               defaultChecked
               className={`${inputStyle}`}
             />
-            <span className="text-slate-800 dark:text-slate-200">Newest</span>
+            <span className="text-sm text-slate-800 dark:text-slate-200">Newest - Oldest</span>
+          </label>
+
+          <label className="inline-flex items-center gap-2 cursor-pointer">
+            <input
+              type="radio"
+              name="sort"
+              value="newest"
+              className={`${inputStyle}`}
+            />
+            <span className="text-sm text-slate-800 dark:text-slate-200">Oldest - Newest</span>
           </label>
 
         </ul>

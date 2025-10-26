@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import type { TechnologyDTO } from "../../../../dtos/models_dtos/TechnologyDTO";
 import technologyService from "../../../../service/technology_service";
 import { Accordion } from "../../../elements/Accordion"
+import { toNormal } from "../../../../util/util_functions";
 
 
 export function TechnologySelect() {
@@ -21,18 +22,15 @@ export function TechnologySelect() {
 
     return (
         <Accordion title="Technologies">
-            <label className="flex flex-col gap-1 text-sm">
+            
 
-                <select
-                    className="rounded-md border border-slate-300 dark:border-slate-600 overflow-y-auto
-                             bg-white dark:bg-slate-700 px-3 py-2 text-sm 
-                             focus:outline-none focus:ring-2 focus:ring-teal-500"
-                >
-                    <option value="">Any Technology</option>
-                    {technologes?.map(t => {
-                        return <option value={t.id} key={t.id}>{t.name}</option>
-                    })}
-                </select>
+            <label className="role-select py-2 flex flex-col items-center h-40 overflow-y-auto gap-3 text-sm">
+                {technologes?.map(t => {
+                    return <div
+                        
+                        className="cursor-pointer py-2 
+                                border border-white/40 w-4/5 text-center">{toNormal(t.name)}</div>
+                })}
             </label>
         </Accordion>
     )

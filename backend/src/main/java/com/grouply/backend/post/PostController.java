@@ -6,6 +6,7 @@ import com.grouply.backend.exceptions.UnauthorizedException;
 import com.grouply.backend.post.dto.CreateProjectPostDTO;
 import com.grouply.backend.post.dto.PostDTO;
 import com.grouply.backend.post.dto.UpdateProjectPostDTO;
+import com.grouply.backend.project_member.ProjectPosition;
 import com.grouply.backend.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -13,6 +14,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/post")
@@ -23,9 +26,10 @@ public class PostController {
 
     @GetMapping("/all")
     public Page<PostDTO> allPosts(@RequestParam(value = "page", defaultValue = "0") int page,
-                                  @RequestParam(value = "size", defaultValue = "10") int size) {
+                                  @RequestParam(value = "size", defaultValue = "10") int size,
+                                  @RequestParam(required = false) List<ProjectPosition> roles) {
         Pageable pageable = PageRequest.of(page, size);
-        return projectPostService.getAllPosts(pageable);
+        return projectPostService.getAllPosts(pageable, roles);
     }
 
     @GetMapping("/{postId}")
