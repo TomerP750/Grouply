@@ -23,6 +23,9 @@ function RoleBadge({ role }: { role: Role }) {
             break;
         case Role.ADMIN:
             styles = "bg-amber-500/15 text-amber-500";
+            break;
+        case Role.RECRUITER: 
+            styles = "bg-purple-500/15 text-purple-400"
             break; 
     }
     return <span className={`text-xs px-2 py-1 rounded-full font-medium ${styles}`}>{role}</span>;
@@ -52,8 +55,10 @@ export function UsersTable() {
     }, [pagination.pageIndex, pagination.pageSize]);
 
 
-    const handleEditProject = () => {
-
+    const [editedRow, setEditedRow] = useState<number>(0);
+    
+    const handleEditProject = (index: number) => {
+        
     };
 
     const handleDeleteProject = (id: number) => {
@@ -122,6 +127,7 @@ export function UsersTable() {
                     <button
                         onClick={(e) => {
                             e.stopPropagation();
+                            setEditedRow(row.original.id)
                         }}
                         className="cursor-pointer rounded text-teal-400 hover:text-teal-300  px-2 py-1"
                     >
@@ -173,7 +179,7 @@ export function UsersTable() {
                             <tr key={hg.id}>
                                 {hg.headers.map((h) => {
                                     const canSort = h.column.getCanSort();
-                                    const dir = h.column.getIsSorted(); // false | 'asc' | 'desc'
+                                    const dir = h.column.getIsSorted();
                                     return (
                                         <th
                                             key={h.id}

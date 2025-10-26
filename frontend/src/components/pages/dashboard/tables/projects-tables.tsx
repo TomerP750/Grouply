@@ -9,17 +9,14 @@ import {
 } from "@tanstack/react-table";
 import { useEffect, useMemo, useState } from "react";
 import { BiChevronLeft, BiChevronRight, BiLoaderAlt, BiPencil, BiPlus, BiTrash } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { ProjectStatus } from "../../../../dtos/enums/ProjectStatus";
 import type { ProjectDTO } from "../../../../dtos/models_dtos/ProjectDTO";
-import type { ProjectMemberDTO } from "../../../../dtos/models_dtos/ProjectMemberDTO";
+import { useUser } from "../../../../redux/hooks";
 import projectService from "../../../../service/ProjectService";
 import { fmtDate, toNormal } from "../../../../util/util_functions";
-import { Avatar } from "../../../elements/Avatar";
 import { Dialog } from "../../../elements/Dialog";
-import { NavLink, useNavigate } from "react-router-dom";
-import projectMemberService from "../../../../service/ProjectMemberService";
-import { useUser } from "../../../../redux/hooks";
 import { Modal } from "../../../elements/Modal";
 import { CreateProjectForm } from "../forms/create_project_form";
 
@@ -55,7 +52,8 @@ export function ProjectsTable() {
     const [sorting, setSorting] = useState<SortingState>([]);
 
     const [dialogOpen, setDialogOpen] = useState<boolean>(false);
-    const [selectedProjectId, setSelectedProejctId] = useState<number>(0);
+    const [selectedProjectId, setSelectedProjectId] = useState<number>(0);
+    const [editedProjectId, setEditedProjectId] = useState<number>(0);
 
 
     const [pageCount, setPageCount] = useState(0);
@@ -97,7 +95,7 @@ export function ProjectsTable() {
 
         ch.accessor("id", {
             header: "#",
-            cell: (i) => i.getValue(),
+            cell: (i) => <span className="">{i.getValue()}</span>,
             enableSorting: true,
         }),
 
@@ -113,9 +111,28 @@ export function ProjectsTable() {
 
         ch.accessor("status", {
             header: "Status",
-            cell: (i) => <StatusBadge status={i.getValue()} />,
+            cell: (i) => {
+                const projectId = i.row.original.id; 
+                const status = i.getValue();
+                const isEditing = projectId === editedProjectId;
+
+                return isEditing ? (
+                    <select
+                        value={status}
+                        onChange={(e) => handleStatusChange(projectId, e.target.value as ProjectStatus)}
+                        className="border rounded px-2 py-1 bg-slate-800 text-white"
+                    >
+                        <option value="PREPARATION">Preperation</option>
+                        <option value="IN_PROGRESS">In Progress</option>
+                        <option value="COMPLETED">Completed</option>
+                    </select>
+                ) : (
+                    <StatusBadge status={status} />
+                );
+            },
             sortingFn: "alphanumeric",
         }),
+
 
         ch.accessor("createdAt", {
             header: "Created",
@@ -146,22 +163,23 @@ export function ProjectsTable() {
                     <button
                         onClick={(e) => {
                             e.stopPropagation();
+                            setEditedProjectId(row.original.id);
                         }}
                         className="inline-flex gap-1 items-center cursor-pointer rounded px-2 py-1 hover:underline"
                     >
-                        <span><BiPencil size={20}/></span>
-                        <span>Edit</span> 
+                        <span><BiPencil size={20} /></span>
+                        <span>Edit</span>
                     </button>
                     <button
                         type="button"
                         onClick={(e) => {
                             e.stopPropagation();
                             setDialogOpen(true);
-                            setSelectedProejctId(row.original.id)
+                            setSelectedProjectId(row.original.id)
                         }}
                         className="inline-flex items-center gap-1 cursor-pointer rounded px-2 py-1 text-red-600 hover:underline "
                     >
-                        <span><BiTrash size={20}/></span>
+                        <span><BiTrash size={20} /></span>
                         <span>Delete</span>
                     </button>
                 </div>
@@ -199,7 +217,7 @@ export function ProjectsTable() {
                     </button>
                     {
                         modalOpen &&
-                        <Modal className="dark:bg-gradient-to-br dark:from-slate-900 via-teal-950 to-slate-800"   open={modalOpen}
+                        <Modal className="dark:bg-gradient-to-br dark:from-slate-900 via-teal-950 to-slate-800" open={modalOpen}
                             onClose={() => setModalOpen(false)}>
                             <CreateProjectForm onClose={() => setModalOpen(false)} />
                         </Modal>

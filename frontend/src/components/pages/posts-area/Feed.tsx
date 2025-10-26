@@ -4,7 +4,7 @@ import type { PostDTO } from "../../../dtos/models_dtos/PostDTO";
 import projectPostService from "../../../service/PostService";
 import { Navbar } from "../../layout/navbar/Navbar";
 import { CreatePostForm } from "./create_post_form";
-import { Filters, type FeedFilters } from "./Filters";
+import { Filters, type FeedFilters } from "./filters_area/filters";
 import { PostCard } from "./post_card/post_card";
 
 
@@ -13,45 +13,22 @@ export function Feed() {
 
     const [posts, setPosts] = useState<PostDTO[]>([]);
 
-    const [filters, setFilters] = useState<FeedFilters>({
-        postTitle: "",
-        startDate: "",
-    })
-
-    const filteredPosts = useMemo(() => {
-        
-        return posts.filter((post) => {
-            
-            const matchProjectName =
-                !filters.postTitle ||
-                post.title
-                    .toLowerCase()
-                    .includes(filters.postTitle.toLowerCase());
-
-            const matchStartDate =
-                !filters.startDate ||
-                new Date(post.postedAt) >= new Date(filters.startDate);
-
-            const matchRole =
-                !filters.roleDemand ||
-                post.positions.some(
-                    (p) => p.position === filters.roleDemand
-                );
-
-            return matchProjectName && matchStartDate && matchRole;
-        });
-    }, [posts, filters]);
-
     const [modalOpen, setModalOpen] = useState<boolean>(false);
 
     const [loading, setLoading] = useState<boolean>(false);
 
+    const [page, setPage] = useState<number>(0);
+    const [size, setSize] = useState<number>(5);
+    const [hasMore, setHasMore] = useState<boolean>(false);
+
+
     useEffect(() => {
         setLoading(true)
 
-        projectPostService.allPosts(0, 10)
+        projectPostService.allPosts(page, size)
             .then(res => {
                 setPosts(res.content);
+                setHasMore(res.last);
             })
             .catch(err => {
                 console.log(err.response.data);
@@ -78,7 +55,7 @@ export function Feed() {
 
             {/* POSTS AND FILTERS */}
             <div className="flex flex-col pt-10 md:pt-0 md:mt-5 px-5 md:px-0 lg:flex-row w-full items-center lg:items-start gap-6">
-                <Filters value={filters} setValue={setFilters}/>
+                <Filters/>
 
                 {/* Main area */}
                 <section className="w-full flex justify-center px-0 sm:px-5 pt-6">
@@ -91,7 +68,7 @@ export function Feed() {
                                 <BiPlus size={20} /><span>Add Post</span>
                             </button>
                         </div>
-                        {filteredPosts?.map(p => (
+                        {posts?.map(p => (
                             <PostCard
                                 key={p.id}
                                 projectPost={p}
@@ -104,7 +81,7 @@ export function Feed() {
 
 
             {/* Pagination */}
-            {posts && posts.length > 3 && <div className="mt-10 flex justify-center gap-1 text-white">
+            {hasMore && <div className="mt-10 flex justify-center gap-1 text-white">
                 <button
                     disabled={loading}
                     className={`inline-flex justify-center cursor-pointer bg-blue-600 

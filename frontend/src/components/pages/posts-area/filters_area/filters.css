@@ -1,0 +1,11 @@
+
+.role-select {
+
+  scrollbar-width: none;         
+  -ms-overflow-style: none;      
+}
+
+.role-select::-webkit-scrollbar {  
+  width: 0;
+  height: 0;
+}

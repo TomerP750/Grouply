@@ -4,6 +4,7 @@ import { FaCode } from "react-icons/fa";
 import { MdBookmarkBorder, MdDashboard, MdHome } from "react-icons/md";
 import { NavLink } from "react-router-dom";
 import type { JwtUser } from "../../../redux/AuthSlice";
+import { SearchBar } from "./search_bar";
 
 const linkClasses = ({ isActive }: { isActive: boolean }) =>
   [
@@ -61,17 +62,14 @@ export function NavbarCenter({ user }: NavbarCenterProps) {
         </li>
 
         <li>
-          <button onClick={() => setSearchOpen} className={`${btn}`}>
+          <button onClick={() => setSearchOpen(true)} className={`${btn}`}>
             <span className="text-sm"><BiSearch size={20} /></span>
           </button>
         </li>
 
-
-
-
-
-
       </ul>}
+
+      {searchOpen && <SearchBar open={searchOpen} onClose={() => setSearchOpen(false)}/>}
     </div>
   );
 }

@@ -6,30 +6,25 @@ import { ProjectCardProvider } from "../../../../context/ProjectCardContext";
 import type { PostDTO } from "../../../../dtos/models_dtos/PostDTO";
 import type { ProjectMemberDTO } from "../../../../dtos/models_dtos/ProjectMemberDTO";
 import { useUserSelector } from "../../../../redux/hooks";
-import archivedProjectService from "../../../../service/ArchivedProjectService";
 import projectPostService from "../../../../service/PostService";
 import projectMemberService from "../../../../service/ProjectMemberService";
 import { Avatar } from "../../../elements/Avatar";
 import { PostCardDescription } from "./post_card_description";
-import { Dialog } from "../../../elements/Dialog";
 
 
 interface PostCardProps {
     projectPost: PostDTO
     onRemove?: (id: number) => void
-    onRemoveFromArchive?: (id: number) => void;
 }
 
 
-export function PostCard({ projectPost, onRemove, onRemoveFromArchive }: PostCardProps) {
-
-    const [loading, setLoading] = useState<boolean>(false);
+export function PostCard({ projectPost, onRemove }: PostCardProps) {
 
     const user = useUserSelector(state => state.authSlice.user);
 
     const navigate = useNavigate();
 
-    const { projectDTO, positions } = projectPost;
+    const { projectDTO } = projectPost;
 
     const [members, setMembers] = useState<ProjectMemberDTO[]>([]);
     useEffect(() => {
@@ -59,9 +54,6 @@ export function PostCard({ projectPost, onRemove, onRemoveFromArchive }: PostCar
         }
     }, []);
 
-
-
-    
 
     const handleDeletePost = (id: number) => {
         

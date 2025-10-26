@@ -47,7 +47,7 @@ export function SecuritySettings() {
 
 
                     <div className="relative flex flex-col gap-1.5">
-                        <label className="font-medium">Current Password</label>
+                        <label className="font-medium">Current Password *</label>
                         <input
                             {...register("currentPassword", {
                                 required: "Password is required",
@@ -68,7 +68,7 @@ export function SecuritySettings() {
                     </div>
 
                     <div className="relative flex flex-col gap-1.5">
-                        <label className="font-medium">Password</label>
+                        <label className="font-medium">Password *</label>
                         <input
                             {...register("password", {
                                 required: "Password is required",
@@ -91,7 +91,7 @@ export function SecuritySettings() {
                     </div>
 
                     <div className="relative flex flex-col gap-1.5">
-                        <label className="font-medium">Confirm Password</label>
+                        <label className="font-medium">Confirm Password *</label>
                         <input
                             {...register("confirmPassword", {
                                 required: "Please confirm your password",

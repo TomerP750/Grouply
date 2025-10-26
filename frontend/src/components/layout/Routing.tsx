@@ -21,6 +21,7 @@ import { PostPage } from "../pages/posts-area/project_info_page/post_page";
 import { ProfilePage } from "../pages/profile/profile_page";
 import { RecruiterLogin } from "../pages/authentication/recruiter-auth/recruiter_login";
 import { ArchivedPostsFeed } from "../pages/archived_posts-area/archived_posts_feed";
+import { Role } from "../../dtos/enums/Role";
 
 
 
@@ -35,9 +36,9 @@ export function Routing() {
                 <Route path="/about" element={<About />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<SignUpWizard />} />
-                <Route path="/recruiter/signup" element={<RecruiterSignUp/>}/>
-                <Route path="/recruiter/login" element={<RecruiterLogin/>}/>
-                <Route path="/settings" element={<SettingsPage/>}>
+                <Route path="/recruiter/signup" element={<RecruiterSignUp />} />
+                <Route path="/recruiter/login" element={<RecruiterLogin />} />
+                <Route path="/settings" element={<SettingsPage />}>
                     <Route index element={<UserSettings />} />
                     <Route path="display" element={<DisplaySettings />} />
                     <Route path="security" element={<SecuritySettings />} />
@@ -47,13 +48,16 @@ export function Routing() {
                 <Route path="/dashboard/:id" element={<Dashboard />}>
                     <Route index element={<Overview />} />
                     <Route path="projects" element={<ProjectsTable />} />
-                    <Route path="users" element={<UsersTable/>} />
-                    <Route path="project-members/:id" element={<ProjectMembersTable/>} />
+                    <Route path="project-members/:id" element={<ProjectMembersTable />} />
+                    {/* {user?.role === Role.ADMIN ?
+                        <Route path="manage/users" element={<UsersTable />} />
+                        : <NotFound/>
+                    } */}
                 </Route>
 
                 <Route path="/post/:id" element={<PostPage />} />
                 <Route path="/feed" element={<Feed />} />
-                <Route path="/archived" element={<ArchivedPostsFeed/>}/>
+                <Route path="/archived" element={<ArchivedPostsFeed />} />
 
 
 

@@ -4,6 +4,7 @@ import { PostDTO } from "../../../dtos/models_dtos/PostDTO";
 import archivedPostService from "../../../service/ArchivedProjectService";
 import { toast } from "react-toastify";
 import { PostCard } from "../posts-area/post_card/post_card";
+import { BiQuestionMark } from "react-icons/bi";
 
 
 
@@ -39,13 +40,24 @@ export function ArchivedPostsFeed() {
                 </div>
 
                 {/* Archived Grid */}
+                {
+                    archivedPosts.length > 0 ?
                 <div className="grid grid-cols-1 flex-1 justify-items-start gap-5 px-10">
                     {archivedPosts.map(ap => {
                         return <PostCard key={ap.id}
                             projectPost={ap}
-                            onRemoveFromArchive={() => handleRemoveFromArchive(ap.id)} />
+                        // onRemoveFromArchive={() => handleRemoveFromArchive(ap.id)} 
+                        />
                     })}
                 </div>
+                : 
+                <div className="flex justify-center flex-1 text-white">
+                
+                    <p>You have not archived posts yet</p>
+                </div>
+                }
+
+
             </div>
         </div>
     )

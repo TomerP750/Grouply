@@ -1,16 +1,29 @@
+import { useState, type ReactNode } from "react"
+import { BiChevronDown, BiChevronUp } from "react-icons/bi";
+import { Hr } from "./Hr";
 
-// interface AccordionProps {
-//     faq: FaqModel
-// }
+interface AccordionProps {
+    children: ReactNode
+    title?: string
+}
 
-// export function Accordion({ faq }: AccordionProps) {
-//     return (
-//         <details className="w-2/3 group rounded-2xl border border-slate-200 bg-white p-5 shadow-sm open:shadow-md dark:border-slate-700 dark:bg-slate-800">
-//             <summary className="cursor-pointer list-none text-base font-semibold">
-//                 {faq.question}
-//                 <span className="float-right transition group-open:rotate-180">▾</span>
-//             </summary>
-//             <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">{faq.answer}</p>
-//         </details>
-//     )
-// }
+export function Accordion({ children, title }: AccordionProps) {
+
+    const [open, setOpen] = useState<boolean>(false);
+
+    return (
+        <div className="">
+            
+            <Hr />
+
+            <button onClick={() => setOpen(!open)} className="cursor-pointer w-full inline-flex justify-between items-center mb-5">
+                <p className="text-lg">{title}</p>
+                <span className={`${open && 'rotate-180'} transition-all duration-300`}>{<BiChevronDown size={22}/>}</span>
+            </button>
+
+            {open && children}
+
+            <Hr/>
+        </div>
+    )
+}
