@@ -35,3 +35,19 @@ export function useRecruiterRole() {
   const user = useUser();
   return user.role === Role.RECRUITER;
 }
+
+
+export function useBodyScrollLock(open: boolean) {
+  
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = "hidden"
+    } else {
+      document.body.style.overflow = ""
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
+}

@@ -8,6 +8,10 @@ class TechnologyService {
         return (await axios(`${BASE_API}/tech/all`)).data;
     }
 
+    async allTechnologiesPage(page: number, size: number) {
+        return (await axios.get(`${BASE_API}/tech/all/page?page=${page}&size=${size}`)).data
+    }
+
 }
 
 const technologyService = new TechnologyService();

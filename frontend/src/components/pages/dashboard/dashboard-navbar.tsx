@@ -88,7 +88,7 @@ export function DashboardNavbar({ user }: DashboardNavbarProps) {
                             <MdAdminPanelSettings size={25} />
                             <p>Admin</p>
                         </button>
-                        {adminMenuOpen && <AdminMenu/>}
+                        {adminMenuOpen && <AdminMenu onClose={() => setAdminMenuOpen(false)}/>}
                     </li>
                     // <li>
                     //     <NavLink

@@ -2,8 +2,11 @@ package com.grouply.backend.technology;
 
 import com.grouply.backend.exceptions.InvalidInputException;
 import com.grouply.backend.technology.dto.TechnologyDTO;
+import com.grouply.backend.util.EntityToDtoMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +22,10 @@ public class TechnologyService implements ITechnologyService {
     @Override
     public List<TechnologyDTO> allTechnologies() {
         return technologyRepository.findAll().stream().map(this::toDto).toList();
+    }
+
+    public Page<TechnologyDTO> allTechnologiesPage(Pageable pageable) {
+        return technologyRepository.findAll(pageable).map(EntityToDtoMapper::toTechnologyDto);
     }
 
     @Override

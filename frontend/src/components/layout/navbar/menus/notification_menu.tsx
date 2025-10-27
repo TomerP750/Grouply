@@ -1,14 +1,17 @@
-import { BiChat, BiGroup } from "react-icons/bi";
+import { BiBellMinus, BiChat, BiGroup } from "react-icons/bi";
 import { Menu } from "../../../elements/Menu";
 
 
 
 export function NotificationMenu() {
+    
+    
+    
     return (
-        <Menu className=" gap-5 bg-gray-200 dark:bg-slate-950 flex flex-col flex-wrap items-start py-5 px-4 absolute top-0 mt-15 -right-2 w-95 max-w-95 min-h-64 rounded-2xl shadow-2xl dark:text-gray-300">
+        <Menu className=" gap-5 bg-gray-200 dark:bg-slate-950 flex flex-col justify-center items-start py-5 px-4 absolute top-0 mt-15 -right-2 w-95 max-w-95 min-h-64 rounded-2xl shadow-2xl dark:text-gray-300">
             <menu className="w-full flex flex-col items-center">
 
-                <BiChat size={40} />
+                <BiBellMinus size={40} />
                 <p className="text-sm text-center">No New Notifications</p>
 
             </menu>

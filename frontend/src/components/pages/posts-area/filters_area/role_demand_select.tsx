@@ -6,7 +6,7 @@ import "./filters.css"
 
 export function RoleDemandSelect() {
 
-    const { add, remove, roles } = useFilters();
+    const { addRole, removeRole, roles } = useFilters();
 
     const isSelected = (position: ProjectPosition) => {
         return roles.includes(position);
@@ -14,8 +14,8 @@ export function RoleDemandSelect() {
 
 
     const toggle = (position: ProjectPosition) => {
-        if (isSelected(position)) remove(position);
-        else add(position); 
+        if (isSelected(position)) removeRole(position);
+        else addRole(position); 
     }
 
 

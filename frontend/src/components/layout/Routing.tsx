@@ -10,7 +10,6 @@ import { Dashboard } from "../pages/dashboard/dashboard";
 import { Overview } from "../pages/dashboard/statistics";
 import { ProjectMembersTable } from "../pages/dashboard/tables/project_members_table";
 import { ProjectsTable } from "../pages/dashboard/tables/projects-tables";
-import { UsersTable } from "../pages/dashboard/tables/users-tabel";
 import { NotFound } from "../pages/other-pages/NotFound";
 import { DisplaySettings } from "../pages/other-pages/settings/display_settings";
 import { SecuritySettings } from "../pages/other-pages/settings/security_settings";
@@ -21,7 +20,8 @@ import { PostPage } from "../pages/posts-area/project_info_page/post_page";
 import { ProfilePage } from "../pages/profile/profile_page";
 import { RecruiterLogin } from "../pages/authentication/recruiter-auth/recruiter_login";
 import { ArchivedPostsFeed } from "../pages/archived_posts-area/archived_posts_feed";
-import { Role } from "../../dtos/enums/Role";
+import { UsersTable } from "../pages/dashboard/tables/admin_tables/users-tabel";
+import { TechnologiesTable } from "../pages/dashboard/tables/admin_tables/technologies_table";
 
 
 
@@ -49,10 +49,9 @@ export function Routing() {
                     <Route index element={<Overview />} />
                     <Route path="projects" element={<ProjectsTable />} />
                     <Route path="project-members/:id" element={<ProjectMembersTable />} />
-                    {/* {user?.role === Role.ADMIN ?
-                        <Route path="manage/users" element={<UsersTable />} />
-                        : <NotFound/>
-                    } */}
+                    {/* Admin section */}
+                    <Route path="manage/users" element={<UsersTable />} />
+                    <Route path="manage/technologies" element={<TechnologiesTable />} />
                 </Route>
 
                 <Route path="/post/:id" element={<PostPage />} />

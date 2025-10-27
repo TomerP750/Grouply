@@ -59,8 +59,6 @@ public class PostService implements IPostService {
                 .findById(dto.getProjectId()).orElseThrow(() -> new NoSuchElementException("Project not found"));
 
 
-
-        // 1. Build the ProjectPost (but not saved yet)
         Post newPost = Post.builder()
                 .description(dto.getDescription())
                 .title(dto.getTitle())

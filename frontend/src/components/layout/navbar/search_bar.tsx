@@ -1,21 +1,46 @@
-import { useEffect } from "react";
 import { BiSearch, BiX } from "react-icons/bi";
+import { useBodyScrollLock } from "../../../util/helper_hooks";
+import { useEffect, useMemo, useState, type ChangeEvent } from "react";
+import userService from "../../../service/UserService";
+import type { UserDTO } from "../../../dtos/models_dtos/UserDTO";
+import { toast } from "react-toastify";
 
 interface SearchBarProps {
   open: boolean;
-  onClose: () => void; // NEW
+  onClose: () => void; 
 }
 
 export function SearchBar({ open, onClose }: SearchBarProps) {
 
+  const [query, setQuery] = useState<string>('');
+  const [users, setUsers] = useState<UserDTO[]>([]);
 
-  useEffect(() => {
-    if (open) document.body.style.overflow = "hidden";
-    else document.body.style.overflow = "";
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [open]);
+  // const debouncedSearch = useMemo(() => {
+  //   return debounce((value: string) => {
+  //     userService.searchUsers(value)
+  //     .then(res => {
+  //       setUsers(res.content)
+  //     })
+  //     .catch(err => {
+  //       toast.error(err.resopnse.data);
+  //     })
+  //   }, 500)
+  // }, []);
+
+  // const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  //   const value = e.target.value;
+  //   setQuery(value);
+  //   debouncedSearch(value)
+  // }
+
+  // useEffect(() => {
+  //   return () => {
+  //     debouncedSearch.cancel();
+  //   };
+  // }, [debouncedSearch])
+
+
+  useBodyScrollLock(open);
 
   return (
     <>
@@ -24,7 +49,7 @@ export function SearchBar({ open, onClose }: SearchBarProps) {
         onClick={onClose}
         className={`
           fixed inset-0 z-30
-          bg-black/40 backdrop-blur-sm
+          bg-black/80 
           transition-opacity duration-200
           ${open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}
         `}
@@ -56,6 +81,8 @@ export function SearchBar({ open, onClose }: SearchBarProps) {
             />
             <input
               type="text"
+              value={query}
+              // onChange={handleChange}
               placeholder="Search users..."
               className="block w-full rounded-lg bg-slate-800 hover:bg-slate-900 border border-white py-4 pl-11 pr-3 
               placeholder:text-slate-500 focus:outline-none"
