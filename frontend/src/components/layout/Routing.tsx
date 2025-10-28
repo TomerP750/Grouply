@@ -7,7 +7,7 @@ import { RecruiterSignUp } from "../pages/authentication/recruiter-auth/recruite
 import { SignUpWizard } from "../pages/authentication/signup-wizard/SignUpWizard";
 import { Login } from "../pages/authentication/user_auth/Login";
 import { Dashboard } from "../pages/dashboard/dashboard";
-import { Overview } from "../pages/dashboard/statistics";
+import { Overview } from "../pages/dashboard/dashboard_index";
 import { ProjectMembersTable } from "../pages/dashboard/tables/project_members_table";
 import { ProjectsTable } from "../pages/dashboard/tables/projects-tables";
 import { NotFound } from "../pages/other-pages/NotFound";

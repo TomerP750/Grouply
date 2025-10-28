@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import type { TechnologyDTO } from "../../../../../dtos/models_dtos/TechnologyDTO";
 import technologyService from "../../../../../service/technology_service";
 import { DataTable } from "./data_table";
+import { BiEdit, BiTrash } from "react-icons/bi";
 
 
 const ch = createColumnHelper<TechnologyDTO>();
@@ -18,6 +19,10 @@ const techColumns: ColumnDef<TechnologyDTO, any>[] = [
     header: "Slug",
     cell: (i) => <span className="block max-w-[260px] truncate">{i.getValue()}</span>,
   }),
+  ch.accessor("color", {
+    header: "Color",
+    cell: (i) => <span className="block max-w-[260px] truncate">{i.getValue()}</span>,
+  }),
   ch.display({
     id: "actions",
     header: "Actions",
@@ -28,9 +33,10 @@ const techColumns: ColumnDef<TechnologyDTO, any>[] = [
             e.stopPropagation();
             // handleEdit(row.original.id);
           }}
-          className="cursor-pointer rounded text-teal-400 hover:text-teal-300 px-2 py-1"
+          className="cursor-pointer inline-flex gap-1 hover:text-gray-300 items-center rounded px-2 py-1"
         >
-          Edit
+          <BiEdit size={18}/>
+          <span>Edit</span>
         </button>
         <button
           type="button"
@@ -38,9 +44,10 @@ const techColumns: ColumnDef<TechnologyDTO, any>[] = [
             e.stopPropagation();
             // handleDelete(row.original.id);
           }}
-          className="cursor-pointer rounded px-2 py-1 text-red-400 hover:text-red-500"
+          className="cursor-pointer inline-flex gap-1 rounded px-2 py-1 text-red-400 hover:text-red-500"
         >
-          Delete
+          <BiTrash size={18}/>
+          <span>Delete</span>
         </button>
       </div>
     ),

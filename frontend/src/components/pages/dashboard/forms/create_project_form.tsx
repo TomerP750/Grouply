@@ -8,6 +8,7 @@ import technologyService from "../../../../service/technology_service";
 import { toast } from "react-toastify";
 import { TechSelectChips } from "./tech_select_chip";
 import projectService from "../../../../service/ProjectService";
+import { toNormal } from "../../../../util/util_functions";
 
 
 const inputBase =
@@ -100,7 +101,7 @@ export function CreateProjectForm({ onClose }: CreateProjectFormProps) {
               <option value="">Select Status</option>
               {Object.values(ProjectStatus).map((s) => (
                 <option key={s} value={s} className="bg-slate-800">
-                  {s}
+                  {toNormal(s)}
                 </option>
               ))}
             </select>

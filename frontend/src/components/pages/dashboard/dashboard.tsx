@@ -3,7 +3,6 @@ import { useUserSelector } from "../../../redux/hooks"
 import userService from "../../../service/UserService";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { Navbar } from "../../layout/navbar/Navbar";
 import { Panel } from "./panel";
 import { DashboardNavbar } from "./dashboard-navbar";
 
@@ -15,7 +14,7 @@ export function Dashboard() {
 
     useEffect(() => {
         if (user) {
-            userService.getOneUser(user.id)
+            userService.getOneUser(user.sub)
                 .then(res => {
                     if (user.id !== res.id) {
                         navigate("/");

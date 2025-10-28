@@ -36,7 +36,7 @@ export function TechnologySelect() {
         <Accordion title="Technologies">
             
 
-            <label className="role-select py-2 flex flex-col items-center h-40 overflow-y-auto gap-3 text-sm">
+            <label className="role-select py-2 flex flex-col items-center h-62 overflow-y-auto gap-3 text-sm">
                 {technologes?.map(t => {
                     return <div
                         onClick={() => toggle(t)}
