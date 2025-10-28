@@ -1,10 +1,9 @@
+import type { IconType } from "react-icons";
+import { BiEnvelope, BiFolderMinus, BiFolderPlus, BiPencil, BiQuestionMark, BiRocket, BiTrash, BiUserCheck, BiUserPlus } from "react-icons/bi";
 import { NavLink, useNavigate } from "react-router-dom";
+import { ActivityType } from "../../../dtos/enums/activity_type";
 import type { ActivityDTO } from "../../../dtos/models_dtos/activity_dto";
 import { timeAgo } from "../../../util/util_functions";
-import { ActivityType } from "../../../dtos/enums/activity_type";
-import type { IconType } from "react-icons";
-import { BiUserCheck, BiUserPlus, BiRocket, BiCircle, BiSend, BiEnvelope } from "react-icons/bi";
-import { useScrollToTop } from "../../../util/helper_hooks";
 
 interface ActivityRowProps {
     activity: ActivityDTO
@@ -17,9 +16,6 @@ export function ActivityRow({ activity }: ActivityRowProps) {
     const { id, message, createdAt, navigateLink, activityType } = activity;
 
     const Icon = getIconByType(activityType);
-
-    console.log(activity);
-    
 
     
     return (
@@ -38,16 +34,24 @@ export function ActivityRow({ activity }: ActivityRowProps) {
 }
 
 const getIconByType = (type: ActivityType): IconType => {
-    switch (type) {
-        case ActivityType.CONNECTED:
-            return BiUserCheck;
-        case ActivityType.SENT_CONNECTION_REQUEST:
-            return BiUserPlus;
-        case ActivityType.SENT_JOIN_REQUEST:
-            return BiEnvelope;
-        case ActivityType.JOINED_PROJECT:
-            return BiRocket;
-        default:
-            return BiCircle;
-    }
+  switch (type) {
+    case ActivityType.CONNECTED:
+      return BiUserCheck; 
+    case ActivityType.SENT_CONNECTION_REQUEST:
+      return BiUserPlus; 
+    case ActivityType.SENT_JOIN_REQUEST:
+      return BiEnvelope;
+    case ActivityType.JOINED_PROJECT:
+      return BiRocket; 
+    case ActivityType.CREATED_PROJECT:
+      return BiFolderPlus; 
+    case ActivityType.CREATED_POST:
+      return BiPencil; 
+    case ActivityType.DELETE_POST:
+      return BiTrash; 
+    case ActivityType.DELETED_PROJECT:
+      return BiFolderMinus; 
+    default:
+      return BiQuestionMark; 
+  }
 };

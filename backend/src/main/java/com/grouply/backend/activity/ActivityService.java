@@ -17,7 +17,7 @@ public class ActivityService {
     private final ActivityRepository activityRepository;
 
     public List<ActivityDTO> getAllActivities(Long userid) {
-        return activityRepository.findByUserId(userid).stream().map(this::toActivityDto).toList();
+        return activityRepository.findAllByUserIdOrderByCreatedAtDesc(userid).stream().map(this::toActivityDto).toList();
     }
 
 

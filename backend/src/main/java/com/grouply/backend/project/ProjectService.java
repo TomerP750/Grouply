@@ -1,5 +1,7 @@
 package com.grouply.backend.project;
 
+import com.grouply.backend.activity.ActivityService;
+import com.grouply.backend.activity.ActivityType;
 import com.grouply.backend.exceptions.InvalidInputException;
 import com.grouply.backend.exceptions.UnauthorizedException;
 import com.grouply.backend.finished_project.FinishedProject;
@@ -43,13 +45,12 @@ public class ProjectService implements IProjectService {
     private final PostRepository postRepository;
     private final TechnologyRepository technologyRepository;
     private final StatisticsRepository statisticsRepository;
-
-
+    private final ActivityService activityService;
 
 
     @Override
     @Transactional
-    public void createProject(Long userId , CreateProjectDTO dto) throws InvalidInputException {
+    public void createProject(Long userId, CreateProjectDTO dto) throws InvalidInputException {
 
         //TODO add validations
         if (dto.getName().isEmpty()) {
@@ -78,11 +79,16 @@ public class ProjectService implements IProjectService {
         project.addMember(owner);
         projectRepository.save(project); // because i put cascade so it automatically saves the project member in the database
 
+        activityService.createActivity("You created project",
+                "/dashboard/" + userId + "/project-members/" + project.getId(),
+                ActivityType.CREATED_PROJECT,
+                user);
+
     }
 
     @Override
     @Transactional
-    public void updateProject(Long userId , UpdateProjectDTO dto) throws UnauthorizedException, InvalidInputException {
+    public void updateProject(Long userId, UpdateProjectDTO dto) throws UnauthorizedException, InvalidInputException {
 
         if (!isOwner(userId, dto.getProjectId())) {
             throw new UnauthorizedException("You are not allowed to update the project");
@@ -126,7 +132,6 @@ public class ProjectService implements IProjectService {
         if (post != null) {
             postRepository.deleteById(post.getId());
         }
-        projectRepository.deleteById(projectId);
 
         Project project = fetchProject(projectId);
 
@@ -135,7 +140,11 @@ public class ProjectService implements IProjectService {
             stats.setCompletedProjects(stats.getCompletedProjects() + 1);
         });
 
+        projectRepository.deleteById(projectId);
+
         updateActiveProjectsStats(userId, '-');
+
+        activityService.createActivity("You deleted project", null, ActivityType.DELETE_POST, fetchUser(userId));
 
     }
 
@@ -163,9 +172,6 @@ public class ProjectService implements IProjectService {
     }
 
 
-
-
-
     //  ------------------------- HELPER METHODS --------------------------
 
     private boolean isOwner(Long userId, Long projectId) {
@@ -179,11 +185,11 @@ public class ProjectService implements IProjectService {
     }
 
     private Project fetchProject(Long projectId) {
-        return projectRepository.findById(projectId).orElseThrow(()->new NoSuchElementException("Project not found"));
+        return projectRepository.findById(projectId).orElseThrow(() -> new NoSuchElementException("Project not found"));
     }
 
     private User fetchUser(Long userId) {
-        return userRepository.findById(userId).orElseThrow(()->new NoSuchElementException("User not found"));
+        return userRepository.findById(userId).orElseThrow(() -> new NoSuchElementException("User not found"));
     }
 
     private Statistics fetchStats(Long userId) {
@@ -217,8 +223,8 @@ public class ProjectService implements IProjectService {
 
     private boolean isAllowedTransition(ProjectStatus currentStatus, ProjectStatus newStatus) {
         if (currentStatus == newStatus) return true;
-        return (currentStatus == ProjectStatus.PREPARATION  && newStatus == ProjectStatus.IN_PROGRESS) ||
-                (currentStatus == ProjectStatus.IN_PROGRESS  && newStatus == ProjectStatus.COMPLETED);
+        return (currentStatus == ProjectStatus.PREPARATION && newStatus == ProjectStatus.IN_PROGRESS) ||
+                (currentStatus == ProjectStatus.IN_PROGRESS && newStatus == ProjectStatus.COMPLETED);
     }
 
     private void markAsFinished(User user, Project project) throws UnauthorizedException {

@@ -1,5 +1,7 @@
 package com.grouply.backend.post;
 
+import com.grouply.backend.activity.ActivityService;
+import com.grouply.backend.activity.ActivityType;
 import com.grouply.backend.exceptions.ExistsException;
 import com.grouply.backend.exceptions.InvalidInputException;
 import com.grouply.backend.exceptions.UnauthorizedException;
@@ -39,6 +41,7 @@ public class PostService implements IPostService {
     private final ProjectMemberRepository projectMemberRepository;
     private final ProjectRepository projectRepository;
     private final ProjectPostPositionRepository projectPostPositionRepository;
+    private final ActivityService activityService;
 
 
     public Page<PostDTO> searchProjects(PostFilters filters, Pageable pageable) {
@@ -76,6 +79,11 @@ public class PostService implements IPostService {
             projectPostPositionRepository.save(postPosition);
         }
 
+        activityService.createActivity("You created a post",
+                "post/"+newPost.getId(),
+                ActivityType.CREATED_POST,
+                fetchUser(userId));
+
         return EntityToDtoMapper.toProjectPostDto(newPost);
     }
 
@@ -106,6 +114,11 @@ public class PostService implements IPostService {
         }
 
         postRepository.deleteById(post.getId());
+
+        activityService.createActivity("You deleted post: "+ "\"" + post.getTitle() + "\"",
+                null,
+                ActivityType.DELETE_POST,
+                user);
     }
 
     @Override
