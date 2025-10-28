@@ -105,17 +105,13 @@ public class JoinRequestService {
                 activityRepository.delete(oldest);
             }
         }
-
-        Activity activity = Activity.builder()
-                .message("You sent join request to " + " " + post.getProject().getName())
-                .user(sender)
-                .build();
-
-        activityRepository.save(activity);
-
-
-
-
+        //TODO remove activity if cancel the join request
+//        Activity activity = Activity.builder()
+//                .message("You sent join request to " + " " + post.getProject().getName() + " to position: " + position.getPosition())
+//                .user(sender)
+//                .build();
+//
+//        activityRepository.save(activity);
 
         return true;
     }

@@ -1,5 +1,6 @@
 package com.grouply.backend.connection;
 
+import com.grouply.backend.activity.ActivityRepository;
 import com.grouply.backend.exceptions.UnauthorizedException;
 import com.grouply.backend.statistics.Statistics;
 import com.grouply.backend.statistics.StatisticsRepository;

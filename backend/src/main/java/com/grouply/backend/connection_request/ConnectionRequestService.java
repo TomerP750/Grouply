@@ -1,5 +1,6 @@
 package com.grouply.backend.connection_request;
 
+import com.grouply.backend.activity.ActivityService;
 import com.grouply.backend.connection.Connection;
 import com.grouply.backend.connection.ConnectionRepository;
 import com.grouply.backend.connection_request.dto.ConnectionRequestDTO;
@@ -29,6 +30,7 @@ public class ConnectionRequestService implements IConnectionRequestService{
     private final ConnectionRepository connectionRepository;
     private final UserRepository userRepository;
     private final StatisticsRepository statisticsRepository;
+    private final ActivityService activityService;
 //    private final NotificationService notificationService;
 
 
@@ -67,6 +69,10 @@ public class ConnectionRequestService implements IConnectionRequestService{
                 .status(ConnectionRequestStatus.PENDING)
                 .build();
         connectionRequestRepository.save(newRequest);
+
+        //TODO remove activity if cancel the join request
+
+        activityService.createActivity("You sent connection request to " + " " + recipient.getUsername(), sender);
 
 
 //        notificationService.sendUserNotification(
@@ -153,6 +159,21 @@ public class ConnectionRequestService implements IConnectionRequestService{
         Statistics recipientStats = statisticsRepository.findByUserId(recipientId).orElseThrow(() -> new NoSuchElementException("Recipient id not found"));
         recipientStats.setConnections(recipientStats.getConnections() + 1);
         statisticsRepository.save(recipientStats);
+
+
+         activityService
+                 .createActivity("You connected with"
+                        + " "
+                        + connectionRecipient.getConnectedUser().getUsername(),
+                        connectionSender.getUser());
+
+
+        activityService
+                .createActivity("You connected with"
+                                + " "
+                                + connectionSender.getConnectedUser().getUsername(), connectionRecipient.getUser());
+
+
 
 
 

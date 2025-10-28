@@ -8,6 +8,9 @@ import { DashboardStatCard } from "./tables/dashborard_stat_card";
 import { FiFolder, FiCheckCircle, FiLink, FiUsers } from "react-icons/fi";
 import { ActiveProjectsChart } from "./tables/charts/active_projects_chart";
 import { ConnectionsChart } from "./tables/charts/connections_chart";
+import type { ActivityDTO } from "../../../dtos/models_dtos/activity_dto";
+import activityService from "../../../service/activity_service";
+import { timeAgo } from "../../../util/util_functions";
 
 
 
@@ -16,10 +19,19 @@ export function Overview() {
   const user = useUser();
   const [stats, setStats] = useState<StatisticsDTO>();
 
+  const [activites, setActivities] = useState<ActivityDTO[]>([]);
+
   useEffect(() => {
     statisticsService.getStats()
       .then(res => {
         setStats(res);
+      })
+      .catch(err => {
+        toast.error(err.response.data);
+      })
+    activityService.allActivities()
+      .then(res => {
+        setActivities(res)
       })
       .catch(err => {
         toast.error(err.response.data);
@@ -84,15 +96,20 @@ export function Overview() {
 
 
       <section className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full  text-white">
-        
+
         <div className="bg-slate-900/80 rounded-xl h-60 p-6 border border-slate-800 shadow-md">
-          <h1 className="text-2xl font-medium mb-2">Recent Activity</h1>
-            <div className="space-y-2 text-gray-300">
-            <p>You Archived Post</p>
-            <p>User Liked your post</p>
-            <p>User Liked your post</p>
-            <p>User Liked your post</p>
-            <p>User Liked your post</p>
+          
+          <h1 className="text-2xl font-medium mb-3">Recent Activity</h1>
+          <div className="space-y-3 text-gray-300">
+            {activites?.map(a => (
+              <div key={a.id} className="flex items-center gap-1 ">
+                <div className="w-3 h-3 rounded-full bg-teal-500 border-2 border-white dark:border-slate-900" />
+                <p className="inline-flex items-center gap-1 text-sm text-slate-800 dark:text-slate-100">
+                  {a.message} <span className="text-slate-500 text-xs">● {timeAgo(a.createdAt)}</span>
+                </p>
+              </div>
+            ))}
+
           </div>
         </div>
 
