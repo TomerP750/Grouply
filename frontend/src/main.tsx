@@ -7,6 +7,7 @@ import { ThemeProvider } from './context/ThemeContext.tsx'
 import './index.css'
 import { store } from './redux/store.ts'
 import { ToastConfig } from './util/ToastConfig.tsx'
+import { ScrollToTop } from './util/scroll_to_top.tsx'
 
 
 axios.interceptors.request.use(function (config) {
@@ -22,6 +23,7 @@ createRoot(document.getElementById('root')!).render(
   <BrowserRouter>
     <Provider store={store}>
       <ThemeProvider>
+        <ScrollToTop/>
         <Layout />
         <ToastConfig/>
       </ThemeProvider>

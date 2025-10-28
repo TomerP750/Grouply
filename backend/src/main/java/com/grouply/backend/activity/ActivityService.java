@@ -21,7 +21,7 @@ public class ActivityService {
     }
 
 
-    public void createActivity(String message, String navigateLink ,User user) {
+    public void createActivity(String message, String navigateLink, ActivityType type ,User user) {
 
         if (activityRepository.countByUserId(user.getId()) > 5) {
             Activity oldest = activityRepository.findTopByUserIdOrderByCreatedAtAsc(user.getId());
@@ -33,6 +33,7 @@ public class ActivityService {
         Activity senderActivity = Activity.builder()
                 .message(message)
                 .navigateLink(navigateLink)
+                .type(type)
                 .user(user)
                 .build();
 
@@ -43,6 +44,8 @@ public class ActivityService {
         return ActivityDTO.builder()
                 .id(entity.getId())
                 .message(entity.getMessage())
+                .activityType(entity.getType())
+                .navigateLink(entity.getNavigateLink())
                 .user(EntityToDtoMapper.toUserDto(entity.getUser()))
                 .createdAt(entity.getCreatedAt())
                 .build();

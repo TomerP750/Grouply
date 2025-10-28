@@ -1,19 +1,16 @@
 package com.grouply.backend.join_request;
 
-import com.grouply.backend.activity.Activity;
-import com.grouply.backend.activity.ActivityRepository;
 import com.grouply.backend.activity.ActivityService;
+import com.grouply.backend.activity.ActivityType;
 import com.grouply.backend.exceptions.ExistsException;
 import com.grouply.backend.exceptions.UnauthorizedException;
 import com.grouply.backend.join_request.dto.JoinRequestDTO;
-//import com.grouply.backend.notification.NotificationService;
-import com.grouply.backend.notification.NotificationType;
+import com.grouply.backend.post.Post;
+import com.grouply.backend.post.PostRepository;
 import com.grouply.backend.project.Project;
 import com.grouply.backend.project.ProjectRepository;
 import com.grouply.backend.project_member.ProjectMemberRepository;
 import com.grouply.backend.project_member.ProjectRole;
-import com.grouply.backend.post.Post;
-import com.grouply.backend.post.PostRepository;
 import com.grouply.backend.project_post_position.ProjectPostPosition;
 import com.grouply.backend.project_post_position.ProjectPostPositionRepository;
 import com.grouply.backend.user.User;
@@ -102,12 +99,15 @@ public class JoinRequestService {
 
 
         //TODO remove activity if cancel the join request
-//        Activity activity = Activity.builder()
-//                .message("You sent join request to " + " " + post.getProject().getName() + " to position: " + position.getPosition())
-//                .user(sender)
-//                .build();
-//
-//        activityRepository.save(activity);
+
+
+        activityService
+                .createActivity("You sent join request to " + " " + post.getProject().getName() + " to position: " + position.getPosition()
+                        ,"/post/"+post.getId()
+                        , ActivityType.SENT_JOIN_REQUEST
+                        ,sender);
+
+
 
         return true;
     }

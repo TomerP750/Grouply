@@ -1,6 +1,7 @@
 package com.grouply.backend.connection_request;
 
 import com.grouply.backend.activity.ActivityService;
+import com.grouply.backend.activity.ActivityType;
 import com.grouply.backend.connection.Connection;
 import com.grouply.backend.connection.ConnectionRepository;
 import com.grouply.backend.connection_request.dto.ConnectionRequestDTO;
@@ -73,6 +74,7 @@ public class ConnectionRequestService implements IConnectionRequestService {
         activityService
                 .createActivity("You sent connection request to " + " " + recipient.getUsername()
                         , "/profile/" + recipientId
+                        , ActivityType.SENT_CONNECTION_REQUEST
                         , sender);
 
 
@@ -167,6 +169,7 @@ public class ConnectionRequestService implements IConnectionRequestService {
                                 + " "
                                 + connectionRecipient.getConnectedUser().getUsername(),
                         "/profile/" + recipientId
+                        , ActivityType.CONNECTED
                         , connectionSender.getUser());
 
 
@@ -175,6 +178,7 @@ public class ConnectionRequestService implements IConnectionRequestService {
                                 + " "
                                 + connectionSender.getConnectedUser().getUsername()
                         , "/profile/" + senderId
+                        , ActivityType.CONNECTED
                         , connectionRecipient.getUser());
 
 

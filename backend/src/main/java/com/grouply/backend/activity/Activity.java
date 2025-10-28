@@ -29,6 +29,10 @@ public class Activity {
 
     private String navigateLink;
 
+    @Enumerated(EnumType.STRING)
+    @Column(length = 50)
+    private ActivityType type;
+
     @ManyToOne
     private User user;
 

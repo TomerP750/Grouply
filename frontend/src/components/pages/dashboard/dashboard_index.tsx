@@ -11,14 +11,15 @@ import { ConnectionsChart } from "./tables/charts/connections_chart";
 import type { ActivityDTO } from "../../../dtos/models_dtos/activity_dto";
 import activityService from "../../../service/activity_service";
 import { timeAgo } from "../../../util/util_functions";
+import { ActivityRow } from "./activity_row";
 
 
 
 export function Overview() {
 
   const user = useUser();
-  const [stats, setStats] = useState<StatisticsDTO>();
 
+  const [stats, setStats] = useState<StatisticsDTO>();
   const [activites, setActivities] = useState<ActivityDTO[]>([]);
 
   useEffect(() => {
@@ -97,18 +98,13 @@ export function Overview() {
 
       <section className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full  text-white">
 
-        <div className="bg-slate-900/80 rounded-xl h-60 p-6 border border-slate-800 shadow-md">
+        <div className="bg-slate-900/80 rounded-xl min-h-60 p-6 border border-slate-800 shadow-md">
           
           <h1 className="text-2xl font-medium mb-3">Recent Activity</h1>
           <div className="space-y-3 text-gray-300">
-            {activites?.map(a => (
-              <div key={a.id} className="flex items-center gap-1 ">
-                <div className="w-3 h-3 rounded-full bg-teal-500 border-2 border-white dark:border-slate-900" />
-                <p className="inline-flex items-center gap-1 text-sm text-slate-800 dark:text-slate-100">
-                  {a.message} <span className="text-slate-500 text-xs">● {timeAgo(a.createdAt)}</span>
-                </p>
-              </div>
-            ))}
+            {activites?.map(a => {
+              return <ActivityRow key={a.id} activity={a}/>
+            })}
 
           </div>
         </div>
