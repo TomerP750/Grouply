@@ -5,8 +5,6 @@ import com.grouply.backend.connection.Connection;
 import com.grouply.backend.connection.ConnectionRepository;
 import com.grouply.backend.connection_request.dto.ConnectionRequestDTO;
 import com.grouply.backend.exceptions.UnauthorizedException;
-//import com.grouply.backend.notification.NotificationService;
-import com.grouply.backend.notification.NotificationType;
 import com.grouply.backend.statistics.Statistics;
 import com.grouply.backend.statistics.StatisticsRepository;
 import com.grouply.backend.user.User;
@@ -24,7 +22,7 @@ import java.util.NoSuchElementException;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class ConnectionRequestService implements IConnectionRequestService{
+public class ConnectionRequestService implements IConnectionRequestService {
 
     private final ConnectionRequestRepository connectionRequestRepository;
     private final ConnectionRepository connectionRepository;
@@ -48,7 +46,7 @@ public class ConnectionRequestService implements IConnectionRequestService{
 
     @Override
     @Transactional
-    public boolean toggleConnectionRequest(Long senderId ,Long recipientId) throws UnauthorizedException {
+    public boolean toggleConnectionRequest(Long senderId, Long recipientId) throws UnauthorizedException {
 
         if (senderId.equals(recipientId)) {
             throw new UnauthorizedException("You cannot send yourself request");
@@ -72,7 +70,10 @@ public class ConnectionRequestService implements IConnectionRequestService{
 
         //TODO remove activity if cancel the join request
 
-        activityService.createActivity("You sent connection request to " + " " + recipient.getUsername(), sender);
+        activityService
+                .createActivity("You sent connection request to " + " " + recipient.getUsername()
+                        , "/profile/" + recipientId
+                        , sender);
 
 
 //        notificationService.sendUserNotification(
@@ -161,24 +162,23 @@ public class ConnectionRequestService implements IConnectionRequestService{
         statisticsRepository.save(recipientStats);
 
 
-         activityService
-                 .createActivity("You connected with"
-                        + " "
-                        + connectionRecipient.getConnectedUser().getUsername(),
-                        connectionSender.getUser());
+        activityService
+                .createActivity("You connected with"
+                                + " "
+                                + connectionRecipient.getConnectedUser().getUsername(),
+                        "/profile/" + recipientId
+                        , connectionSender.getUser());
 
 
         activityService
                 .createActivity("You connected with"
                                 + " "
-                                + connectionSender.getConnectedUser().getUsername(), connectionRecipient.getUser());
-
-
-
+                                + connectionSender.getConnectedUser().getUsername()
+                        , "/profile/" + senderId
+                        , connectionRecipient.getUser());
 
 
     }
-
 
 
 }

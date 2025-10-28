@@ -27,6 +27,8 @@ public class Activity {
     @Column(nullable = false)
     private String message;
 
+    private String navigateLink;
+
     @ManyToOne
     private User user;
 

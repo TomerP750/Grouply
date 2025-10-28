@@ -2,6 +2,7 @@ package com.grouply.backend.join_request;
 
 import com.grouply.backend.activity.Activity;
 import com.grouply.backend.activity.ActivityRepository;
+import com.grouply.backend.activity.ActivityService;
 import com.grouply.backend.exceptions.ExistsException;
 import com.grouply.backend.exceptions.UnauthorizedException;
 import com.grouply.backend.join_request.dto.JoinRequestDTO;
@@ -35,7 +36,7 @@ public class JoinRequestService {
     private final UserRepository userRepository;
     private final ProjectMemberRepository projectMemberRepository;
     private final ProjectPostPositionRepository projectPostPositionRepository;
-    private final ActivityRepository activityRepository;
+    private final ActivityService activityService;
 //    private final NotificationService notificationService;
 
     /**
@@ -99,12 +100,7 @@ public class JoinRequestService {
 
         joinRequestRepository.save(joinRequest);
 
-        if (activityRepository.countByUserId(sender.getId()) > 5) {
-            Activity oldest = activityRepository.findTopByUserIdOrderByCreatedAtAsc(sender.getId());
-            if (oldest != null) {
-                activityRepository.delete(oldest);
-            }
-        }
+
         //TODO remove activity if cancel the join request
 //        Activity activity = Activity.builder()
 //                .message("You sent join request to " + " " + post.getProject().getName() + " to position: " + position.getPosition())

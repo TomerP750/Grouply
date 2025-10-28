@@ -20,9 +20,19 @@ public class ActivityService {
         return activityRepository.findByUserId(userid).stream().map(this::toActivityDto).toList();
     }
 
-    public void createActivity(String message, User user) {
+
+    public void createActivity(String message, String navigateLink ,User user) {
+
+        if (activityRepository.countByUserId(user.getId()) > 5) {
+            Activity oldest = activityRepository.findTopByUserIdOrderByCreatedAtAsc(user.getId());
+            if (oldest != null) {
+                activityRepository.delete(oldest);
+            }
+        }
+
         Activity senderActivity = Activity.builder()
                 .message(message)
+                .navigateLink(navigateLink)
                 .user(user)
                 .build();
 
