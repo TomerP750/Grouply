@@ -41,11 +41,21 @@ export function TechSelectChips({ technologies, value, onChange, label = "Techno
             )}
 
             <div className="flex gap-2">
+
+                <button
+                    type="button"
+                    onClick={add}
+                    disabled={disabled || !selectedId || (max ? value.length >= max : false)}
+                    className="px-3 py-2 rounded-md text-sm bg-teal-600 text-white
+                     hover:bg-teal-700 transition disabled:opacity-50"
+                >
+                    Add
+                </button>
                 <select
                     disabled={disabled}
                     value={selectedId}
                     onChange={(e) => setSelectedId(e.target.value ? Number(e.target.value) : "")}
-                    className={`w-full rounded-lg px-3 py-2 text-sm outline-none transition border
+                    className={`appearance-none w-full rounded-lg px-3 py-2 text-sm outline-none transition border
                      bg-slate-800 text-white border-slate-700
                      focus:ring-2 focus:ring-teal-500/40 focus:border-teal-500
                      ${disabled ? "opacity-60 cursor-not-allowed" : ""}`}
@@ -58,15 +68,7 @@ export function TechSelectChips({ technologies, value, onChange, label = "Techno
                     ))}
                 </select>
 
-                <button
-                    type="button"
-                    onClick={add}
-                    disabled={disabled || !selectedId || (max ? value.length >= max : false)}
-                    className="px-3 py-2 rounded-md text-sm bg-teal-600 text-white
-                     hover:bg-teal-700 transition disabled:opacity-50"
-                >
-                    Add
-                </button>
+                
             </div>
 
             <div className="mt-3 flex flex-wrap gap-2">

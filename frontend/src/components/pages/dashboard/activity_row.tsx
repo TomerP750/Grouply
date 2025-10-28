@@ -22,11 +22,11 @@ export function ActivityRow({ activity }: ActivityRowProps) {
         <div key={id} className="flex items-center gap-1 ">
             <Icon className="text-teal-500" size={22} />
             <p className="inline-flex items-center gap-1 text-sm text-slate-800 dark:text-slate-100">
-                <NavLink
-                    to={navigateLink}
+                <button
+                    onClick={() => navigate(navigateLink)}
                     title={navigateLink}
-                    className="cursor-pointer hover:underline hover:underline-offset-2">{message}
-                </NavLink>
+                    className={`${navigateLink && 'cursor-pointer hover:underline hover:underline-offset-2'}`}>{message}
+                </button>
                 <span className="text-slate-500 text-xs">● {timeAgo(createdAt)}</span>
             </p>
         </div>

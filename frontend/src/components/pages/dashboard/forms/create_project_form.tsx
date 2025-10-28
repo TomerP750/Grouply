@@ -61,7 +61,7 @@ export function CreateProjectForm({ onClose }: CreateProjectFormProps) {
       <div className="rounded-2xl border border-slate-800 bg-slate-900 p-5 shadow-sm">
         <div className="grid grid-cols-1 md:grid-cols-2 justify-items-center gap-5">
           {/* Name */}
-          <div className="w-full flex flex-col gap-1">
+          <section className="w-full flex flex-col gap-1">
             <label className={labelBase} htmlFor="name">
               Name of the project <span className="text-rose-400">*</span>
             </label>
@@ -80,15 +80,14 @@ export function CreateProjectForm({ onClose }: CreateProjectFormProps) {
               })}
             />
             {errors.name && <p className={errorText}>{errors.name.message}</p>}
-          </div>
+          </section>
 
           {/* Status */}
-          <div className="w-full flex flex-col gap-1">
+          <section className="w-full flex flex-col gap-1">
             <label className={labelBase} htmlFor="status">
               Status <span className="text-rose-400">*</span>
             </label>
             <select
-              id="status"
               className={`${inputBase} appearance-none ${
                 errors.status ? "border-rose-500 focus:ring-rose-400" : ""
               }`}
@@ -108,7 +107,8 @@ export function CreateProjectForm({ onClose }: CreateProjectFormProps) {
             {errors.status && (
               <p className={errorText}>{errors.status.message as string}</p>
             )}
-          </div>
+          </section>
+
         </div>
 
 

@@ -88,7 +88,7 @@ export function Overview() {
           <ActiveProjectsChart activeProjectsCount={stats?.activeProjects} />
         </div>
 
-        <div className="bg-slate-900/80 rounded-xl p-6 border border-slate-800 shadow-md">
+        <div className="bg-slate-900/80 rounded-xl p-6 border border-slate-800 shadow-md space-y-5">
           <p className="text-2xl">Connections</p>
           <ConnectionsChart total={stats?.connections} />
         </div>
