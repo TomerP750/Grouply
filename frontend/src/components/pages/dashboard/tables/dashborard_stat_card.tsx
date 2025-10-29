@@ -10,7 +10,7 @@ interface DashboardStatCardProps {
 
 export function DashboardStatCard({ Icon, label, value, color }: DashboardStatCardProps) {
     return (
-        <div className="bg-slate-900/80 space-y-3 aspect-square rounded-xl p-6 shadow-md flex flex-col items-start justify-start border border-slate-800">
+        <div className="bg-gray-200 dark:bg-slate-900/80 space-y-3 aspect-square rounded-xl p-6 shadow-md flex flex-col items-start justify-start border border-slate-800">
             <div className="flex items-center gap-4">
 
                 <p>{<Icon size={40} className={`${color}`} />}</p>

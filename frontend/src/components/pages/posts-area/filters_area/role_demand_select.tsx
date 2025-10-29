@@ -26,7 +26,7 @@ export function RoleDemandSelect() {
                     return <div
                         key={pp}
                         onClick={() => toggle(pp)}
-                        className={`${isSelected(pp) && 'bg-white text-black'} cursor-pointer py-2 border border-white/40 w-4/5 text-center`}>{toNormal(pp)}</div>
+                        className={`${isSelected(pp) && 'bg-black text-white dark:bg-white dark:text-black'} cursor-pointer py-2 border border-black dark:border-white/40 w-4/5 text-center`}>{toNormal(pp)}</div>
                 })}
             </label>
         </Accordion>

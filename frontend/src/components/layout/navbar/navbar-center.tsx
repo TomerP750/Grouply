@@ -9,10 +9,12 @@ import { SearchBar } from "./search_bar";
 const linkClasses = ({ isActive }: { isActive: boolean }) =>
   [
     "relative inline-flex items-center gap-2 px-3 py-1 text-base font-medium transition-all duration-200",
-    "text-slate-600 dark:text-slate-300 hover:text-teal-500",
-    "after:content-[''] after:absolute after:left-0 after:-bottom-3 after:h-[2px] after:w-0 after:bg-teal-500 after:rounded-full after:transition-all after:duration-300 hover:after:w-full",
+    "text-black dark:text-slate-300",
+    "hover:text-black dark:hover:text-teal-400",
+    "after:content-[''] after:absolute after:left-0 after:-bottom-3 after:h-[2px] after:w-0 after:rounded-full after:transition-all after:duration-300",
+    "after:bg-black dark:after:bg-slate-600 hover:after:w-full hover:after:bg-black dark:hover:after:bg-teal-400",
     isActive
-      ? "text-teal-500 after:w-full after:bg-teal-500"
+      ? "text-black dark:text-teal-400 after:w-full after:bg-black dark:after:bg-teal-400"
       : "",
   ].join(" ");
 

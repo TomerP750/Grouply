@@ -61,7 +61,7 @@ export function SearchBar({ open, onClose }: SearchBarProps) {
         className={`
           fixed top-0 left-0 w-full h-50 flex flex-col items-center justify-start p-5  
           z-40
-          bg-gray-800/95 backdrop-blur border-b border-white/10
+          bg-gray-100/90 dark:bg-gray-800/95 backdrop-blur border-b border-white/10
           transition-transform duration-300 ease-out will-change-transform
           ${open ? "translate-y-0" : "-translate-y-full"}
         `}
@@ -77,15 +77,15 @@ export function SearchBar({ open, onClose }: SearchBarProps) {
           <div className="relative w-4/10">
             <BiSearch
               size={22}
-              className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
+              className="absolute left-3 top-1/2 -translate-y-1/2 text-black dark:text-slate-400"
             />
             <input
               type="text"
               value={query}
               // onChange={handleChange}
               placeholder="Search users..."
-              className="block w-full rounded-lg bg-slate-800 hover:bg-slate-900 border border-white py-4 pl-11 pr-3 
-              placeholder:text-slate-500 focus:outline-none"
+              className="block w-full rounded-lg dark:bg-slate-800 dark:hover:bg-slate-900 border border-black dark:border-white py-4 pl-11 pr-3 
+              placeholder:text-black dark:placeholder:text-slate-500 focus:outline-none"
             />
           </div>
 

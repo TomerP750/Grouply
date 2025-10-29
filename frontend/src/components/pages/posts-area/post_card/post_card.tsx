@@ -86,7 +86,7 @@ export function PostCard({ projectPost, onRemove }: PostCardProps) {
                     onDelete={() => handleDeletePost(projectPost.id)}
                 />
 
-                {/* Actions + some users*/}
+                {/* ReadMore + users*/}
                 <div className="flex items-center justify-between w-full px-6 pb-4 mt-auto">
 
                     <div className="flex -space-x-2 items-center cursor-pointer">

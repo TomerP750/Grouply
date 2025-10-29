@@ -106,7 +106,7 @@ export function PostCardDescription({ post, onEdit, onDelete, sentRequest }: Pro
 
     return (
         <div className="flex flex-col flex-grow w-full px-6 py-4 gap-2">
-            <p className="text-sm text-gray-300">{timeAgo(postedAt)}</p>
+            <p className="text-sm font-medium dark:text-gray-300">{timeAgo(postedAt)}</p>
             <div className="flex w-full justify-between items-center">
                 {/* Title + isowner */}
                 <div className="flex flex-col-reverse items-start sm:flex justify-between w-full gap-3 font-bold text-2xl text-gray-900 dark:text-white">

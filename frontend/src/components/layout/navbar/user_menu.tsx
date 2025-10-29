@@ -10,7 +10,7 @@ import { logout, type JwtUser } from '../../../redux/AuthSlice';
 import './user_menu_styles.css';
 
 
-const rowStyle = "flex items-center justify-between hover:bg-gray-300/20 py-1 px-2 cursor-pointer";
+const rowStyle = "flex items-center justify-between hover:bg-gray-300/40 dark:hover:bg-gray-300/10 py-1 px-2 cursor-pointer";
 
 interface UserMenuProps {
     user: JwtUser | null;
@@ -74,12 +74,12 @@ export function UserMenu({ user }: UserMenuProps) {
                 </div>
             </section>
 
-            <div className="flex w-full font-medium dark:text-gray-300 justify-end items-center gap-2 px-2 py-1 cursor-pointer ">
+            <div className="flex w-full font-medium dark:text-gray-300 justify-end items-center gap-2 px-2 py-1 ">
                 <IoColorPaletteOutline size={20} />
                 <button onClick={toggle} className="text-sm cursor-pointer hover:underline">Theme: {theme === "dark" ? "Dark" : "Light"}</button>
             </div>
 
-            <NavLink to={"/about"} className="flex w-full items-center gap-2 px-2 py-1 cursor-pointer hover:bg-slate-700/50">
+            <NavLink to={"/about"} className="flex w-full items-center gap-2 px-2 py-1 cursor-pointer hover:bg-gray-300/40 dark:hover:bg-gray-300/10">
                 <HiOutlineQuestionMarkCircle size={20} />
                 <span className='text-sm'>Help and About</span>
             </NavLink>
@@ -87,7 +87,7 @@ export function UserMenu({ user }: UserMenuProps) {
 
             <button
                 onClick={handleLogout}
-                className='w-full inline-flex gap-2 items-center px-2 py-1 text-rose-500 cursor-pointer hover:bg-slate-700/50'>
+                className='w-full inline-flex gap-2 items-center px-2 py-1 text-rose-500 cursor-pointer hover:bg-slate-700/50 dark:hover:bg-gray-300/10'>
                 <BiLogOut size={20} />
                 <span className='text-sm'>Logout</span>
             </button>

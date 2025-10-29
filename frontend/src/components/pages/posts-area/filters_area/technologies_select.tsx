@@ -41,7 +41,7 @@ export function TechnologySelect() {
                     return <div
                         onClick={() => toggle(t)}
                         className="cursor-pointer py-2 
-                                border border-white/40 w-4/5 text-center">{toNormal(t.name)}</div>
+                                border border-black dark:border-white/40 w-4/5 text-center">{toNormal(t.name)}</div>
                 })}
             </label>
         </Accordion>

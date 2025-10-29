@@ -8,8 +8,9 @@ import profileService from "../../../service/ProfileService";
 import { Navbar } from "../../layout/navbar/Navbar";
 import { ProfileActions } from "./profile_actions";
 import { ProfileBanner } from "./profile_banner";
+import { ProjectGrid } from "./project_grid";
 
-
+const linkStyle = "border px-3 w-1/2 py-2 inline-flex justify-center gap-2 items-center hover:bg-black dark:hover:text-black dark:hover:bg-white hover:text-white transition-colors duration-200"
 
 export function ProfilePage() {
   const params = useParams();
@@ -40,18 +41,17 @@ export function ProfilePage() {
 
           <button className="font-medium mb-3 cursor-pointer">2 Connections</button>
 
-
-          <NavLink to={"/"} className={"hover:bg-white hover:text-black transition-colors duration-200 border px-3 w-1/2 py-2 inline-flex justify-center gap-2 items-center"}>
+          <NavLink to={"/"} className={`${linkStyle}`}>
             <FaLinkedin size={22} />
             <span>LinkedIn</span>
           </NavLink>
 
-          <NavLink to={"/"} className={"border px-3 w-1/2 py-2 inline-flex justify-center gap-2 items-center hover:bg-white hover:text-black transition-colors duration-200"}>
+          <NavLink to={"/"} className={`${linkStyle}`}>
             <FaGithub size={22} />
             <span>GitHub</span>
           </NavLink>
 
-          <NavLink to={"/"} className={"border px-3 w-1/2 py-2 inline-flex justify-center gap-2 items-center hover:bg-white hover:text-black transition-colors duration-200"}>
+          <NavLink to={"/"} className={`${linkStyle}`}>
             <FaLink size={22} />
             <span>Portfolio</span>
           </NavLink>
@@ -59,10 +59,10 @@ export function ProfilePage() {
         </section>
 
         {/* Page container */}
-        <div className="flex-1 xl:mt-0 mx-auto px-4 sm:px-10 min-h-screen">
+        <section className="flex-1 xl:mt-0 mx-auto px-4 sm:px-10 ">
 
           {/* Header  */}
-          <div className="flex w-full justify-between items-center gap-4 sm:gap-6 md:gap-8 pt-6">
+          <div className="flex flex-col lg:flex-row items-start w-full justify-between lg:items-center gap-4 sm:gap-6 md:gap-8 pt-6">
 
             {/* Name/handle */}
             <div>
@@ -77,17 +77,22 @@ export function ProfilePage() {
           </div>
 
           {/* content */}
-          <section className="mt-6 sm:mt-10 md:mt-14">
-            <p className="text-base sm:text-lg">
+          <section className="mt-6 sm:mt-10 md:mt-14 pb-10 space-y-2">
+            <p className="text-lg">About {user.username}</p>
+            <p className="">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis accusantium optio error
               voluptates, cum autem quibusdam ut molestiae sunt minus ratione itaque unde cupiditate
               dolores enim obcaecati veritatis, commodi ex.
             </p>
           </section>
 
+        </section>
 
-        </div>
       </div>
+
+      <ProjectGrid/>
+
+      
     </main>
   );
 }

@@ -5,7 +5,7 @@ const inputStyle = `
   w-4 h-4
   rounded-full
   border border-slate-400
-  checked:border-teal-500 checked:bg-teal-500
+  checked:bg-black dark:checked:bg-teal-500
   transition-colors duration-200
   cursor-pointer
 `;
@@ -18,7 +18,7 @@ interface SortGroupProps {
 export function SortGroup() {
     return (
         <Accordion title="Sort By">
-        <ul className="flex flex-col items-start gap-5">
+        <ul className="flex flex-col items-center gap-5">
           
 
           <label className="inline-flex items-center gap-2 cursor-pointer">

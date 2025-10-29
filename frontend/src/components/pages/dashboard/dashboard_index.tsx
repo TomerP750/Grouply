@@ -43,10 +43,10 @@ export function Overview() {
     <main className="p-8">
       {/* Header */}
       <div className="space-y-2 mb-10 py-3">
-        <h1 className="text-4xl font-semibold text-white">
-          Welcome back, <span className="text-teal-400">{user.username}</span>
+        <h1 className="text-4xl font-semibold dark:text-white">
+          Welcome back, <span className="dark:text-teal-400">{user.username}</span>
         </h1>
-        <p className="text-slate-400">Here’s an overview of your workspace today.</p>
+        <p className="text-slate-700 dark:text-slate-400">Here’s an overview of your workspace today.</p>
       </div>
 
       {/* Stats Row */}
@@ -96,15 +96,15 @@ export function Overview() {
       </section>}
 
 
-      <section className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full  text-white">
+      <section className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full">
 
-        <div className="bg-slate-900/80 rounded-xl min-h-60 p-6 border border-slate-800 shadow-md">
+        <div className="bg-gray-200 dark:bg-slate-900/80 rounded-xl min-h-60 p-6 border border-slate-800 shadow-md">
           
-          <h1 className="text-2xl font-medium mb-3">Recent Activity</h1>
-          <div className="space-y-3 text-gray-300">
-            {activites?.map(a => {
+          <h1 className="text-2xl text-black dark:text-white font-medium mb-3">Recent Activity</h1>
+          <div className="space-y-3 dark:text-gray-300">
+            {activites.length > 0 ? activites?.map(a => {
               return <ActivityRow key={a.id} activity={a}/>
-            })}
+            }) : <span>No Recent Activities</span>}
 
           </div>
         </div>
