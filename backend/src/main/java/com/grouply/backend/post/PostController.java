@@ -12,9 +12,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -22,37 +26,41 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PostController {
 
-    private final PostService projectPostService;
+    private final PostService postService;
 
     @GetMapping("/all")
     public Page<PostDTO> allPosts(@RequestParam(value = "page", defaultValue = "0") int page,
                                   @RequestParam(value = "size", defaultValue = "10") int size,
                                   @RequestParam(required = false) List<ProjectPosition> roles) {
         Pageable pageable = PageRequest.of(page, size);
-        return projectPostService.getAllPosts(pageable, roles);
+        return postService.getAllPosts(pageable, roles);
     }
 
     @GetMapping("/{postId}")
     public PostDTO onePost(@PathVariable Long postId) {
-        return projectPostService.getOnePost(postId);
+        return postService.getOnePost(postId);
     }
 
     @PostMapping("/create")
     public PostDTO createPost(@AuthenticationPrincipal CustomUserDetails userDetails, @RequestBody CreateProjectPostDTO dto) throws ExistsException, UnauthorizedException {
         Long userId = userDetails.getId();
-        return projectPostService.createPost(userId ,dto);
+        return postService.createPost(userId ,dto);
     }
 
     @PutMapping("/update")
     public void updatePost(@AuthenticationPrincipal CustomUserDetails userDetails, @RequestBody UpdateProjectPostDTO dto) throws InvalidInputException, UnauthorizedException {
         Long userId = userDetails.getId();
-        projectPostService.updatePost(userId, dto);
+        postService.updatePost(userId, dto);
     }
 
     @DeleteMapping("/delete/{postId}")
     public void deletePostId(@AuthenticationPrincipal CustomUserDetails userDetails, @PathVariable Long postId) throws UnauthorizedException {
         Long userId = userDetails.getId();
-        projectPostService.deletePost(userId, postId);
+        postService.deletePost(userId, postId);
     }
+
+    
+
+
 
 }

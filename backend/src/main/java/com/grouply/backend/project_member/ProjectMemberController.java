@@ -1,11 +1,15 @@
 package com.grouply.backend.project_member;
 
+import com.grouply.backend.exceptions.UnauthorizedException;
+import com.grouply.backend.project_member.dto.ChangeMemberRoleDTO;
 import com.grouply.backend.project_member.dto.ProjectMemberDTO;
+import com.grouply.backend.security.CustomUserDetails;
 import com.grouply.backend.util.EntityToDtoMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -42,6 +46,17 @@ public class ProjectMemberController {
         return projectMemberService.isOwner(userId, projectId);
     }
 
+    @PatchMapping("/changeRole/{memberId}")
+    public void changeMemberRole(@AuthenticationPrincipal CustomUserDetails userDetails, @RequestBody ChangeMemberRoleDTO dto) throws UnauthorizedException {
+        Long userId = userDetails.getId();
+        projectMemberService.changeMemberRole(userId, dto);
+    }
+
+    @DeleteMapping("/remove/{memberId}/{projectId}")
+    public void removeMemberFromProject(@AuthenticationPrincipal CustomUserDetails userDetails, @PathVariable Long memberId ,@PathVariable Long projectId) throws UnauthorizedException {
+        Long userId = userDetails.getId();
+        projectMemberService.removeMemberFromProject(userId, memberId, projectId);
+    }
 
 
 

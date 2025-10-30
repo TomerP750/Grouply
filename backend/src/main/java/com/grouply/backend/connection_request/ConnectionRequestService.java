@@ -167,7 +167,7 @@ public class ConnectionRequestService implements IConnectionRequestService {
         activityService
                 .createActivity("You connected with"
                                 + " "
-                                + connectionRecipient.getConnectedUser().getUsername(),
+                                + connectionSender.getConnectedUser().getUsername(),
                         "/profile/" + recipientId
                         , ActivityType.CONNECTED
                         , connectionSender.getUser());
@@ -176,7 +176,7 @@ public class ConnectionRequestService implements IConnectionRequestService {
         activityService
                 .createActivity("You connected with"
                                 + " "
-                                + connectionSender.getConnectedUser().getUsername()
+                                + connectionRecipient.getConnectedUser().getUsername()
                         , "/profile/" + senderId
                         , ActivityType.CONNECTED
                         , connectionRecipient.getUser());

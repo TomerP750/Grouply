@@ -5,16 +5,14 @@ import com.grouply.backend.activity.ActivityType;
 import com.grouply.backend.exceptions.ExistsException;
 import com.grouply.backend.exceptions.InvalidInputException;
 import com.grouply.backend.exceptions.UnauthorizedException;
-import com.grouply.backend.post.dto.PostFilters;
+import com.grouply.backend.post.dto.CreateProjectPostDTO;
+import com.grouply.backend.post.dto.PostDTO;
+import com.grouply.backend.post.dto.UpdateProjectPostDTO;
 import com.grouply.backend.project.Project;
 import com.grouply.backend.project.ProjectRepository;
 import com.grouply.backend.project_member.ProjectMemberRepository;
 import com.grouply.backend.project_member.ProjectPosition;
 import com.grouply.backend.project_member.ProjectRole;
-import com.grouply.backend.post.dto.CreateProjectPostDTO;
-//import com.grouply.backend.project_post.dto.DeleteProjectPostDTO;
-import com.grouply.backend.post.dto.PostDTO;
-import com.grouply.backend.post.dto.UpdateProjectPostDTO;
 import com.grouply.backend.project_post_position.ProjectPostPosition;
 import com.grouply.backend.project_post_position.ProjectPostPositionRepository;
 import com.grouply.backend.user.User;
@@ -28,6 +26,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -44,9 +43,9 @@ public class PostService implements IPostService {
     private final ActivityService activityService;
 
 
-    public Page<PostDTO> searchProjects(PostFilters filters, Pageable pageable) {
-        return null;
-    }
+
+
+
 
     @Override
     public PostDTO createPost(Long userId , CreateProjectPostDTO dto) throws ExistsException, UnauthorizedException {

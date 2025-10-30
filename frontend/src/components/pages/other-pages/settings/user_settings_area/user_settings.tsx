@@ -18,6 +18,7 @@ export function UserSettings() {
   const [usernameChecked, setUsernameChecked] = useState<boolean>(false);
   const [isTaken, setIsTaken] = useState<boolean>(false);
   const usernameQuery = watch("username", user.username ?? "");
+  const [avatarInputOpen, setAvatarInputOpen] = useState<boolean>(false);
 
 
   useEffect(() => {
@@ -25,6 +26,7 @@ export function UserSettings() {
     setValue("lastName", user.lastName)
     setValue("username", user.username)
     setValue("email", user.email)
+    user.avatar && setValue("avatarUrl", user.avatar)
   }, []);
 
 
@@ -78,10 +80,21 @@ export function UserSettings() {
           <div className="flex items-start gap-8">
 
             <div className="w-30 aspect-square rounded-lg bg-white" />
-            {/* <img src={defaultImage} className="w-30 aspect-square rounded-lg bg-white" /> */}
-            <button className="text-white cursor-pointer bg-gray-700 hover:bg-gray-600 px-3 py-2 rounded-lg">
-              Change Avatar
-            </button>
+            
+            <div className="flex flex-col gap-5 items-start">
+              {/* <img src={defaultImage} className="w-30 aspect-square rounded-lg bg-white" /> */}
+              <button type="button" onClick={() => setAvatarInputOpen(true)} className="text-white cursor-pointer bg-gray-700 hover:bg-gray-600 px-3 py-2 rounded-lg">
+                Change Avatar
+              </button>
+
+              {avatarInputOpen && <div className="flex flex-col gap-1.5">
+                <input
+                  {...register("avatarUrl")}
+                  type="url"
+                  className={`${inputStyle} `}
+                />
+              </div>}
+            </div>
 
           </div>
 

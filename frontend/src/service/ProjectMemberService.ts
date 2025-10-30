@@ -1,5 +1,6 @@
 import axios from "axios";
 import { BASE_API } from "../util/base_api";
+import type { ProjectRole } from "../dtos/enums/ProjectRole";
 
 
 class ProjectMemberService {
@@ -18,6 +19,14 @@ class ProjectMemberService {
 
     async isOwner(userId: number, projectId: number) {
         return (await axios.get(`${BASE_API}/member/isOwner/${userId}/${projectId}`)).data
+    }
+
+    async removeMemberFromProject(memberId: number, projectId: number) {
+        return (await axios.delete(`${BASE_API}/member/remove/${memberId}/${projectId}`))
+    }
+
+    async changeMemberRole(data: undefined) {
+        return (await axios.get(`${BASE_API}/member/changeRole`))
     }
 
 }

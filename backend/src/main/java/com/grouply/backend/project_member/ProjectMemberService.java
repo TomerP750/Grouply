@@ -3,6 +3,7 @@ package com.grouply.backend.project_member;
 import com.grouply.backend.exceptions.UnauthorizedException;
 import com.grouply.backend.project.Project;
 import com.grouply.backend.project.ProjectRepository;
+import com.grouply.backend.project_member.dto.ChangeMemberRoleDTO;
 import com.grouply.backend.project_member.dto.ProjectMemberDTO;
 import com.grouply.backend.user.User;
 import com.grouply.backend.user.UserRepository;
@@ -44,6 +45,30 @@ public class ProjectMemberService implements IProjectMemberService{
                 .findByProjectId(projectId, pageable)
                 .map(EntityToDtoMapper::toProjectMemberDto);
     }
+
+
+
+    @Override
+    public void changeMemberRole(Long userId, ChangeMemberRoleDTO dto) throws UnauthorizedException {
+
+        log.info("Entering change member role");
+        if (!isOwner(userId, dto.getProjectId())) {
+            throw new UnauthorizedException("You are not authorized to change member's user");
+        }
+
+        ProjectMember member = fetchProjectMember(dto.getMemberId(), dto.getProjectId());
+        member.setProjectRole(dto.getRole());
+        projectMemberRepository.save(member);
+        log.info("Changed members role to: " + dto.getRole());
+    }
+
+    /**
+     * Removes member from the project
+     * @param ownerId
+     * @param memberToRemoveId
+     * @param projectId
+     * @throws UnauthorizedException
+     */
 
 
     @Override

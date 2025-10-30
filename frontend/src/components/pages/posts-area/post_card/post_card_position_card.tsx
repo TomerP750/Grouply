@@ -22,6 +22,7 @@ export function PostCardPositionCard({ postPosition, postId, user }: PostCardPos
     const [applied, setApplied] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
 
+
     const handleRequestToJoin = (projectPostPositionId: number) => {
 
         if (user) {
@@ -63,7 +64,7 @@ export function PostCardPositionCard({ postPosition, postId, user }: PostCardPos
             <button
                 disabled={loading}
                 onClick={() => handleRequestToJoin(postPosition.id)}
-                className={`text-sm cursor-pointer transition-colors px-2 py-1 rounded-lg
+                className={`disabled:cursor-not-allowed disabled:opacity-50 text-sm cursor-pointer transition-colors px-2 py-1 rounded-lg
                                 ${applied ? 'bg-green-600 hover:bg-green-500' : 'bg-blue-600 hover:bg-blue-500'}
                                 `}>
                 {applied ? <BiCheck size={20} /> : 'Request To Join'}

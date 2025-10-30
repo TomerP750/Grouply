@@ -5,4 +5,5 @@ export interface UpdateUserDTO {
     lastName: string
     username: string
     email: string
+    avatarUrl: string
 }
