@@ -12,6 +12,10 @@ class TechnologyService {
         return (await axios.get(`${BASE_API}/tech/all/page?page=${page}&size=${size}`)).data
     }
 
+    async deleteTechnology(id: number) {
+        return (await axios.delete(`${BASE_API}/tech/delete/${id}`))
+    }
+
 }
 
 const technologyService = new TechnologyService();

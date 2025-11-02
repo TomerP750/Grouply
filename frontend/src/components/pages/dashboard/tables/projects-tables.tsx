@@ -58,7 +58,6 @@ export function ProjectsTable() {
 
   const handleEditOpen = (id: number) => {
     setEditedProjectId(id);
-
   }
 
 
@@ -88,15 +87,31 @@ export function ProjectsTable() {
 
       ch.accessor("name", {
         header: "Name",
-        cell: (i) => (
-          <span
-            className="block max-w-[260px] truncate"
-            title={String(i.getValue())}
-          >
-            {i.getValue()}
-          </span>
-        ),
+        cell: (i) => {
+          const projectId = i.row.original.id;
+          const isEditing = projectId === editedProjectId;
+
+          if (isEditing) {
+            return (
+              <input
+                type="text"
+                className="block w-[260px] border rounded px-2 py-1"
+                defaultValue={String(i.getValue())}
+              />
+            );
+          }
+
+          return (
+            <span
+              className="block max-w-[260px] truncate"
+              title={String(i.getValue())}
+            >
+              {i.getValue()}
+            </span>
+          );
+        },
       }),
+
 
       ch.accessor("status", {
         header: "Status",
@@ -108,7 +123,7 @@ export function ProjectsTable() {
           return isEditing ? (
             <select
               value={status}
-              onChange={(e) =>setSelctedStatus(e.target.value as ProjectStatus)}
+              onChange={(e) => setSelctedStatus(e.target.value as ProjectStatus)}
               onBlur={() => setEditedProjectId(0)}
               className="border rounded px-2 py-1 bg-slate-800 text-white"
             >
@@ -155,7 +170,7 @@ export function ProjectsTable() {
           <section className="flex items-center gap-2 font-medium">
 
             {editedProjectId === row.original.id ? (
-             
+
               <div className="flex items-center gap-3">
                 <button
                   onClick={() => setEditedProjectId(row.original.id)}
@@ -166,7 +181,7 @@ export function ProjectsTable() {
                 </button>
                 <button
                   type="button"
-                  onClick={() => setEditedProjectId(0)} // cancel editing
+                  onClick={() => setEditedProjectId(0)}
                   className="inline-flex items-center gap-1 cursor-pointer rounded px-2 py-1 text-gray-400 hover:underline"
                 >
                   <BiX size={20} />
@@ -174,7 +189,7 @@ export function ProjectsTable() {
                 </button>
               </div>
             ) : (
-              // ✅ Show Edit / Delete otherwise
+
               <div className="flex items-center gap-3">
                 <button
                   onClick={() => handleEditOpen(row.original.id)}
@@ -197,8 +212,6 @@ export function ProjectsTable() {
                 </button>
               </div>
             )}
-
-
 
           </section>
         ),
@@ -242,12 +255,6 @@ export function ProjectsTable() {
         loading={loading}
         emptyMessage="No projects"
         enableSorting
-        onRowClick={(row) => {
-          // optional: navigate to a project details page
-          // navigate(`/dashboard/${user.sub}/projects/${row.id}`)
-          // or do nothing:
-          return;
-        }}
         className="shadow-md"
       />
 

@@ -51,3 +51,31 @@ export function useBodyScrollLock(open: boolean) {
   }, [open]);
 
 }
+
+
+export interface PaginationState {
+  pageIndex: number 
+  pageSize: number
+}
+
+export function usePagination(initialSize = 10) {
+
+  const [pagination, setPagination] = useState<PaginationState>({
+    pageIndex: 0,
+    pageSize: initialSize
+  });
+
+  const [pageCount, setPageCount] = useState<number>(0);
+
+  const resetPagination = () => {
+    setPagination({pageIndex: 0, pageSize: initialSize})
+  }
+
+  return {
+    pageCount,
+    setPageCount,
+    pagination,
+    setPagination,
+    resetPagination
+  }
+}

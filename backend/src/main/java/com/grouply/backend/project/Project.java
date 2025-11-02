@@ -32,6 +32,8 @@ public class Project {
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ProjectMember> projectMembers = new HashSet<>();
 
+    //TODO add maybe createdBy user
+
     @CreatedDate
     private LocalDateTime createdAt;
 

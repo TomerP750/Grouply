@@ -145,6 +145,7 @@ export function DataTable<T>({
           className="cursor-pointer py-1 disabled:opacity-50"
           onClick={() => table.previousPage()}
           disabled={!canPrev}
+          title="Previous Page"
         >
           <BiChevronLeft size={30} />
         </button>
@@ -152,6 +153,7 @@ export function DataTable<T>({
           className="cursor-pointer py-1 disabled:opacity-50"
           onClick={() => table.nextPage()}
           disabled={!canNext}
+          title="Next Page"
         >
           <BiChevronRight size={30} />
         </button>

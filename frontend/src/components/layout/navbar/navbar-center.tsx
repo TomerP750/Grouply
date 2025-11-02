@@ -49,12 +49,12 @@ export function NavbarCenter({ user }: NavbarCenterProps) {
           </NavLink>
         </li>
 
-        <li>
+        {/* <li>
           <NavLink to="/challenges" className={linkClasses}>
             <FaCode size={22} />
             <span className="text-sm">Challanges</span>
           </NavLink>
-        </li>
+        </li> */}
 
         <li>
           <NavLink to={`/dashboard/${user?.id}`} className={linkClasses}>
