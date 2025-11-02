@@ -34,28 +34,32 @@ export function EditProfileModal({ open, onClose, profile }: EditProfileModalPro
 
     return (
         <Modal open={open} onClose={onClose} title="Edit Profile">
-            <form onSubmit={handleSubmit(handleUpdate)} className="space-y-6 mt-5">
+            <form onSubmit={handleSubmit(handleUpdate)} className="space-y-6 mt-7">
 
                 {/* Banner URL */}
                 <div>
-                    <label className="block text-sm font-medium mb-2">Banner Url</label>
-                    <div className="flex gap-2">
+                    <div className="flex justify-between items-center">
+                        <label className="block text-sm font-medium mb-2">Banner Url</label>
+                        <button
+                            type="button"
+                            onClick={() => resetField("bannerUrl")}
+                            className="text-sm rounded-md px-2 py-1 bg-slate-100 dark:bg-teal-600 hover:bg-slate-200 dark:hover:bg-teal-500 transition"
+                            title="Reset banner URL"
+                        >
+                            Reset
+                        </button>
+                    </div>
+                    <div className="flex flex-col gap-2">
+
                         <input
                             type="url"
-                            className="w-full rounded-md px-3 py-2 outline-none bg-slate-100 dark:bg-slate-800 focus:bg-white dark:focus:bg-slate-700 focus:ring-2 focus:ring-teal-500 transition"
+                            className="w-full rounded-md pr-3 py-2 outline-none bg-slate-100 dark:bg-slate-800 focus:bg-white dark:focus:bg-slate-700 focus:ring-2 focus:ring-teal-500 transition"
                             {...register("bannerUrl", {
                                 validate: (v) =>
                                     !v || /^https?:\/\//i.test(v) || "Please enter a valid URL",
                             })}
                         />
-                        <button
-                            type="button"
-                            onClick={() => resetField("bannerUrl")}
-                            className=" rounded-md px-3 py-2 bg-slate-100 dark:bg-teal-600 hover:bg-slate-200 dark:hover:bg-teal-500 transition"
-                            title="Reset banner URL"
-                        >
-                            Reset
-                        </button>
+
                     </div>
 
                     {/* Live preview */}
@@ -73,29 +77,29 @@ export function EditProfileModal({ open, onClose, profile }: EditProfileModalPro
                     )}
                 </div>
 
+
                 {/* About */}
-                <div>
-                    <div className="flex justify-between items-center mb-2">
-                        <label className="block text-sm font-medium">About</label>
-                        <button
-                            type="button"
-                            onClick={() => resetField("about")}
-                            className="text-sm rounded-md px-2 py-1 bg-slate-100 dark:bg-teal-600 hover:bg-slate-200 dark:hover:bg-teal-500 transition"
-                        >
-                            Reset
-                        </button>
-                    </div>
-                    <textarea
-                        rows={10}
-                        className="resize-none w-full rounded-md px-3 py-2 outline-none bg-slate-100 dark:bg-slate-800 focus:bg-white dark:focus:bg-slate-700 focus:ring-2 focus:ring-teal-500 transition"
-                        {...register("about", {
-                            maxLength: { value: 500, message: "Max 500 characters" },
-                        })}
-                    />
-                    {errors.about && (
-                        <p className="mt-1 text-sm text-rose-600">{errors.about.message}</p>
-                    )}
+                <div className="flex justify-between items-center mb-2">
+                    <label className="block text-sm font-medium">About</label>
+                    <button
+                        type="button"
+                        onClick={() => resetField("about")}
+                        className="text-sm rounded-md px-2 py-1 bg-slate-100 dark:bg-teal-600 hover:bg-slate-200 dark:hover:bg-teal-500 transition"
+                    >
+                        Reset
+                    </button>
                 </div>
+                <textarea
+                    rows={10}
+                    className="resize-none w-full rounded-md px-3 py-2 outline-none bg-slate-100 dark:bg-slate-800 focus:bg-white dark:focus:bg-slate-700 focus:ring-2 focus:ring-teal-500 transition"
+                    {...register("about", {
+                        maxLength: { value: 500, message: "Max 500 characters" },
+                    })}
+                />
+                {errors.about && (
+                    <p className="mt-1 text-sm text-rose-600">{errors.about.message}</p>
+                )}
+
 
                 {/* Links */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

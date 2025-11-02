@@ -171,6 +171,16 @@ public class ProjectService implements IProjectService {
         return projects.stream().map(EntityToDtoMapper::toProjectDto).toList();
     }
 
+    /**
+     * Gets all the user's projects that with role owner that has no post.
+     * @param userId
+     * @return
+     */
+    public List<ProjectDTO> getAllUserProjectsWithNoPosts(Long userId) {
+        List<Project> projects = projectRepository.findOwnedProjectsWithNoPosts(userId, ProjectRole.OWNER);
+        return projects.stream().map(EntityToDtoMapper::toProjectDto).toList();
+    }
+
 
     //  ------------------------- HELPER METHODS --------------------------
 

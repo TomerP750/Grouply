@@ -42,13 +42,19 @@ export function CreatePostForm({ open, onClose, onAdd }: CreatePostFormProps) {
   const user = useUserSelector(state => state.authSlice.user);
 
   useEffect(() => {
+
     if (!open || !user) return;
     setLoadingProjects(true);
     projectService
-      .getAllUserOwnedProjects()
-      .then((res) => setOwnedProjects(res))
+      .allUserProjectsWithNoPosts()
+      .then((res) => {
+        console.log(res);
+        
+        setOwnedProjects(res)
+      })
       .catch((err) => toast.error(err?.response?.data))
       .finally(() => setLoadingProjects(false));
+
   }, [open]);
 
 
@@ -62,7 +68,7 @@ export function CreatePostForm({ open, onClose, onAdd }: CreatePostFormProps) {
     setLoading(true);
 
     const dataToSend: CreateProjectPostDTO = new CreateProjectPostDTO(data.title, data.description, positions, data.projectId)
-    console.log("data", dataToSend)
+    
     projectPostService.createPost(dataToSend)
       .then(res => {
         toast.success("Created Post")
@@ -95,23 +101,24 @@ export function CreatePostForm({ open, onClose, onAdd }: CreatePostFormProps) {
         <div className="flex-1 overflow-y-auto space-y-5 mt-10 pr-5">
 
 
-          {/* Positions (directly under project select) */}
+          {/* Positions */}
           <PositionSelectChips
             value={positions}
             onChange={setPositions}
-            max={8} // optional limit
+            max={8} 
           />
 
           {/* Project select + Positions */}
           <label className="flex flex-col gap-2">
             <span className={labelCls}>Choose Project</span>
             <select
+              defaultValue={""}
               className={inputBase}
               disabled={loadingProjects}
               {...register("projectId", { required: "Please choose a project" })}
               aria-invalid={!!errors.projectId}
             >
-              <option value="" disabled>
+              <option value="">
                 {loadingProjects ? "Loading projects…" : "Select a project"}
               </option>
               {ownedProjects.map((op) => (
@@ -193,6 +200,7 @@ export function CreatePostForm({ open, onClose, onAdd }: CreatePostFormProps) {
           </button>
         </div>
       </form>
+
     </Modal>
   );
 }

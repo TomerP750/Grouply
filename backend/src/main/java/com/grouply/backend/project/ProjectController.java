@@ -67,6 +67,12 @@ public class ProjectController {
         return projectService.getAllUserOwnedProjects(userId);
     }
 
+    @GetMapping("/owned/noPost")
+    public List<ProjectDTO> allUserProjectsWithNoPosts(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        Long userId = userDetails.getId();
+        return projectService.getAllUserProjectsWithNoPosts(userId);
+    }
+
 
 
 

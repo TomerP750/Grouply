@@ -12,6 +12,7 @@ interface ModalProps {
 }
 
 export function Modal({ open, onClose, title, children, width, height, className }: ModalProps) {
+    
     // Early return: no mount when closed
     if (!open) return null;
 
@@ -35,7 +36,7 @@ export function Modal({ open, onClose, title, children, width, height, className
             <button
                 aria-label="Close modal"
                 onClick={onClose}
-                className="fixed inset-0 bg-black/50 backdrop-blur-[2px]"
+                className="fixed inset-0 bg-black/80"
             />
 
             {/* Wrapper */}
@@ -56,9 +57,9 @@ export function Modal({ open, onClose, title, children, width, height, className
                     {/* Close (X) */}
                     <button
                         onClick={onClose}
-                        className="absolute right-3.5 top-3.5 inline-flex h-9 w-9 items-center justify-center rounded-full text-slate-500 hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
+                        className="cursor-pointer absolute right-3.5 top-3.5 inline-flex h-9 w-9 items-center justify-center rounded-full text-slate-500 hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-teal-500/50"
                     >
-                        <BiX size={20} />
+                        <BiX size={25} />
                     </button>
 
                     {/* Title */}

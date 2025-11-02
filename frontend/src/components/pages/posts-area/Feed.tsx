@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { BiLoaderAlt, BiPlus } from "react-icons/bi";
+import { BiFilter, BiLoaderAlt, BiPlus } from "react-icons/bi";
 import type { PostDTO } from "../../../dtos/models_dtos/PostDTO";
 import projectPostService from "../../../service/PostService";
 import { Navbar } from "../../layout/navbar/Navbar";
@@ -63,11 +63,15 @@ export function Feed() {
                     <section className="w-full flex justify-center px-0 sm:px-5 pt-6">
                         {/* Width cap + centered */}
                         <div className="w-full grid grid-cols-1 justify-items-center lg:justify-items-start gap-y-10">
-                            <div className="flex max-w-3/4 justify-center">
+                            <div className="flex w-3/4 justify-between lg:max-w-3/4 lg:justify-center">
                                 <button
                                     onClick={() => setModalOpen(true)}
                                     className="inline-flex items-center gap-1 rounded-lg text-white bg-blue-600 px-3 py-1.5 cursor-pointer hover:bg-blue-500 transition-colors">
                                     <BiPlus size={20} /><span>Add Post</span>
+                                </button>
+                                <button
+                                    className="lg:hidden inline-flex items-center gap-1 rounded-lg text-white bg-gray-600 px-3 py-1.5 cursor-pointer hover:bg-gray-500 transition-colors">
+                                    <BiFilter size={20} /><span>Filters</span>
                                 </button>
                             </div>
                             {posts?.map(p => (

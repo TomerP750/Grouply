@@ -21,6 +21,10 @@ class ProjectService {
         return (await axios.delete(`${BASE_API}/project/delete/${id}`))
     }
 
+    async allUserProjectsWithNoPosts() {
+        return (await axios.get(`${BASE_API}/project/owned/noPost`)).data
+    }
+
 }
 
 const projectService = new ProjectService();

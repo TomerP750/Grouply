@@ -7,6 +7,7 @@ import { SortGroup } from "./sort_group";
 import { TechnologySelect } from "./technologies_select";
 import { useFilters } from "../../../../context/filter_context";
 import { useState } from "react";
+import { MobileFilters } from "./mobile_filters";
 
 export type FeedFilters = {
   postTitle: string;
@@ -52,6 +53,8 @@ export function Filters() {
 
         <TechnologySelect />
       </div>}
+
+      <MobileFilters/>
 
     </aside>
 

@@ -26,8 +26,6 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
                                        @Param("projectRole") ProjectRole projectRole);
 
 
-
-
     @Query("""
     SELECT DISTINCT p
     FROM Project p
@@ -45,6 +43,26 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
             @Param("recipientId") Long recipientId,
             @Param("ownerRole") ProjectRole ownerRole
     );
+
+    @Query("""
+    SELECT DISTINCT p
+    FROM Project p
+    JOIN p.projectMembers pmOwner
+    WHERE pmOwner.user.id = :ownerId
+      AND pmOwner.projectRole = :ownerRole
+      AND NOT EXISTS (
+          SELECT 1
+          FROM Post po
+          WHERE po.project = p
+      )
+""")
+    List<Project> findOwnedProjectsWithNoPosts(
+            @Param("ownerId") Long ownerId,
+            @Param("ownerRole") ProjectRole ownerRole
+    );
+
+
+
 
 
 

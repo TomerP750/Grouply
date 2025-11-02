@@ -35,15 +35,16 @@ export function TechnologySelect() {
     return (
         <Accordion title="Technologies">
             
-
             <label className="role-select py-2 flex flex-col items-center h-62 overflow-y-auto gap-3 text-sm">
                 {technologes?.map(t => {
                     return <div
+                        key={t.id}
                         onClick={() => toggle(t)}
                         className="cursor-pointer py-2 
                                 border border-black dark:border-white/40 w-4/5 text-center">{toNormal(t.name)}</div>
                 })}
             </label>
+            
         </Accordion>
     )
 }

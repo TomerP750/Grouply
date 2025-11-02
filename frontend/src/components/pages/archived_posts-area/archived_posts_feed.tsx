@@ -5,6 +5,7 @@ import archivedPostService from "../../../service/ArchivedProjectService";
 import { toast } from "react-toastify";
 import { PostCard } from "../posts-area/post_card/post_card";
 import { BiQuestionMark } from "react-icons/bi";
+import { Filters } from "../posts-area/filters_area/filters";
 
 
 
@@ -35,9 +36,7 @@ export function ArchivedPostsFeed() {
             <Navbar />
             <div className="flex-col lg:flex-row flex w-full items-center gap-5 lg:gap-0 lg:items-start lg:py-10 min-h-screen">
                 {/* Filters */}
-                <div className="w-70 h-80 lg:sticky lg:top-10 bg-slate-700">
-
-                </div>
+                
 
                 {/* Archived Grid */}
                 {

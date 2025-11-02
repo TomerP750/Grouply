@@ -18,7 +18,7 @@ export function MessageButton({ chats, onOpen, }: MessageButtonProps) {
   );
 
   return (
-    <div className="fixed bottom-5 right-5 z-50">
+    <div className="hidden lg:block md:fixed bottom-5 right-5 z-50">
       <button
         onClick={onOpen}
         aria-label="Open messages"

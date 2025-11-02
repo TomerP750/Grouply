@@ -23,7 +23,7 @@ export function Dialog({ open, title = "Confirm Action", message, onClose, onCon
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity"
+        className="absolute inset-0 bg-black/80  transition-opacity"
         onClick={onClose}
       />
 

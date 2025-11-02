@@ -9,6 +9,7 @@ import connectionService from "../../../service/connection_service";
 import { InviteToProjectModal } from "./invite_to_project_modal";
 import { useThrottleClick } from "../../../util/helper_hooks";
 import { EditProfileModal } from "./edit_profile_modal";
+import { FaPencil } from "react-icons/fa6";
 
 
 const baseBtn =
@@ -122,7 +123,7 @@ export function ProfileActions({ profile, user }: ProfileActionsProps) {
                 </>
             ) : (
                 <button onClick={() => setModalOpen(true)} className={primaryBtn}>
-                    <FaLink size={16} />
+                    <FaPencil size={16} />
                     Edit Profile
                 </button>
             )}
