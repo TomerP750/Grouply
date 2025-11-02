@@ -8,7 +8,8 @@ import { useScrollToTop } from "../../../../util/helper_hooks";
 import { PostCardPositionCard } from "../post_card/post_card_position_card";
 import { useUser } from "../../../../redux/hooks";
 import { PostPositionPageCard } from "./post_page_position_card";
-import { technologyIconMap, toNormal } from "../../../../util/util_functions";
+import { toNormal } from "../../../../util/util_functions";
+import { technologyIconMap } from "../../../../util/technology_icon_mapper";
 
 
 export function PostPage() {

@@ -1,6 +1,7 @@
 import axios from "axios";
 import { BASE_API } from "../util/base_api";
 import type { ProjectRole } from "../dtos/enums/ProjectRole";
+import type { ChangeUserRoleDTO } from "../components/pages/dashboard/tables/project_members_table";
 
 
 class ProjectMemberService {
@@ -25,8 +26,8 @@ class ProjectMemberService {
         return (await axios.delete(`${BASE_API}/member/remove/${memberId}/${projectId}`))
     }
 
-    async changeMemberRole(data: undefined) {
-        return (await axios.get(`${BASE_API}/member/changeRole`))
+    async changeMemberRole(data: ChangeUserRoleDTO) {
+        return (await axios.patch(`${BASE_API}/member/changeRole`, data))
     }
 
 }

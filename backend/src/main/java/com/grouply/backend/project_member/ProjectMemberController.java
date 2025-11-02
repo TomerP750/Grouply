@@ -46,7 +46,7 @@ public class ProjectMemberController {
         return projectMemberService.isOwner(userId, projectId);
     }
 
-    @PatchMapping("/changeRole/{memberId}")
+    @PatchMapping("/changeRole")
     public void changeMemberRole(@AuthenticationPrincipal CustomUserDetails userDetails, @RequestBody ChangeMemberRoleDTO dto) throws UnauthorizedException {
         Long userId = userDetails.getId();
         projectMemberService.changeMemberRole(userId, dto);

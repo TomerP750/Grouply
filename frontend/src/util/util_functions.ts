@@ -35,21 +35,6 @@ export function toNormal(str: string) {
 
 
 
-import { SiReact, SiSpringboot, SiTypescript, SiPython, SiJavascript, SiMongodb } from "react-icons/si";
-import { FaJava } from "react-icons/fa";
-import type { IconType } from "react-icons";
-
-export const technologyIconMap: Record<string, IconType> = {
-  react: SiReact,
-  "spring-boot": SiSpringboot,
-  typescript: SiTypescript,
-  javascript: SiJavascript,
-  java: FaJava,
-  python: SiPython,
-  mongodb: SiMongodb,
-};
-
-
 
 export function timeAgo(date: Date | string | number): string {
   const target = date instanceof Date ? date : new Date(date);
