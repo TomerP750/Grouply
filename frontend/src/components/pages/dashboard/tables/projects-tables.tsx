@@ -3,7 +3,7 @@ import {
   createColumnHelper,
   type ColumnDef,
 } from "@tanstack/react-table";
-import { BiPencil, BiPlus, BiTrash } from "react-icons/bi";
+import { BiPencil, BiPlus, BiTrash, BiX } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -16,41 +16,27 @@ import { Dialog } from "../../../elements/Dialog";
 import { Modal } from "../../../elements/Modal";
 import { CreateProjectForm } from "../forms/create_project_form";
 import { DataTable } from "./admin_tables/data_table";
+import { extractPageCount } from "../../../../util/pagination_helper";
+import { StatusBadge } from "../../../../util/ui_helper";
 
-function StatusBadge({ status }: { status: ProjectStatus }) {
-  let styles = "bg-slate-500/15 text-slate-400";
-  switch (status) {
-    case ProjectStatus.IN_PROGRESS:
-      styles = "bg-teal-600/15 text-teal-500";
-      break;
-    case ProjectStatus.PREPARATION:
-      styles = "bg-amber-500/15 text-amber-500";
-      break;
-    case ProjectStatus.COMPLETED:
-      styles = "bg-green-500/15 text-green-500";
-      break;
-  }
-  return (
-    <span className={`text-xs px-2 py-1 rounded-full font-medium ${styles}`}>
-      {toNormal(status)}
-    </span>
-  );
-}
+
 
 const ch = createColumnHelper<ProjectDTO>();
 
 export function ProjectsTable() {
+
+  const [pageCount, setPageCount] = useState(0);
+  const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 10 });
+
   const [modalOpen, setModalOpen] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
 
   const [rows, setRows] = useState<ProjectDTO[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const [editedProjectId, setEditedProjectId] = useState<number>(0);
   const [selectedProjectId, setSelectedProjectId] = useState<number>(0);
-
-  const [pageCount, setPageCount] = useState(0);
-  const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 10 });
+  const [selectedStatus, setSelctedStatus] = useState<ProjectStatus>();
 
   const navigate = useNavigate();
   const user = useUser();
@@ -61,15 +47,7 @@ export function ProjectsTable() {
       .getUserOwnedProjectsPagination(pagination.pageIndex, pagination.pageSize)
       .then((res) => {
         setRows(res.content);
-        const computed =
-          (typeof res.totalPages === "number" && res.totalPages > 0
-            ? res.totalPages
-            : undefined) ??
-          (typeof res.totalElements === "number"
-            ? Math.max(1, Math.ceil(res.totalElements / pagination.pageSize))
-            : 1);
-
-        setPageCount(computed);
+        setPageCount(extractPageCount(res, pagination.pageSize));
       })
       .catch((err) =>
         toast.error(err?.response?.data ?? "Failed to load projects")
@@ -77,30 +55,19 @@ export function ProjectsTable() {
       .finally(() => setLoading(false));
   }, [pagination.pageIndex, pagination.pageSize]);
 
-  const handleStatusChange = (projectId: number, next: ProjectStatus) => {
-    // optimistic UI
-    setRows((prev) =>
-      prev.map((p) => (p.id === projectId ? { ...p, status: next } : p))
-    );
 
-    projectService
-      .updateProjectStatus(projectId, next) 
-      .then(() => {
-        toast.success("Status updated");
-        setEditedProjectId(0);
-      })
-      .catch((err) => {
-        
-        setRows((prev) =>
-          prev.map((p) =>
-            p.id === projectId ? { ...p, status: prev.find(x => x.id === projectId)?.status! } : p
-          )
-        );
-        toast.error(err?.response?.data ?? "Failed to update status");
-      });
+  const handleEditOpen = (id: number) => {
+    setEditedProjectId(id);
+
+  }
+
+
+  const handleUpdate = (projectId: number) => {
+
   };
 
   const handleDeleteProject = (id: number) => {
+
     projectService
       .deleteProject(id)
       .then(() => {
@@ -109,6 +76,7 @@ export function ProjectsTable() {
       })
       .catch((err) => toast.error(err?.response?.data ?? "Delete failed"))
       .finally(() => setDialogOpen(false));
+
   };
 
   const columns: ColumnDef<ProjectDTO, any>[] = useMemo(
@@ -140,9 +108,7 @@ export function ProjectsTable() {
           return isEditing ? (
             <select
               value={status}
-              onChange={(e) =>
-                handleStatusChange(projectId, e.target.value as ProjectStatus)
-              }
+              onChange={(e) =>setSelctedStatus(e.target.value as ProjectStatus)}
               onBlur={() => setEditedProjectId(0)}
               className="border rounded px-2 py-1 bg-slate-800 text-white"
             >
@@ -186,30 +152,55 @@ export function ProjectsTable() {
         id: "actions",
         header: "Actions",
         cell: ({ row }) => (
-          <div className="flex items-center gap-2 font-medium">
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                setEditedProjectId(row.original.id);
-              }}
-              className="inline-flex gap-1 items-center cursor-pointer rounded px-2 py-1 hover:underline"
-            >
-              <BiPencil size={20} />
-              <span>Edit</span>
-            </button>
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                setSelectedProjectId(row.original.id);
-                setDialogOpen(true);
-              }}
-              className="inline-flex items-center gap-1 cursor-pointer rounded px-2 py-1 text-red-600 hover:underline"
-            >
-              <BiTrash size={20} />
-              <span>Delete</span>
-            </button>
-          </div>
+          <section className="flex items-center gap-2 font-medium">
+
+            {editedProjectId === row.original.id ? (
+             
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={() => setEditedProjectId(row.original.id)}
+                  className="inline-flex gap-1 items-center text-green-600 cursor-pointer rounded px-2 py-1 hover:underline"
+                >
+                  <BiPencil size={20} />
+                  <span>Save</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setEditedProjectId(0)} // cancel editing
+                  className="inline-flex items-center gap-1 cursor-pointer rounded px-2 py-1 text-gray-400 hover:underline"
+                >
+                  <BiX size={20} />
+                  <span>Cancel</span>
+                </button>
+              </div>
+            ) : (
+              // ✅ Show Edit / Delete otherwise
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={() => handleEditOpen(row.original.id)}
+                  className="inline-flex gap-1 items-center cursor-pointer rounded px-2 py-1 hover:underline"
+                >
+                  <BiPencil size={20} />
+                  <span>Edit</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSelectedProjectId(row.original.id);
+                    setDialogOpen(true);
+                  }}
+                  className="inline-flex items-center gap-1 cursor-pointer rounded px-2 py-1 text-red-600 hover:underline"
+                >
+                  <BiTrash size={20} />
+                  <span>Delete</span>
+                </button>
+              </div>
+            )}
+
+
+
+          </section>
         ),
         enableSorting: false,
       }),
@@ -218,7 +209,8 @@ export function ProjectsTable() {
   );
 
   return (
-    <div className="w-full p-4 dark:text-white">
+    <main className="w-full p-4 dark:text-white">
+
       <div className="mb-3 flex items-center justify-between">
         <h2 className="text-lg font-semibold">Projects</h2>
         <button
@@ -267,6 +259,6 @@ export function ProjectsTable() {
           onConfirm={() => handleDeleteProject(selectedProjectId)}
         />
       )}
-    </div>
+    </main>
   );
 }

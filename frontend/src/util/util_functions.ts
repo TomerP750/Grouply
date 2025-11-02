@@ -64,3 +64,4 @@ export function timeAgo(date: Date | string | number): string {
   return `${years} year${years !== 1 ? "s" : ""} ago`;
 }
 
+

@@ -6,7 +6,7 @@ import type { CreateProjectDTO } from "../dtos/models_dtos/request_dto/create_pr
 class ProjectService {
 
     async getUserOwnedProjectsPagination(pageIndex: number, size: number ) {
-        return (await axios.get(`${BASE_API}/project/owned?page=${pageIndex}&size=${size}`)).data
+        return (await axios.get(`${BASE_API}/project/owned?pageIndex=${pageIndex}&size=${size}`)).data
     }
 
     async getAllUserOwnedProjects() {

@@ -1,0 +1,12 @@
+
+@keyframes slide-down {
+    from {
+        transform: translateY(-100%);
+    } to {
+        transform: translateY(0%);
+    }
+}
+
+.search-bar {
+    animation: slide-down 0.2s ease-out forwards;
+}

@@ -15,7 +15,7 @@ type DataTableProps<T> = {
   columns: ColumnDef<T, any>[];
   rows: T[];
   pageCount: number;                           // total pages from server
-  pagination: PaginationState;                 // { pageIndex, pageSize }
+  pagination: PaginationState;                
   setPagination: React.Dispatch<React.SetStateAction<PaginationState>>;
   loading?: boolean;
   emptyMessage?: string;
@@ -53,7 +53,8 @@ export function DataTable<T>({
   });
 
   const canPrev = pagination.pageIndex > 0;
-  const canNext = pagination.pageIndex + 1 < (pageCount || 1);
+  const canNext = pagination.pageIndex + 1 < pageCount;
+
 
   const tableWrapperCls = useMemo(
     () =>

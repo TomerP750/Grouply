@@ -4,6 +4,8 @@ import { useEffect, useMemo, useState, type ChangeEvent } from "react";
 import userService from "../../../service/UserService";
 import type { UserDTO } from "../../../dtos/models_dtos/UserDTO";
 import { toast } from "react-toastify";
+import './search_bar.css'
+
 
 interface SearchBarProps {
   open: boolean;
@@ -58,7 +60,7 @@ export function SearchBar({ open, onClose }: SearchBarProps) {
 
       {/* search bar */}
       <div
-        className={`
+        className={`search-bar
           fixed top-0 left-0 w-full h-50 flex flex-col items-center justify-start p-5  
           z-40
           bg-gray-100/90 dark:bg-gray-800/95 backdrop-blur border-b border-white/10
