@@ -9,7 +9,7 @@ export class ProjectDTO {
     status: ProjectStatus
     technologies: TechnologyDTO[]
     createdAt: Date
-   
+    
 
     constructor(id: number, name: string, status: ProjectStatus, technologies: TechnologyDTO[] , createdAt: Date) {
         this.id = id
