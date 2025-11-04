@@ -7,8 +7,8 @@ const FILTER_ROLES = "filter_roles";
 const FILTER_TECHNOLOGIES = "filter_technologies";
 
 type FilterState = {
-    roles: ProjectPosition[],
-    technologies: TechnologyDTO[],
+    selectedRoles: ProjectPosition[],
+    selectedTechnologies: TechnologyDTO[],
     empty: boolean,
 }
 
@@ -32,46 +32,51 @@ const getInitialRoles = () => {
 }
 
 const getInitialTechs = () => {
-    const stored = localStorage.getItem(FILTER_ROLES);
+    const stored = localStorage.getItem(FILTER_TECHNOLOGIES);
     return stored ? JSON.parse(stored) as TechnologyDTO[] : [];
 }
 
 export function FilterProvider({ children }: FilterProviderProps) {
 
-    const [roles, setRoles] = useState<ProjectPosition[]>(getInitialRoles);
-    const [technologies, setTechnolgies] = useState<TechnologyDTO[]>(getInitialTechs);
+    const [selectedRoles, setSelectedRoles] = useState<ProjectPosition[]>(getInitialRoles);
+    const [selectedTechnologies, setSelectedTechnologies] = useState<TechnologyDTO[]>(getInitialTechs);
 
     useEffect(() => {
-        localStorage.setItem(FILTER_ROLES, JSON.stringify(roles));
-        localStorage.setItem(FILTER_TECHNOLOGIES, JSON.stringify(technologies));
-        setEmpty(roles.length === 0 && technologies.length === 0);
-    }, [roles, technologies]);
+        localStorage.setItem(FILTER_ROLES, JSON.stringify(selectedRoles));
+        localStorage.setItem(FILTER_TECHNOLOGIES, JSON.stringify(selectedTechnologies));
+        setEmpty(selectedRoles.length === 0 && selectedTechnologies.length === 0);
+    }, [selectedRoles, selectedTechnologies]);
 
-    const [empty, setEmpty] = useState<boolean>(roles.length === 0);
+    const [empty, setEmpty] = useState<boolean>(selectedRoles.length === 0 && selectedTechnologies.length === 0);
 
     const addRole = (role: ProjectPosition) => {
-        setRoles(prev => (prev.includes(role) ? prev : [...prev, role]));
+        setSelectedRoles(prev => (prev.includes(role) ? prev : [...prev, role]));
     };
 
     const removeRole = (role: ProjectPosition) => {
-        setRoles(prev => prev.filter(r => r !== role));
+        setSelectedRoles(prev => prev.filter(r => r !== role));
     };
 
     const addTech = (tech: TechnologyDTO) => {
-        setTechnolgies(prev => (prev.includes(tech) ? prev : [...prev, tech]));
+        setSelectedTechnologies(prev =>
+            prev.some(t => t.id === tech.id) ? prev : [...prev, tech]
+        );
     };
 
     const removeTech = (tech: TechnologyDTO) => {
-        setTechnolgies(prev => prev.filter(t => t !== tech));
+        setSelectedTechnologies(prev => prev.filter(t => t.id !== tech.id));
     };
 
+
     const clear = () => {
-        setRoles([]);
-        localStorage.removeItem(FILTER_ROLES)
+        setSelectedRoles([]);
+        setSelectedTechnologies([]);
+        localStorage.removeItem(FILTER_ROLES);
+        localStorage.removeItem(FILTER_TECHNOLOGIES);
         setEmpty(true);
     };
 
-    const ctx: FilterContextValues = { roles, technologies, empty, addRole, removeRole, addTech, removeTech ,clear };
+    const ctx: FilterContextValues = { selectedRoles, selectedTechnologies, empty, addRole, removeRole, addTech, removeTech, clear };
 
     return (
         <FilterContext.Provider value={ctx}>

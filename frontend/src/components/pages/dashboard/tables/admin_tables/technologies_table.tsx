@@ -25,6 +25,7 @@ export function TechnologiesTable() {
   const [selectedTechId, setSelectedTechId] = useState<number | undefined>();
   const [techName, setTechName] = useState<string>('');
 
+
   // UseEffects
   useEffect(() => {
     setLoading(true);
@@ -39,6 +40,7 @@ export function TechnologiesTable() {
       )
       .finally(() => setLoading(false));
   }, [pagination.pageIndex, pagination.pageSize]);
+
 
   // Functions
   const handleEditOpen = (id: number) => {
@@ -71,7 +73,7 @@ export function TechnologiesTable() {
         return isEditing ? (
           <input
             type="text"
-            className="block w-[260px] rounded-md bg-slate-800 px-2 py-1 text-slate-100 ring-1 ring-white/10 focus:outline-none focus:ring-2 focus:ring-teal-500/50"
+            className="block max-w-[260px] rounded-md bg-slate-800 px-2 py-1 text-slate-100 ring-1 ring-white/10 focus:outline-none focus:ring-2 focus:ring-teal-500/50"
             value={name}
             onClick={(e) => e.stopPropagation()}
           />

@@ -1,11 +1,13 @@
 import axios from "axios";
 import { BASE_API } from "../util/base_api";
 import type { CreateProjectDTO } from "../dtos/models_dtos/request_dto/create_project_dto";
+import type { ProjectPosition } from "../dtos/enums/ProjectPosition";
+import type { TechnologyDTO } from "../dtos/models_dtos/TechnologyDTO";
 
 
 class ProjectService {
 
-    async getUserOwnedProjectsPagination(pageIndex: number, size: number ) {
+    async getUserOwnedProjectsPagination(pageIndex: number, size: number) {
         return (await axios.get(`${BASE_API}/project/owned?pageIndex=${pageIndex}&size=${size}`)).data
     }
 

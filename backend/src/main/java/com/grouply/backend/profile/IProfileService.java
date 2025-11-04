@@ -7,6 +7,6 @@ public interface IProfileService {
 
     ProfileDTO getOneProfile(Long userId);
 
-    void UpdateProfile(UpdateProfileDTO dto);
+    void UpdateProfile(Long userId ,UpdateProfileDTO dto);
 
 }

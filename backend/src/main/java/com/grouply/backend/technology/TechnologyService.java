@@ -58,6 +58,8 @@ public class TechnologyService implements ITechnologyService {
     private TechnologyDTO toDto(Technology entity) {
         return TechnologyDTO.builder()
                 .id(entity.getId())
+                .slug(entity.getSlug())
+                .color(entity.getColor())
                 .name(entity.getName())
                 .build();
     }

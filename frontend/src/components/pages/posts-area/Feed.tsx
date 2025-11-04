@@ -1,12 +1,15 @@
-import { useEffect, useMemo, useState } from "react";
-import { BiFilter, BiLoaderAlt, BiPlus } from "react-icons/bi";
+import { useCallback, useEffect, useState } from "react";
+import { BiFilter, BiLoaderAlt } from "react-icons/bi";
+import { FilterProvider, useFilters } from "../../../context/filter_context";
 import type { PostDTO } from "../../../dtos/models_dtos/PostDTO";
 import projectPostService from "../../../service/PostService";
 import { Navbar } from "../../layout/navbar/Navbar";
-import { CreatePostForm } from "./create_post_form";
-import { Filters, type FeedFilters } from "./filters_area/filters";
+import { FeedHeader } from "./feed_header";
+import { Filters } from "./filters_area/filters";
 import { PostCard } from "./post_card/post_card";
-import { FilterProvider } from "../../../context/filter_context";
+import { usePagination } from "../../../util/helper_hooks";
+import postService from "../../../service/PostService";
+import { toast } from "react-toastify";
 
 
 
@@ -14,19 +17,20 @@ export function Feed() {
 
     const [posts, setPosts] = useState<PostDTO[]>([]);
 
-    const [modalOpen, setModalOpen] = useState<boolean>(false);
+    const { selectedRoles, selectedTechnologies } = useFilters();
 
     const [loading, setLoading] = useState<boolean>(false);
 
-    const [page, setPage] = useState<number>(0);
-    const [size, setSize] = useState<number>(5);
+    const { pageCount, pagination } = usePagination(5);
+
+
     const [hasMore, setHasMore] = useState<boolean>(false);
 
 
     useEffect(() => {
         setLoading(true)
 
-        projectPostService.allPosts(page, size)
+        projectPostService.allPosts(pagination.pageIndex, pagination.pageSize)
             .then(res => {
                 setPosts(res.content);
                 setHasMore(res.last);
@@ -49,26 +53,40 @@ export function Feed() {
         setPosts(prev => prev.filter(p => p.id !== deletePostId))
     }
 
+    const handleFilterChange = useCallback(() => {
+        setLoading(true);
+        postService.searchPosts(selectedRoles, selectedTechnologies)
+            .then(res => {
+                setPosts(res.content);
+            })
+            .catch(err => {
+                toast.error(err.response.data);
+            })
+            .finally(() => {
+                setLoading(false);
+            })
+    }, [selectedRoles, selectedTechnologies]);
+
+    useEffect(() => {
+        handleFilterChange();
+    }, [handleFilterChange])
+
+
     return (
-        <FilterProvider>
             <main className="min-h-screen bg-gray-200 dark:bg-gradient-to-r dark:from-slate-900 dark:via-teal-950 dark:to-stone-900 pb-10">
 
                 <Navbar />
 
                 {/* POSTS AND FILTERS */}
                 <div className="flex flex-col pt-10 md:pt-0 md:mt-5 px-5 md:px-0 lg:flex-row w-full items-center lg:items-start gap-6">
-                    <Filters />
+                    <Filters onFilterChange={handleFilterChange} />
 
                     {/* Main area */}
                     <section className="w-full flex justify-center px-0 sm:px-5 pt-6">
                         {/* Width cap + centered */}
                         <div className="w-full grid grid-cols-1 justify-items-center lg:justify-items-start gap-y-10">
                             <div className="flex w-3/4 justify-between lg:max-w-3/4 lg:justify-center">
-                                <button
-                                    onClick={() => setModalOpen(true)}
-                                    className="inline-flex items-center gap-1 rounded-lg text-white bg-blue-600 px-3 py-1.5 cursor-pointer hover:bg-blue-500 transition-colors">
-                                    <BiPlus size={20} /><span>Add Post</span>
-                                </button>
+                                <FeedHeader onAdd={handleAdd} />
                                 <button
                                     className="lg:hidden inline-flex items-center gap-1 rounded-lg text-white bg-gray-600 px-3 py-1.5 cursor-pointer hover:bg-gray-500 transition-colors">
                                     <BiFilter size={20} /><span>Filters</span>
@@ -96,11 +114,7 @@ export function Feed() {
                     </button>
                 </div>}
 
-
-
-                {modalOpen && <CreatePostForm open={modalOpen} onClose={() => setModalOpen(false)} onAdd={(newPost) => handleAdd(newPost)} />}
-
             </main>
-        </FilterProvider>
+       
     )
 }

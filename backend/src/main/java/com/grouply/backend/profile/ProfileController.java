@@ -2,7 +2,9 @@ package com.grouply.backend.profile;
 
 import com.grouply.backend.profile.dto.ProfileDTO;
 import com.grouply.backend.profile.dto.UpdateProfileDTO;
+import com.grouply.backend.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,8 +20,9 @@ public class ProfileController {
     }
 
     @PutMapping("/update")
-    public void updateProfile(@RequestBody UpdateProfileDTO dto) {
-        profileService.UpdateProfile(dto);
+    public void updateProfile(@AuthenticationPrincipal CustomUserDetails userDetails, @RequestBody UpdateProfileDTO dto) {
+        Long userId = userDetails.getId();
+        profileService.UpdateProfile(userId, dto);
     }
 
 }

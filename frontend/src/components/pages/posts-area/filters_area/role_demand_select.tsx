@@ -4,18 +4,27 @@ import { toNormal } from "../../../../util/util_functions"
 import { Accordion } from "../../../elements/Accordion"
 import "./filters.css"
 
-export function RoleDemandSelect() {
+interface RoleDemandSelectProps {
+    onFilterChange?: () => void;
+}
 
-    const { addRole, removeRole, roles } = useFilters();
+export function RoleDemandSelect({ onFilterChange }: RoleDemandSelectProps) {
+
+    const { addRole, removeRole, selectedRoles } = useFilters();
 
     const isSelected = (position: ProjectPosition) => {
-        return roles.includes(position);
+        return selectedRoles.includes(position);
     }
 
 
     const toggle = (position: ProjectPosition) => {
-        if (isSelected(position)) removeRole(position);
-        else addRole(position); 
+
+        if (isSelected(position)) {
+            removeRole(position)
+        } else { 
+            addRole(position) 
+        }; 
+        onFilterChange?.();  
     }
 
 
@@ -26,7 +35,7 @@ export function RoleDemandSelect() {
                     return <div
                         key={pp}
                         onClick={() => toggle(pp)}
-                        className={`${isSelected(pp) && 'bg-black text-white dark:bg-white dark:text-black'} cursor-pointer py-2 border border-black dark:border-white/40 w-4/5 text-center`}>{toNormal(pp)}</div>
+                        className={`${isSelected(pp) && 'bg-black text-white dark:bg-white dark:text-black'} cursor-pointer py-2 border border-black dark:border-white/40 w-4/5 text-center transition-colors duration-200`}>{toNormal(pp)}</div>
                 })}
             </label>
         </Accordion>

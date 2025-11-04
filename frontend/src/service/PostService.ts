@@ -3,6 +3,7 @@ import { BASE_API } from "../util/base_api";
 import type { CreateProjectPostDTO } from "../dtos/models_dtos/request_dto/CreateProjectPostDTO";
 import type { EditPostRequestDTO } from "../components/pages/posts-area/edit_post_form";
 import type { ProjectPosition } from "../dtos/enums/ProjectPosition";
+import type { TechnologyDTO } from "../dtos/models_dtos/TechnologyDTO";
 
 
 class PostService {
@@ -34,6 +35,14 @@ class PostService {
     async editPost(data: EditPostRequestDTO) {
         
     }
+
+
+    async searchPosts(roles: ProjectPosition[], techs: TechnologyDTO[]) {
+        const params = new URLSearchParams();
+        roles.forEach(r => params.append("roles", r));
+        techs.forEach(t => params.append("techIds", String(t.id)));
+        return (await axios.get(`${BASE_API}/post/search?${params.toString()}`)).data
+    } 
 
 }
 

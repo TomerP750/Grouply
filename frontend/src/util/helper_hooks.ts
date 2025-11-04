@@ -38,7 +38,7 @@ export function useRecruiterRole() {
 
 
 export function useBodyScrollLock(open: boolean) {
-  
+
   useEffect(() => {
     if (open) {
       document.body.style.overflow = "hidden"
@@ -54,7 +54,7 @@ export function useBodyScrollLock(open: boolean) {
 
 
 export interface PaginationState {
-  pageIndex: number 
+  pageIndex: number
   pageSize: number
 }
 
@@ -68,7 +68,7 @@ export function usePagination(initialSize = 10) {
   const [pageCount, setPageCount] = useState<number>(0);
 
   const resetPagination = () => {
-    setPagination({pageIndex: 0, pageSize: initialSize})
+    setPagination({ pageIndex: 0, pageSize: initialSize })
   }
 
   return {

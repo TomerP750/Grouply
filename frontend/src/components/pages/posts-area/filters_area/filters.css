@@ -1,5 +1,24 @@
 
+@keyframes open {
+  from {
+    height: 0rem;
+  } to {
+    height: 15.5rem;
+  }
+}
+
+
 .role-select {
+
+  animation: open 0.1s ease-out forwards;
+
+  scrollbar-width: none;         
+  -ms-overflow-style: none;      
+}
+
+.tech-select {
+
+  animation: open 0.1s ease-out forwards;
 
   scrollbar-width: none;         
   -ms-overflow-style: none;      

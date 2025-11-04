@@ -23,7 +23,7 @@ public interface IPostService {
 
     PostDTO getOnePost(Long postId);
 
-    Page<PostDTO> getAllPosts(Pageable pageable, List<ProjectPosition> roles);
+    Page<PostDTO> getAllPosts(Pageable pageable);
 
     boolean requestToJoinProject(Long userId, Long ownerId, Long projectId);
 }

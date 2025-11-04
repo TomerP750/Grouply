@@ -1,13 +1,13 @@
 
 import { useState, useContext, createContext, type ReactNode } from "react";
-import type { ProjectPostDTO } from "../dtos/models_dtos/PostDTO";
+import type { PostDTO } from "../dtos/models_dtos/PostDTO";
 
 
 type ProjectCardState = {
     open: boolean
     archived: boolean
     sentRequest: boolean
-    projectPost: ProjectPostDTO
+    projectPost: PostDTO
 }
 
 type ProjectCardContextValues = ProjectCardState & {
@@ -23,7 +23,7 @@ const ProjectCardContext = createContext<ProjectCardContextValues | undefined>(u
 
 interface ProjectCardProviderProps {
     children: ReactNode;
-    projectPost: ProjectPostDTO
+    projectPost: PostDTO
 }
 
 export function ProjectCardProvider({ children, projectPost }: ProjectCardProviderProps) {

@@ -35,4 +35,15 @@ public interface PostRepository extends JpaRepository<Post, Long> {
             @Param("roles") List<ProjectPosition> roles,
             Pageable pageable
     );
+
+    Page<Post> findDistinctByPositions_PositionIn(
+            List<ProjectPosition> roles, Pageable pageable);
+
+
+    Page<Post> findDistinctByProject_Technologies_IdIn(
+            List<Long> techIds, Pageable pageable);
+
+
+    Page<Post> findDistinctByPositions_PositionInAndProject_Technologies_IdIn(
+            List<ProjectPosition> roles, List<Long> techIds, Pageable pageable);
 }

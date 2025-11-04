@@ -15,13 +15,15 @@ import { DisplaySettings } from "../pages/other-pages/settings/display_settings"
 import { SecuritySettings } from "../pages/other-pages/settings/security_settings";
 import { SettingsPage } from "../pages/other-pages/settings/SettingsPage";
 import { UserSettings } from "../pages/other-pages/settings/user_settings_area/user_settings";
-import { Feed } from "../pages/posts-area/Feed";
+import { Feed } from "../pages/posts-area/feed";
 import { PostPage } from "../pages/posts-area/project_info_page/post_page";
 import { ProfilePage } from "../pages/profile/profile_page";
 import { RecruiterLogin } from "../pages/authentication/recruiter-auth/recruiter_login";
 import { ArchivedPostsFeed } from "../pages/archived_posts-area/archived_posts_feed";
 import { UsersTable } from "../pages/dashboard/tables/admin_tables/users-tabel";
 import { TechnologiesTable } from "../pages/dashboard/tables/admin_tables/technologies_table";
+import FeedPage from "../pages/posts-area/feed_page";
+import { ReviewProjectPage } from "../pages/review_project/review_project_page";
 
 
 
@@ -32,7 +34,7 @@ export function Routing() {
     return (
         <div>
             <Routes>
-                <Route path="/" element={user ? <Feed /> : <Home />} />
+                <Route path="/" element={user ? <FeedPage /> : <Home />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<SignUpWizard />} />
@@ -57,6 +59,7 @@ export function Routing() {
                 <Route path="/post/:id" element={<PostPage />} />
                 <Route path="/feed" element={<Feed />} />
                 <Route path="/archived" element={<ArchivedPostsFeed />} />
+                <Route path="review-project" element={<ReviewProjectPage/>}/>
 
 
 

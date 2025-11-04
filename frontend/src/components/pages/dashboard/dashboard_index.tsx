@@ -1,18 +1,16 @@
 import { useEffect, useState } from "react";
-import { useUser } from "../../../redux/hooks";
-import type { StatisticsDTO } from "../../../dtos/models_dtos/statistics_dto";
-import statisticsService from "../../../service/statistics_service";
+import { FiCheckCircle, FiFolder, FiLink } from "react-icons/fi";
 import { toast } from "react-toastify";
-import { HiHandRaised } from "react-icons/hi2";
-import { DashboardStatCard } from "./tables/dashborard_stat_card";
-import { FiFolder, FiCheckCircle, FiLink, FiUsers } from "react-icons/fi";
+import type { ActivityDTO } from "../../../dtos/models_dtos/activity_dto";
+import type { StatisticsDTO } from "../../../dtos/models_dtos/statistics_dto";
+import { useUser } from "../../../redux/hooks";
+import activityService from "../../../service/activity_service";
+import statisticsService from "../../../service/statistics_service";
+import { Hr } from "../../elements/Hr";
+import { ActivityRow } from "./activity_row";
 import { ActiveProjectsChart } from "./tables/charts/active_projects_chart";
 import { ConnectionsChart } from "./tables/charts/connections_chart";
-import type { ActivityDTO } from "../../../dtos/models_dtos/activity_dto";
-import activityService from "../../../service/activity_service";
-import { timeAgo } from "../../../util/util_functions";
-import { ActivityRow } from "./activity_row";
-import { Hr } from "../../elements/Hr";
+import { DashboardStatCard } from "./tables/dashborard_stat_card";
 
 
 
@@ -105,12 +103,12 @@ export function Overview() {
           
           <h1 className="text-2xl text-black dark:text-white font-medium mb-3">Recent Activity</h1>
           <Hr />
-          <div className="space-y-3 dark:text-gray-300">
+          <ul className="space-y-3 dark:text-gray-300">
             {activites.length > 0 ? activites?.map(a => {
-              return <ActivityRow key={a.id} activity={a}/>
+              return <li key={a.id} className="even:bg-slate-800 px-2 py-1"><ActivityRow key={a.id} activity={a}/></li>
             }) : <span>No Recent Activities</span>}
 
-          </div>
+          </ul>
         </div>
 
         <div className="bg-slate-900/80 rounded-xl p-6 border border-slate-800 shadow-md">

@@ -12,7 +12,7 @@ const inputStyle = "rounded-lg border border-gray-500/50 bg-gray-400 dark:bg-gra
 
 export function UserSettings() {
 
-  const { register, handleSubmit, formState: { errors }, setValue, getValues, watch } = useForm<UpdateUserDTO>();
+  const { register, handleSubmit, formState: { errors }, setValue, getValues, watch, resetField } = useForm<UpdateUserDTO>();
 
   const user = useUser();
   const [usernameChecked, setUsernameChecked] = useState<boolean>(false);
@@ -87,19 +87,26 @@ export function UserSettings() {
                 Change Avatar
               </button>
 
-              {avatarInputOpen && <div className="flex flex-col gap-1.5">
+              {avatarInputOpen && <div className="flex gap-4">
                 <input
                   {...register("avatarUrl")}
                   type="url"
                   className={`${inputStyle} `}
                 />
+                <button 
+                onClick={() => {
+                  setAvatarInputOpen(false);
+                  resetField("avatarUrl");
+                }}
+                className="text-sm cursor-pointer">Cancel</button>
               </div>}
+
             </div>
 
           </div>
 
           {/* Inputs section */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 w-full gap-5">
+          <section className="grid grid-cols-1 lg:grid-cols-2 w-full gap-5">
             <div className="flex flex-col gap-1.5">
               <label className="font-medium ">First Name</label>
               <input
@@ -128,10 +135,10 @@ export function UserSettings() {
                 className={`${inputStyle}`}
               />
             </div>
-          </div>
+          </section>
 
           {/* username input and check*/}
-          <div className="flex flex-col gap-1.5 w-full">
+          <section className="flex flex-col gap-1.5 w-full">
             <label>Username</label>
 
             {/* Input and check */}
@@ -168,7 +175,7 @@ export function UserSettings() {
                 : <span className="text-green-500">Username Available</span>
             )}
 
-          </div>
+          </section>
 
           <button className="text-white cursor-pointer rounded-lg hover:bg-teal-500 bg-teal-600 px-4 py-2">
             Save

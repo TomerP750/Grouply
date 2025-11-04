@@ -21,6 +21,8 @@ import com.grouply.backend.post.Post;
 import com.grouply.backend.post.dto.PostDTO;
 import com.grouply.backend.project_post_position.ProjectPostPosition;
 import com.grouply.backend.project_post_position.dto.ProjectPostPositionDTO;
+import com.grouply.backend.social_link.SocialLink;
+import com.grouply.backend.social_link.dto.SocialLinkDTO;
 import com.grouply.backend.technology.Technology;
 import com.grouply.backend.technology.dto.TechnologyDTO;
 import com.grouply.backend.user.Dtos.UserDTO;
@@ -173,8 +175,10 @@ public class EntityToDtoMapper {
 
     public static ProfileDTO toProfileDto(Profile profile) {
         return ProfileDTO.builder()
+                .id(profile.getId())
                 .about(profile.getAbout())
                 .bannerUrl(profile.getBannerUrl())
+//                .socialLinks(toSocialLinkDtos(profile.getSocialLinks()))
                 .user(toUserDto(profile.getUser()))
                 .positions(toPositionDtos(profile.getPositions()))
                 .build();
@@ -229,6 +233,26 @@ public class EntityToDtoMapper {
                 .sender(toUserDto(entity.getSender()))
                 .sentAt(entity.getSentAt())
                 .build();
+    }
+
+    public static SocialLinkDTO toSocialLinkDto(SocialLink entity) {
+        if (entity == null) return null;
+
+        return SocialLinkDTO.builder()
+                .id(entity.getId())
+                .link(entity.getLink())
+                .type(entity.getType())
+                .build();
+    }
+
+    public static Set<SocialLinkDTO> toSocialLinkDtos(Set<SocialLink> entities) {
+        if (entities == null || entities.isEmpty()) return Collections.emptySet();
+
+        Set<SocialLinkDTO> result = new HashSet<>(entities.size());
+        for (SocialLink sl : entities) {
+            if (sl != null) result.add(toSocialLinkDto(sl));
+        }
+        return result;
     }
 
 

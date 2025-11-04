@@ -30,10 +30,10 @@ public class PostController {
 
     @GetMapping("/all")
     public Page<PostDTO> allPosts(@RequestParam(value = "page", defaultValue = "0") int page,
-                                  @RequestParam(value = "size", defaultValue = "10") int size,
-                                  @RequestParam(required = false) List<ProjectPosition> roles) {
-        Pageable pageable = PageRequest.of(page, size);
-        return postService.getAllPosts(pageable, roles);
+                                  @RequestParam(value = "size", defaultValue = "10") int size
+                                  ) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, ("createdAt")));
+        return postService.getAllPosts(pageable);
     }
 
     @GetMapping("/{postId}")
@@ -60,6 +60,17 @@ public class PostController {
     }
 
     
+    // TEST
+
+    @GetMapping("/search")
+    public Page<PostDTO> search(
+            @RequestParam(required = false) List<ProjectPosition> roles,
+            @RequestParam(required = false, name = "techIds") List<Long> techIds
+
+    ) {
+        Pageable pageable = PageRequest.of(0, 5);
+        return postService.searchPosts(roles, techIds, pageable);
+    }
 
 
 

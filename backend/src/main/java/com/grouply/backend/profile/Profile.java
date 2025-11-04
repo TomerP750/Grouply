@@ -1,15 +1,14 @@
 package com.grouply.backend.profile;
 
 import com.grouply.backend.position.Position;
+import com.grouply.backend.social_link.SocialLink;
 import com.grouply.backend.user.User;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "profiles")
@@ -21,10 +20,15 @@ public class Profile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Setter(AccessLevel.NONE)
     private Long id;
 
     private String about;
     private String bannerUrl;
+
+
+//    @OneToMany(mappedBy = "profile")
+//    private Set<SocialLink> socialLinks;
 
     @ManyToMany
     private List<Position> positions = new ArrayList<>();

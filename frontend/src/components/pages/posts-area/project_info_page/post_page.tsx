@@ -20,6 +20,7 @@ export function PostPage() {
     const id = +params.id!;
 
     const [post, setPost] = useState<PostDTO>();
+    const techs = post?.projectDTO.technologies;
 
     const user = useUser();
 
@@ -33,7 +34,7 @@ export function PostPage() {
             })
     }, []);
 
-    const techs = post?.projectDTO.technologies;
+    
 
 
     return (
@@ -105,14 +106,7 @@ export function PostPage() {
 
                     </div>
                 </section>
-
-
-
-
-
-
-
-
+                
             </main>
         </div>
     )

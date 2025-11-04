@@ -13,6 +13,7 @@ import { ProjectGrid } from "./project_grid";
 const linkStyle = "border px-3 w-1/2 py-2 inline-flex justify-center gap-2 items-center hover:bg-black dark:hover:text-black dark:hover:bg-white hover:text-white transition-colors duration-200"
 
 export function ProfilePage() {
+
   const params = useParams();
   const id = Number(params.id);
 
@@ -20,14 +21,19 @@ export function ProfilePage() {
 
   const user = useUser();
 
-
   useEffect(() => {
     if (!id) return;
     profileService
       .getOneProfile(id)
-      .then(setProfile)
+      .then(res => {
+        console.log(res);
+        
+        setProfile(res)
+      })
       .catch((err) => console.log(err));
   }, [id]);
+
+  
 
   return (
     <main className="min-h-screen bg-gray-200 dark:bg-slate-900 dark:text-white">
@@ -41,20 +47,20 @@ export function ProfilePage() {
 
           <button className="font-medium mb-3 cursor-pointer">2 Connections</button>
 
-          <NavLink to={"/"} className={`${linkStyle}`}>
+          {<NavLink to={"/"} className={`${linkStyle}`}>
             <FaLinkedin size={22} />
             <span>LinkedIn</span>
-          </NavLink>
+          </NavLink>}
 
-          <NavLink to={"/"} className={`${linkStyle}`}>
+          {<NavLink to={"/"} className={`${linkStyle}`}>
             <FaGithub size={22} />
             <span>GitHub</span>
-          </NavLink>
+          </NavLink>}
 
-          <NavLink to={"/"} className={`${linkStyle}`}>
+          {<NavLink to={"/"} className={`${linkStyle}`}>
             <FaLink size={22} />
             <span>Portfolio</span>
-          </NavLink>
+          </NavLink>}
 
         </section>
 

@@ -126,14 +126,35 @@ public class PostService implements IPostService {
     }
 
     @Override
-    public Page<PostDTO> getAllPosts(Pageable pageable, @Nullable List<ProjectPosition> roles) {
-        Page<Post> page = (roles == null || roles.isEmpty())
-                ? postRepository.findAllByOrderByPostedAtDesc(pageable)
-                : postRepository.findAllFiltered(roles, pageable);
+    public Page<PostDTO> getAllPosts(Pageable pageable) {
+
+        Page<Post> page = postRepository.findAllByOrderByPostedAtDesc(pageable);
+        return page.map(EntityToDtoMapper::toProjectPostDto);
+
+    }
+
+    // TEST
+
+
+    public Page<PostDTO> searchPosts(List<ProjectPosition> roles, List<Long> techIds, Pageable pageable) {
+        boolean noRoles = roles == null || roles.isEmpty();
+        boolean noTechs = techIds == null || techIds.isEmpty();
+
+        Page<Post> page;
+        if (noRoles && noTechs) {
+            page = postRepository.findAll(pageable);
+        } else if (noTechs) {
+            page = postRepository.findDistinctByPositions_PositionIn(roles, pageable);
+        } else if (noRoles) {
+            page = postRepository.findDistinctByProject_Technologies_IdIn(techIds, pageable);
+        } else {
+            page = postRepository.findDistinctByPositions_PositionInAndProject_Technologies_IdIn(roles, techIds, pageable);
+        }
 
         return page.map(EntityToDtoMapper::toProjectPostDto);
     }
 
+    // END TEST
 
     @Override
     public boolean requestToJoinProject(Long userId, Long ownerId, Long projectId) {
