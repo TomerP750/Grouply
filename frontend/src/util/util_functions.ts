@@ -65,3 +65,12 @@ export function timeAgo(date: Date | string | number): string {
 }
 
 
+
+export function averageGrades(grades: Record<string, number>): number {
+  const values = Object.values(grades);
+  if (values.length === 0) return 0;
+
+  const sum = values.reduce((acc, num) => acc + num, 0);
+  return Math.round(sum / values.length);
+}
+

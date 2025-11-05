@@ -73,6 +73,13 @@ public class ProjectController {
         return projectService.getAllUserProjectsWithNoPosts(userId);
     }
 
+    //TODO add to frontend
+    @GetMapping("/owned/completed")
+    public List<ProjectDTO> allUserOwnedFinishedProjects(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        Long userId = userDetails.getId();
+        return projectService.getFinishedProject(userId);
+    }
+
 
 
 

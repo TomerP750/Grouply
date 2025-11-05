@@ -4,8 +4,6 @@ import com.grouply.backend.activity.ActivityService;
 import com.grouply.backend.activity.ActivityType;
 import com.grouply.backend.exceptions.InvalidInputException;
 import com.grouply.backend.exceptions.UnauthorizedException;
-import com.grouply.backend.finished_project.FinishedProject;
-import com.grouply.backend.finished_project.FinishedProjectRepository;
 import com.grouply.backend.project.Dtos.CreateProjectDTO;
 import com.grouply.backend.project.Dtos.ProjectDTO;
 import com.grouply.backend.project.Dtos.UpdateProjectDTO;
@@ -41,7 +39,6 @@ public class ProjectService implements IProjectService {
     private final ProjectRepository projectRepository;
     private final ProjectMemberRepository projectMemberRepository;
     private final UserRepository userRepository;
-    private final FinishedProjectRepository finishedProjectRepository;
     private final PostRepository postRepository;
     private final TechnologyRepository technologyRepository;
     private final StatisticsRepository statisticsRepository;
@@ -79,7 +76,7 @@ public class ProjectService implements IProjectService {
         project.addMember(owner);
         projectRepository.save(project); // because i put cascade so it automatically saves the project member in the database
 
-        activityService.createActivity("You created project",
+        activityService.createActivity("You created" + " " + project.getName() ,
                 "/dashboard/" + userId + "/project-members/" + project.getId(),
                 ActivityType.CREATED_PROJECT,
                 user);
@@ -171,6 +168,12 @@ public class ProjectService implements IProjectService {
         return projects.stream().map(EntityToDtoMapper::toProjectDto).toList();
     }
 
+    public List<ProjectDTO> getFinishedProject(Long userId) {
+        List<Project> projects = projectRepository
+                .getAllUserOwnedFinishedProjects(userId, ProjectRole.OWNER, ProjectStatus.COMPLETED);
+        return projects.stream().map(EntityToDtoMapper::toProjectDto).toList();
+    }
+
     /**
      * Gets all the user's projects that with role owner that has no post.
      * @param userId
@@ -253,11 +256,6 @@ public class ProjectService implements IProjectService {
             Statistics stats = fetchStats(m.getUser().getId());
             stats.setCompletedProjects(stats.getCompletedProjects() + 1);
         });
-
-        FinishedProject finishedProject = FinishedProject.builder()
-                .project(project)
-                .build();
-        finishedProjectRepository.save(finishedProject);
 
     }
 

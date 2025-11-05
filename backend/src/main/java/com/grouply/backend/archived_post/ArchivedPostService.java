@@ -72,7 +72,7 @@ public class ArchivedPostService implements IArchivedPostService {
     public Page<PostDTO> allArchivedPosts(Long userId, Pageable pageable) {
         return archivedPostRepository
                 .findByUserId(userId, pageable)
-                .map(a -> EntityToDtoMapper.toProjectPostDto(a.getPost()));
+                .map(a -> EntityToDtoMapper.toPostDto(a.getPost()));
     }
 
     public boolean isPostArchived(Long userId, Long postId) {

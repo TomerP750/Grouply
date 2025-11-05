@@ -86,6 +86,7 @@ public class EntityToDtoMapper {
                 .id(p.getId())
                 .name(p.getName())
                 .status(p.getStatus())
+                .githubRepositoryUrl(p.getGithubRepositoryUrl())
                 .createdAt(p.getCreatedAt())
                 .technologies(toTechnologiesDtos(p.getTechnologies()))
                 .build();
@@ -109,7 +110,7 @@ public class EntityToDtoMapper {
         if (ap == null) return null;
         return ArchivedPostDTO.builder()
                 .id(ap.getId())
-                .projectPost(toProjectPostDto(ap.getPost()))
+                .projectPost(toPostDto(ap.getPost()))
                 .userId(ap.getUser().getId())
                 .archivedAt(ap.getArchivedAt())
                 .build();
@@ -127,7 +128,7 @@ public class EntityToDtoMapper {
     }
 
 
-    public static PostDTO toProjectPostDto(Post post) {
+    public static PostDTO toPostDto(Post post) {
         if (post == null) return null;
 
         return PostDTO.builder()
@@ -140,12 +141,12 @@ public class EntityToDtoMapper {
                 .build();
     }
 
-    public static List<PostDTO> toProjectPostDtos(List<Post> posts) {
+    public static List<PostDTO> toPostDtos(List<Post> posts) {
         List<PostDTO> result = new ArrayList<>();
         if (posts != null) {
             for (Post posting : posts) {
                 if (posting != null) {
-                    result.add(toProjectPostDto(posting));
+                    result.add(toPostDto(posting));
                 }
             }
         }

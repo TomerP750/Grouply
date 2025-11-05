@@ -23,21 +23,28 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
             "JOIN p.projectMembers pm " +
             "WHERE pm.user.id = :userId AND pm.projectRole = :projectRole")
     List<Project> getAllUserOwnedProjects(@Param("userId") Long userId,
-                                       @Param("projectRole") ProjectRole projectRole);
+                                          @Param("projectRole") ProjectRole projectRole);
+
+    @Query("SELECT p FROM Project p " +
+            "JOIN p.projectMembers pm " +
+            "WHERE pm.user.id = :userId AND pm.projectRole = :projectRole AND status = :status")
+    List<Project> getAllUserOwnedFinishedProjects(@Param("userId") Long userId,
+                                                  @Param("projectRole") ProjectRole projectRole,
+                                                  @Param("status") ProjectStatus status);
 
 
     @Query("""
-    SELECT DISTINCT p
-    FROM Project p
-    JOIN p.projectMembers pmOwner
-    WHERE pmOwner.user.id = :ownerId
-    AND pmOwner.projectRole = :ownerRole
-    AND NOT EXISTS (
-      SELECT 1 FROM ProjectMember pm
-      WHERE pm.project = p
-      AND pm.user.id = :recipientId
-    )
-""")
+                SELECT DISTINCT p
+                FROM Project p
+                JOIN p.projectMembers pmOwner
+                WHERE pmOwner.user.id = :ownerId
+                AND pmOwner.projectRole = :ownerRole
+                AND NOT EXISTS (
+                  SELECT 1 FROM ProjectMember pm
+                  WHERE pm.project = p
+                  AND pm.user.id = :recipientId
+                )
+            """)
     List<Project> findOwnedProjectsWhereUserNotMember(
             @Param("ownerId") Long ownerId,
             @Param("recipientId") Long recipientId,
@@ -45,25 +52,21 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
     );
 
     @Query("""
-    SELECT DISTINCT p
-    FROM Project p
-    JOIN p.projectMembers pmOwner
-    WHERE pmOwner.user.id = :ownerId
-      AND pmOwner.projectRole = :ownerRole
-      AND NOT EXISTS (
-          SELECT 1
-          FROM Post po
-          WHERE po.project = p
-      )
-""")
+                SELECT DISTINCT p
+                FROM Project p
+                JOIN p.projectMembers pmOwner
+                WHERE pmOwner.user.id = :ownerId
+                  AND pmOwner.projectRole = :ownerRole
+                  AND NOT EXISTS (
+                      SELECT 1
+                      FROM Post po
+                      WHERE po.project = p
+                  )
+            """)
     List<Project> findOwnedProjectsWithNoPosts(
             @Param("ownerId") Long ownerId,
             @Param("ownerRole") ProjectRole ownerRole
     );
-
-
-
-
 
 
 }

@@ -38,3 +38,21 @@ export function StatusBadge({ status }: { status: ProjectStatus }) {
     </span>
   );
 }
+
+
+
+export function getGradeColor(grade: number): string {
+  if (!Number.isFinite(grade)) {
+    return "bg-slate-200 text-slate-700 dark:bg-slate-800 dark:text-slate-300";
+  }
+
+  const g = Math.max(0, Math.min(100, Math.round(grade)));
+
+  if (g >= 90) return "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-300";
+  if (g >= 80) return "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300";        
+  if (g >= 70) return "bg-lime-100 text-lime-800 dark:bg-lime-900/30 dark:text-lime-300";          
+  if (g >= 60) return "bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300";        
+  if (g >= 50) return "bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-300";     
+
+  return "bg-rose-100 text-rose-800 dark:bg-rose-900/30 dark:text-rose-300";                         
+}

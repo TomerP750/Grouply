@@ -40,6 +40,8 @@ public class Project {
     @Enumerated(EnumType.STRING)
     private ProjectStatus status;
 
+    private String githubRepositoryUrl;
+
     @ManyToMany
     private Set<Technology> technologies = new HashSet<>();
 

@@ -27,6 +27,10 @@ class ProjectService {
         return (await axios.get(`${BASE_API}/project/owned/noPost`)).data
     }
 
+    async allUserOwnedFinishedProjects() {
+        return (await axios.get(`${BASE_API}/project/owned/completed`)).data
+    }
+
 }
 
 const projectService = new ProjectService();

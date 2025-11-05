@@ -17,6 +17,7 @@ export function SearchBar({ open, onClose }: SearchBarProps) {
   const [query, setQuery] = useState<string>('');
   const [users, setUsers] = useState<UserDTO[]>([]);
 
+
   // const debouncedSearch = useMemo(() => {
   //   return debounce((value: string) => {
   //     userService.searchUsers(value)
@@ -50,7 +51,7 @@ export function SearchBar({ open, onClose }: SearchBarProps) {
       <div
         onClick={onClose}
         className={`
-          fixed inset-0 z-30
+          fixed inset-0 z-30 min-h-screen
           bg-black/80 
           transition-opacity duration-200
           ${open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}
@@ -65,7 +66,6 @@ export function SearchBar({ open, onClose }: SearchBarProps) {
           z-40
           bg-gray-100/90 dark:bg-gray-800/95 backdrop-blur border-b border-white/10
           transition-transform duration-300 ease-out will-change-transform
-          ${open ? "translate-y-0" : "-translate-y-full"}
         `}
         role="dialog"
         aria-modal="true"

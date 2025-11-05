@@ -83,7 +83,7 @@ public class PostService implements IPostService {
                 ActivityType.CREATED_POST,
                 fetchUser(userId));
 
-        return EntityToDtoMapper.toProjectPostDto(newPost);
+        return EntityToDtoMapper.toPostDto(newPost);
     }
 
     @Override
@@ -122,14 +122,14 @@ public class PostService implements IPostService {
 
     @Override
     public PostDTO getOnePost(Long postId) {
-        return EntityToDtoMapper.toProjectPostDto(fetchProjectPost(postId));
+        return EntityToDtoMapper.toPostDto(fetchProjectPost(postId));
     }
 
     @Override
     public Page<PostDTO> getAllPosts(Pageable pageable) {
 
         Page<Post> page = postRepository.findAllByOrderByPostedAtDesc(pageable);
-        return page.map(EntityToDtoMapper::toProjectPostDto);
+        return page.map(EntityToDtoMapper::toPostDto);
 
     }
 
@@ -151,7 +151,7 @@ public class PostService implements IPostService {
             page = postRepository.findDistinctByPositions_PositionInAndProject_Technologies_IdIn(roles, techIds, pageable);
         }
 
-        return page.map(EntityToDtoMapper::toProjectPostDto);
+        return page.map(EntityToDtoMapper::toPostDto);
     }
 
     // END TEST

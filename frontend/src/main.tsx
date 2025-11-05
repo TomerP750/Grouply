@@ -2,12 +2,13 @@ import axios from 'axios'
 import { createRoot } from 'react-dom/client'
 import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
-import { Layout } from './components/layout/Layout.tsx'
+
 import { ThemeProvider } from './context/ThemeContext.tsx'
 import './index.css'
 import { store } from './redux/store.ts'
 import { ToastConfig } from './util/ToastConfig.tsx'
 import { ScrollToTop } from './util/scroll_to_top.tsx'
+import { Layout } from './components/layout/Layout.tsx'
 
 
 axios.interceptors.request.use(function (config) {

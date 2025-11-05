@@ -17,6 +17,7 @@ public class ProjectDTO {
     private Long id;
     private String name;
     private ProjectStatus status;
+    private String githubRepositoryUrl;
     private LocalDateTime createdAt;
     private Set<TechnologyDTO> technologies;
 }
