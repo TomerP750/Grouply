@@ -79,7 +79,7 @@ public class PostService implements IPostService {
         }
 
         activityService.createActivity("You created a post",
-                "post/"+newPost.getId(),
+                "/post/"+newPost.getId(),
                 ActivityType.CREATED_POST,
                 fetchUser(userId));
 

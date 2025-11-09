@@ -48,7 +48,7 @@ export function ReviewProjectPage() {
     const [url, setUrl] = useState<string>('');
     const [error, setError] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(false);
-    const [result, setResult] = useState<boolean>(true);
+    const [result, setResult] = useState<boolean>(false);
 
     const grade = averageGrades(resultDummy.metrics);
 
@@ -209,7 +209,6 @@ export function ReviewProjectPage() {
                         className="w-full rounded-full bg-slate-700/60 px-4 py-2 shadow-md shadow-black/40 outline-none transition
                     focus:ring-2 focus:ring-teal-500 "
                     />
-
                 </div>
 
                 <div className="flex items-center gap-4">
@@ -238,17 +237,19 @@ export function ReviewProjectPage() {
 
             <section className="mx-auto flex w-full max-w-3xl flex-col items-center gap-6 px-4 pb-16 dark:text-white">
                 <select
+                    disabled={url.length > 0}
                     value={url}
                     onChange={(e) => setUrl(e.target.value)}
                     className="w-60 appearance-none rounded-lg border border-slate-300 px-3 py-2 text-center shadow-sm
-                   outline-none transition
+                   disabled:opacity-50 disabled:cursor-not-allowed
+                    outline-none transition cursor-pointer
                    focus:ring-2 focus:ring-teal-500
                    dark:border-slate-700 dark:bg-slate-800 dark:text-white"
                 >
                     <option value="">Select A Project</option>
                     {projects.length > 0 ? (
                         projects.map((p) => (
-                            <option key={p.id} value={p.name}>
+                            <option key={p.id} value={p.githubRepositoryUrl}>
                                 {p.name}
                             </option>
                         ))

@@ -64,6 +64,9 @@ export function Feed() {
             })
             .finally(() => {
                 setLoading(false);
+                console.log("selected roles:", selectedRoles);
+                console.log("selected techs:", selectedTechnologies);
+                
             })
     }, [selectedRoles, selectedTechnologies]);
 
@@ -88,7 +91,7 @@ export function Feed() {
                             <div className="flex w-3/4 justify-between lg:max-w-3/4 lg:justify-center">
                                 <FeedHeader onAdd={handleAdd} />
                                 <button
-                                    className="lg:hidden inline-flex items-center gap-1 rounded-lg text-white bg-gray-600 px-3 py-1.5 cursor-pointer hover:bg-gray-500 transition-colors">
+                                    className="lg:hidden max-h-10 inline-flex items-center gap-1 rounded-lg text-white bg-gray-600 px-3 py-1.5 cursor-pointer hover:bg-gray-500 transition-colors">
                                     <BiFilter size={20} /><span>Filters</span>
                                 </button>
                             </div>

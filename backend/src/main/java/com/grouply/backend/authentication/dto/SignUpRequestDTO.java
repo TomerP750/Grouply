@@ -9,4 +9,5 @@ import lombok.Data;
 public class SignUpRequestDTO {
 
     private AccountDTO accountDetails;
+    private Integer code;
 }

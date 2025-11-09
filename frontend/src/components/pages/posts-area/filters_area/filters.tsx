@@ -19,9 +19,9 @@ export function Filters({ onFilterChange }: FiltersProps) {
 
   return (
     
-    <aside className="hidden lg:block lg:sticky top-10 w-72 shrink-0 z-auto">
+    <aside className="hidden lg:block lg:sticky top-10 w-72 shrink-0">
       
-      <div className="lg:sticky lg:top-16 h-[calc(100vh-8rem)] overflow-y-auto
+      <div className="lg:sticky lg:top-10 h-[calc(100vh-2rem)] overflow-y-auto
                       px-4 py-4 rounded-xl text-slate-900 dark:text-slate-100
                       shadow-lg space-y-4 min-h-0">
 

@@ -13,9 +13,8 @@ public class UpdateProjectDTO {
 
     private Long projectId;
     private String name;
-    private LocalDateTime createdAt;
     private ProjectStatus status;
 //    private Set<Technology> technologies;
-    private ProjectPosition userPosition;
+
 
 }

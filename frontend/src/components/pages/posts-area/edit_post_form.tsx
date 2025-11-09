@@ -58,7 +58,7 @@ export function EditPostFormModal({ open, onClose, post }: EditPostFormModalProp
         if (!open || !user) return;
         setLoadingProjects(true);
         projectService
-            .getAllUserOwnedProjects()
+            .allUserProjectsWithNoPosts()
             .then((res) => setOwnedProjects(res))
             .catch((err) => toast.error(err?.response?.data))
             .finally(() => setLoadingProjects(false));
@@ -163,12 +163,14 @@ export function EditPostFormModal({ open, onClose, post }: EditPostFormModalProp
 
                     {/* Description */}
                     <label className="flex flex-col gap-2">
+                        
                         <div className="flex justify-between items-center">
                             <span className={labelCls}>Description</span>
                             <button type="button" onClick={() => resetField("description")} className="text-white px-2 py-1 bg-teal-600 rounded-lg hover:bg-teal-500 cursor-pointer">
                                 Reset
                             </button>
                         </div>
+
                         <textarea
                             rows={8}
                             readOnly={length > 500}

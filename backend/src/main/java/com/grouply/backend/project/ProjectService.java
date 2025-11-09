@@ -242,7 +242,6 @@ public class ProjectService implements IProjectService {
 
     private void markAsFinished(User user, Project project) throws UnauthorizedException {
 
-
         if (!isOwner(user.getId(), project.getId())) {
             throw new UnauthorizedException("Unauthorized");
         }

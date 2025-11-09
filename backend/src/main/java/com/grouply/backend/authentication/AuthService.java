@@ -68,7 +68,6 @@ public class AuthService implements IAuthService {
 
         userRepository.save(user);
 
-        System.out.println(user);
 
         Profile profile = Profile.builder()
                 .about(null)

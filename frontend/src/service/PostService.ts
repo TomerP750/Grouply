@@ -13,11 +13,12 @@ class PostService {
             page: String(page),
             size: String(size)
         });
+
         if (roles?.length) {
-            params.set("roles", roles.join(","));
+            roles.forEach(r => params.append("roles", r));
         }
 
-        return (await axios.get(`${BASE_API}/post/all?${[params.toString()]}`)).data
+        return (await axios.get(`${BASE_API}/post/all${params.toString()}`)).data
     }
 
     async onePost(postId: number) {

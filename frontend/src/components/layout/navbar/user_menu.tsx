@@ -36,7 +36,7 @@ export function UserMenu({ user }: UserMenuProps) {
 
     
     return (
-        <main className="z-1000 user-menu gap-5 bg-gray-200 dark:bg-slate-950 flex flex-col items-start py-5 px-4 absolute top-0 mt-15 -right-3 w-85 min-h-64 rounded-2xl shadow-2xl dark:text-gray-300">
+        <main className="user-menu gap-5 bg-gray-200 dark:bg-slate-950 flex flex-col items-start py-5 px-4 absolute top-0 mt-15 -right-3 w-85 min-h-64 rounded-2xl shadow-2xl dark:text-gray-300 z-[1000]">
 
             <section className='flex flex-col w-full '>
                 <p>{fullName}</p>

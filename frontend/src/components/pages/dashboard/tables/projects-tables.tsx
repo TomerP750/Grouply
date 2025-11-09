@@ -18,6 +18,7 @@ import { CreateProjectForm } from "../forms/create_project_form";
 import { DataTable } from "./admin_tables/data_table";
 import { extractPageCount } from "../../../../util/pagination_helper";
 import { StatusBadge } from "../../../../util/ui_helper";
+import type { UpdateProjectDTO } from "../../../../dtos/models_dtos/request_dto/update_project_dto";
 
 
 
@@ -34,9 +35,11 @@ export function ProjectsTable() {
   const [rows, setRows] = useState<ProjectDTO[]>([]);
   const [loading, setLoading] = useState(false);
 
+
   const [editedProjectId, setEditedProjectId] = useState<number>(0);
-  const [selectedProjectId, setSelectedProjectId] = useState<number>(0);
-  const [selectedStatus, setSelctedStatus] = useState<ProjectStatus>();
+  // const [selectedProjectId, setSelectedProjectId] = useState<number>(0);
+  const [selectedStatus, setSelectedStatus] = useState<ProjectStatus>();
+  const [name, setName] = useState<string>('');
 
   const navigate = useNavigate();
   const user = useUser();
@@ -61,7 +64,23 @@ export function ProjectsTable() {
   }
 
 
-  const handleUpdate = (projectId: number) => {
+  const handleUpdate = () => {
+
+    const dataToSend: UpdateProjectDTO = {
+      projectId: editedProjectId,
+      name: name,
+      status: selectedStatus!
+    }
+
+    projectService.updateProject(dataToSend)
+      .then(() => {
+        setEditedProjectId(0);
+        toast.success("Project updated!");
+      })
+      .catch(err => {
+        toast.error(err.response.data);
+      })
+
 
   };
 
@@ -95,6 +114,7 @@ export function ProjectsTable() {
             return (
               <input
                 type="text"
+                onChange={(e) => setName(e.target.value)}
                 className="block w-[260px] border rounded px-2 py-1"
                 defaultValue={String(i.getValue())}
               />
@@ -115,28 +135,30 @@ export function ProjectsTable() {
 
       ch.accessor("status", {
         header: "Status",
-        cell: (i) => {
-          const projectId = i.row.original.id;
-          const status = i.getValue();
+        cell: (ctx) => {
+          const projectId = ctx.row.original.id;
+          const current = ctx.getValue() as ProjectStatus;
           const isEditing = projectId === editedProjectId;
 
-          return isEditing ? (
+          if (!isEditing) return <StatusBadge status={current} />;
+
+          return (
             <select
-              value={status}
-              onChange={(e) => setSelctedStatus(e.target.value as ProjectStatus)}
-              onBlur={() => setEditedProjectId(0)}
+              value={selectedStatus ?? current}
+              onChange={(e) => setSelectedStatus(e.target.value as ProjectStatus)}
               className="border rounded px-2 py-1 bg-slate-800 text-white"
             >
-              <option value="PREPARATION">Preparation</option>
-              <option value="IN_PROGRESS">In Progress</option>
-              <option value="COMPLETED">Completed</option>
+              {Object.values(ProjectStatus).map((s) => (
+                <option key={s} value={s}>
+                  {toNormal(s)}
+                </option>
+              ))}
             </select>
-          ) : (
-            <StatusBadge status={status} />
           );
         },
         sortingFn: "alphanumeric",
       }),
+
 
       ch.accessor("createdAt", {
         header: "Created",
@@ -173,7 +195,7 @@ export function ProjectsTable() {
 
               <div className="flex items-center gap-3">
                 <button
-                  onClick={() => setEditedProjectId(row.original.id)}
+                  onClick={handleUpdate}
                   className="inline-flex gap-1 items-center text-green-600 cursor-pointer rounded px-2 py-1 hover:underline"
                 >
                   <BiPencil size={20} />
@@ -202,7 +224,7 @@ export function ProjectsTable() {
                   type="button"
                   onClick={(e) => {
                     e.stopPropagation();
-                    setSelectedProjectId(row.original.id);
+                    setEditedProjectId(row.original.id);
                     setDialogOpen(true);
                   }}
                   className="inline-flex items-center gap-1 cursor-pointer rounded px-2 py-1 text-red-600 hover:underline"
@@ -263,7 +285,7 @@ export function ProjectsTable() {
           open={dialogOpen}
           message={"Are you sure you want to delete?"}
           onClose={() => setDialogOpen(false)}
-          onConfirm={() => handleDeleteProject(selectedProjectId)}
+          onConfirm={() => handleDeleteProject(editedProjectId)}
         />
       )}
     </main>
