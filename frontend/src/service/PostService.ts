@@ -1,9 +1,10 @@
 import axios from "axios";
 import { BASE_API } from "../util/base_api";
 import type { CreateProjectPostDTO } from "../dtos/models_dtos/request_dto/CreateProjectPostDTO";
-import type { EditPostRequestDTO } from "../components/pages/posts-area/edit_post_form";
+
 import type { ProjectPosition } from "../dtos/enums/ProjectPosition";
 import type { TechnologyDTO } from "../dtos/models_dtos/TechnologyDTO";
+import type { EditPostRequestDTO } from "../components/pages/posts-area/forms/edit_post_form";
 
 
 class PostService {

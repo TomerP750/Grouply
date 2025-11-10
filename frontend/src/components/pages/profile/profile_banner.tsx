@@ -9,7 +9,7 @@ type ProfileBannerProps = {
 
 export function ProfileBanner({ bannerUrl, user }: ProfileBannerProps) {
   return (
-    <div className="w-full">
+    <div className="w-full z-0">
       {/* Banner */}
       <div className="relative w-full h-48 sm:h-64">
         {bannerUrl ? (

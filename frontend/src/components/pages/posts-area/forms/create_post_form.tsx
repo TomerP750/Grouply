@@ -11,7 +11,8 @@ import { useUser } from "../../../../redux/hooks";
 import postService from "../../../../service/PostService";
 import projectService from "../../../../service/ProjectService";
 import { PositionSelectChips } from "../position_chip_select";
-import { Navbar } from "../../../layout/navbar/Navbar";
+import { useNavigate } from "react-router-dom";
+
 
 
 
@@ -28,23 +29,21 @@ const errorCls = "text-xs text-red-500 mt-1";
 
 
 interface CreatePostFormProps {
-  open?: boolean;
-  onClose?: () => void;
   onAdd?: (dto: PostDTO) => void;
 }
 
-export function CreatePostForm({ open, onClose, onAdd }: CreatePostFormProps) {
+export function CreatePostForm({ onAdd }: CreatePostFormProps) {
   const [ownedProjects, setOwnedProjects] = useState<ProjectDTO[]>([]);
   const [loadingProjects, setLoadingProjects] = useState(false);
   const [loading, setLoading] = useState<boolean>(false);
 
   const [positions, setPositions] = useState<ProjectPosition[]>([]);
 
+  const navigate = useNavigate();
   const user = useUser();
 
   useEffect(() => {
 
-    if (!open || !user) return;
     setLoadingProjects(true);
     projectService
       .allUserProjectsWithNoPosts()
@@ -56,7 +55,7 @@ export function CreatePostForm({ open, onClose, onAdd }: CreatePostFormProps) {
       .catch((err) => toast.error(err?.response?.data))
       .finally(() => setLoadingProjects(false));
 
-  }, [open]);
+  }, []);
 
 
   const { register, handleSubmit, reset, formState: { errors }, control, resetField } = useForm<CreateProjectPostDTO>();
@@ -72,9 +71,9 @@ export function CreatePostForm({ open, onClose, onAdd }: CreatePostFormProps) {
 
     postService.createPost(dataToSend)
       .then(res => {
-        toast.success("Created Post")
-        onClose?.()
-        onAdd?.(res)
+        toast.success("Created Post");
+        navigate("/");
+        onAdd?.(res);
       })
       .catch(err => {
         toast.error(err.response.data);
@@ -173,13 +172,13 @@ export function CreatePostForm({ open, onClose, onAdd }: CreatePostFormProps) {
         </div>
 
         {/* Buttons */}
-        <div className="mt-6 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+        <div className="mt-6 mr-4 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
           <button
             type="button"
             onClick={(e) => {
               e.stopPropagation();
               reset();
-              onClose?.();
+              navigate("/");
             }}
             className="inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm text-slate-300 hover:text-white hover:bg-slate-800/60 transition"
           >

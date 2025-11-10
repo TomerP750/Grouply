@@ -6,16 +6,14 @@ import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import type { PostDTO } from "../../../../../dtos/models_dtos/PostDTO";
+import type { JoinRequestDTO } from "../../../../../dtos/models_dtos/request_dto/JoinRequestDTO";
 import { useUser } from "../../../../../redux/hooks";
-import postService from "../../../../../service/PostService";
+import joinRequestService from "../../../../../service/JoinRequestService";
 import { usePagination } from "../../../../../util/helper_hooks";
 import { extractPageCount } from "../../../../../util/pagination_helper";
 import { fmtDate } from "../../../../../util/util_functions";
 import { Dialog } from "../../../../elements/Dialog";
 import { DataTable } from "../admin_tables/data_table";
-import type { JoinRequestDTO } from "../../../../../dtos/models_dtos/request_dto/JoinRequestDTO";
-import joinRequestService from "../../../../../service/JoinRequestService";
 
 const ch = createColumnHelper<JoinRequestDTO>();
 
@@ -24,11 +22,11 @@ export function JoinRequestsTable() {
     const { pagination, setPageCount, pageCount, setPagination } = usePagination();
     const [rows, setRows] = useState<JoinRequestDTO[]>([]);
     const [loading, setLoading] = useState(false);
-    const [modalOpen, setModalOpen] = useState(false);
     const [dialogOpen, setDialogOpen] = useState(false);
 
     const params = useParams();
-    const postId = Number(params.id);
+    const postId = Number(params.postId);
+    console.log("postId: ", postId)
 
     const navigate = useNavigate();
     const user = useUser();
@@ -37,9 +35,10 @@ export function JoinRequestsTable() {
         setLoading(true);
         joinRequestService.allRequestsByPostId(postId, pagination.pageIndex, pagination.pageSize)
             .then(res => {
-                setRows(res.content);
-                console.log(res.content);
+                setRows(res.content);  
+                console.log(res);
                 
+                setPageCount(extractPageCount(res, pagination.pageSize));              
             })
             .catch((err) =>
                 toast.error(err?.response?.data ?? "Failed to load ")
@@ -70,9 +69,9 @@ export function JoinRequestsTable() {
                 id: "actions",
                 header: "Actions",
                 cell: ({ row }) => (
-                    <section className="flex items-center gap-2 font-medium">
-                        <button>Accept</button>
-                        <button>Decline</button>
+                    <section className="flex items-center gap-3 font-medium">
+                        <button className="cursor-pointer bg-green-700 hover:bg-green-800 transition-colors rounded-lg px-2 py-1">Accept</button>
+                        <button className="cursor-pointer bg-red-700 hover:bg-red-800 transition-colors rounded-lg px-2 py-1">Decline</button>
                     </section>
                 ),
                 enableSorting: false,
@@ -84,7 +83,7 @@ export function JoinRequestsTable() {
     return (
         <main className="w-full p-4 dark:text-white">
 
-            <h2 className="text-lg font-semibold ">Posts</h2>
+            <h2 className="text-lg font-semibold ">Join Requests</h2>
 
             <DataTable<JoinRequestDTO>
                 columns={columns}
@@ -93,7 +92,7 @@ export function JoinRequestsTable() {
                 pagination={pagination}
                 setPagination={setPagination}
                 loading={loading}
-                emptyMessage="No posts"
+                emptyMessage="No Join Requests"
                 enableSorting
                 className="shadow-md"
             />

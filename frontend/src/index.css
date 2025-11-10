@@ -47,3 +47,14 @@ body {
 
 
 
+@layer utilities {
+  .hover-gradient-move {
+    background-size: 200%;
+    background-position: left center;
+    transition: background-position 1s ease;
+  }
+  .hover-gradient-move:hover {
+    background-position: right center;
+  }
+}
+
