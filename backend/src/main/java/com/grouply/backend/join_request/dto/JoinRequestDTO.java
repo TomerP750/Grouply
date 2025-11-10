@@ -4,6 +4,8 @@ import com.grouply.backend.project_post_position.dto.ProjectPostPositionDTO;
 import lombok.Builder;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Data
 @Builder
 public class JoinRequestDTO {
@@ -11,5 +13,6 @@ public class JoinRequestDTO {
     Long senderId;
     Long projectPostPositionId;
     Long projectPostId;
+    LocalDateTime requestedAt;
 
 }

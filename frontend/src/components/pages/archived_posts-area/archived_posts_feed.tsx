@@ -32,7 +32,7 @@ export function ArchivedPostsFeed() {
     }
 
     return (
-        <div className="flex flex-col bg-slate-900 min-h-screen">
+        <div className="flex flex-col  min-h-screen">
             <Navbar />
             <div className="flex-col lg:flex-row flex w-full items-center gap-5 lg:gap-0 lg:items-start lg:py-10 min-h-screen">
                 {/* Filters */}

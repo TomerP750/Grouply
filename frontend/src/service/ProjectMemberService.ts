@@ -1,7 +1,7 @@
 import axios from "axios";
 import { BASE_API } from "../util/base_api";
 import type { ProjectRole } from "../dtos/enums/ProjectRole";
-import type { ChangeUserRoleDTO } from "../components/pages/dashboard/tables/project_members_table";
+import type { ChangeUserRoleDTO } from "../components/pages/dashboard/tables/user_tables/project_members_table";
 
 
 class ProjectMemberService {

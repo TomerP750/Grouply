@@ -7,18 +7,18 @@ import { BiPencil, BiPlus, BiTrash, BiX } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import { ProjectStatus } from "../../../../dtos/enums/ProjectStatus";
-import type { ProjectDTO } from "../../../../dtos/models_dtos/ProjectDTO";
-import { useUser } from "../../../../redux/hooks";
-import projectService from "../../../../service/ProjectService";
-import { fmtDate, toNormal } from "../../../../util/util_functions";
-import { Dialog } from "../../../elements/Dialog";
-import { Modal } from "../../../elements/Modal";
-import { CreateProjectForm } from "../forms/create_project_form";
-import { DataTable } from "./admin_tables/data_table";
-import { extractPageCount } from "../../../../util/pagination_helper";
-import { StatusBadge } from "../../../../util/ui_helper";
-import type { UpdateProjectDTO } from "../../../../dtos/models_dtos/request_dto/update_project_dto";
+import { ProjectStatus } from "../../../../../dtos/enums/ProjectStatus";
+import type { ProjectDTO } from "../../../../../dtos/models_dtos/ProjectDTO";
+import { useUser } from "../../../../../redux/hooks";
+import projectService from "../../../../../service/ProjectService";
+import { fmtDate, toNormal } from "../../../../../util/util_functions";
+import { Dialog } from "../../../../elements/Dialog";
+import { Modal } from "../../../../elements/Modal";
+import { CreateProjectForm } from "../../forms/create_project_form";
+import { DataTable } from "../admin_tables/data_table";
+import { extractPageCount } from "../../../../../util/pagination_helper";
+import { StatusBadge } from "../../../../../util/ui_helper";
+import type { UpdateProjectDTO } from "../../../../../dtos/models_dtos/request_dto/update_project_dto";
 
 
 
@@ -37,7 +37,7 @@ export function ProjectsTable() {
 
 
   const [editedProjectId, setEditedProjectId] = useState<number>(0);
-  // const [selectedProjectId, setSelectedProjectId] = useState<number>(0);
+  const [selectedProjectId, setSelectedProjectId] = useState<number>(0); // this is for deleting a row (project)
   const [selectedStatus, setSelectedStatus] = useState<ProjectStatus>();
   const [name, setName] = useState<string>('');
 
@@ -59,8 +59,10 @@ export function ProjectsTable() {
   }, [pagination.pageIndex, pagination.pageSize]);
 
 
-  const handleEditOpen = (id: number) => {
+  const handleEditOpen = (id: number, currentName: string, currentStatus: ProjectStatus) => {
     setEditedProjectId(id);
+    setName(currentName);
+    setSelectedStatus(currentStatus);
   }
 
 
@@ -74,6 +76,9 @@ export function ProjectsTable() {
 
     projectService.updateProject(dataToSend)
       .then(() => {
+        // setRows(prev => prev.map(p =>
+        //   p.id === editedProjectId ? { ...p, name, status: selectedStatus } : p
+        // ));
         setEditedProjectId(0);
         toast.success("Project updated!");
       })
@@ -114,9 +119,9 @@ export function ProjectsTable() {
             return (
               <input
                 type="text"
+                value={name}
                 onChange={(e) => setName(e.target.value)}
                 className="block w-[260px] border rounded px-2 py-1"
-                defaultValue={String(i.getValue())}
               />
             );
           }
@@ -144,6 +149,7 @@ export function ProjectsTable() {
 
           return (
             <select
+              key={projectId}
               value={selectedStatus ?? current}
               onChange={(e) => setSelectedStatus(e.target.value as ProjectStatus)}
               className="border rounded px-2 py-1 bg-slate-800 text-white"
@@ -190,57 +196,42 @@ export function ProjectsTable() {
         header: "Actions",
         cell: ({ row }) => (
           <section className="flex items-center gap-2 font-medium">
-
             {editedProjectId === row.original.id ? (
-
               <div className="flex items-center gap-3">
-                <button
-                  onClick={handleUpdate}
-                  className="inline-flex gap-1 items-center text-green-600 cursor-pointer rounded px-2 py-1 hover:underline"
-                >
-                  <BiPencil size={20} />
-                  <span>Save</span>
+                <button onClick={handleUpdate} className="inline-flex gap-1 items-center text-green-600 rounded px-2 py-1 hover:underline">
+                  <BiPencil size={20} /><span>Save</span>
                 </button>
-                <button
-                  type="button"
-                  onClick={() => setEditedProjectId(0)}
-                  className="inline-flex items-center gap-1 cursor-pointer rounded px-2 py-1 text-gray-400 hover:underline"
-                >
-                  <BiX size={20} />
-                  <span>Cancel</span>
+                <button type="button" onClick={() => setEditedProjectId(0)} className="inline-flex items-center gap-1 text-gray-400 rounded px-2 py-1 hover:underline">
+                  <BiX size={20} /><span>Cancel</span>
                 </button>
               </div>
             ) : (
-
               <div className="flex items-center gap-3">
                 <button
-                  onClick={() => handleEditOpen(row.original.id)}
-                  className="inline-flex gap-1 items-center cursor-pointer rounded px-2 py-1 hover:underline"
+                  onClick={() => handleEditOpen(row.original.id, row.original.name, row.original.status)}
+                  className="inline-flex gap-1 items-center rounded px-2 py-1 hover:underline"
                 >
-                  <BiPencil size={20} />
-                  <span>Edit</span>
+                  <BiPencil size={20} /><span>Edit</span>
                 </button>
                 <button
                   type="button"
                   onClick={(e) => {
                     e.stopPropagation();
-                    setEditedProjectId(row.original.id);
+                    setSelectedProjectId(row.original.id);
                     setDialogOpen(true);
                   }}
-                  className="inline-flex items-center gap-1 cursor-pointer rounded px-2 py-1 text-red-600 hover:underline"
+                  className="inline-flex items-center gap-1 text-red-600 rounded px-2 py-1 hover:underline"
                 >
-                  <BiTrash size={20} />
-                  <span>Delete</span>
+                  <BiTrash size={20} /><span>Delete</span>
                 </button>
               </div>
             )}
-
           </section>
         ),
         enableSorting: false,
       }),
     ],
-    [editedProjectId, navigate, user.sub]
+    [editedProjectId, name, selectedStatus, navigate, user.sub]
   );
 
   return (

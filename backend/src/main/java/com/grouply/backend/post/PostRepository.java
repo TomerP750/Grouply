@@ -1,6 +1,7 @@
 package com.grouply.backend.post;
 
 import com.grouply.backend.project_member.ProjectPosition;
+import com.grouply.backend.project_member.ProjectRole;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -35,6 +36,32 @@ public interface PostRepository extends JpaRepository<Post, Long> {
             @Param("roles") List<ProjectPosition> roles,
             Pageable pageable
     );
+
+    @Query(
+            value = """
+    select distinct p
+    from Post p
+    join p.project pr
+    join pr.projectMembers pm
+    where pm.user.id = :userId
+      and pm.projectRole = :role
+  """,
+            countQuery = """
+    select count(distinct p)
+    from Post p
+    join p.project pr
+    join pr.projectMembers pm
+    where pm.user.id = :userId
+      and pm.projectRole = :role
+  """
+    )
+    Page<Post> findAllPostsOnProjectsWhereUserHasRole(
+            @Param("userId") Long userId,
+            @Param("role") ProjectRole role,
+            Pageable pageable
+    );
+
+
 
     Page<Post> findDistinctByPositions_PositionIn(
             List<ProjectPosition> roles, Pageable pageable);

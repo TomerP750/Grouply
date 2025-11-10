@@ -14,6 +14,10 @@
   --bp-2xl: 1530px;
 }
 
+body {
+  background: linear-gradient(to right, #0f172a, #042f2e, #1c1917);
+}
+
 
 ::-webkit-scrollbar {
   width: 10px;
@@ -40,5 +44,6 @@
   scrollbar-width: thin;
   scrollbar-color: #14b8a6 #1e293b; 
 }
+
 
 

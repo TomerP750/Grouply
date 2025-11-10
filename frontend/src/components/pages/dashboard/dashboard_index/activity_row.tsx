@@ -1,9 +1,9 @@
 import type { IconType } from "react-icons";
 import { BiEnvelope, BiFolderMinus, BiFolderPlus, BiPencil, BiQuestionMark, BiRocket, BiTrash, BiUserCheck, BiUserPlus } from "react-icons/bi";
-import { NavLink, useNavigate } from "react-router-dom";
-import { ActivityType } from "../../../dtos/enums/activity_type";
-import type { ActivityDTO } from "../../../dtos/models_dtos/activity_dto";
-import { timeAgo } from "../../../util/util_functions";
+import { useNavigate } from "react-router-dom";
+import { ActivityType } from "../../../../dtos/enums/activity_type";
+import type { ActivityDTO } from "../../../../dtos/models_dtos/activity_dto";
+import { timeAgo } from "../../../../util/util_functions";
 
 interface ActivityRowProps {
     activity: ActivityDTO

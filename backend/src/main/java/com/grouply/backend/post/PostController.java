@@ -59,6 +59,14 @@ public class PostController {
         postService.deletePost(userId, postId);
     }
 
+    @GetMapping("/dashboard/all")
+    public Page<PostDTO> allPostsWhereUserIsOwner(@AuthenticationPrincipal CustomUserDetails userDetails,
+                                                  @RequestParam(value = "page", defaultValue = "0") int page,
+                                                  @RequestParam(value = "size", defaultValue = "10") int size) {
+        Long userId = userDetails.getId();
+        Pageable pageable = PageRequest.of(page, size);
+        return postService.getOwnedPosts(userId, pageable);
+    }
     
     // TEST
 

@@ -24,6 +24,10 @@ public class TechnologyService implements ITechnologyService {
         return technologyRepository.findAll().stream().map(this::toDto).toList();
     }
 
+    public List<TechnologyDTO> allUsedTechsInPosts() {
+        return technologyRepository.findAllUsedTechsInPosts().stream().map(this::toDto).toList();
+    }
+
     public Page<TechnologyDTO> allTechnologiesPage(Pageable pageable) {
         return technologyRepository.findAll(pageable).map(EntityToDtoMapper::toTechnologyDto);
     }

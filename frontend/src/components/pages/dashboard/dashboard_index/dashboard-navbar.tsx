@@ -1,22 +1,22 @@
 import { useEffect, useState } from "react";
-import { BiTask } from "react-icons/bi";
+import { BiNews, BiTask } from "react-icons/bi";
 import { FaUserGroup } from "react-icons/fa6";
 import { MdAdminPanelSettings, MdDashboard } from "react-icons/md";
 import { NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
-import logoLight from "../../../assets/logolight.png";
-import logoDark from "../../../assets/logodark.png";
-import type { JwtUser } from "../../../redux/AuthSlice";
-import userService from "../../../service/UserService";
-import { NavbarRight } from "../../layout/navbar/NavbarRight";
-import { useTheme } from "../../../context/ThemeContext";
+import logoLight from "../../../../assets/logolight.png";
+import logoDark from "../../../../assets/logodark.png";
 import { AdminMenu } from "./admin_menu";
+import { useTheme } from "../../../../context/ThemeContext";
+import type { JwtUser } from "../../../../redux/AuthSlice";
+import userService from "../../../../service/UserService";
+import { NavbarRight } from "../../../layout/navbar/NavbarRight";
 
 
 const baseClasses =
     "cursor-pointer dark:text-gray-300 w-full p-2 inline-flex items-center gap-2 rounded-md transition";
 const activeClasses = "underline decoration-teal-500 decoration-2 underline-offset-10 font-bolder";
-const inactiveClasses = "hover:bg-gray-300/20 dark:text-gray-300";
+const inactiveClasses = "hover:bg-teal-200/20 dark:text-gray-300";
 
 interface DashboardNavbarProps {
     user: JwtUser | null
@@ -79,6 +79,18 @@ export function DashboardNavbar({ user }: DashboardNavbarProps) {
                     </NavLink>
                 </li>
 
+                <li>
+                    <NavLink
+                        to={`/dashboard/${user?.id}/posts`}
+                        className={({ isActive }) =>
+                            `${baseClasses} ${isActive ? activeClasses : inactiveClasses}`
+                        }
+                    >
+                        <BiNews size={25} />
+                        <p>Posts</p>
+                    </NavLink>
+                </li>
+
                 {authorized &&
 
                     <li className="relative">
@@ -90,17 +102,6 @@ export function DashboardNavbar({ user }: DashboardNavbarProps) {
                         </button>
                         {adminMenuOpen && <AdminMenu onClose={() => setAdminMenuOpen(false)}/>}
                     </li>
-                    // <li>
-                    //     <NavLink
-                    //         to={`/dashboard/${user?.id}/users`}
-                    //         className={({ isActive }) =>
-                    //             `${baseClasses} ${isActive ? activeClasses : inactiveClasses}`
-                    //         }
-                    //     >
-                    //         <FaUserGroup size={25} />
-                    //         <p>Users</p>
-                    //     </NavLink>
-                    // </li>
                 }
 
 

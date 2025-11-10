@@ -9,13 +9,13 @@ import { SearchBar } from "./search_bar";
 const linkClasses = ({ isActive }: { isActive: boolean }) =>
   [
     "relative inline-flex items-center gap-2 px-3 py-1 text-base font-medium transition-all duration-200",
-    "text-black dark:text-slate-300",
-    "hover:text-black dark:hover:text-teal-400",
+    "text-black text-white",
     "after:content-[''] after:absolute after:left-0 after:-bottom-3 after:h-[2px] after:w-0 after:rounded-full after:transition-all after:duration-300",
     "after:bg-black dark:after:bg-slate-600 hover:after:w-full hover:after:bg-black dark:hover:after:bg-teal-400",
-    isActive
-      ? "text-black dark:text-teal-400 after:w-full after:bg-black dark:after:bg-teal-400"
-      : "",
+    isActive && [
+       "bg-black text-white py-2 rounded-lg dark:bg-white dark:text-black dark:hover:text-black after:w-0",
+       "after:w-0 hover:after:w-0 hover:after:bg-transparent dark:hover:after:bg-transparent"
+    ].join(" ")
   ].join(" ");
 
 const btn =

@@ -1,6 +1,9 @@
 package com.grouply.backend.join_request;
 
+import com.grouply.backend.join_request.dto.JoinRequestDTO;
 import com.grouply.backend.project_member.ProjectPosition;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -16,16 +19,5 @@ public interface JoinRequestRepository extends JpaRepository<JoinRequest, Long> 
 
     boolean existsBySenderIdAndPostIdAndPositionId(Long userId, Long postId, Long postPositionId);
 
-    @Query("""
-    SELECT CASE WHEN COUNT(jr) > 0 THEN true ELSE false END
-    FROM JoinRequest jr
-    WHERE jr.sender.id = :userId
-      AND jr.post.id = :postId
-      AND jr.position.position = :position
-""")
-    boolean existsByUserAndPostAndPositionName(
-            @Param("userId") Long userId,
-            @Param("postId") Long postId,
-            @Param("position") ProjectPosition position);
-
+    Page<JoinRequest> findByPostId(Long postId, Pageable pageable);
 }

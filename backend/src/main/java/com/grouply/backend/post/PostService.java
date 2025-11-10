@@ -22,11 +22,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
-import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -41,8 +38,7 @@ public class PostService implements IPostService {
     private final ProjectRepository projectRepository;
     private final ProjectPostPositionRepository projectPostPositionRepository;
     private final ActivityService activityService;
-
-
+    
 
 
 
@@ -131,6 +127,12 @@ public class PostService implements IPostService {
         Page<Post> page = postRepository.findAllByOrderByPostedAtDesc(pageable);
         return page.map(EntityToDtoMapper::toPostDto);
 
+    }
+
+    public Page<PostDTO> getOwnedPosts(Long userId, Pageable pageable) {
+
+        Page<Post> page = postRepository.findAllPostsOnProjectsWhereUserHasRole(userId, ProjectRole.OWNER, pageable);
+        return page.map(EntityToDtoMapper::toPostDto);
     }
 
     // TEST

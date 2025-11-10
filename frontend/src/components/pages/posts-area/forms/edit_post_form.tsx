@@ -2,14 +2,15 @@ import { useEffect, useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { BiLoaderAlt } from "react-icons/bi";
 import { toast } from "react-toastify";
-import { ProjectPosition } from "../../../dtos/enums/ProjectPosition";
-import type { PostDTO } from "../../../dtos/models_dtos/PostDTO";
-import { ProjectDTO } from "../../../dtos/models_dtos/ProjectDTO";
-import { useUserSelector } from "../../../redux/hooks";
-import projectPostService from "../../../service/PostService";
-import projectService from "../../../service/ProjectService";
-import { Modal } from "../../elements/Modal";
-import { PositionSelectChips } from "./position_chip_select";
+import type { ProjectPosition } from "../../../../dtos/enums/ProjectPosition";
+import type { PostDTO } from "../../../../dtos/models_dtos/PostDTO";
+import type { ProjectDTO } from "../../../../dtos/models_dtos/ProjectDTO";
+import { useUserSelector } from "../../../../redux/hooks";
+import projectService from "../../../../service/ProjectService";
+import { Modal } from "../../../elements/Modal";
+import { PositionSelectChips } from "../position_chip_select";
+import postService from "../../../../service/PostService";
+
 
 
 
@@ -79,7 +80,7 @@ export function EditPostFormModal({ open, onClose, post }: EditPostFormModalProp
             projectId: data.projectId
         }
 
-        projectPostService.editPost(dataToSend)
+        postService.editPost(dataToSend)
             .then(res => {
                 toast.success("Created Post")
                 onClose()

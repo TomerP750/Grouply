@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import { BiCheck, BiEdit, BiTrash, BiX } from "react-icons/bi";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { ProjectRole } from "../../../../dtos/enums/ProjectRole";
-import type { ProjectMemberDTO } from "../../../../dtos/models_dtos/ProjectMemberDTO";
-import projectMemberService from "../../../../service/ProjectMemberService";
-import { Avatar } from "../../../elements/Avatar";
-import { Dialog } from "../../../elements/Dialog";
-import { useUser } from "../../../../redux/hooks";
+import { ProjectRole } from "../../../../../dtos/enums/ProjectRole";
+import type { ProjectMemberDTO } from "../../../../../dtos/models_dtos/ProjectMemberDTO";
+import projectMemberService from "../../../../../service/ProjectMemberService";
+import { Avatar } from "../../../../elements/Avatar";
+import { Dialog } from "../../../../elements/Dialog";
+import { useUser } from "../../../../../redux/hooks";
 
 export interface ChangeUserRoleDTO {
     memberId: number

@@ -76,13 +76,13 @@ export function Feed() {
 
 
     return (
-            <main className="min-h-screen bg-gray-200 dark:bg-gradient-to-r dark:from-slate-900 dark:via-teal-950 dark:to-stone-900 pb-10">
+            <main className="min-h-screen bg-[#f8fafc] dark:bg-gradient-to-r dark:from-slate-900 dark:via-teal-950 dark:to-stone-900 pb-10">
 
                 <Navbar />
 
                 {/* POSTS AND FILTERS */}
                 <div className="flex flex-col pt-10 md:pt-0 md:mt-5 px-5 md:px-0 lg:flex-row w-full items-center lg:items-start gap-6">
-                    <Filters onFilterChange={handleFilterChange} />
+                    <Filters onFilterChange={handleFilterChange} posts={posts} />
 
                     {/* Main area */}
                     <section className="w-full flex justify-center px-0 sm:px-5 pt-6">

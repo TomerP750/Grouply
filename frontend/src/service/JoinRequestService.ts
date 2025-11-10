@@ -7,6 +7,10 @@ import { BASE_API } from "../util/base_api";
 
 class JoinRequestService {
 
+    async allRequestsByPostId(id: number, page: number, size: number) {
+        return (await axios.get(`${BASE_API}/join/all/${id}?page=${page}&size=${size}`)).data
+    }
+
     async toggleJoinRequest(data: JoinRequestDTO) {
         return (await axios.post(`${BASE_API}/join/request`, data)).data
     }

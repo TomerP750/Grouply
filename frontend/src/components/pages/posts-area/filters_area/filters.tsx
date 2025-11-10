@@ -6,13 +6,15 @@ import { MobileFilters } from "./mobile_filters";
 import { RoleDemandSelect } from "./role_demand_select";
 import { SortGroup } from "./sort_group";
 import { TechnologySelect } from "./technologies_select";
+import type { PostDTO } from "../../../../dtos/models_dtos/PostDTO";
 
 
 interface FiltersProps {
   onFilterChange: () => void;
+  posts: PostDTO[]
 }
 
-export function Filters({ onFilterChange }: FiltersProps) {
+export function Filters({ onFilterChange, posts }: FiltersProps) {
 
   const [open, setOpen] = useState(true);
   const { clear, empty } = useFilters();
@@ -32,7 +34,10 @@ export function Filters({ onFilterChange }: FiltersProps) {
             <span>{'Filter & Sort'.toUpperCase()}</span>
           </h2>
           <button
-            onClick={(e) => { e.stopPropagation(); clear(); }}
+            onClick={(e) => { 
+              e.stopPropagation(); 
+              clear(); 
+            }}
             className={`${empty ? 'cursor-not-allowed opacity-50' : 'cursor-pointer hover:underline hover:underline-offset-2'} text-sm`}
           >
             Clear All

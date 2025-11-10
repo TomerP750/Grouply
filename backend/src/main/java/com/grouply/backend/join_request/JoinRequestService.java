@@ -15,8 +15,11 @@ import com.grouply.backend.project_post_position.ProjectPostPosition;
 import com.grouply.backend.project_post_position.ProjectPostPositionRepository;
 import com.grouply.backend.user.User;
 import com.grouply.backend.user.UserRepository;
+import com.grouply.backend.util.EntityToDtoMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.NoSuchElementException;
@@ -121,6 +124,11 @@ public class JoinRequestService {
      */
     public boolean appliedToPostPosition(Long userId, Long postId, Long postPositionId) {
         return joinRequestRepository.existsBySenderIdAndPostIdAndPositionId(userId, postId, postPositionId);
+    }
+
+    public Page<JoinRequestDTO> allRequestsByPost(Long postId, Pageable pageable) {
+        Page<JoinRequest> requests = joinRequestRepository.findByPostId(postId, pageable);
+        return requests.map(EntityToDtoMapper::toJoinRequestDto);
     }
 
 //    ----------- HELPER METHODS -----------

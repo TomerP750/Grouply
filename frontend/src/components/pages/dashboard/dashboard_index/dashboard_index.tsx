@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
 import { FiCheckCircle, FiFolder, FiLink } from "react-icons/fi";
 import { toast } from "react-toastify";
-import type { ActivityDTO } from "../../../dtos/models_dtos/activity_dto";
-import type { StatisticsDTO } from "../../../dtos/models_dtos/statistics_dto";
-import { useUser } from "../../../redux/hooks";
-import activityService from "../../../service/activity_service";
-import statisticsService from "../../../service/statistics_service";
-import { Hr } from "../../elements/Hr";
+import type { ActivityDTO } from "../../../../dtos/models_dtos/activity_dto";
+import type { StatisticsDTO } from "../../../../dtos/models_dtos/statistics_dto";
+import { useUser } from "../../../../redux/hooks";
+import activityService from "../../../../service/activity_service";
+import statisticsService from "../../../../service/statistics_service";
+import { Hr } from "../../../elements/Hr";
+import { ActiveProjectsChart } from "../charts/active_projects_chart";
+import { ConnectionsChart } from "../charts/connections_chart";
 import { ActivityRow } from "./activity_row";
-import { ActiveProjectsChart } from "./tables/charts/active_projects_chart";
-import { ConnectionsChart } from "./tables/charts/connections_chart";
-import { DashboardStatCard } from "./tables/dashborard_stat_card";
+import { DashboardStatCard } from "./dashborard_stat_card";
+
 
 
 

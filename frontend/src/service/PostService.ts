@@ -37,6 +37,9 @@ class PostService {
         
     }
 
+    async allPostsWhereUserIsOwner(page: number, size: number) {
+        return (await axios.get(`${BASE_API}/post/dashboard/all?page=${page}&size=${size}`)).data
+    }
 
     async searchPosts(roles: ProjectPosition[], techs: TechnologyDTO[]) {
         const params = new URLSearchParams();
@@ -44,6 +47,9 @@ class PostService {
         techs.forEach(t => params.append("techIds", String(t.id)));
         return (await axios.get(`${BASE_API}/post/search?${params.toString()}`)).data
     } 
+
+
+
 
 }
 

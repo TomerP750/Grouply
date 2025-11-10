@@ -9,7 +9,7 @@ import { useUserSelector } from "../../../../redux/hooks";
 import projectPostService from "../../../../service/PostService";
 import projectMemberService from "../../../../service/ProjectMemberService";
 import { Avatar } from "../../../elements/Avatar";
-import { PostCardDescription } from "./post_card_description";
+import { PostCardDescription } from "./post_card_content";
 
 
 interface PostCardProps {

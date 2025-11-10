@@ -1,12 +1,12 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { useFilters } from "../../../../context/filter_context";
 import type { TechnologyDTO } from "../../../../dtos/models_dtos/TechnologyDTO";
 import technologyService from "../../../../service/technology_service";
-import { Accordion } from "../../../elements/Accordion"
-import { toNormal } from "../../../../util/util_functions";
-import { useFilters } from "../../../../context/filter_context";
 import { technologyIconMap } from "../../../../util/technology_icon_mapper";
-import { SiReact } from "react-icons/si";
+import { toNormal } from "../../../../util/util_functions";
+import { Accordion } from "../../../elements/Accordion";
+
 
 
 export function TechnologySelect() {

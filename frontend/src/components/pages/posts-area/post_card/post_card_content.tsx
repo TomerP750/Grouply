@@ -3,14 +3,15 @@ import { BiDotsVertical } from "react-icons/bi";
 import { MdBookmarkAdd } from "react-icons/md";
 import { toast } from "react-toastify";
 import type { PostDTO } from "../../../../dtos/models_dtos/PostDTO";
-import { useUser, useUserSelector } from "../../../../redux/hooks";
+import { useUser } from "../../../../redux/hooks";
+import archivedPostService from "../../../../service/ArchivedProjectService";
 import projectMemberService from "../../../../service/ProjectMemberService";
+import { timeAgo, toNormal } from "../../../../util/util_functions";
+import { Dialog } from "../../../elements/Dialog";
+
 import './post_card_css.css';
 import { PostCardPositionCard } from "./post_card_position_card";
-import { timeAgo, toNormal, toTitleCase } from "../../../../util/util_functions";
-import { Dialog } from "../../../elements/Dialog";
-import { EditPostFormModal } from "../edit_post_form";
-import archivedPostService from "../../../../service/ArchivedProjectService";
+import { EditPostFormModal } from "../forms/edit_post_form";
 
 
 type MemberType = "member" | "owner"
@@ -112,7 +113,7 @@ export function PostCardDescription({ post, onEdit, onDelete, sentRequest }: Pro
                 <div className="flex flex-col-reverse items-start sm:flex justify-between w-full gap-3 font-bold text-2xl text-gray-900 dark:text-white">
                     <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold leading-tight">{toNormal(title)}</h1>
                     <div className="flex justify-between items-center w-full">
-                        {isMember && <span className="text-xs text-white bg-slate-500 px-3 py-1 rounded-full">{isOwner ? getMemberTypeTitle("owner") : getMemberTypeTitle("member")}</span>}
+                        {isMember && <span className="text-xs text-white bg-teal-300/50 px-3 py-1 ">{isOwner ? getMemberTypeTitle("owner") : getMemberTypeTitle("member")}</span>}
 
                         {/* OWNER CRUD BUTTONS MENU */}
                         {isOwner
