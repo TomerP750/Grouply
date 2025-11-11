@@ -1,5 +1,5 @@
 import type { ActivityType } from "../enums/activity_type"
-import type { UserDTO } from "./UserDTO"
+import type { UserDTO } from "./user_dto"
 
 
 export interface ActivityDTO {

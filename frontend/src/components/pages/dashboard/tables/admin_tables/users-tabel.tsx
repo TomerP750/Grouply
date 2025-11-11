@@ -5,9 +5,9 @@ import { useNavigate } from "react-router-dom";
 
 import { DataTable } from "./data_table";
 import { Role } from "../../../../../dtos/enums/Role";
-import type { UserDTO } from "../../../../../dtos/models_dtos/UserDTO";
+import type { UserDTO } from "../../../../../dtos/models_dtos/user_dto";
 import { useUser } from "../../../../../redux/hooks";
-import userService from "../../../../../service/UserService";
+import userService from "../../../../../service/user_service";
 import { extractPageCount } from "../../../../../util/pagination_helper";
 import { RoleBadge } from "../../../../../util/ui_helper";
 

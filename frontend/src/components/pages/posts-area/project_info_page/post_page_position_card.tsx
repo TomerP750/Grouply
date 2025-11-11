@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import type { ProjectPostPositionDTO } from "../../../../dtos/models_dtos/ProjectPostPositionDTO";
-import joinRequestService from "../../../../service/JoinRequestService";
+import type { ProjectPostPositionDTO } from "../../../../dtos/models_dtos/project_post_position_dto";
+import joinRequestService from "../../../../service/join_request_service";
 import { useUser } from "../../../../redux/hooks";
 import { JoinRequestDTO } from "../../../../dtos/models_dtos/request_dto/JoinRequestDTO";
 import { toast } from "react-toastify";
 import { BiCheck, BiLoaderAlt } from "react-icons/bi";
-import projectMemberService from "../../../../service/ProjectMemberService";
-import type { PostDTO } from "../../../../dtos/models_dtos/PostDTO";
+import projectMemberService from "../../../../service/project_member_service";
+import type { PostDTO } from "../../../../dtos/models_dtos/post_dto";
 
 interface PostPositionPageCardProps {
     postPosition: ProjectPostPositionDTO

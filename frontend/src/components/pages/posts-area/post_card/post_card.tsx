@@ -3,11 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import defaultImage from "../../../../assets/projectdefault.jpg";
 import { ProjectCardProvider } from "../../../../context/ProjectCardContext";
-import type { PostDTO } from "../../../../dtos/models_dtos/PostDTO";
-import type { ProjectMemberDTO } from "../../../../dtos/models_dtos/ProjectMemberDTO";
+import type { PostDTO } from "../../../../dtos/models_dtos/post_dto";
+import type { ProjectMemberDTO } from "../../../../dtos/models_dtos/project_member_dto";
 import { useUserSelector } from "../../../../redux/hooks";
-import projectPostService from "../../../../service/PostService";
-import projectMemberService from "../../../../service/ProjectMemberService";
+import projectPostService from "../../../../service/post_service";
+import projectMemberService from "../../../../service/project_member_service";
 import { Avatar } from "../../../elements/Avatar";
 import { PostCardDescription } from "./post_card_content";
 

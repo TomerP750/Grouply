@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { useUser } from "../../../../../redux/hooks";
 import { useEffect, useState } from "react";
 import type { UpdateUserDTO } from "../../../../../dtos/models_dtos/request_dto/update_user_dto";
-import userService from "../../../../../service/UserService";
+import userService from "../../../../../service/user_service";
 import { toast } from "react-toastify";
 import { DeleteAccount } from "./delete_account";
 

@@ -4,12 +4,12 @@ import { BiLoaderAlt } from "react-icons/bi";
 import { toast } from "react-toastify";
 
 import type { ProjectPosition } from "../../../../dtos/enums/ProjectPosition";
-import type { PostDTO } from "../../../../dtos/models_dtos/PostDTO";
-import type { ProjectDTO } from "../../../../dtos/models_dtos/ProjectDTO";
+import type { PostDTO } from "../../../../dtos/models_dtos/post_dto";
+import type { ProjectDTO } from "../../../../dtos/models_dtos/project_dto";
 import { CreateProjectPostDTO } from "../../../../dtos/models_dtos/request_dto/CreateProjectPostDTO";
 import { useUser } from "../../../../redux/hooks";
-import postService from "../../../../service/PostService";
-import projectService from "../../../../service/ProjectService";
+import postService from "../../../../service/post_service";
+import projectService from "../../../../service/project_service";
 import { PositionSelectChips } from "../position_chip_select";
 import { useNavigate } from "react-router-dom";
 

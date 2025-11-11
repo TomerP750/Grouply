@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { Panel } from "./panel";
 import { DashboardNavbar } from "./dashboard-navbar";
 import { useUserSelector } from "../../../../redux/hooks";
-import userService from "../../../../service/UserService";
+import userService from "../../../../service/user_service";
 
 
 export function Dashboard() {

@@ -9,7 +9,7 @@ import logoDark from "../../../../assets/logodark.png";
 import { AdminMenu } from "./admin_menu";
 import { useTheme } from "../../../../context/ThemeContext";
 import type { JwtUser } from "../../../../redux/AuthSlice";
-import userService from "../../../../service/UserService";
+import userService from "../../../../service/user_service";
 import { NavbarRight } from "../../../layout/navbar/NavbarRight";
 
 

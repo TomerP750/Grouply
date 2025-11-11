@@ -3,7 +3,7 @@ import { BASE_API } from "../util/base_api";
 import type { CreateProjectPostDTO } from "../dtos/models_dtos/request_dto/CreateProjectPostDTO";
 
 import type { ProjectPosition } from "../dtos/enums/ProjectPosition";
-import type { TechnologyDTO } from "../dtos/models_dtos/TechnologyDTO";
+import type { TechnologyDTO } from "../dtos/models_dtos/technology_dto";
 import type { EditPostRequestDTO } from "../components/pages/posts-area/forms/edit_post_form";
 
 

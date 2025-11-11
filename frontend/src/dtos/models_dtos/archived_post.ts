@@ -1,4 +1,4 @@
-import type { PostDTO } from "./PostDTO"
+import type { PostDTO } from "./post_dto"
 
 export class ArchivedPostDTO {
     id: number

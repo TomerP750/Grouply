@@ -6,9 +6,9 @@ import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import type { PostDTO } from "../../../../../dtos/models_dtos/PostDTO";
+import type { PostDTO } from "../../../../../dtos/models_dtos/post_dto";
 import { useUser } from "../../../../../redux/hooks";
-import postService from "../../../../../service/PostService";
+import postService from "../../../../../service/post_service";
 import { usePagination } from "../../../../../util/helper_hooks";
 import { extractPageCount } from "../../../../../util/pagination_helper";
 import { fmtDate } from "../../../../../util/util_functions";

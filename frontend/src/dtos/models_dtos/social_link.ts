@@ -1,5 +1,5 @@
 import type { SocialType } from "../enums/social_type"
-import type { ProfileDTO } from "./ProfileDTO"
+import type { ProfileDTO } from "./profile_dto"
 
 
 export interface SocialLinkDTO {

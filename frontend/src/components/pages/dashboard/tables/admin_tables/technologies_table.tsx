@@ -2,7 +2,7 @@ import { createColumnHelper, type ColumnDef } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
 import { BiEdit, BiTrash, BiX } from "react-icons/bi";
 import { toast } from "react-toastify";
-import type { TechnologyDTO } from "../../../../../dtos/models_dtos/TechnologyDTO";
+import type { TechnologyDTO } from "../../../../../dtos/models_dtos/technology_dto";
 import technologyService from "../../../../../service/technology_service";
 import { usePagination } from "../../../../../util/helper_hooks";
 import { extractPageCount } from "../../../../../util/pagination_helper";

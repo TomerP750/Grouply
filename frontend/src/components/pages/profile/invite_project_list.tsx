@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import type { ProjectDTO } from "../../../dtos/models_dtos/ProjectDTO";
+import type { ProjectDTO } from "../../../dtos/models_dtos/project_dto";
 import { InviteProjectCard } from "./invite_project_card";
 
 

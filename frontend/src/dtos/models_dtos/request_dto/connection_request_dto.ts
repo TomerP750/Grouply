@@ -1,4 +1,4 @@
-import type { UserDTO } from "../UserDTO";
+import type { UserDTO } from "../user_dto";
 
 
 export interface ConnectionRequestDTO {

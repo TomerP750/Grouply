@@ -1,6 +1,6 @@
 import type { ProjectPosition } from "../../enums/ProjectPosition"
 import type { ProjectStatus } from "../../enums/ProjectStatus"
-import type { TechnologyDTO } from "../TechnologyDTO"
+import type { TechnologyDTO } from "../technology_dto"
 
 
 export interface CreateProjectDTO {

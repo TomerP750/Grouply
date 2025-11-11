@@ -6,7 +6,7 @@ import { FiEye, FiEyeOff } from "react-icons/fi";
 import { useDispatch } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import { login } from "../../../../redux/AuthSlice";
-import authService from "../../../../service/AuthService";
+import authService from "../../../../service/auth_service";
 
 export interface RecruiterSignUpRequestDTO {
 

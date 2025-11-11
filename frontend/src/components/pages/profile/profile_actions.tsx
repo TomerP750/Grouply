@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { FaLink } from "react-icons/fa";
 import { MdMail } from "react-icons/md";
 import { toast } from "react-toastify";
-import type { ProfileDTO } from "../../../dtos/models_dtos/ProfileDTO"
+import type { ProfileDTO } from "../../../dtos/models_dtos/profile_dto"
 import type { JwtUser } from "../../../redux/AuthSlice"
 import connectionRequestService from "../../../service/connection_request_service";
 import connectionService from "../../../service/connection_service";

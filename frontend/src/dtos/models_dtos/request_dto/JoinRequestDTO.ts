@@ -1,4 +1,4 @@
-import { ProjectPostPositionDTO } from "../ProjectPostPositionDTO";
+import { ProjectPostPositionDTO } from "../project_post_position_dto";
 
 
 export class JoinRequestDTO {

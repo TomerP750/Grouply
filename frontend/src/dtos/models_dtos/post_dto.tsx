@@ -1,5 +1,5 @@
-import type { ProjectDTO } from "./ProjectDTO"
-import type { ProjectPostPositionDTO } from "./ProjectPostPositionDTO"
+import type { ProjectDTO } from "./project_dto"
+import type { ProjectPostPositionDTO } from "./project_post_position_dto"
 
 export class PostDTO {
   id: number

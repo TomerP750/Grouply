@@ -1,14 +1,14 @@
 import { useCallback, useEffect, useState } from "react";
 import { BiFilter, BiLoaderAlt } from "react-icons/bi";
 import { FilterProvider, useFilters } from "../../../context/filter_context";
-import type { PostDTO } from "../../../dtos/models_dtos/PostDTO";
-import projectPostService from "../../../service/PostService";
+import type { PostDTO } from "../../../dtos/models_dtos/post_dto";
+import projectPostService from "../../../service/post_service";
 import { Navbar } from "../../layout/navbar/Navbar";
 import { FeedHeader } from "./feed_header";
 import { Filters } from "./filters_area/filters";
 import { PostCard } from "./post_card/post_card";
 import { usePagination } from "../../../util/helper_hooks";
-import postService from "../../../service/PostService";
+import postService from "../../../service/post_service";
 import { toast } from "react-toastify";
 
 
@@ -76,7 +76,7 @@ export function Feed() {
 
 
     return (
-            <main className="min-h-screen bg-[#f8fafc] dark:bg-gradient-to-r dark:from-slate-900 dark:via-teal-950 dark:to-stone-900 pb-10">
+            <main className="min-h-screen pb-10">
 
                 <Navbar />
 

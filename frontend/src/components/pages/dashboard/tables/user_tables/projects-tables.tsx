@@ -8,9 +8,9 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import { ProjectStatus } from "../../../../../dtos/enums/ProjectStatus";
-import type { ProjectDTO } from "../../../../../dtos/models_dtos/ProjectDTO";
+import type { ProjectDTO } from "../../../../../dtos/models_dtos/project_dto";
 import { useUser } from "../../../../../redux/hooks";
-import projectService from "../../../../../service/ProjectService";
+import projectService from "../../../../../service/project_service";
 import { fmtDate, toNormal } from "../../../../../util/util_functions";
 import { Dialog } from "../../../../elements/Dialog";
 import { Modal } from "../../../../elements/Modal";

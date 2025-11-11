@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { TechnologyDTO } from "../../../../dtos/models_dtos/TechnologyDTO";
+import type { TechnologyDTO } from "../../../../dtos/models_dtos/technology_dto";
 
 interface TechSelectChipsProps {
     technologies: TechnologyDTO[];

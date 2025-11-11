@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form"
-import userService from "../../../../service/UserService";
+import userService from "../../../../service/user_service";
 import { useState } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { toast } from "react-toastify";

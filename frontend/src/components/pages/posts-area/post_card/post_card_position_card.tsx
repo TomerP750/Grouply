@@ -1,9 +1,9 @@
 import { BiGroup, BiCheck } from "react-icons/bi";
 import { toTitleCase } from "../../../../util/util_functions";
-import type { ProjectPostPositionDTO } from "../../../../dtos/models_dtos/ProjectPostPositionDTO";
+import type { ProjectPostPositionDTO } from "../../../../dtos/models_dtos/project_post_position_dto";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import joinRequestService from "../../../../service/JoinRequestService";
+import joinRequestService from "../../../../service/join_request_service";
 import { JoinRequestDTO } from "../../../../dtos/models_dtos/request_dto/JoinRequestDTO";
 import type { JwtUser } from "../../../../redux/AuthSlice";
 

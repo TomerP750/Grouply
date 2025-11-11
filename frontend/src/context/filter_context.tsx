@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react"
 import type { ProjectPosition } from "../dtos/enums/ProjectPosition"
-import type { TechnologyDTO } from "../dtos/models_dtos/TechnologyDTO";
+import type { TechnologyDTO } from "../dtos/models_dtos/technology_dto";
 
 
 const FILTER_ROLES = "filter_roles";

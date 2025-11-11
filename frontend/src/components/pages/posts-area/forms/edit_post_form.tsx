@@ -3,13 +3,13 @@ import { useForm, useWatch } from "react-hook-form";
 import { BiLoaderAlt } from "react-icons/bi";
 import { toast } from "react-toastify";
 import type { ProjectPosition } from "../../../../dtos/enums/ProjectPosition";
-import type { PostDTO } from "../../../../dtos/models_dtos/PostDTO";
-import type { ProjectDTO } from "../../../../dtos/models_dtos/ProjectDTO";
+import type { PostDTO } from "../../../../dtos/models_dtos/post_dto";
+import type { ProjectDTO } from "../../../../dtos/models_dtos/project_dto";
 import { useUserSelector } from "../../../../redux/hooks";
-import projectService from "../../../../service/ProjectService";
+import projectService from "../../../../service/project_service";
 import { Modal } from "../../../elements/Modal";
 import { PositionSelectChips } from "../position_chip_select";
-import postService from "../../../../service/PostService";
+import postService from "../../../../service/post_service";
 
 
 

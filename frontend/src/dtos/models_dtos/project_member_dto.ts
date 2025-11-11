@@ -1,7 +1,7 @@
 
 import type { ProjectPosition } from "../enums/ProjectPosition"
 import type { ProjectRole } from "../enums/ProjectRole"
-import type { UserDTO } from "./UserDTO"
+import type { UserDTO } from "./user_dto"
 
 export class ProjectMemberDTO {
     id: number

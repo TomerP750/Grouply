@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { HiSearch } from "react-icons/hi";
 import { toast } from "react-toastify";
-import type { ProjectDTO } from "../../../dtos/models_dtos/ProjectDTO";
-import projectService from "../../../service/ProjectService";
+import type { ProjectDTO } from "../../../dtos/models_dtos/project_dto";
+import projectService from "../../../service/project_service";
 import { Modal } from "../../elements/Modal";
 import { InviteProjectList } from "./invite_project_list";
 import { InviteToProjectProvider } from "../../../context/invite_to_project_context";

@@ -1,6 +1,6 @@
 import { FaUserAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { UserDTO } from "../../dtos/models_dtos/UserDTO";
+import { UserDTO } from "../../dtos/models_dtos/user_dto";
 import defaultAvatar from "../../assets/defaultAvatar.png";
 
 interface AvatarProps {

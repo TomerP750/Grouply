@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { BiCheckCircle, BiChevronLeft, BiErrorCircle, BiLoaderAlt } from "react-icons/bi";
 import { toast } from "react-toastify";
-import type { ProjectDTO } from "../../../dtos/models_dtos/ProjectDTO";
-import projectService from "../../../service/ProjectService";
+import type { ProjectDTO } from "../../../dtos/models_dtos/project_dto";
+import projectService from "../../../service/project_service";
 import { useBodyScrollLock } from "../../../util/helper_hooks";
 import { Navbar } from "../../layout/navbar/Navbar";
 import { getGradeColor } from "../../../util/ui_helper";
@@ -87,7 +87,7 @@ export function ReviewProjectPage() {
 
     if (result) {
         return (
-            <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:via-teal-950 dark:to-stone-900">
+            <div className="min-h-screen bg-gradient-to-br from-slate-100 to-slate-100 dark:from-slate-900 dark:via-teal-950 dark:to-stone-900">
                 <Navbar />
 
                 <main className="w-full ">
@@ -190,7 +190,7 @@ export function ReviewProjectPage() {
 
 
     return (
-        <div className="min-h-screen dark:bg-gradient-to-br dark:from-slate-900 dark:via-teal-950 dark:to-stone-900">
+        <div className="min-h-screen bg-gradient-to-br from-slate-100 via-indigo-100 to-sky-200 dark:bg-gradient-to-br dark:from-slate-900 dark:via-teal-950 dark:to-stone-900">
             <Navbar />
 
             <section className="mx-auto max-w-3xl px-4 py-10 mt-20 flex flex-col items-center justify-center gap-8 dark:text-white">
@@ -206,8 +206,8 @@ export function ReviewProjectPage() {
                         required
                         inputMode="url"
                         pattern="https?://.+"
-                        className="w-full rounded-full bg-slate-700/60 px-4 py-2 shadow-md shadow-black/40 outline-none transition
-                    focus:ring-2 focus:ring-teal-500 "
+                        className="w-full rounded-full bg-indigo-200 dark:bg-slate-700/60 px-4 py-2 shadow-md shadow-black/20 dark:shadow-black/40 outline-none transition
+                    focus:ring-2 focus:ring-sky-500/50 dark:focus:ring-teal-500 "
                     />
                 </div>
 

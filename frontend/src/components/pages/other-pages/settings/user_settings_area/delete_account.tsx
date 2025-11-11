@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form"
 import { FiEye, FiEyeOff } from "react-icons/fi";
-import userService from "../../../../../service/UserService";
+import userService from "../../../../../service/user_service";
 
 
 const inputStyle = "w-80 rounded-lg border border-gray-500/50 bg-gray-400 dark:bg-gray-800 px-3 py-1";

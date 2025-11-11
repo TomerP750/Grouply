@@ -7,7 +7,7 @@ import { BsArrowLeft } from "react-icons/bs";
 import { useDispatch } from "react-redux";
 
 import { BiGroup, BiLoader, BiLoaderAlt } from "react-icons/bi";
-import authService from "../../../../service/AuthService";
+import authService from "../../../../service/auth_service";
 import { login } from "../../../../redux/AuthSlice";
 import { toast } from "react-toastify";
 

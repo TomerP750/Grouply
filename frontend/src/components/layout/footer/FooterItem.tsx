@@ -5,6 +5,8 @@ interface FooterItemProps {
     footerItem: FooterItem
 }
 
+const linkStyle = "hover:text-slate-700 dark:hover:text-teal-300 transition-colors duration-200";
+
 export function FooterItem({ footerItem }: FooterItemProps) {
 
     const { title, link1, link2, link3 } = footerItem;
@@ -14,10 +16,10 @@ export function FooterItem({ footerItem }: FooterItemProps) {
             <h3 className="text-sm font-semibold uppercase tracking-wider dark:text-slate-300">
                 {title}
             </h3>
-            <ul className="mt-4 space-y-3 ">
-                <li><NavLink to="#" className="hover:text-indigo-300">{link1}</NavLink></li>
-                <li><NavLink to="#" className="hover:text-indigo-300">{link2}</NavLink></li>
-                <li><NavLink to="#" className="hover:text-indigo-300">{link3}</NavLink></li>
+            <ul className="mt-4 space-y-3 dark:text-slate-400">
+                <li><NavLink to="#" className={`${linkStyle}`}>{link1}</NavLink></li>
+                <li><NavLink to="#" className={`${linkStyle}`}>{link2}</NavLink></li>
+                <li><NavLink to="#" className={`${linkStyle}`}>{link3}</NavLink></li>
             </ul>
         </div>
     )

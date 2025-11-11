@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { NavLink, useParams } from "react-router-dom"
-import postService from "../../../../service/PostService";
-import type { PostDTO } from "../../../../dtos/models_dtos/PostDTO";
+import postService from "../../../../service/post_service";
+import type { PostDTO } from "../../../../dtos/models_dtos/post_dto";
 import { toast } from "react-toastify";
 import { Navbar } from "../../../layout/navbar/Navbar";
 import { useScrollToTop } from "../../../../util/helper_hooks";

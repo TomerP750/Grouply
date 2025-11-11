@@ -1,4 +1,4 @@
-import type { UserDTO } from "../../../dtos/models_dtos/UserDTO";
+import type { UserDTO } from "../../../dtos/models_dtos/user_dto";
 import { Avatar } from "../../elements/Avatar";
 import defaultBanner from "../../../assets/defaultProfileBanner.jpg";
 

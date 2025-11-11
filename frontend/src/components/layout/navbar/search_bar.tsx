@@ -1,8 +1,8 @@
 import { BiSearch, BiX } from "react-icons/bi";
 import { useBodyScrollLock } from "../../../util/helper_hooks";
 import { useEffect, useMemo, useState, type ChangeEvent } from "react";
-import userService from "../../../service/UserService";
-import type { UserDTO } from "../../../dtos/models_dtos/UserDTO";
+import userService from "../../../service/user_service";
+import type { UserDTO } from "../../../dtos/models_dtos/user_dto";
 import { toast } from "react-toastify";
 import './search_bar.css'
 

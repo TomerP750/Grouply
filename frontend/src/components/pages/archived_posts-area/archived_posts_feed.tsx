@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { Navbar } from "../../layout/navbar/Navbar";
-import { PostDTO } from "../../../dtos/models_dtos/PostDTO";
-import archivedPostService from "../../../service/ArchivedProjectService";
+import { PostDTO } from "../../../dtos/models_dtos/post_dto";
+import archivedPostService from "../../../service/archived_project_service";
 import { toast } from "react-toastify";
 import { PostCard } from "../posts-area/post_card/post_card";
 import { BiQuestionMark } from "react-icons/bi";

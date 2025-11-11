@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useFilters } from "../../../../context/filter_context";
-import type { TechnologyDTO } from "../../../../dtos/models_dtos/TechnologyDTO";
+import type { TechnologyDTO } from "../../../../dtos/models_dtos/technology_dto";
 import technologyService from "../../../../service/technology_service";
 import { technologyIconMap } from "../../../../util/technology_icon_mapper";
 import { toNormal } from "../../../../util/util_functions";

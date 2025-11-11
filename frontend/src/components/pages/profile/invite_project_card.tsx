@@ -1,5 +1,5 @@
 import { HiUserAdd } from "react-icons/hi"
-import type { ProjectDTO } from "../../../dtos/models_dtos/ProjectDTO"
+import type { ProjectDTO } from "../../../dtos/models_dtos/project_dto"
 import { BiLoaderAlt } from "react-icons/bi"
 import { ProjectPosition } from "../../../dtos/enums/ProjectPosition"
 import { toNormal } from "../../../util/util_functions"

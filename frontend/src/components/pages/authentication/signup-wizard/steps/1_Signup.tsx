@@ -5,7 +5,7 @@ import { BsArrowLeft } from "react-icons/bs";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { useWizardStep } from "../../../../../context/WizardStepContext";
-import authService from "../../../../../service/AuthService";
+import authService from "../../../../../service/auth_service";
 import { useDispatch } from "react-redux";
 import { login } from "../../../../../redux/AuthSlice";
 import type { SignUpRequestDTO } from "../Dtos/SignUpRequestDTO";

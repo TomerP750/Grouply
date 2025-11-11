@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import { BiDotsVertical } from "react-icons/bi";
 import { MdBookmarkAdd } from "react-icons/md";
 import { toast } from "react-toastify";
-import type { PostDTO } from "../../../../dtos/models_dtos/PostDTO";
+import type { PostDTO } from "../../../../dtos/models_dtos/post_dto";
 import { useUser } from "../../../../redux/hooks";
-import archivedPostService from "../../../../service/ArchivedProjectService";
-import projectMemberService from "../../../../service/ProjectMemberService";
+import archivedPostService from "../../../../service/archived_project_service";
+import projectMemberService from "../../../../service/project_member_service";
 import { timeAgo, toNormal } from "../../../../util/util_functions";
 import { Dialog } from "../../../elements/Dialog";
 
@@ -113,7 +113,7 @@ export function PostCardDescription({ post, onEdit, onDelete, sentRequest }: Pro
                 <div className="flex flex-col-reverse items-start sm:flex justify-between w-full gap-3 font-bold text-2xl text-gray-900 dark:text-white">
                     <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold leading-tight">{toNormal(title)}</h1>
                     <div className="flex justify-between items-center w-full">
-                        {isMember && <span className="text-xs text-white bg-teal-300/50 px-3 py-1 ">{isOwner ? getMemberTypeTitle("owner") : getMemberTypeTitle("member")}</span>}
+                        {isMember && <span className="text-xs text-white bg-sky-500 dark:bg-teal-300/50 px-3 py-1 ">{isOwner ? getMemberTypeTitle("owner") : getMemberTypeTitle("member")}</span>}
 
                         {/* OWNER CRUD BUTTONS MENU */}
                         {isOwner
@@ -128,10 +128,10 @@ export function PostCardDescription({ post, onEdit, onDelete, sentRequest }: Pro
                                     <div className="crud-buttons absolute right-0 -bottom-18 font-light dark:bg-slate-900 bg-white px-2 w-30 py-2 gap-1 dark:text-white flex flex-col items-center text-base">
                                         <button
                                             onClick={() => setEditModalOpen(true)}
-                                            className="cursor-pointer hover:bg-slate-700 w-full">Edit</button>
+                                            className="cursor-pointer hover:bg-indigo-200 dark:hover:bg-slate-700 w-full">Edit</button>
                                         <button
                                             onClick={() => setDialogOpen(true)}
-                                            className="cursor-pointer hover:bg-slate-700 w-full">Delete</button>
+                                            className="cursor-pointer hover:bg-indigo-200 dark:hover:bg-slate-700 w-full">Delete</button>
                                     </div>}
 
                             </div>}

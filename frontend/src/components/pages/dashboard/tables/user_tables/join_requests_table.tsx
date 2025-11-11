@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 
 import type { JoinRequestDTO } from "../../../../../dtos/models_dtos/request_dto/JoinRequestDTO";
 import { useUser } from "../../../../../redux/hooks";
-import joinRequestService from "../../../../../service/JoinRequestService";
+import joinRequestService from "../../../../../service/join_request_service";
 import { usePagination } from "../../../../../util/helper_hooks";
 import { extractPageCount } from "../../../../../util/pagination_helper";
 import { fmtDate } from "../../../../../util/util_functions";

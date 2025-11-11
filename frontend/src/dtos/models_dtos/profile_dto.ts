@@ -1,6 +1,6 @@
-import type { PositionDTO } from "./PositionDTO"
+import type { PositionDTO } from "./position_dto"
 import type { SocialLinkDTO } from "./social_link"
-import type { UserDTO } from "./UserDTO"
+import type { UserDTO } from "./user_dto"
 
 
 export class ProfileDTO {
