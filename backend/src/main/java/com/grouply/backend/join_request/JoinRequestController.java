@@ -31,6 +31,18 @@ public class JoinRequestController {
         return joinRequestService.toggleJoinRequest(dto);
     }
 
+    @PostMapping("accept/{joinRequestId}")
+    public void acceptJoinRequest(@AuthenticationPrincipal CustomUserDetails userDetails ,@PathVariable Long joinRequestId) throws UnauthorizedException {
+        Long userId = userDetails.getId();
+        joinRequestService.acceptJoinRequest(userId, joinRequestId);
+    }
+
+    @PostMapping("decline/{joinRequestId}")
+    public void declineJoinRequest(@AuthenticationPrincipal CustomUserDetails userDetails ,@PathVariable Long joinRequestId) throws UnauthorizedException {
+        Long userId = userDetails.getId();
+        joinRequestService.declineJoinRequest(userId, joinRequestId);
+    }
+
     @GetMapping("/applied/{postId}/{positionId}")
     public boolean checkApplied(@AuthenticationPrincipal CustomUserDetails userDetails,
                                 @PathVariable Long postId,

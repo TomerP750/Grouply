@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @Builder
 public class JoinRequestDTO {
 
+    Long id;
     Long senderId;
     Long projectPostPositionId;
     Long projectPostId;

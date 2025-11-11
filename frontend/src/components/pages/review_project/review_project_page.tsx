@@ -244,7 +244,12 @@ export function ReviewProjectPage() {
                    disabled:opacity-50 disabled:cursor-not-allowed
                     outline-none transition cursor-pointer
                    focus:ring-2 focus:ring-teal-500
-                   dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+                  
+                   dark:border-slate-700 dark:text-white
+                   bg-gradient-to-r 
+                   dark:from-slate-900 dark:via-teal-700 dark:to-slate-900 
+                   hover-gradient-move duration-200
+                   "
                 >
                     <option value="">Select A Project</option>
                     {projects.length > 0 ? (

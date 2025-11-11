@@ -9,6 +9,7 @@ import com.grouply.backend.post.Post;
 import com.grouply.backend.post.PostRepository;
 import com.grouply.backend.project.Project;
 import com.grouply.backend.project.ProjectRepository;
+import com.grouply.backend.project_member.ProjectMember;
 import com.grouply.backend.project_member.ProjectMemberRepository;
 import com.grouply.backend.project_member.ProjectRole;
 import com.grouply.backend.project_post_position.ProjectPostPosition;
@@ -115,6 +116,40 @@ public class JoinRequestService {
         return true;
     }
 
+
+    public void acceptJoinRequest(Long userId, Long joinRequestId) throws UnauthorizedException {
+        JoinRequest joinRequest = fetchJoinRequest(joinRequestId);
+        Project project = joinRequest.getPost().getProject();
+        if (!isOwner(userId, project.getId())) {
+            throw new UnauthorizedException("Unauthorized to response");
+        }
+        log.info("Starting to create member");
+        User user = fetchUser(joinRequest.getSender().getId());
+        ProjectMember newMember = ProjectMember.builder()
+                .user(user)
+                .projectRole(ProjectRole.MEMBER)
+                .projectPosition(joinRequest.getPosition().getPosition())
+                .project(project)
+                .build();
+        project.getProjectMembers().add(newMember);
+        projectRepository.save(project);
+
+        joinRequestRepository.deleteById(joinRequestId);
+
+        log.info("Created new member!");
+    }
+
+    public void declineJoinRequest(Long userId, Long joinRequestId) throws UnauthorizedException {
+        JoinRequest joinRequest = fetchJoinRequest(joinRequestId);
+        Project project = joinRequest.getPost().getProject();
+        if (!isOwner(userId, project.getId())) {
+            throw new UnauthorizedException("Unauthorized to response");
+        }
+        joinRequestRepository.deleteById(joinRequestId);
+        log.info("Declined join request");
+    }
+
+
     /**
      * this checks if the user has sent a join request to a specific position in a post
      * @param userId
@@ -131,6 +166,8 @@ public class JoinRequestService {
         return requests.map(EntityToDtoMapper::toJoinRequestDto);
     }
 
+
+
 //    ----------- HELPER METHODS -----------
 
     private boolean isOwner(Long userId, Long projectId) {
@@ -140,6 +177,10 @@ public class JoinRequestService {
 
     private Project fetchProject(Long projectId) {
         return projectRepository.findById(projectId).orElseThrow(()->new NoSuchElementException("Project not found"));
+    }
+
+    private JoinRequest fetchJoinRequest(Long requestId) {
+        return joinRequestRepository.findById(requestId).orElseThrow(()->new NoSuchElementException("Request not found"));
     }
 
     private User fetchUser(Long userId) {

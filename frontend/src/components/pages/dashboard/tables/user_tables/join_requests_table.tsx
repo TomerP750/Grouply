@@ -26,7 +26,6 @@ export function JoinRequestsTable() {
 
     const params = useParams();
     const postId = Number(params.postId);
-    console.log("postId: ", postId)
 
     const navigate = useNavigate();
     const user = useUser();
@@ -35,10 +34,8 @@ export function JoinRequestsTable() {
         setLoading(true);
         joinRequestService.allRequestsByPostId(postId, pagination.pageIndex, pagination.pageSize)
             .then(res => {
-                setRows(res.content);  
-                console.log(res);
-                
-                setPageCount(extractPageCount(res, pagination.pageSize));              
+                setRows(res.content);
+                setPageCount(extractPageCount(res, pagination.pageSize));
             })
             .catch((err) =>
                 toast.error(err?.response?.data ?? "Failed to load ")
@@ -46,16 +43,40 @@ export function JoinRequestsTable() {
             .finally(() => setLoading(false));
     }, [pagination.pageIndex, pagination.pageSize]);
 
+
+    const handleAccept = (requestId: number) => {
+        joinRequestService.acceptRequest(requestId)
+            .then(() => {
+                setRows(prev => prev.filter(r => r.id !== requestId))
+                toast.success("Accepted Request");
+            })
+            .catch(err => {
+                toast.error(err.response.data);
+            })
+
+    }
+
+    const handleDecline = (requestId: number) => {
+        joinRequestService.declineRequest(requestId)
+            .then(() => {
+                setRows(prev => prev.filter(r => r.id !== requestId))
+                toast.success("Declined Request");
+            })
+            .catch(err => {
+                toast.error(err.response.data);
+            })
+    }
+
     const columns: ColumnDef<JoinRequestDTO, any>[] = useMemo(
         () => [
             ch.accessor("senderId", {
-                id: "id",
-                header: "#",
+                id: "senderId",
+                header: "Sender Id",
                 cell: (i) => <span>{i.getValue()}</span>,
             }),
             ch.accessor("projectPostPositionId", {
-                id: "title",
-                header: "Title",
+                id: "position",
+                header: "Position",
                 cell: (i) => <span>{i.getValue()}</span>,
                 sortingFn: "alphanumeric",
             }),
@@ -70,8 +91,12 @@ export function JoinRequestsTable() {
                 header: "Actions",
                 cell: ({ row }) => (
                     <section className="flex items-center gap-3 font-medium">
-                        <button className="cursor-pointer bg-green-700 hover:bg-green-800 transition-colors rounded-lg px-2 py-1">Accept</button>
-                        <button className="cursor-pointer bg-red-700 hover:bg-red-800 transition-colors rounded-lg px-2 py-1">Decline</button>
+                        <button
+                            onClick={() => handleAccept(row.original.id)}
+                            className="cursor-pointer bg-green-700 hover:bg-green-800 transition-colors rounded-lg px-2 py-1">Accept</button>
+                        <button
+                            onClick={() => handleDecline(row.original.id)}
+                            className="cursor-pointer bg-red-700 hover:bg-red-800 transition-colors rounded-lg px-2 py-1">Decline</button>
                     </section>
                 ),
                 enableSorting: false,

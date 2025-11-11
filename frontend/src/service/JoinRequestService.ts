@@ -19,6 +19,16 @@ class JoinRequestService {
         return (await axios.get(`${BASE_API}/join/applied/${postId}/${positionId}`)).data
     }
 
+    async acceptRequest(joinRequestId: number) {
+        return (await axios.post(`${BASE_API}/join/accept/${joinRequestId}`))
+    }
+
+    async declineRequest(joinRequestId: number) {
+        return (await axios.post(`${BASE_API}/join/decline/${joinRequestId}`))
+    }
+
+    
+
 }
 
 const joinRequestService = new JoinRequestService();

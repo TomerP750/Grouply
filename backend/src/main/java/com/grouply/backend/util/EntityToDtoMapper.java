@@ -231,6 +231,7 @@ public class EntityToDtoMapper {
 
     public static JoinRequestDTO toJoinRequestDto(JoinRequest entity) {
         return JoinRequestDTO.builder()
+                .id(entity.getId())
                 .projectPostId(entity.getPost().getId())
                 .projectPostPositionId(entity.getPosition().getId())
                 .senderId(entity.getSender().getId())
