@@ -5,9 +5,12 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { logout } from "../../../../redux/AuthSlice";
 
 const menuItem =
-  "dark:text-gray-300 hover:text-white cursor-pointer inline-flex items-center gap-3 hover:bg-gray-500/30 w-full py-2 px-2 rounded-md transition-colors";
+  "cursor-pointer inline-flex items-center gap-3 w-full py-2 px-3 rounded-lg transition-colors text-slate-600 dark:text-slate-300 hover:bg-sky-500/10 hover:text-sky-600 dark:hover:bg-teal-500/10 dark:hover:text-teal-400";
+
 const active =
-  "bg-gray-400/30 dark:bg-gray-600/30 text-gray-600 font-bold dark:text-white";
+  "bg-sky-500/20 text-sky-700 dark:bg-teal-500/20 dark:text-teal-300 font-semibold";
+
+
 
 export function SettingsSidebar() {
 
@@ -20,7 +23,7 @@ export function SettingsSidebar() {
   }
 
   return (
-    <aside className="w-55 lg:w-75 min-h-screen bg-gray-300 dark:bg-slate-950 font-medium">
+    <aside className="w-55 lg:w-75 min-h-screen font-medium">
       <ul className="flex flex-col items-start px-3 py-5 gap-0.5">
 
         <li className="w-full">

@@ -1,6 +1,7 @@
 import type { UserDTO } from "../../../dtos/models_dtos/user_dto";
 import { Avatar } from "../../elements/Avatar";
 import defaultBanner from "../../../assets/defaultProfileBanner.jpg";
+import { ProfileSocials } from "./profile_socials";
 
 type ProfileBannerProps = {
   bannerUrl?: string | null;
@@ -33,6 +34,8 @@ export function ProfileBanner({ bannerUrl, user }: ProfileBannerProps) {
             <Avatar user={user} className="w-full h-full object-cover rounded-full" />
           </div>
         </div>
+
+        <ProfileSocials/>
       </div>
     </div>
   );

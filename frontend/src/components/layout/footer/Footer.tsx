@@ -5,7 +5,7 @@ import { FooterTop } from "./FooterTop";
 
 export function Footer() {
   return (
-    <footer className="bg-gradient-to-r from-sky-100 via-indigo-100 to-gray-100 dark:from-slate-900 dark:via-teal-950 dark:to-stone-900">
+    <footer className="bg-gradient-to-r from-sky-100 to-indigo-100  dark:from-slate-900 dark:to-stone-950">
     
       <div className="mx-auto px-6 py-12">
         

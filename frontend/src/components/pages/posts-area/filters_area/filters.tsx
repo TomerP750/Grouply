@@ -21,7 +21,7 @@ export function Filters({ onFilterChange, posts }: FiltersProps) {
 
   return (
     
-    <aside className="hidden lg:block lg:sticky top-10 w-72 shrink-0">
+    <aside className="hidden lg:block lg:sticky top-10 w-72 shrink-0 shadow-md">
       
       <div className="lg:sticky lg:top-10 h-[calc(100vh-2rem)] overflow-y-auto
                       px-4 py-4 rounded-xl text-slate-900 dark:text-slate-100

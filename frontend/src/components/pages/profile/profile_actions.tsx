@@ -21,7 +21,7 @@ const baseBtn =
 
 const primaryBtn =
   baseBtn +
-  " text-white " +
+  " dark:text-white " +
   "ring-0";
 
 const dangerBtn =

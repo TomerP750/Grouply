@@ -15,7 +15,7 @@
 }
 
 body {
-  background: linear-gradient(to right, white, #e0f2fe, #e0e7ff); /* light mode */
+  background: linear-gradient(to right, #e0f2fe, #e0e7ff); /* light mode */
 }
 
 .dark body {
@@ -24,7 +24,8 @@ body {
 
 
 
-/* Light mode scrollbar */
+
+
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;

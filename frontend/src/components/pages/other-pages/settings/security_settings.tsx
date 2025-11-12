@@ -5,7 +5,7 @@ import { FiEye, FiEyeOff } from "react-icons/fi";
 import { toast } from "react-toastify";
 
 
-const inputStyle = "w-80 rounded-lg border border-gray-500/50 bg-gray-400 dark:bg-gray-800 px-3 py-1";
+const inputStyle = "w-80 rounded-lg border border-gray-500/50 bg-indigo-200 dark:bg-gray-800 px-3 py-1";
 
 export interface ChangePasswordDTO {
     currentPassword: string,
@@ -39,7 +39,7 @@ export function SecuritySettings() {
                 {/* header */}
                 <div className="space-y-2 dark:text-white">
                     <p className="font-semibold text-lg">Change Password</p>
-                    <p className="text-gray-400">Settings for update user information</p>
+                    <p className="text-slate-500 dark:text-gray-400">Settings for update user information</p>
                 </div>
 
                 {/* Inputs section */}

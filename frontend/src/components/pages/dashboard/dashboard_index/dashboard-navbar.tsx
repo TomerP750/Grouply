@@ -15,7 +15,7 @@ import { NavbarRight } from "../../../layout/navbar/NavbarRight";
 
 const baseClasses =
     "cursor-pointer dark:text-gray-300 w-full p-2 inline-flex items-center gap-2 rounded-md transition";
-const activeClasses = "underline decoration-teal-500 decoration-2 underline-offset-10 font-bolder";
+const activeClasses = "underline dark:decoration-teal-500 decoration-2 underline-offset-10 font-bolder";
 const inactiveClasses = "hover:bg-teal-200/20 dark:text-gray-300";
 
 interface DashboardNavbarProps {

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ProjectPosition } from "../../../dtos/enums/ProjectPosition";
 import { BiX } from "react-icons/bi";
+import { toNormal } from "../../../util/util_functions";
 
 interface PositionSelectChipsProps {
     value: ProjectPosition[];
@@ -45,14 +46,14 @@ export function PositionSelectChips({
                     value={selectedPos}
                     onChange={(e) => setSelectedPos(e.target.value as ProjectPosition || "")}
                     className={`w-full rounded-lg px-3 py-2 text-sm outline-none transition border
-                     bg-slate-800 text-white border-slate-700
-                     focus:ring-2 focus:ring-teal-500/40 focus:border-teal-500
+                     bg-slate-200 dark:bg-slate-800 dark:text-white border-slate-700
+                     focus:ring-2 focus:ring-teal-500/40 focus:border-sky-500 dark:focus:border-teal-500
                      ${disabled ? "opacity-60 cursor-not-allowed" : ""}`}
                 >
-                    <option value="">{disabled ? "Loading..." : "Select Position"}</option>
+                    <option value="" className="font-medium bg-sky-100 dark:bg-slate-800">{disabled ? "Loading..." : "Select Position"}</option>
                     {available.map((pos) => (
-                        <option key={pos} value={pos} className="bg-slate-800">
-                            {pos}
+                        <option key={pos} value={pos} className="font-medium bg-sky-100 dark:bg-slate-800 even:bg-sky-200">
+                            {toNormal(pos)}
                         </option>
                     ))}
                 </select>
@@ -61,7 +62,7 @@ export function PositionSelectChips({
                     type="button"
                     onClick={add}
                     disabled={disabled || !selectedPos || (max ? value.length >= max : false)}
-                    className="px-3 py-2 rounded-md text-sm bg-teal-600 text-white
+                    className="px-3 py-2 rounded-md text-sm bg-sky-500 dark:bg-teal-600 text-white
                      hover:bg-teal-700 transition disabled:opacity-50"
                 >
                     Add
@@ -71,9 +72,9 @@ export function PositionSelectChips({
             <div className="mt-3 flex flex-wrap gap-2">
                 {value.map((pos, idx) => (
                     <span
-                        key={`${pos}-${idx}`} // unique even for duplicates
+                        key={`${pos}-${idx}`}
                         className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium
-                 bg-teal-600/15 text-teal-500 border border-teal-500/30"
+                 dark:bg-teal-600/15 text-teal-500 border border-teal-500/30"
                     >
                         {pos}
                         <button

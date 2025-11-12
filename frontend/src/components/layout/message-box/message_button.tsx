@@ -10,7 +10,7 @@ interface MessageButtonProps {
 }
 
 
-export function MessageButton({ chats, onOpen, }: MessageButtonProps) {
+export function MessageButton({ chats, onOpen }: MessageButtonProps) {
 
   const totalUnread = useMemo(
     () => chats.reduce((sum, c) => sum + (c.unread || 0), 0),

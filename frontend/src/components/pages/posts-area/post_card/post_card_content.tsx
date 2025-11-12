@@ -28,14 +28,14 @@ export const getMemberTypeTitle = (type: MemberType) => {
 }
 
 
-interface ProjectCardDescriptionProps {
+interface ProjectCardContentProps {
     post: PostDTO;
     sentRequest: boolean
     onEdit: () => void;
     onDelete: () => void;
 }
 
-export function PostCardDescription({ post, onEdit, onDelete, sentRequest }: ProjectCardDescriptionProps) {
+export function PostCardContent({ post, onEdit, onDelete, sentRequest }: ProjectCardContentProps) {
 
     const [loading, setLoading] = useState<boolean>(false);
     const [isOwner, setIsOwner] = useState<boolean>(false);

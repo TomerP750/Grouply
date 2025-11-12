@@ -3,13 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import defaultImage from "../../../../assets/projectdefault.jpg";
 import { ProjectCardProvider } from "../../../../context/ProjectCardContext";
-import type { PostDTO } from "../../../../dtos/models_dtos/post_dto";
+
 import type { ProjectMemberDTO } from "../../../../dtos/models_dtos/project_member_dto";
 import { useUserSelector } from "../../../../redux/hooks";
 import projectPostService from "../../../../service/post_service";
 import projectMemberService from "../../../../service/project_member_service";
 import { Avatar } from "../../../elements/Avatar";
-import { PostCardDescription } from "./post_card_content";
+import { PostCardContent } from "./post_card_content";
+import type { PostDTO } from "../../../../dtos/models_dtos/post_dto";
 
 
 interface PostCardProps {
@@ -74,12 +75,12 @@ export function PostCard({ projectPost, onRemove }: PostCardProps) {
 
     return (
         <ProjectCardProvider projectPost={projectPost}>
-            <div className="w-full sm:w-3/4 min-h-100 bg-gray-100 dark:bg-slate-800 dark:text-white rounded-2xl shadow-lg overflow-hidden flex flex-col hover:shadow-2xl hover:shadow-teal-800/30 transition-shadow">
+            <div className="w-full sm:w-3/4 min-h-100 bg-gradient-to-br from-white to-slate-100 dark:from-slate-800 dark:to-slate-900 dark:text-white rounded-2xl shadow-lg overflow-hidden flex flex-col hover:shadow-2xl hover:shadow-teal-800/30 transition-shadow">
                 {/* Image placeholder */}
                 <img src={defaultImage} className="h-[40%] object-center object-cover bg-gradient-to-r from-blue-600 to-blue-500 w-full" />
 
                 {/* Description + Buttons to join */}
-                <PostCardDescription
+                <PostCardContent
                     post={projectPost}
                     sentRequest={sentRequest}
                     onEdit={handleEdit}

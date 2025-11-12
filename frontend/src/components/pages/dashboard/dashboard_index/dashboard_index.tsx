@@ -11,6 +11,9 @@ import { ActiveProjectsChart } from "../charts/active_projects_chart";
 import { ConnectionsChart } from "../charts/connections_chart";
 import { ActivityRow } from "./activity_row";
 import { DashboardStatCard } from "./dashborard_stat_card";
+import { FaClock, FaHistory } from "react-icons/fa";
+import { LuActivity } from "react-icons/lu";
+import { MdHistory } from "react-icons/md";
 
 
 
@@ -83,13 +86,13 @@ export function Overview() {
       {/* Charts Row */}
       {stats && <section className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full  mb-8 text-white">
         {/* Active projects and connections */}
-        <div className="bg-slate-900/80 rounded-xl p-6 border border-slate-800 shadow-md">
+        <div className="bg-gradient-to-br from-white to-slate-100 dark:from-slate-800 dark:to-slate-900 rounded-xl p-6 border border-slate-800 shadow-md">
           <p className="text-2xl">Active Projects</p>
           <Hr />
           <ActiveProjectsChart activeProjectsCount={stats?.activeProjects} />
         </div>
 
-        <div className="bg-slate-900/80 rounded-xl p-6 border border-slate-800 shadow-md space-y-5">
+        <div className="bg-gradient-to-br from-white to-slate-100 dark:from-slate-800 dark:to-slate-900 rounded-xl p-6 border border-slate-800 shadow-md space-y-5">
           <p className="text-2xl">Connections</p>
           <Hr />
           <ConnectionsChart total={stats?.connections} />
@@ -100,19 +103,22 @@ export function Overview() {
 
       <section className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full">
 
-        <div className="bg-gray-200 dark:bg-slate-900/80 rounded-xl min-h-60 p-6 border border-slate-800 shadow-md">
+        <div className="bg-gradient-to-br from-white to-slate-100 dark:from-slate-800 dark:to-slate-900 rounded-xl min-h-60 p-6 border border-slate-800 shadow-md">
           
-          <h1 className="text-2xl text-black dark:text-white font-medium mb-3">Recent Activity</h1>
+          <h1 className="inline-flex items-center gap-1 text-black dark:text-white font-medium ">
+            <MdHistory size={30}/>
+            <span className="text-2xl">Recent Activity</span>
+            </h1>
           <Hr />
-          <ul className="space-y-3 dark:text-gray-300">
+          <ul className="space-y-1 dark:text-gray-300">
             {activites.length > 0 ? activites?.map(a => {
-              return <li key={a.id} className="even:bg-slate-800 px-2 py-1"><ActivityRow key={a.id} activity={a}/></li>
+              return <li key={a.id} className="odd:bg-slate-300 dark:odd:bg-slate-900  dark:even:bg-slate-800 px-2 py-1"><ActivityRow key={a.id} activity={a}/></li>
             }) : <span>No Recent Activities</span>}
 
           </ul>
         </div>
 
-        <div className="bg-slate-900/80 rounded-xl p-6 border border-slate-800 shadow-md">
+        <div className="bg-gradient-to-br from-white to-slate-100 dark:from-slate-800 dark:to-slate-900 rounded-xl p-6 border border-slate-800 shadow-md">
 
         </div>
 

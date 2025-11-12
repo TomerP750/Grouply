@@ -11,7 +11,7 @@ export function ProfileProjectCard({ project }: { project: ProjectDTO }) {
   return (
     <div
       className="w-100 aspect-square rounded-2xl border border-slate-200 dark:border-slate-700
-                 bg-white dark:bg-slate-900 shadow-sm hover:shadow-lg hover:-translate-y-1
+                 bg-gradient-to-br from-white to-slate-100 dark:from-slate-800 dark:to-slate-900 shadow-sm hover:shadow-lg hover:-translate-y-1
                  transition-all duration-200 flex flex-col p-5"
     >
       {/* Top Section */}

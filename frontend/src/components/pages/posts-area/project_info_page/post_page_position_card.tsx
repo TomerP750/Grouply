@@ -49,7 +49,6 @@ export function PostPositionPageCard({ postPosition, post }: PostPositionPageCar
 
 
 
-
     const handleRequestToJoin = () => {
 
         if (user) {

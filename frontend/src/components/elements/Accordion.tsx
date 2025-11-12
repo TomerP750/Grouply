@@ -15,7 +15,7 @@ export function Accordion({ children, title }: AccordionProps) {
         <div className="">
             
             <button onClick={() => setOpen(!open)} className={`cursor-pointer w-full inline-flex justify-between items-center ${open && `mb-5`}`}>
-                <p className="text-xs uppercase tracking-wider text-slate-100 font-semibold mb-2">{title}</p>
+                <p className="text-xs uppercase tracking-wider dark:text-slate-100 font-semibold mb-2">{title}</p>
                 <span className={`${open && 'rotate-180'} transition-all duration-300`}>{<BiChevronDown size={22}/>}</span>
             </button>
 

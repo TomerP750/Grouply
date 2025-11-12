@@ -6,7 +6,7 @@ import { SettingsSidebar } from "./sidebar";
 
 export function SettingsPage() {
     return (
-        <div className="bg-gray-200 dark:bg-slate-900 min-h-screen">
+        <div className=" min-h-screen">
             <Navbar />
             <div className="flex">
                 <SettingsSidebar />

@@ -107,13 +107,7 @@ export function DataTable<T>({
                 <tr
                   key={row.id}
                   onClick={onRowClick ? () => onRowClick(row.original) : undefined}
-                  className={`transition-colors ${
-                    i % 2 === 0
-                      ? "bg-slate-50 dark:bg-slate-900/80"
-                      : "bg-slate-200/40 dark:bg-slate-800/60"
-                  } hover:bg-slate-100 dark:hover:bg-slate-700/70 ${
-                    onRowClick ? "cursor-pointer" : ""
-                  }`}
+                  className={`odd:bg-sky-100 dark:odd:bg-slate-900 even:bg-white dark:even:bg-slate-800`}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <td

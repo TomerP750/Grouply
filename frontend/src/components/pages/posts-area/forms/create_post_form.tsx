@@ -24,7 +24,7 @@ const inputBase =
   "text-slate-900 outline-none transition " +
   "dark:bg-slate-900 dark:text-slate-100 " +
   "border-slate-300 dark:border-slate-600 " +
-  "focus:border-teal-500 focus:ring-2 focus:ring-teal-500/60 focus:ring-offset-0";
+  "focus:border-teal-500 focus:ring-2 focus:ring-sky-500 dark:focus:ring-teal-500/60 focus:ring-offset-0";
 const errorCls = "text-xs text-red-500 mt-1";
 
 
@@ -85,17 +85,19 @@ export function CreatePostForm({ onAdd }: CreatePostFormProps) {
   };
 
   return (
-    <div className="min-h-screen flex justify-center">
+    <div className="min-h-screen flex justify-center py-5">
    
       <form
         onSubmit={handleSubmit(sendCreation)}
-        className="flex flex-col w-1/2 pb-10"
+        className="flex flex-col w-1/2 pb-10 bg-sky-300/10"
       >
         {/* Body */}
-        <div className="flex-1 overflow-y-auto mt-8 sm:mt-10 pr-3 sm:pr-5 space-y-6">
+        <div className="flex-1 overflow-y-auto mt-8 sm:mt-10 px-3 sm:px-5 space-y-6">
+
+          <h1 className="text-2xl font-semibold text-center dark:text-slate-200">Create Post</h1>
 
           {/* Positions */}
-          <div className="rounded-xl border border-slate-700/60 bg-slate-900/40 p-4 sm:p-5">
+          <div className="rounded-xl border border-slate-700/60 bg-sky-100 dark:bg-slate-900/40 p-4 sm:p-5">
             <PositionSelectChips value={positions} onChange={setPositions} max={8} />
           </div>
 
@@ -145,7 +147,7 @@ export function CreatePostForm({ onAdd }: CreatePostFormProps) {
               <button
                 type="button"
                 onClick={() => resetField("description")}
-                className="px-2 py-1 text-xs font-medium rounded-lg bg-teal-600 text-white hover:bg-teal-500 transition"
+                className="cursor-pointer px-2 py-1 text-xs font-medium rounded-lg bg-sky-600 hover:bg-sky-500 dark:bg-teal-600 text-white dark:hover:bg-teal-500 transition"
               >
                 Reset
               </button>
@@ -163,7 +165,7 @@ export function CreatePostForm({ onAdd }: CreatePostFormProps) {
               })}
               aria-invalid={!!errors.description}
             />
-            <span className="text-right text-xs text-slate-400">{length} / 500</span>
+            <span className="text-right text-xs dark:text-slate-400 font-medium">{length} / 500</span>
 
             {errors.description && (
               <span className={errorCls}>{errors.description.message}</span>
@@ -180,7 +182,7 @@ export function CreatePostForm({ onAdd }: CreatePostFormProps) {
               reset();
               navigate("/");
             }}
-            className="inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm text-slate-300 hover:text-white hover:bg-slate-800/60 transition"
+            className="cursor-pointer hover:underline inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm dark:text-slate-300 dark:hover:text-white"
           >
             Cancel
           </button>
@@ -188,7 +190,7 @@ export function CreatePostForm({ onAdd }: CreatePostFormProps) {
           <button
             type="submit"
             disabled={loading || loadingProjects}
-            className="inline-flex items-center justify-center rounded-lg bg-teal-600 text-white px-4 py-2 text-sm font-semibold hover:brightness-110 disabled:opacity-60 transition"
+            className="disabled:cursor-not-allowed cursor-pointer inline-flex items-center justify-center rounded-lg bg-sky-500 dark:bg-teal-600 text-white px-4 py-2 text-sm font-semibold hover:brightness-110 disabled:opacity-60 transition"
           >
             {loading ? <BiLoaderAlt size={20} className="animate-spin" /> : "Create Post"}
           </button>

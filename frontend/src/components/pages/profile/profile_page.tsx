@@ -9,8 +9,9 @@ import { Navbar } from "../../layout/navbar/Navbar";
 import { ProfileActions } from "./profile_actions";
 import { ProfileBanner } from "./profile_banner";
 import { ProjectGrid } from "./project_grid";
+import { ProfileSocials } from "./profile_socials";
+import { Hr } from "../../elements/Hr";
 
-const linkStyle = "border px-3 w-1/2 py-2 inline-flex justify-center gap-2 items-center hover:bg-black dark:hover:text-black dark:hover:bg-white hover:text-white transition-colors duration-200"
 
 export function ProfilePage() {
 
@@ -27,45 +28,27 @@ export function ProfilePage() {
       .getOneProfile(id)
       .then(res => {
         console.log(res);
-        
+
         setProfile(res)
       })
       .catch((err) => console.log(err));
   }, [id]);
 
-  
+
 
   return (
-    <main className="min-h-screen bg-gray-200 dark:bg-slate-900 dark:text-white">
+    <main className="min-h-screen  dark:text-white">
+
       <Navbar />
 
       {/* Banner */}
       {profile && <ProfileBanner user={profile.user} />}
 
-      <div className="flex">
-        <section className="w-80 aspect-square mt-30 flex flex-col items-center text-sm gap-3">
 
-          <button className="font-medium mb-3 cursor-pointer">2 Connections</button>
 
-          {<NavLink to={"/"} className={`${linkStyle}`}>
-            <FaLinkedin size={22} />
-            <span>LinkedIn</span>
-          </NavLink>}
-
-          {<NavLink to={"/"} className={`${linkStyle}`}>
-            <FaGithub size={22} />
-            <span>GitHub</span>
-          </NavLink>}
-
-          {<NavLink to={"/"} className={`${linkStyle}`}>
-            <FaLink size={22} />
-            <span>Portfolio</span>
-          </NavLink>}
-
-        </section>
-
-        {/* Page container */}
-        <section className="flex-1 xl:mt-0 mx-auto px-4 sm:px-10 ">
+      {/* Page container */}
+      <div className="w-full flex justify-end">
+        <section className="w-[83%] xl:mt-0  px-4 sm:px-10 ">
 
           {/* Header  */}
           <div className="flex flex-col lg:flex-row items-start w-full justify-between lg:items-center gap-4 sm:gap-6 md:gap-8 pt-6">
@@ -82,8 +65,8 @@ export function ProfilePage() {
             <ProfileActions profile={profile!} user={user} />
           </div>
 
-          {/* content */}
-          <section className="mt-6 sm:mt-10 md:mt-14 pb-10 space-y-2">
+          {/* About */}
+          <section className="mt-6 sm:mt-10 md:mt-14 pb-10 space-y-2 bg-slate-800/80 p-5 min-h-80">
             <p className="text-lg">About {user.username}</p>
             <p className="">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis accusantium optio error
@@ -93,12 +76,13 @@ export function ProfilePage() {
           </section>
 
         </section>
-
       </div>
 
-      <ProjectGrid/>
+      <Hr />
 
-      
+      <ProjectGrid />
+
+
     </main>
   );
 }

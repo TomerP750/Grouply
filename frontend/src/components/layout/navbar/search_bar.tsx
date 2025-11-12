@@ -5,6 +5,7 @@ import userService from "../../../service/user_service";
 import type { UserDTO } from "../../../dtos/models_dtos/user_dto";
 import { toast } from "react-toastify";
 import './search_bar.css'
+import { Drawer } from "../../elements/drawer";
 
 
 interface SearchBarProps {
@@ -17,42 +18,16 @@ export function SearchBar({ open, onClose }: SearchBarProps) {
   const [query, setQuery] = useState<string>('');
   const [users, setUsers] = useState<UserDTO[]>([]);
 
-
-  // const debouncedSearch = useMemo(() => {
-  //   return debounce((value: string) => {
-  //     userService.searchUsers(value)
-  //     .then(res => {
-  //       setUsers(res.content)
-  //     })
-  //     .catch(err => {
-  //       toast.error(err.resopnse.data);
-  //     })
-  //   }, 500)
-  // }, []);
-
-  // const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-  //   const value = e.target.value;
-  //   setQuery(value);
-  //   debouncedSearch(value)
-  // }
-
-  // useEffect(() => {
-  //   return () => {
-  //     debouncedSearch.cancel();
-  //   };
-  // }, [debouncedSearch])
-
-
   useBodyScrollLock(open);
 
   return (
-    <>
+    <Drawer>
       {/* Backdrop Wrapper */}
       <div
         onClick={onClose}
         className={`
           fixed inset-0 z-30 min-h-screen
-          bg-black/80 
+         bg-black/80 
           transition-opacity duration-200
           ${open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}
         `}
@@ -64,7 +39,7 @@ export function SearchBar({ open, onClose }: SearchBarProps) {
         className={`search-bar
           fixed top-0 left-0 w-full h-50 flex flex-col items-center justify-start p-5  
           z-40
-          bg-gray-100/90 dark:bg-gray-800/95 backdrop-blur border-b border-white/10
+          bg-gradient-to-br from-indigo-100  to-indigo-100 dark:from-slate-800 dark:to-slate-900 backdrop-blur border-b border-white/10
           transition-transform duration-300 ease-out will-change-transform
         `}
         role="dialog"
@@ -91,11 +66,11 @@ export function SearchBar({ open, onClose }: SearchBarProps) {
             />
           </div>
 
-          <button onClick={onClose}><BiX size={40} className="cursor-pointer"/></button>
+          <button onClick={onClose}><BiX size={40} className="cursor-pointer dark:text-white"/></button>
 
         </div>
 
       </div>
-    </>
+    </Drawer>
   );
 }

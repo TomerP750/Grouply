@@ -31,7 +31,7 @@ export function ConnectionMenu() {
     if (requests.length > 0) {
 
         return (
-            <Menu className="bg-gray-200 dark:bg-slate-950 py-5 px-4 absolute top-0 mt-15 -right-2 w-95 max-w-95 min-h-64 rounded-2xl shadow-2xl dark:text-gray-300">
+            <Menu className="bg-gradient-to-br from-white to-slate-100 dark:from-slate-800 dark:to-slate-900 py-5 px-4 absolute top-0 mt-15 -right-2 w-95 max-w-95 min-h-64 rounded-2xl shadow-2xl dark:text-gray-300">
                 <div className="w-full flex min-h-64 flex-col">
 
                     {/* List */}
@@ -55,7 +55,7 @@ export function ConnectionMenu() {
     }
 
     return (
-        <Menu className="bg-gray-200 flex items-center justify-center dark:bg-slate-950 py-5 px-4 absolute top-0 mt-15 -right-2 w-95 max-w-95 min-h-64 rounded-2xl shadow-2xl dark:text-gray-300">
+        <Menu className="bg-gradient-to-br from-white to-slate-100 dark:from-slate-800 dark:to-slate-900 flex items-center justify-center py-5 px-4 absolute top-0 mt-15 -right-2 w-95 max-w-95 min-h-64 rounded-2xl shadow-2xl dark:text-gray-300">
 
             <menu className="w-full flex flex-col items-center">
 

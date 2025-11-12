@@ -12,11 +12,11 @@ import { toNormal } from "../../../../util/util_functions";
 
 
 const inputBase =
-    "w-full rounded-lg px-3 py-2 text-sm outline-none transition border " +
-    "bg-slate-800 text-white border-slate-700 " +
-    "focus:ring-2 focus:ring-teal-500/40 focus:border-teal-500";
-  const labelBase = "text-sm font-medium text-gray-200 select-none";
-  const errorText = "text-xs text-rose-400 mt-1";
+  "w-full rounded-lg px-3 py-2 text-sm outline-none transition border " +
+  "dark:bg-slate-800 bg-indigo-300 text-white border-slate-700 " +
+  "focus:ring-2 focus:ring-teal-500/40 focus:border-teal-500";
+const labelBase = "text-sm font-medium dark:text-gray-200 select-none";
+const errorText = "text-xs text-rose-400 mt-1";
 
 
 interface CreateProjectFormProps {
@@ -25,40 +25,40 @@ interface CreateProjectFormProps {
 
 export function CreateProjectForm({ onClose }: CreateProjectFormProps) {
 
-    const [technologies, setTechnologies] = useState<TechnologyDTO[]>([]);
+  const [technologies, setTechnologies] = useState<TechnologyDTO[]>([]);
 
-    useEffect(() => {
-        
-        technologyService.allTechnologies()
-        .then(res => {
-            setTechnologies(res);
-        })
-        .catch(err => {
-            toast.error(err.response.data)
-        })
-        
-    }, []);
+  useEffect(() => {
 
-    const { register, handleSubmit, formState: { errors, isSubmitting }, reset, control } = useForm<CreateProjectDTO>();
-    
-    const sendData = (data: CreateProjectDTO) => {
-        
-        projectService.createProject(data)
-        .then(() => {
-          toast.success("Project Created");
-          onClose();
-        })
-        .catch(err => {
-          toast.error(err.response.data);
-        })
-    
-    };
+    technologyService.allTechnologies()
+      .then(res => {
+        setTechnologies(res);
+      })
+      .catch(err => {
+        toast.error(err.response.data)
+      })
 
-    return (
+  }, []);
+
+  const { register, handleSubmit, formState: { errors, isSubmitting }, reset, control } = useForm<CreateProjectDTO>();
+
+  const sendData = (data: CreateProjectDTO) => {
+
+    projectService.createProject(data)
+      .then(() => {
+        toast.success("Project Created");
+        onClose();
+      })
+      .catch(err => {
+        toast.error(err.response.data);
+      })
+
+  };
+
+  return (
     <form className="w-full" onSubmit={handleSubmit(sendData)}>
       <h1 className="text-xl font-semibold mb-4">Create Project</h1>
 
-      <div className="rounded-2xl border border-slate-800 bg-slate-900 p-5 shadow-sm">
+      <div className="rounded-2xl border border-slate-800 bg-gradient-to-r from-indigo-100 to-sky-100 dark:bg-slate-900 p-5 shadow-sm">
         <div className="grid grid-cols-1 md:grid-cols-2 justify-items-center gap-5">
           {/* Name */}
           <section className="w-full flex flex-col gap-1">
@@ -69,9 +69,8 @@ export function CreateProjectForm({ onClose }: CreateProjectFormProps) {
               id="name"
               type="text"
               placeholder="e.g., Grouply"
-              className={`${inputBase} ${
-                errors.name ? "border-rose-500 focus:ring-rose-400" : ""
-              }`}
+              className={`${inputBase} ${errors.name ? "border-rose-500 focus:ring-rose-400" : ""
+                }`}
               aria-invalid={!!errors.name}
               {...register("name", {
                 required: "Project name is required",
@@ -88,9 +87,8 @@ export function CreateProjectForm({ onClose }: CreateProjectFormProps) {
               Status <span className="text-rose-400">*</span>
             </label>
             <select
-              className={`${inputBase} appearance-none ${
-                errors.status ? "border-rose-500 focus:ring-rose-400" : ""
-              }`}
+              className={`${inputBase} appearance-none ${errors.status ? "border-rose-500 focus:ring-rose-400" : ""
+                }`}
               aria-invalid={!!errors.status}
               {...register("status", {
                 required: "Status is required",
@@ -109,34 +107,61 @@ export function CreateProjectForm({ onClose }: CreateProjectFormProps) {
             )}
           </section>
 
+          {/* Github url */}
+          <section className="w-full flex flex-col gap-1 col-span-2">
+            <div className="flex justify-between items-center">
+              <label className={labelBase} htmlFor="name">
+                Github Repository Url <span className="text-rose-400">*</span>
+              </label>
+              <button type="button" className="cursor-pointer dark:text-white bg-sky-500 hover:bg-sky-600 dark:bg-teal-500 dark:hover:bg-teal-600 transition-colors px-2 py-1 rounded-lg text-white">Reset</button>
+            </div>
+
+            <input
+              id="name"
+              type="text"
+              placeholder="e.g., Grouply"
+              className={`${inputBase} ${errors.name ? "border-rose-500 focus:ring-rose-400" : ""
+                }`}
+              aria-invalid={!!errors.name}
+              {...register("githubUrl", {
+                required: "Repository url is required",
+                minLength: { value: 10, message: "Min 10 characters" },
+                maxLength: { value: 100, message: "Max 100 characters" },
+              })}
+            />
+            {errors.name && <p className={errorText}>{errors.name.message}</p>}
+          </section>
+
         </div>
 
 
-        {/* Technologies Chip */}
-      <div className="mt-6">
-        <Controller
-          name="technologies" 
-          control={control}
-          rules={{
-            validate: (arr) => (arr && (arr as TechnologyDTO[]).length > 0) || "Add at least one technology",
-          }}
-          render={({ field }) => (
-            <TechSelectChips
-              technologies={technologies}
-              value={(field.value as TechnologyDTO[]) ?? []}
-              onChange={field.onChange}
-              max={12}
-            />
-          )}
-        />
-        {errors.technologies && (
-          <p className="text-xs text-rose-400 mt-1">
-            {errors.technologies.message}
-          </p>
-        )}
-      </div>
 
-        
+
+        {/* Technologies Chip */}
+        <div className="mt-6">
+          <Controller
+            name="technologies"
+            control={control}
+            rules={{
+              validate: (arr) => (arr && (arr as TechnologyDTO[]).length > 0) || "Add at least one technology",
+            }}
+            render={({ field }) => (
+              <TechSelectChips
+                technologies={technologies}
+                value={(field.value as TechnologyDTO[]) ?? []}
+                onChange={field.onChange}
+                max={12}
+              />
+            )}
+          />
+          {errors.technologies && (
+            <p className="text-xs text-rose-400 mt-1">
+              {errors.technologies.message}
+            </p>
+          )}
+        </div>
+
+
 
         {/* Actions */}
         <div className="mt-6 flex items-center justify-end gap-2">
@@ -150,10 +175,10 @@ export function CreateProjectForm({ onClose }: CreateProjectFormProps) {
           </button>
           <button
             type="submit"
-            className="cursor-pointer disabled:cursor-not-allowed  px-4 py-2 rounded-md text-sm bg-teal-600 text-white hover:bg-teal-700 transition disabled:opacity-60"
+            className="cursor-pointer disabled:cursor-not-allowed  px-4 py-2 rounded-md text-sm bg-sky-600 dark:bg-teal-600 text-white hover:bg-sky-700 dark:hover:bg-teal-700 transition disabled:opacity-60"
             disabled={isSubmitting}
           >
-            {isSubmitting ? <BiLoaderAlt size={20} className="animate-spin"/> : "Create Project"}
+            {isSubmitting ? <BiLoaderAlt size={20} className="animate-spin" /> : "Create Project"}
           </button>
         </div>
       </div>

@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import { DeleteAccount } from "./delete_account";
 
 
-const inputStyle = "rounded-lg border border-gray-500/50 bg-gray-400 dark:bg-gray-800 px-3 py-1";
+const inputStyle = "rounded-lg border border-gray-500/50 bg-indigo-200 dark:bg-gray-800 px-3 py-1";
 
 
 export function UserSettings() {
@@ -70,7 +70,7 @@ export function UserSettings() {
         {/* header */}
         <div className="space-y-2 dark:text-white">
           <p className="font-semibold text-lg">Personal Information</p>
-          <p className="text-gray-400">Settings for update user information</p>
+          <p className="text-slate-500 dark:text-gray-400">Settings for update user information</p>
         </div>
 
         {/* Main area */}
@@ -83,7 +83,7 @@ export function UserSettings() {
             
             <div className="flex flex-col gap-5 items-start">
               {/* <img src={defaultImage} className="w-30 aspect-square rounded-lg bg-white" /> */}
-              <button type="button" onClick={() => setAvatarInputOpen(true)} className="text-white cursor-pointer bg-gray-700 hover:bg-gray-600 px-3 py-2 rounded-lg">
+              <button type="button" onClick={() => setAvatarInputOpen(true)} className="text-white cursor-pointer bg-indigo-500 hover:bg-indigo-400 dark:bg-gray-700 dark:hover:bg-gray-600 px-3 py-2 rounded-lg">
                 Change Avatar
               </button>
 
@@ -177,7 +177,7 @@ export function UserSettings() {
 
           </section>
 
-          <button className="text-white cursor-pointer rounded-lg hover:bg-teal-500 bg-teal-600 px-4 py-2">
+          <button className="text-white cursor-pointer rounded-lg bg-sky-500 hover:bg-sky-600 dark:hover:bg-teal-500 dark:bg-teal-600 px-4 py-2">
             Save
           </button>
         </div>

@@ -87,7 +87,7 @@ export function ReviewProjectPage() {
 
     if (result) {
         return (
-            <div className="min-h-screen bg-gradient-to-br from-slate-100 to-slate-100 dark:from-slate-900 dark:via-teal-950 dark:to-stone-900">
+            <div className="min-h-screen bg-gradient-to-br from-slate-100 via-indigo-100 to-sky-200 dark:from-slate-900 dark:via-teal-950 dark:to-stone-900">
                 <Navbar />
 
                 <main className="w-full ">
@@ -105,7 +105,12 @@ export function ReviewProjectPage() {
                     {/* Page content */}
                     <section className="max-w-5xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-10">
                         {/* Header */}
-                        <header className="flex flex-col items-center text-center gap-3 mb-8">
+                        <header className="flex flex-col items-center text-center gap-3 mb-5">
+
+                            <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-slate-900 dark:text-white">
+                                {toTitleCase(resultDummy.repositoryName)}’s Review
+                            </h1>
+
                             <span
                                 className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-semibold shadow-sm ${getGradeColor(
                                     resultDummy.grade
@@ -114,9 +119,7 @@ export function ReviewProjectPage() {
                                 Grade: {grade}/100
                             </span>
 
-                            <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-slate-900 dark:text-white">
-                                {toTitleCase(resultDummy.repositoryName)}’s Review
-                            </h1>
+
 
 
 
@@ -130,8 +133,8 @@ export function ReviewProjectPage() {
                             <div className="lg:col-span-2 space-y-6">
 
                                 {/* Summery */}
-                                <div className="flex flex-col items-start gap-3 bg-slate-900/20 p-5">
-                                    <h2 className="text-slate-300 text-lg font-semibold">Summery:</h2>
+                                <div className="flex flex-col items-start gap-3 rounded-lg bg-indigo-300/30 dark:bg-slate-900/20 p-5">
+                                    <h2 className="dark:text-slate-300 text-lg font-semibold">Summery:</h2>
                                     <p className="text-slate-600 dark:text-slate-300">
                                         {resultDummy.feedback.overall}
                                     </p>
@@ -215,9 +218,9 @@ export function ReviewProjectPage() {
                     <button
                         disabled={!hasUrl || loading}
                         onClick={handleReview}
-                        className={`${btn} inline-flex items-center justify-center rounded-full bg-teal-500 px-5 py-2 font-medium text-white transition
-                      hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-400
-                      disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-teal-500`}
+                        className={`${btn} inline-flex items-center justify-center rounded-full bg-sky-500 dark:bg-teal-500 px-5 py-2 font-medium text-white transition
+                      dark:hover:bg-teal-600 hover:bg-sky-600 focus:outline-none focus:ring-2 focus:ring-teal-400
+                      disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-sky-500 dark:disabled:hover:bg-teal-500`}
                     >
                         {loading ? "Reviewing" : "Review"}
                     </button>
@@ -239,22 +242,24 @@ export function ReviewProjectPage() {
                 <select
                     disabled={url.length > 0}
                     value={url}
+                    required
                     onChange={(e) => setUrl(e.target.value)}
                     className="w-60 appearance-none rounded-lg border border-slate-300 px-3 py-2 text-center shadow-sm
                    disabled:opacity-50 disabled:cursor-not-allowed
-                    outline-none transition cursor-pointer
+                    outline-none cursor-pointer
                    focus:ring-2 focus:ring-teal-500
                   
                    dark:border-slate-700 dark:text-white
+                   from-indigo-200 via-sky-200 to-indigo-200
                    bg-gradient-to-r 
                    dark:from-slate-900 dark:via-teal-700 dark:to-slate-900 
-                   hover-gradient-move duration-200
+                   hover-gradient-move duration-100
                    "
                 >
-                    <option value="">Select A Project</option>
+                    <option value="">Select Project</option>
                     {projects.length > 0 ? (
                         projects.map((p) => (
-                            <option key={p.id} value={p.githubRepositoryUrl}>
+                            <option className=" bg-indigo-200 hover:bg-sky-100" key={p.id} value={p.githubRepositoryUrl}>
                                 {p.name}
                             </option>
                         ))

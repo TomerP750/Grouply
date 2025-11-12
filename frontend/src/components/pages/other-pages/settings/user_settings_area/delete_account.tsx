@@ -4,7 +4,7 @@ import { FiEye, FiEyeOff } from "react-icons/fi";
 import userService from "../../../../../service/user_service";
 
 
-const inputStyle = "w-80 rounded-lg border border-gray-500/50 bg-gray-400 dark:bg-gray-800 px-3 py-1";
+const inputStyle = "w-80 rounded-lg border border-gray-500/50 bg-indigo-200 dark:bg-gray-800 px-3 py-1";
 
 export interface DeleteUserRequestDTO {
     password: string
