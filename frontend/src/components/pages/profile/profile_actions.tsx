@@ -60,7 +60,7 @@ export function ProfileActions({ profile, user }: ProfileActionsProps) {
             .catch((err) => toast.error(err?.response?.data ?? "Failed to check connection"));
     }, [profile?.user?.id]);
 
-    // To disabled the button for 5 seconds
+    
     const handleConnectRequest = () => {
 
         throttleConnect(() => {

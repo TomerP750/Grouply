@@ -19,7 +19,7 @@ export function Hero() {
       <div className="dark:text-white w-full md:w-2/3 flex-1 flex flex-col items-start justify-center px-10 gap-8">
 
         <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium shadow-sm dark:border-slate-700 dark:bg-slate-800">
-          <span className="inline-block h-2 w-2 rounded-full bg-teal-500" />
+          <span className="inline-block h-2 w-2 rounded-full bg-sky-500 dark:bg-teal-500" />
           Built for devs who want to build together
         </span>
 
@@ -38,20 +38,16 @@ export function Hero() {
 
         <div className="flex items-center gap-5">
           <button className='cursor-pointer text-white 
-        bg-teal-600 hover:bg-teal-500 transition-colors duration-200
-        px-4 py-2 
-        
-        from-teal-900 via-teal-700 to-teal-800 
-        hover:from-teal-700 hover:via-teal-500 hover:to-teal-600 
-
-        rounded-lg font-medium'><NavLink to={"/signup"}>Get Started</NavLink>
+        bg-sky-500 hover:bg-sky-600 dark:bg-teal-600 dark:hover:bg-teal-500 transition-colors duration-200
+        px-4 py-2 rounded-lg font-medium'>
+          <NavLink to={"/signup"}>Get Started</NavLink>
           </button>
           <NavLink to={"/about"}
             className='hover:scale-110 duration-200 inline-flex gap-2 items-center'>Learn More <FaArrowRight /></NavLink>
         </div>
 
         <p className={"text-gray-400 inline-flex items-center gap-2"}>Recruiter and looking for talent? 
-          <NavLink to={"/recruiter/signup"} className='text-white cursor-pointer bg-teal-600 hover:bg-teal-500 transition-colors duration-200 px-3 py-2 rounded-lg'>Register Here</NavLink>
+          <NavLink to={"/recruiter/signup"} className='text-white cursor-pointer bg-sky-500 hover:bg-sky-600 dark:bg-teal-600 dark:hover:bg-teal-500 transition-colors duration-200 px-3 py-2 rounded-lg'>Register Here</NavLink>
           </p>
 
       </div>

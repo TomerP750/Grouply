@@ -31,23 +31,25 @@ export function ConnectionMenu() {
     if (requests.length > 0) {
 
         return (
-            <Menu className="bg-gradient-to-br from-white to-slate-100 dark:from-slate-800 dark:to-slate-900 py-5 px-4 absolute top-0 mt-15 -right-2 w-95 max-w-95 min-h-64 rounded-2xl shadow-2xl dark:text-gray-300">
-                <div className="w-full flex min-h-64 flex-col">
+            <Menu>
+                <div className="animate-[bounceUp_0.25s_ease-out_forwards] bg-gradient-to-br from-white to-slate-100 dark:from-slate-800 dark:to-slate-900 py-5 px-4 absolute top-0 mt-15 -right-2 w-95 max-w-95 min-h-64 rounded-2xl shadow-2xl dark:text-gray-300">
+                    <div className="w-full flex min-h-64 flex-col">
 
-                    {/* List */}
-                    <div className="flex-1 overflow-y-auto gap-3 pr-1">
-                        {requests.map(r => (
-                            <ConnectionRequestCard
-                                key={r.id}
-                                connectionRequest={r}
-                                onResponse={() => handleResponse(r.id)}
-                            />
-                        ))}
+                        {/* List */}
+                        <div className="flex-1 overflow-y-auto gap-3 pr-1">
+                            {requests.map(r => (
+                                <ConnectionRequestCard
+                                    key={r.id}
+                                    connectionRequest={r}
+                                    onResponse={() => handleResponse(r.id)}
+                                />
+                            ))}
+                        </div>
+
+                        <NavLink to="/" className="mt-3 text-sm self-center hover:underline">
+                            View More
+                        </NavLink>
                     </div>
-
-                    <NavLink to="/" className="mt-3 text-sm self-center hover:underline">
-                        View More
-                    </NavLink>
                 </div>
             </Menu>
         );
@@ -55,14 +57,16 @@ export function ConnectionMenu() {
     }
 
     return (
-        <Menu className="bg-gradient-to-br from-white to-slate-100 dark:from-slate-800 dark:to-slate-900 flex items-center justify-center py-5 px-4 absolute top-0 mt-15 -right-2 w-95 max-w-95 min-h-64 rounded-2xl shadow-2xl dark:text-gray-300">
+        <Menu>
+            <div className="animate-[bounceUp_0.25s_ease-out_forwards] bg-gradient-to-br from-white to-slate-100 dark:from-slate-800 dark:to-slate-900 flex items-center justify-center py-5 px-4 absolute top-2 mt-15 right-45 w-95 max-w-95 min-h-64 rounded-2xl shadow-2xl dark:text-gray-300">
 
-            <menu className="w-full flex flex-col items-center">
+                <menu className="w-full flex flex-col items-center">
 
-                <BiGroup size={40} />
-                <p className="text-sm text-center">No Pending Requests</p>
+                    <BiGroup size={40} />
+                    <p className="text-sm text-center">No Pending Requests</p>
 
-            </menu>
+                </menu>
+            </div>
         </Menu>
     )
 }

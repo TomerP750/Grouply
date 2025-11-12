@@ -63,7 +63,7 @@ export function PositionSelectChips({
                     onClick={add}
                     disabled={disabled || !selectedPos || (max ? value.length >= max : false)}
                     className="px-3 py-2 rounded-md text-sm bg-sky-500 dark:bg-teal-600 text-white
-                     hover:bg-teal-700 transition disabled:opacity-50"
+                     hover:bg-sky-600 dark:hover:bg-teal-700 transition disabled:opacity-50"
                 >
                     Add
                 </button>
@@ -74,16 +74,17 @@ export function PositionSelectChips({
                     <span
                         key={`${pos}-${idx}`}
                         className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium
-                 dark:bg-teal-600/15 text-teal-500 border border-teal-500/30"
+                        text-blue-600
+                 dark:bg-teal-600/15 dark:text-teal-500 border dark:border-teal-500/30"
                     >
                         {pos}
                         <button
                             type="button"
                             onClick={() => remove(idx)}
-                            className="ml-1 rounded-full px-1.5 text-teal-500 hover:bg-teal-500/10"
+                            className="ml-1 rounded-full text-blue-500 dark:text-teal-500 dark:hover:bg-teal-500/10"
                             aria-label={`Remove ${pos} #${idx + 1}`}
                         >
-                            ✕
+                            <BiX size={20}/>
                         </button>
                     </span>
                 ))}

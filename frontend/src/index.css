@@ -84,3 +84,17 @@ body {
   }
 }
 
+@keyframes bounceUp {
+  from {
+    transform: translateY(20%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@theme {
+  --animate-bounce-up: bounceUp 0.25s ease forwards;
+}

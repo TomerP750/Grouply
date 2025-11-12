@@ -27,12 +27,12 @@ interface FilterProviderProps {
 }
 
 const getInitialRoles = () => {
-    const stored = localStorage.getItem(FILTER_ROLES);
+    const stored = sessionStorage.getItem(FILTER_ROLES);
     return stored ? JSON.parse(stored) as ProjectPosition[] : [];
 }
 
 const getInitialTechs = () => {
-    const stored = localStorage.getItem(FILTER_TECHNOLOGIES);
+    const stored = sessionStorage.getItem(FILTER_TECHNOLOGIES);
     return stored ? JSON.parse(stored) as TechnologyDTO[] : [];
 }
 
@@ -42,8 +42,8 @@ export function FilterProvider({ children }: FilterProviderProps) {
     const [selectedTechnologies, setSelectedTechnologies] = useState<TechnologyDTO[]>(getInitialTechs);
 
     useEffect(() => {
-        localStorage.setItem(FILTER_ROLES, JSON.stringify(selectedRoles));
-        localStorage.setItem(FILTER_TECHNOLOGIES, JSON.stringify(selectedTechnologies));
+        sessionStorage.setItem(FILTER_ROLES, JSON.stringify(selectedRoles));
+        sessionStorage.setItem(FILTER_TECHNOLOGIES, JSON.stringify(selectedTechnologies));
         setEmpty(selectedRoles.length === 0 && selectedTechnologies.length === 0);
     }, [selectedRoles, selectedTechnologies]);
 
@@ -71,8 +71,8 @@ export function FilterProvider({ children }: FilterProviderProps) {
     const clear = () => {
         setSelectedRoles([]);
         setSelectedTechnologies([]);
-        localStorage.removeItem(FILTER_ROLES);
-        localStorage.removeItem(FILTER_TECHNOLOGIES);
+        sessionStorage.removeItem(FILTER_ROLES);
+        sessionStorage.removeItem(FILTER_TECHNOLOGIES);
         setEmpty(true);
     };
 

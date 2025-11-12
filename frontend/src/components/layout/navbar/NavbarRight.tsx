@@ -17,6 +17,15 @@ interface NavbarRightProps {
   className?: string
 }
 
+const loginBtn = `
+  hidden md:inline-flex items-center justify-center
+  rounded-3xl px-5 py-1 font-bold text-white
+  bg-sky-600 hover:bg-sky-500
+  dark:bg-teal-700 dark:hover:bg-teal-600
+  focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400
+  transition-transform duration-200 hover:scale-110
+`;
+
 
 export function NavbarRight({ user, className }: NavbarRightProps) {
 
@@ -79,21 +88,13 @@ export function NavbarRight({ user, className }: NavbarRightProps) {
           <div className="flex items-center gap-3">
           <NavLink
             to="/login"
-            className="hidden md:inline-flex items-center justify-center 
-          rounded-3xl bg-[#0f0f10] dark:bg-teal-700 dark:hover:bg-teal-600 px-5 py-1 text-white font-bold hover:bg-gray-800 
-          focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400
-          transition-all hover:scale-110 
-          "
+            className={`${loginBtn}`}
           >
             Login
           </NavLink>
           <NavLink
             to="/recruiter/login"
-            className="hidden md:inline-flex items-center justify-center 
-          rounded-3xl bg-[#0f0f10] dark:bg-teal-700 dark:hover:bg-teal-600 px-5 py-1 text-white font-bold hover:bg-gray-800 
-          focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400
-          transition-all hover:scale-110
-          "
+            className={`${loginBtn}`}
           >
             Recruiter Login
           </NavLink>

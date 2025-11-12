@@ -11,6 +11,7 @@ import { usePagination } from "../../../util/helper_hooks";
 import postService from "../../../service/post_service";
 import { toast } from "react-toastify";
 import { MessageDock } from "../../layout/message-box/message_dock";
+import { MobileFilters } from "./filters_area/mobile_filters";
 
 
 
@@ -85,17 +86,14 @@ export function Feed() {
             <div className="flex flex-col pt-10 md:pt-0 md:mt-5 px-5 md:px-0 lg:flex-row w-full items-center lg:items-start gap-6">
                 <Filters onFilterChange={handleFilterChange} posts={posts} />
 
+                <MobileFilters/>
                 {/* Main area */}
                 <section className="w-full flex justify-center px-0 sm:px-5 pt-6">
                     {/* Width cap + centered */}
                     <div className="w-full grid grid-cols-1 justify-items-center lg:justify-items-start gap-y-10">
-                        <div className="flex w-3/4 justify-between lg:max-w-3/4 lg:justify-center">
-                            <FeedHeader onAdd={handleAdd} />
-                            <button
-                                className="lg:hidden max-h-10 inline-flex items-center gap-1 rounded-lg text-white bg-gray-600 px-3 py-1.5 cursor-pointer hover:bg-gray-500 transition-colors">
-                                <BiFilter size={20} /><span>Filters</span>
-                            </button>
-                        </div>
+
+                        <FeedHeader onAdd={handleAdd} />
+
                         {posts?.map(p => (
                             <PostCard
                                 key={p.id}
@@ -105,7 +103,7 @@ export function Feed() {
                         ))}
                     </div>
 
-                    
+
 
                 </section>
             </div>

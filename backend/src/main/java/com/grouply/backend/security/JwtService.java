@@ -85,11 +85,7 @@ public class JwtService {
         Date expiration = getClaims(token).getExpiration();
         Date now = new Date(System.currentTimeMillis());
 
-        if (expiration.before(now)) {
-            return false;
-        }
-
-        return true;
+        return !expiration.before(now);
     }
 
 }

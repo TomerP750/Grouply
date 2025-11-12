@@ -2,6 +2,8 @@ package com.grouply.backend.join_request;
 
 import com.grouply.backend.activity.ActivityService;
 import com.grouply.backend.activity.ActivityType;
+import com.grouply.backend.archived_post.ArchivedPost;
+import com.grouply.backend.archived_post.ArchivedPostRepository;
 import com.grouply.backend.exceptions.ExistsException;
 import com.grouply.backend.exceptions.UnauthorizedException;
 import com.grouply.backend.join_request.dto.JoinRequestDTO;
@@ -38,6 +40,7 @@ public class JoinRequestService {
     private final ProjectMemberRepository projectMemberRepository;
     private final ProjectPostPositionRepository projectPostPositionRepository;
     private final ActivityService activityService;
+    private final ArchivedPostRepository archivedPostRepository;
 //    private final NotificationService notificationService;
 
     /**
@@ -104,15 +107,11 @@ public class JoinRequestService {
 
         //TODO remove activity if cancel the join request
 
-
         activityService
                 .createActivity("You sent join request to " + " " + post.getProject().getName() + " to position: " + position.getPosition()
                         ,"/post/"+post.getId()
                         , ActivityType.SENT_JOIN_REQUEST
                         ,sender);
-
-
-
         return true;
     }
 
@@ -133,6 +132,14 @@ public class JoinRequestService {
                 .build();
         project.getProjectMembers().add(newMember);
         projectRepository.save(project);
+
+        if (archivedPostRepository.existsByUserIdAndPostId(joinRequest.getSender().getId(), project.getId())) {
+            log.info("Archived post found");
+            ArchivedPost archivedPost = archivedPostRepository
+                    .findByUserIdAndPostId(joinRequest.getSender().getId(), project.getId()).orElseThrow(() -> new NoSuchElementException("Archived post not found"));
+            archivedPostRepository.deleteById(archivedPost.getId());
+            log.info("Deleted archived post because archiver join the project");
+        }
 
         joinRequestRepository.deleteById(joinRequestId);
 
@@ -173,10 +180,6 @@ public class JoinRequestService {
     private boolean isOwner(Long userId, Long projectId) {
         return projectMemberRepository
                 .existsByUserIdAndProjectIdAndProjectRole(userId, projectId, ProjectRole.OWNER);
-    }
-
-    private Project fetchProject(Long projectId) {
-        return projectRepository.findById(projectId).orElseThrow(()->new NoSuchElementException("Project not found"));
     }
 
     private JoinRequest fetchJoinRequest(Long requestId) {

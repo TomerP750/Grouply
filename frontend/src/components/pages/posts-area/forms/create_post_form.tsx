@@ -97,7 +97,7 @@ export function CreatePostForm({ onAdd }: CreatePostFormProps) {
           <h1 className="text-2xl font-semibold text-center dark:text-slate-200">Create Post</h1>
 
           {/* Positions */}
-          <div className="rounded-xl border border-slate-700/60 bg-sky-100 dark:bg-slate-900/40 p-4 sm:p-5">
+          <div className="rounded-xl border border-sky-600/40 dark:border-slate-700/60  p-4 sm:p-5">
             <PositionSelectChips value={positions} onChange={setPositions} max={8} />
           </div>
 

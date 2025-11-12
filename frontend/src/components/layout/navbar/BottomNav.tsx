@@ -26,7 +26,7 @@ export function BottomNav() {
 
     if (user) {
         return (
-            <nav className="visible lg:hidden fixed bottom-0 w-full py-2 border-t bg-white dark:bg-slate-900 flex">
+            <nav className="visible lg:hidden fixed bottom-0 w-full py-2 border-t bg-white dark:bg-slate-900 flex z-[1000]">
                 
                 <NavLink to="/" end className={({ isActive }) => `${baseClasses} ${isActive ? activeClasses : inactiveClasses}`}>
                     <FaHome size={22} />

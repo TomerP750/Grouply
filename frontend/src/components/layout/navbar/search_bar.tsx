@@ -10,7 +10,7 @@ import { Drawer } from "../../elements/drawer";
 
 interface SearchBarProps {
   open: boolean;
-  onClose: () => void; 
+  onClose: () => void;
 }
 
 export function SearchBar({ open, onClose }: SearchBarProps) {
@@ -48,7 +48,7 @@ export function SearchBar({ open, onClose }: SearchBarProps) {
         {/* Input bar */}
 
         <div className="w-9/10 flex justify-between items-center gap-2 relative">
-          
+
           <div></div>
 
           <div className="relative w-4/10">
@@ -59,14 +59,20 @@ export function SearchBar({ open, onClose }: SearchBarProps) {
             <input
               type="text"
               value={query}
-              // onChange={handleChange}
+              onChange={(e) => setQuery(e.target.value)}
               placeholder="Search users..."
-              className="block w-full rounded-lg dark:bg-slate-800 dark:hover:bg-slate-900 border border-black dark:border-white py-4 pl-11 pr-3 
+              className="block dark:text-white w-full rounded-lg dark:bg-slate-800 dark:hover:bg-slate-900 border border-black dark:border-white py-4 pl-11 pr-3 
               placeholder:text-black dark:placeholder:text-slate-500 focus:outline-none"
             />
+
+            {/* {query.length > 0 &&
+              <button onClick={() => setQuery('')}>
+                <BiX className="cursor-pointer absolute right-1 top-4 text-white" size={30} />
+              </button>
+            } */}
           </div>
 
-          <button onClick={onClose}><BiX size={40} className="cursor-pointer dark:text-white"/></button>
+          <button onClick={onClose}><BiX size={40} className="cursor-pointer dark:text-white" /></button>
 
         </div>
 

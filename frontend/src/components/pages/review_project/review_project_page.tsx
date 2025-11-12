@@ -259,7 +259,7 @@ export function ReviewProjectPage() {
                     <option value="">Select Project</option>
                     {projects.length > 0 ? (
                         projects.map((p) => (
-                            <option className=" bg-indigo-200 hover:bg-sky-100" key={p.id} value={p.githubRepositoryUrl}>
+                            <option className=" bg-indigo-200 hover:bg-sky-100 dark:bg-slate-800 dark:hover:bg-slate-700" key={p.id} value={p.githubRepositoryUrl}>
                                 {p.name}
                             </option>
                         ))

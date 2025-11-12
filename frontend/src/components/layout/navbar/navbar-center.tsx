@@ -10,7 +10,7 @@ const linkClasses = ({ isActive }: { isActive: boolean }) =>
   [
     "relative inline-flex items-center gap-2 px-3 py-1 text-base font-medium transition-all duration-200",
     "text-black dark:text-white",
-    "after:content-[''] after:absolute after:left-0 after:-bottom-3 after:h-[2px] after:w-0 after:rounded-full after:transition-all after:duration-300",
+    "after:content-[''] after:absolute after:left-0 after:-bottom-9 after:h-[2px] after:w-0 after:rounded-full after:transition-all after:duration-300",
     "after:bg-black dark:after:bg-slate-600 hover:after:w-full hover:after:bg-black dark:hover:after:bg-teal-400",
     isActive &&
       [

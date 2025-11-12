@@ -48,10 +48,11 @@ export function ProfilePage() {
 
       {/* Page container */}
       <div className="w-full flex justify-end">
+        
         <section className="w-[83%] xl:mt-0  px-4 sm:px-10 ">
 
           {/* Header  */}
-          <div className="flex flex-col lg:flex-row items-start w-full justify-between lg:items-center gap-4 sm:gap-6 md:gap-8 pt-6">
+          <div className=" flex items-center  w-4/5 md:w-9/10 xl:w-full justify-between lg:items-center gap-4 sm:gap-6 md:gap-8 pt-6">
 
             {/* Name/handle */}
             <div>

@@ -15,7 +15,7 @@ export function FeedHeader({ onAdd }: FeedHeaderProps) {
     return (
         <button
             onClick={() => navigate("/create-post")}
-            className="cursor-pointer flex items-center justify-center w-full 
+            className="cursor-pointer flex items-center justify-center w-3/4
         bg-gradient-to-r dark:from-slate-900 dark:via-teal-950 dark:to-slate-900 
         from-indigo-100 via-sky-200 to-indigo-200
         hover-gradient-move border border-indigo-200/80 
