@@ -113,6 +113,7 @@ public class AuthService implements IAuthService {
 
         String token = jwtService.generateToken(principal.getId());
         return new AuthResponseDTO(token);
+
     }
 
     @Override
@@ -133,6 +134,7 @@ public class AuthService implements IAuthService {
 
     @Override
     public AuthResponseDTO recruiterSignup(RecruiterSignupRequestDTO dto) throws InvalidInputException {
+
         if (!dto.getPassword().equals(dto.getConfirmPassword())) {
             throw new InvalidInputException("Passwords are not match");
         }
@@ -157,6 +159,7 @@ public class AuthService implements IAuthService {
 
         RecruiterLoginRequestDTO loginRequest = new RecruiterLoginRequestDTO(dto.getEmail(), dto.getPassword());
         return recruiterLogin(loginRequest);
+
     }
 
 

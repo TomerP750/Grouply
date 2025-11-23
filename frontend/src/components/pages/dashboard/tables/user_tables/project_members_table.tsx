@@ -5,222 +5,314 @@ import { toast } from "react-toastify";
 import { ProjectRole } from "../../../../../dtos/enums/ProjectRole";
 import type { ProjectMemberDTO } from "../../../../../dtos/models_dtos/project_member_dto";
 import projectMemberService from "../../../../../service/project_member_service";
-import { Avatar } from "../../../../elements/Avatar";
 import { Dialog } from "../../../../elements/Dialog";
-import { useUser } from "../../../../../redux/hooks";
+import { DataTable } from "../admin_tables/data_table";
+import { usePagination } from "../../../../../util/helper_hooks";
+import { extractPageCount } from "../../../../../util/pagination_helper";
+import { createColumnHelper, type ColumnDef } from "@tanstack/react-table";
 
 export interface ChangeUserRoleDTO {
-    memberId: number
-    projectId: number
-    role: ProjectRole
+  memberId: number;
+  projectId: number;
+  role: ProjectRole;
 }
 
-const columns = ["", "First Name", "Last Name", "Username", "Position", "Role", "Actions"];
-const buttonStyle = "inline-flex items-center gap-1 cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
+const buttonStyle =
+  "inline-flex items-center gap-1 cursor-pointer disabled:cursor-not-allowed disabled:opacity-50";
+const ch = createColumnHelper<ProjectMemberDTO>();
 
 export function ProjectMembersTable() {
 
-    const params = useParams();
-    const projectId = Number(params.id);
+  const params = useParams();
+  const projectId = Number(params.id);
 
-    const [selectedRole, setSelectedRole] = useState<ProjectRole>();
-    const [editOpen, setEditOpen] = useState<boolean>(false);
-    const [editedMemberId, setEditedMemberId] = useState<number>();
-    const [dialogOpen, setDialogOpen] = useState<boolean>(false);
+  const [selectedRole, setSelectedRole] = useState<ProjectRole>();
+  const [editedMemberId, setEditedMemberId] = useState<number | undefined>();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [dialogOpen, setDialogOpen] = useState<boolean>(false);
+  const [selectedMemberId, setSelectedMemberId] = useState<number | null>(null);
 
-    const [members, setMembers] = useState<ProjectMemberDTO[]>([]);
+  const [rows, setRows] = useState<ProjectMemberDTO[]>([]);
 
-    const user = useUser();
+  const { pagination, setPagination, pageCount, setPageCount } = usePagination();
 
+  // ───────────────────────────────── Columns ─────────────────────────────────
 
+  const columns: ColumnDef<ProjectMemberDTO, any>[] = [
+    
+    // #
+    ch.accessor("id", {
+      header: "#",
+      cell: (info) => <span>{info.getValue()}</span>,
+    }),
 
-    useEffect(() => {
-        projectMemberService.allMembersPagination(projectId, 0, 10)
-            .then(res => {
-                setMembers(res.content);
-            })
-            .catch(err => {
-                toast.error(err.response.data);
-            })
-    }, []);
+    // First name
+    ch.accessor(
+      (row) => row.user.firstName,
+      {
+        id: "firstName",
+        header: "First Name",
+        cell: (info) => <span>{info.getValue()}</span>,
+      }
+    ),
 
-    const handleOpenEdit = (member: ProjectMemberDTO) => {
-        setEditedMemberId(member.id)
-        setSelectedRole(member.projectRole)
-        setEditOpen(true);
-    }
+    // Last name
+    ch.accessor(
+      (row) => row.user.lastName,
+      {
+        id: "lastName",
+        header: "Last Name",
+        cell: (info) => <span>{info.getValue()}</span>,
+      }
+    ),
 
+    // Username
+    ch.accessor(
+      (row) => row.user.username,
+      {
+        id: "username",
+        header: "Username",
+        cell: (info) => {
+          const value = info.getValue() as string;
+          return (
+            <span
+              className="block max-w-[260px] truncate"
+              title={value}
+            >
+              {value}
+            </span>
+          );
+        },
+      }
+    ),
 
-    const handleEdit = (memberId: number, projectId: number) => {
+    // Position
+    ch.accessor("projectPosition", {
+      header: "Position",
+      cell: (info) => <span>{String(info.getValue())}</span>,
+      sortingFn: "alphanumeric",
+    }),
 
-        const data: ChangeUserRoleDTO = {
-            memberId,
-            projectId,
-            role: selectedRole!
+    // Role 
+    ch.accessor("projectRole", {
+      header: "Role",
+      cell: (info) => {
+        const member = info.row.original;
+        const role = info.getValue() as ProjectRole;
+        const isEditing = editedMemberId === member.id;
+
+        const currentValue =
+          isEditing && selectedRole !== undefined ? selectedRole : role;
+
+        if (isEditing) {
+          return (
+            <select
+              value={currentValue}
+              onChange={(e) =>
+                setSelectedRole(e.target.value as ProjectRole)
+              }
+              className="border rounded px-2 py-1  text-sm"
+            >
+              {Object.values(ProjectRole).map((r) => (
+                <option key={r} value={r} className="dark:bg-slate-700 dark:even:bg-slate-800">
+                  {r}
+                </option>
+              ))}
+            </select>
+          );
         }
 
-        projectMemberService.changeMemberRole(data)
-            .then(() => {
-                toast.success("Changed role")
-            })
-            .catch(err => {
-                toast.error(err.response.data);
-            })
-            .finally(() => {
-                setEditOpen(false);
-            })
-    }
+        return (
+          <span
+            className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-medium ring-1 ${getRoleStyle(
+              role
+            )}`}
+          >
+            {role}
+          </span>
+        );
+      },
+      sortingFn: "alphanumeric",
+    }),
 
-    const handleRemove = (memberId: number, projectId: number) => {
+    // Actions
+    ch.display({
+      id: "actions",
+      header: "Actions",
+      cell: ({ row }) => {
+        const member = row.original;
+        const isEditing = editedMemberId === member.id;
 
-        projectMemberService.removeMemberFromProject(memberId, projectId)
-            .then(() => {
-                toast.success("Removed member");
-                setMembers(prev => prev.filter(m => m.id !== memberId));
-                setDialogOpen(false);
-            })
-            .catch(err => {
-                toast.error(err.response.data);
-            })
-            
-    }
+        return (
+          <div className="flex items-center gap-3">
+            {isEditing ? (
+              <>
+                <button
+                  type="button"
+                  onClick={() => handleEdit(member.id, projectId)}
+                  className={`${buttonStyle} text-emerald-500`}
+                  disabled={!selectedRole}
+                >
+                  <BiCheck size={18} />
+                  <span>Save</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setEditedMemberId(undefined);
+                    setSelectedRole(undefined);
+                  }}
+                  className={`${buttonStyle} text-slate-400`}
+                >
+                  <BiX size={18} />
+                  <span>Cancel</span>
+                </button>
+              </>
+            ) : (
+              <>
+                <button
+                  type="button"
+                  onClick={() => handleOpenEdit(member)}
+                  className={`${buttonStyle} dark:text-gray-200`}
+                >
+                  <BiEdit size={18} />
+                  <span>Edit role</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSelectedMemberId(member.id);
+                    setDialogOpen(true);
+                  }}
+                  className={`${buttonStyle} text-red-500`}
+                >
+                  <BiTrash size={18} />
+                  <span>Remove</span>
+                </button>
+              </>
+            )}
+          </div>
+        );
+      },
+      enableSorting: false,
+    }),
+  ];
 
+  // ─────────────────────────────── Data fetch ────────────────────────────────
 
-    return (
-        <div className="w-full min-h-screen p-6">
-            <div className="overflow-hidden rounded-2xl border border-white/10 bg-slate-950 shadow-xl">
-                <table className="w-full text-sm">
-                    <thead className="sticky top-0 z-10 bg-slate-900/80 backdrop-blur">
-                        <tr className="grid grid-cols-7 gap-4 px-6 py-3">
-                            {columns.map((c) => (
-                                <th
-                                    key={c}
-                                    className="text-left font-semibold tracking-wide text-slate-300 uppercase text-xs"
-                                >
-                                    {c}
-                                </th>
-                            ))}
-                        </tr>
-                    </thead>
+  useEffect(() => {
+    setLoading(true);
+    projectMemberService
+      .allMembersPagination(
+        projectId,
+        pagination.pageIndex,
+        pagination.pageSize
+      )
+      .then((res) => {
+        setRows(res.content);
+        setPageCount(extractPageCount(res, pagination.pageSize));
+      })
+      .catch((err) => {
+        toast.error(err.response?.data);
+      })
+      .finally(() => setLoading(false));
+  }, [projectId, pagination.pageIndex, pagination.pageSize, setPageCount]);
 
-                    <tbody>
-                        {members.map((m) => (
-                            <tr
-                                key={m.id}
-                                className="grid grid-cols-7 gap-4 items-center px-6 py-4 border-t border-white/5 even:bg-white/[0.02] hover:bg-white/[0.04] transition-colors"
-                            >
-                                <td className="flex items-center">
-                                    <Avatar size={40} />
-                                </td>
+  // ─────────────────────────────── Handlers ────────────────────────────────
 
-                                <td className="text-slate-200 truncate">{m.user.firstName}</td>
-                                <td className="text-slate-200 truncate">{m.user.lastName}</td>
-                                <td className="text-slate-400 truncate">{m.user.username}</td>
-                                <td>
-                                    <span className="inline-flex items-center rounded-full border border-teal-500/30 bg-teal-500/10 px-2 py-0.5 text-xs font-medium text-teal-300">
-                                        {m.projectPosition}
-                                    </span>
-                                </td>
+  const handleOpenEdit = (member: ProjectMemberDTO) => {
+    setEditedMemberId(member.id);
+    setSelectedRole(member.projectRole);
+  };
 
-                                <td>
-                                    {editOpen && editedMemberId === m.id ? (
-                                        <select
-                                            className="w-full rounded-md bg-slate-800 px-3 py-2 text-slate-200 ring-1 ring-white/10 focus:outline-none focus:ring-2 focus:ring-teal-500/50 cursor-pointer appearance-none"
-                                            onChange={(e) => setSelectedRole(e.target.value as ProjectRole)}
-                                            value={selectedRole}
-                                        >
-                                            {Object.values(ProjectRole).map((r) => (
-                                                <option
-                                                    className="bg-slate-800 text-slate-200"
-                                                    value={r}
-                                                    key={r}
-                                                >
-                                                    {r}
-                                                </option>
-                                            ))}
-                                        </select>
-                                    ) : (
-                                        <span
-                                            className={`inline-flex items-center justify-center rounded-full px-3 py-1 text-xs font-medium ring-1 shadow-sm ${getRoleStyle(
-                                                m.projectRole
-                                            )}`}
-                                        >
-                                            {m.projectRole}
-                                        </span>
+  const handleEdit = (memberId: number, projectId: number) => {
+    if (!selectedRole) return;
 
-                                    )}
-                                </td>
+    const data: ChangeUserRoleDTO = {
+      memberId,
+      projectId,
+      role: selectedRole,
+    };
 
-                                <td>
-                                    <div className="flex items-center gap-3 text-sm">
-                                        {editOpen && editedMemberId === m.id ? (
-                                            <div className="flex gap-2">
-                                                <button
-                                                    onClick={() => handleEdit(m.id, projectId)}
-                                                    className={`${buttonStyle} inline-flex items-center gap-1 rounded-md border border-green-500/30 bg-green-500/10 px-3 py-1.5 text-green-400 hover:bg-green-500/15`}
-                                                >
-                                                    <BiCheck size={20} />
-                                                    <span className="hover:underline">Save</span>
-                                                </button>
-                                                <button
-                                                    onClick={() => setEditOpen(false)}
-                                                    className={`${buttonStyle} inline-flex items-center gap-1 rounded-md border border-white/10 bg-slate-800/60 px-3 py-1.5 text-slate-200 hover:bg-slate-800`}
-                                                >
-                                                    <BiX size={20} />
-                                                    <span className="hover:underline">Cancel</span>
-                                                </button>
-                                            </div>
-                                        ) : (
-                                            <div className="flex gap-2">
-                                                <button
-                                                    onClick={() => handleOpenEdit(m)}
-                                                    className={`${buttonStyle} inline-flex items-center gap-1 rounded-md border border-white/10 bg-slate-800/60 px-3 py-1.5 text-slate-200 hover:bg-slate-800`}
-                                                >
-                                                    <BiEdit size={20} />
-                                                    <span className="hover:underline">Edit</span>
-                                                </button>
+    projectMemberService
+      .changeMemberRole(data)
+      .then(() => {
+        toast.success("Changed role");
+        setRows((prev) =>
+          prev.map((m) =>
+            m.id === memberId ? { ...m, projectRole: selectedRole } : m
+          )
+        );
+      })
+      .catch((err) => {
+        toast.error(err.response?.data ?? "Failed to change role");
+      })
+      .finally(() => {
+        setEditedMemberId(undefined);
+        setSelectedRole(undefined);
+      });
+  };
 
-                                                <button
-                                                    disabled={members.length <= 1}
-                                                    onClick={() => setDialogOpen(true)}
-                                                    className={`${buttonStyle} inline-flex items-center gap-1 rounded-md border border-red-500/30 bg-red-500/10 px-3 py-1.5 text-red-400 hover:bg-red-500/15 disabled:opacity-50 disabled:cursor-not-allowed`}
-                                                >
-                                                    <BiTrash size={20} />
-                                                    <span>Remove</span>
-                                                </button>
+  const handleRemove = (memberId: number, projectId: number) => {
+    projectMemberService
+      .removeMemberFromProject(memberId, projectId)
+      .then(() => {
+        toast.success("Removed member");
+        setRows((prev) => prev.filter((m) => m.id !== memberId));
+        setDialogOpen(false);
+        setSelectedMemberId(null);
+      })
+      .catch((err) => {
+        toast.error(err.response?.data ?? "Failed to remove member");
+      });
+  };
 
-                                                {dialogOpen && <Dialog title="Remove Member"
-                                                    onConfirm={() => handleRemove(m.id, projectId)}
-                                                    open={dialogOpen}
-                                                    onClose={() => setDialogOpen(false)}
-                                                    message={"Are you sure you want to remove from the project?"} />
-                                                }
-                                            </div>
-                                        )}
-                                    </div>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    );
+  // ───────────────────────────────── Render ─────────────────────────────────
 
+  return (
+    <main>
+      <DataTable<ProjectMemberDTO>
+        columns={columns}
+        rows={rows}
+        pageCount={pageCount}
+        pagination={pagination}
+        setPagination={setPagination}
+        loading={loading}
+        emptyMessage="No members"
+        enableSorting
+        className="shadow-md dark:text-white p-5"
+      />
+
+      {dialogOpen && (
+        <Dialog
+          open={dialogOpen}
+          message={"Are you sure you want to remove this member?"}
+          onClose={() => {
+            setDialogOpen(false);
+            setSelectedMemberId(null);
+          }}
+          onConfirm={() => {
+            if (selectedMemberId != null) {
+              handleRemove(selectedMemberId, projectId);
+            }
+          }}
+        />
+      )}
+    </main>
+  );
 }
 
+// ────────────────────────────── Role styling ───────────────────────────────
 
 const getRoleStyle = (role: ProjectRole) => {
-
-    switch (role) {
-        case ProjectRole.OWNER:
-            return "bg-amber-500/10 text-amber-400 ring-amber-400/25";
-        case ProjectRole.MODERATOR:
-            return "bg-violet-500/10 text-violet-400 ring-violet-400/25";
-        case ProjectRole.MEMBER:
-            return "bg-slate-700/40 text-slate-300 ring-slate-500/20";
-        default:
-            return "bg-slate-800/60 text-slate-300 ring-white/10";
-    }
-
+  switch (role) {
+    case ProjectRole.OWNER:
+      return "bg-amber-500/10 text-amber-400 ring-amber-400/25";
+    case ProjectRole.MODERATOR:
+      return "bg-violet-500/10 text-violet-400 ring-violet-400/25";
+    case ProjectRole.MEMBER:
+      return "bg-slate-700/40 text-slate-300 ring-slate-500/20";
+    default:
+      return "bg-slate-800/60 text-slate-300 ring-white/10";
+  }
 };

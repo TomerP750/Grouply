@@ -52,7 +52,7 @@ export function PositionSelectChips({
                 >
                     <option value="" className="font-medium bg-sky-100 dark:bg-slate-800">{disabled ? "Loading..." : "Select Position"}</option>
                     {available.map((pos) => (
-                        <option key={pos} value={pos} className="font-medium bg-sky-100 dark:bg-slate-800 even:bg-sky-200">
+                        <option key={pos} value={pos} className="font-medium bg-sky-100 dark:bg-slate-800 dark:even:bg-slate-700 even:bg-sky-200">
                             {toNormal(pos)}
                         </option>
                     ))}

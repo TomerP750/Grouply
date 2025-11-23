@@ -15,9 +15,6 @@ import { useNavigate } from "react-router-dom";
 
 
 
-
-
-
 const labelCls = "text-sm font-medium text-slate-700 dark:text-slate-200";
 const inputBase =
   "w-full rounded-md border bg-white px-3 py-2 text-sm " +

@@ -2,9 +2,10 @@ import { useState } from "react";
 import { BiHomeAlt2, BiSearch } from "react-icons/bi";
 import { FaCode } from "react-icons/fa";
 import { MdBookmarkBorder, MdDashboard, MdHome } from "react-icons/md";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import type { JwtUser } from "../../../redux/AuthSlice";
 import { SearchBar } from "./search_bar";
+import { useFilters } from "../../../context/filter_context";
 
 const linkClasses = ({ isActive }: { isActive: boolean }) =>
   [
@@ -13,12 +14,12 @@ const linkClasses = ({ isActive }: { isActive: boolean }) =>
     "after:content-[''] after:absolute after:left-0 after:-bottom-9 after:h-[2px] after:w-0 after:rounded-full after:transition-all after:duration-300",
     "after:bg-black dark:after:bg-slate-600 hover:after:w-full hover:after:bg-black dark:hover:after:bg-teal-400",
     isActive &&
-      [
-        "bg-black text-white py-2 rounded-lg",              
-        "dark:bg-teal-600 dark:text-slate-900",          
+    [
+      "bg-black text-white py-2 rounded-lg",
+      "dark:bg-teal-600 dark:text-slate-900",
 
-        "after:w-0 hover:after:w-0 hover:after:bg-transparent dark:hover:after:bg-transparent",
-      ].join(" "),
+      "after:w-0 hover:after:w-0 hover:after:bg-transparent dark:hover:after:bg-transparent",
+    ].join(" "),
   ]
     .filter(Boolean)
     .join(" ");
@@ -37,22 +38,30 @@ export function NavbarCenter({ user }: NavbarCenterProps) {
 
   const [searchOpen, setSearchOpen] = useState<boolean>(false);
 
+  const { clear } = useFilters();
+
+  const { pathname } = useLocation();
+
   return (
     <div className="">
       {/* {user && <SearchBar />} */}
       {user && <ul className="hidden lg:flex items-center gap-5 text-lg ">
         <li>
-          <NavLink to="/" className={linkClasses}>
+
+          <NavLink onClick={clear} to="/" className={linkClasses}>
             <MdHome size={22} />
             <span className="text-sm">Home</span>
           </NavLink>
+
         </li>
 
         <li>
-          <NavLink to="/archived" className={linkClasses}>
+
+          <NavLink onClick={clear} to="/archived" className={linkClasses}>
             <MdBookmarkBorder size={22} />
             <span className="text-sm">Archived</span>
           </NavLink>
+
         </li>
 
         <li>
@@ -64,7 +73,7 @@ export function NavbarCenter({ user }: NavbarCenterProps) {
 
         <li>
           <NavLink to={`/dashboard/${user?.id}`} className={linkClasses}>
-            <MdDashboard size={22}/>
+            <MdDashboard size={22} />
             <span className="text-sm">Dashboard</span>
           </NavLink>
         </li>
@@ -77,7 +86,7 @@ export function NavbarCenter({ user }: NavbarCenterProps) {
 
       </ul>}
 
-      {searchOpen && <SearchBar open={searchOpen} onClose={() => setSearchOpen(false)}/>}
+      {searchOpen && <SearchBar open={searchOpen} onClose={() => setSearchOpen(false)} />}
     </div>
   );
 }

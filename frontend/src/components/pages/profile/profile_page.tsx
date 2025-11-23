@@ -67,8 +67,8 @@ export function ProfilePage() {
           </div>
 
           {/* About */}
-          <section className="mt-6 sm:mt-10 md:mt-14 pb-10 space-y-2 bg-slate-800/80 p-5 min-h-80">
-            <p className="text-lg">About {user.username}</p>
+          <section className="mt-6 sm:mt-10 md:mt-14 pb-10 space-y-2 bg-white dark:bg-slate-800/80 rounded-2xl shadow-sm p-5 min-h-80">
+            <p className="text-lg font-medium">About {user.username}</p>
             <p className="">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis accusantium optio error
               voluptates, cum autem quibusdam ut molestiae sunt minus ratione itaque unde cupiditate

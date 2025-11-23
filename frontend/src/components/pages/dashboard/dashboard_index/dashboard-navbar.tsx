@@ -28,7 +28,7 @@ export function DashboardNavbar({ user }: DashboardNavbarProps) {
 
     const [authorized, setAuthorized] = useState<boolean>(false);
 
-    const {theme} = useTheme();
+    const { theme } = useTheme();
 
     useEffect(() => {
         if (user)

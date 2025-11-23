@@ -84,23 +84,31 @@ export function Overview() {
       </section>
 
       {/* Charts Row */}
-      {stats && <section className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full  mb-8 text-white">
+      {/* Projects chart */}
+      {stats && <section className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full  mb-8 dark:text-white">
         {/* Active projects and connections */}
         <div className="bg-gradient-to-br from-white to-slate-100 dark:from-slate-800 dark:to-slate-900 rounded-xl p-6 border border-slate-800 shadow-md">
-          <p className="text-2xl">Active Projects</p>
+          <h1 className="inline-flex items-center gap-1 text-black dark:text-white font-medium ">
+            <MdHistory size={30}/>
+            <span className="text-2xl">Projects</span>
+            </h1>
           <Hr />
           <ActiveProjectsChart activeProjectsCount={stats?.activeProjects} />
         </div>
 
+        {/* Connections chart */}
         <div className="bg-gradient-to-br from-white to-slate-100 dark:from-slate-800 dark:to-slate-900 rounded-xl p-6 border border-slate-800 shadow-md space-y-5">
-          <p className="text-2xl">Connections</p>
+          <h1 className="inline-flex items-center gap-1 text-black dark:text-white font-medium ">
+            <MdHistory size={30}/>
+            <span className="text-2xl">Connections</span>
+            </h1>
           <Hr />
           <ConnectionsChart total={stats?.connections} />
         </div>
 
       </section>}
 
-
+        {/* Recent activity */}
       <section className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full">
 
         <div className="bg-gradient-to-br from-white to-slate-100 dark:from-slate-800 dark:to-slate-900 rounded-xl min-h-60 p-6 border border-slate-800 shadow-md">
@@ -116,6 +124,7 @@ export function Overview() {
             }) : <span>No Recent Activities</span>}
 
           </ul>
+
         </div>
 
         <div className="bg-gradient-to-br from-white to-slate-100 dark:from-slate-800 dark:to-slate-900 rounded-xl p-6 border border-slate-800 shadow-md">

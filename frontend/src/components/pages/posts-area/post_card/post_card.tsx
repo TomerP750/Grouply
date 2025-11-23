@@ -75,7 +75,7 @@ export function PostCard({ projectPost, onRemove }: PostCardProps) {
 
     return (
         <ProjectCardProvider projectPost={projectPost}>
-            <div className="w-full sm:w-3/4 min-h-100 bg-gradient-to-br from-white to-slate-100 dark:from-slate-800 dark:to-slate-900 dark:text-white rounded-2xl shadow-lg overflow-hidden flex flex-col hover:shadow-2xl hover:shadow-teal-800/30 transition-shadow">
+            <div className="w-full sm:w-3/4 min-h-100 bg-gradient-to-br from-neutral-100 to-slate-100 dark:from-slate-800 dark:to-slate-900 dark:text-white rounded-2xl shadow-lg overflow-hidden flex flex-col hover:shadow-2xl hover:shadow-teal-800/30 transition-shadow">
                 {/* Image placeholder */}
                 <img src={defaultImage} className="h-[40%] object-center object-cover bg-gradient-to-r from-blue-600 to-blue-500 w-full" />
 

@@ -177,7 +177,7 @@ export function ProjectsTable() {
         header: "Members",
         cell: ({ row }) => (
           <button
-            className="cursor-pointer hover:underline min-w-[140px]"
+            className="cursor-pointer hover:underline"
             onClick={(e) => {
               e.stopPropagation();
               navigate(
@@ -209,7 +209,7 @@ export function ProjectsTable() {
               <div className="flex items-center gap-3">
                 <button
                   onClick={() => handleEditOpen(row.original.id, row.original.name, row.original.status)}
-                  className="inline-flex gap-1 items-center rounded px-2 py-1 hover:underline"
+                  className="cursor-pointer inline-flex gap-1 items-center rounded px-2 py-1 hover:underline"
                 >
                   <BiPencil size={20} /><span>Edit</span>
                 </button>
@@ -220,7 +220,7 @@ export function ProjectsTable() {
                     setSelectedProjectId(row.original.id);
                     setDialogOpen(true);
                   }}
-                  className="inline-flex items-center gap-1 text-red-600 rounded px-2 py-1 hover:underline"
+                  className="cursor-pointer inline-flex items-center gap-1 text-rose-600 bg-red-800/20 rounded px-2 py-1 hover:underline"
                 >
                   <BiTrash size={20} /><span>Delete</span>
                 </button>

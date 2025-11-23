@@ -20,7 +20,7 @@ interface AdminMenuProps {
 export function AdminMenu({ onClose }: AdminMenuProps) {
 
   return (
-    <Menu className="absolute right-0 mt-3 w-80 p-5 rounded-2xl shadow-2xl border border-gray-200/40 dark:border-slate-800/60 bg-white/80 dark:bg-slate-950/90 backdrop-blur-xl">
+    <div className="absolute z-1000 left-0 mt-3 w-80 p-5 rounded-2xl shadow-2xl border border-gray-200/40 dark:border-slate-800/60 bg-white/80 dark:bg-slate-950/90 backdrop-blur-xl">
 
       <div className="mb-4">
         <h3 className="text-lg font-bold text-gray-800 dark:text-gray-100">Admin Menu</h3>
@@ -57,6 +57,6 @@ export function AdminMenu({ onClose }: AdminMenuProps) {
           </button>
         </li>
       </ul>
-    </Menu>
+    </div>
   );
 }

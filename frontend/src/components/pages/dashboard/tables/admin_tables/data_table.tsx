@@ -134,7 +134,7 @@ export function DataTable<T>({
       </div>
 
       {/* Pagination */}
-      <div className="mt-3 flex items-center gap-2">
+      <div className="mt-3 flex items-center gap-2 dark:text-white">
         <button
           className="cursor-pointer py-1 disabled:opacity-50"
           onClick={() => table.previousPage()}
