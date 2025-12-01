@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 import type { JwtUser } from "../../../redux/AuthSlice";
 import { Avatar } from "../../elements/Avatar";
 import { Badge } from "../../elements/Badge";
-import { SearchBar } from "./search_bar";
+import { SearchBar } from "./search.bar/search_bar";
 import { UserMenu } from "./user_menu";
 import { Menu } from "../../elements/Menu";
 import { ConnectionMenu } from "./menus/connections_menu";

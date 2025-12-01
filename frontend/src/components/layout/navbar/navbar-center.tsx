@@ -4,7 +4,7 @@ import { FaCode } from "react-icons/fa";
 import { MdBookmarkBorder, MdDashboard, MdHome } from "react-icons/md";
 import { NavLink, useLocation } from "react-router-dom";
 import type { JwtUser } from "../../../redux/AuthSlice";
-import { SearchBar } from "./search_bar";
+import { SearchBar } from "./search.bar/search_bar";
 import { useFilters } from "../../../context/filter_context";
 
 const linkClasses = ({ isActive }: { isActive: boolean }) =>

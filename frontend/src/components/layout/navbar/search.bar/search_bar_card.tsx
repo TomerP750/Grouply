@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import type { UserDTO } from "../../../dtos/models_dtos/user_dto";
+import type { UserDTO } from "../../../../dtos/models_dtos/user_dto";
 
 interface SearchbarCardProps {
     user: UserDTO
