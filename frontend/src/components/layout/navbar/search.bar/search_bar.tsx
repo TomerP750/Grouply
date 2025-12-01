@@ -28,7 +28,6 @@ export function SearchBar({ open, onClose }: SearchBarProps) {
     debounce((value: string) => {
       const trimmed = value.toLowerCase();
       setLoading(true)
-      toast.success("api called: " + value)
       userService.searchUsers(trimmed)
         .then(res => {
           setUsers(res.content)

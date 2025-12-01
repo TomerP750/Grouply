@@ -253,7 +253,7 @@ export function EditPostFormModal({ open, onClose, post }: EditPostFormModalProp
             <button
               type="submit"
               disabled={loading || loadingProjects}
-              className="inline-flex items-center justify-center rounded-md bg-teal-600 px-4 py-2 text-sm font-medium text-white transition hover:brightness-110 disabled:opacity-60 cursor-pointer"
+              className="inline-flex items-center justify-center rounded-md bg-sky-500 dark:bg-teal-600 px-4 py-2 text-sm font-medium text-white transition hover:brightness-110 disabled:opacity-60 cursor-pointer"
             >
               {loading ? <BiLoaderAlt size={20} className="animate-spin" /> : "Edit Post"}
             </button>

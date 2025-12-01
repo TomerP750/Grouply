@@ -3,12 +3,9 @@ import { BiPlus } from "react-icons/bi";
 import type { PostDTO } from "../../../dtos/models_dtos/post_dto";
 import { useNavigate } from "react-router-dom";
 
-interface FeedHeaderProps {
-    onAdd: (newPost: PostDTO) => void
 
-}
 
-export function FeedHeader({ onAdd }: FeedHeaderProps) {
+export function FeedHeader() {
 
     const navigate = useNavigate();
 
@@ -26,5 +23,16 @@ export function FeedHeader({ onAdd }: FeedHeaderProps) {
             <span className="dark:text-slate-200 font-medium">Create Post</span>
 
         </button>
+        // <button
+        //     onClick={() => navigate("/create-post")}
+        //     className="cursor-pointer flex items-center justify-center w-3/4
+        // border-3 border-black dark:border-white border-dotted
+        // rounded-2xl p-8 
+        //  transition-all duration-200">
+
+        //     <BiPlus size={50} className={`dark:text-teal-400 text-5xl`} />
+        //     <span className="dark:text-slate-200 font-medium">Create Post</span>
+
+        // </button>
     )
 }

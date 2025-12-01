@@ -100,7 +100,7 @@ export function Feed() {
                     {/* Width cap + centered */}
                     <div className="w-full grid grid-cols-1 justify-items-center lg:justify-items-start gap-y-10">
 
-                        <FeedHeader onAdd={handleAdd} />
+                        <FeedHeader />
 
                         {posts?.map(p => (
                             <PostCard
