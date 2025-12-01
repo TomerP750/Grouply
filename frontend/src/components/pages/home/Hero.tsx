@@ -46,9 +46,9 @@ export function Hero() {
             className='hover:scale-110 duration-200 inline-flex gap-2 items-center'>Learn More <FaArrowRight /></NavLink>
         </div>
 
-        <p className={"text-gray-400 inline-flex items-center gap-2"}>Recruiter and looking for talent? 
+        {/* <p className={"text-gray-400 inline-flex items-center gap-2"}>Recruiter and looking for talent? 
           <NavLink to={"/recruiter/signup"} className='text-white cursor-pointer bg-sky-500 hover:bg-sky-600 dark:bg-teal-600 dark:hover:bg-teal-500 transition-colors duration-200 px-3 py-2 rounded-lg'>Register Here</NavLink>
-          </p>
+          </p> */}
 
       </div>
 

@@ -6,15 +6,11 @@ import { MobileFilters } from "./mobile_filters";
 import { RoleDemandSelect } from "./role_demand_select";
 import { SortGroup } from "./sort_group";
 import { TechnologySelect } from "./technologies_select";
-import type { PostDTO } from "../../../../dtos/models_dtos/post_dto";
 
 
-interface FiltersProps {
-  onFilterChange: () => void;
-  posts: PostDTO[]
-}
 
-export function Filters({ onFilterChange, posts }: FiltersProps) {
+
+export function Filters() {
 
   const [open, setOpen] = useState(true);
   const { clear, empty } = useFilters();
@@ -49,7 +45,7 @@ export function Filters({ onFilterChange, posts }: FiltersProps) {
             <Hr />
             <SortGroup />
             <Hr />
-            <RoleDemandSelect onFilterChange={onFilterChange}/>
+            <RoleDemandSelect />
             <Hr />
             <TechnologySelect />
           </div>

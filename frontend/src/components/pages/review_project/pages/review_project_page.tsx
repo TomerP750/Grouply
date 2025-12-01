@@ -1,14 +1,16 @@
-import { useEffect, useRef, useState } from "react";
-import { BiCheckCircle, BiChevronLeft, BiErrorCircle, BiLoaderAlt } from "react-icons/bi";
+import { useEffect, useState } from "react";
+import { BiChevronLeft, BiLoaderAlt } from "react-icons/bi";
 import { toast } from "react-toastify";
-import type { ProjectDTO } from "../../../dtos/models_dtos/project_dto";
-import projectService from "../../../service/project_service";
-import { useBodyScrollLock } from "../../../util/helper_hooks";
-import { Navbar } from "../../layout/navbar/Navbar";
-import { getGradeColor } from "../../../util/ui_helper";
-import { averageGrades, toTitleCase } from "../../../util/util_functions";
-import { MetricsTable } from "./metrics_table";
-import { NavLink, type Link } from "react-router-dom";
+import type { ProjectDTO } from "../../../../dtos/models_dtos/project_dto";
+import projectService from "../../../../service/project_service";
+import { useBodyScrollLock } from "../../../../util/helper_hooks";
+import { getGradeColor } from "../../../../util/ui_helper";
+import { averageGrades, toTitleCase } from "../../../../util/util_functions";
+import { Navbar } from "../../../layout/navbar/Navbar";
+import { Improvements } from "../components/improvments";
+import { Positives } from "../components/positives";
+import { MetricsTable } from "../components/metrics_table";
+
 
 export const resultDummy = {
     repositoryName: "grouply",
@@ -119,11 +121,6 @@ export function ReviewProjectPage() {
                                 Grade: {grade}/100
                             </span>
 
-
-
-
-
-
                         </header>
 
                         {/* Grid content */}
@@ -141,40 +138,11 @@ export function ReviewProjectPage() {
                                 </div>
 
                                 {/* Positives */}
-                                <div className="rounded-2xl border border-emerald-200/60 bg-emerald-50/60 shadow-sm p-5 dark:border-emerald-900/40 dark:bg-emerald-900/10">
-                                    <h2 className="text-lg font-semibold text-emerald-800 mb-3 dark:text-emerald-300">
-                                        Positives
-                                    </h2>
-                                    <ul className="space-y-2">
-                                        {resultDummy.feedback.positives.map((p) => (
-                                            <li
-                                                key={p}
-                                                className="flex items-start gap-3 text-emerald-900 dark:text-emerald-200"
-                                            >
-                                                <BiCheckCircle className="mt-0.5" size={20} />
-                                                <span>{p}</span>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
+                                <Positives/>
 
                                 {/* Improvements */}
-                                <div className="rounded-2xl border border-amber-200/60 bg-amber-50/60 shadow-sm p-5 dark:border-amber-900/40 dark:bg-amber-900/10">
-                                    <h2 className="text-lg font-semibold text-amber-800 mb-3 dark:text-amber-300">
-                                        Improvements
-                                    </h2>
-                                    <ul className="space-y-2">
-                                        {resultDummy.feedback.improvements.map((p) => (
-                                            <li
-                                                key={p}
-                                                className="flex items-start gap-3 text-amber-900 dark:text-amber-200"
-                                            >
-                                                <BiErrorCircle className="mt-0.5" size={20} />
-                                                <span>{p}</span>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
+                                <Improvements/>
+                                
                             </div>
 
                             {/* Metrics card */}

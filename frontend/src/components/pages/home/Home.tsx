@@ -9,8 +9,8 @@ export function Home() {
  text-black dark:text-white ">
             
             <Hero />
-            <Features />
-            <RecruiterFeatures/>
+            {/* <Features />
+            <RecruiterFeatures/> */}
             
            
         </main>

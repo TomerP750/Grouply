@@ -8,7 +8,8 @@ import './index.css'
 import { store } from './redux/store.ts'
 import { ToastConfig } from './util/ToastConfig.tsx'
 import { ScrollToTop } from './util/scroll_to_top.tsx'
-import { Layout } from './components/layout/Layout.tsx'
+import { Layout } from './components/layout/layout.tsx'
+
 
 
 axios.interceptors.request.use(function (config) {

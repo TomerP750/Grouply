@@ -8,8 +8,9 @@ import {
   FaFlask,
   FaBook,
 } from "react-icons/fa";
-import { getGradeColor } from "../../../util/ui_helper";
-import { toTitleCase } from "../../../util/util_functions";
+import { getGradeColor } from "../../../../util/ui_helper";
+import { toTitleCase } from "../../../../util/util_functions";
+
 
 interface MetricsTableProps {
     metrics: Record<string, number>;

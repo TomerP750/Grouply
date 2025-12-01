@@ -2,15 +2,15 @@ import { useEffect, useState } from "react";
 import { FaGithub, FaLink } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa6";
 import { NavLink, useParams } from "react-router-dom";
-import type { ProfileDTO } from "../../../dtos/models_dtos/profile_dto";
-import { useUser } from "../../../redux/hooks";
-import profileService from "../../../service/profile_service";
-import { Navbar } from "../../layout/navbar/Navbar";
-import { ProfileActions } from "./profile_actions";
-import { ProfileBanner } from "./profile_banner";
-import { ProjectGrid } from "./project_grid";
-import { ProfileSocials } from "./profile_socials";
-import { Hr } from "../../elements/Hr";
+import type { ProfileDTO } from "../../../../dtos/models_dtos/profile_dto";
+import { useUser } from "../../../../redux/hooks";
+import profileService from "../../../../service/profile_service";
+import { Navbar } from "../../../layout/navbar/Navbar";
+
+import { Hr } from "../../../elements/Hr";
+import { ProfileActions } from "../components/profile_actions";
+import { ProfileBanner } from "../components/profile_banner";
+import { ProjectGrid } from "../components/project_grid";
 
 
 export function ProfilePage() {

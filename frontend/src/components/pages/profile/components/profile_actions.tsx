@@ -2,14 +2,15 @@ import { useEffect, useState } from "react";
 import { FaLink } from "react-icons/fa";
 import { MdMail } from "react-icons/md";
 import { toast } from "react-toastify";
-import type { ProfileDTO } from "../../../dtos/models_dtos/profile_dto"
-import type { JwtUser } from "../../../redux/AuthSlice"
-import connectionRequestService from "../../../service/connection_request_service";
-import connectionService from "../../../service/connection_service";
-import { InviteToProjectModal } from "./invite_to_project_modal";
-import { useThrottleClick } from "../../../util/helper_hooks";
+
 import { EditProfileModal } from "./edit_profile_modal";
 import { FaPencil } from "react-icons/fa6";
+import type { ProfileDTO } from "../../../../dtos/models_dtos/profile_dto";
+import type { JwtUser } from "../../../../redux/AuthSlice";
+import connectionRequestService from "../../../../service/connection_request_service";
+import connectionService from "../../../../service/connection_service";
+import { useThrottleClick } from "../../../../util/helper_hooks";
+import { InviteToProjectModal } from "./invite_to_project_modal";
 
 
 const baseBtn =

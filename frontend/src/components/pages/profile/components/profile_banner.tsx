@@ -1,6 +1,7 @@
-import type { UserDTO } from "../../../dtos/models_dtos/user_dto";
-import { Avatar } from "../../elements/Avatar";
-import defaultBanner from "../../../assets/defaultProfileBanner.jpg";
+
+import type { UserDTO } from "../../../../dtos/models_dtos/user_dto";
+import defaultBanner from "../../../../assets/defaultProfileBanner.jpg";
+import { Avatar } from "../../../elements/Avatar";
 import { ProfileSocials } from "./profile_socials";
 
 type ProfileBannerProps = {

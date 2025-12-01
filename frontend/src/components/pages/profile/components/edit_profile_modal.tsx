@@ -1,7 +1,8 @@
 import { useForm } from "react-hook-form";
-import { Modal } from "../../elements/Modal";
 import { useEffect } from "react";
-import type { ProfileDTO } from "../../../dtos/models_dtos/profile_dto";
+import type { ProfileDTO } from "../../../../dtos/models_dtos/profile_dto";
+import { Modal } from "../../../elements/Modal";
+
 
 
 

@@ -5,10 +5,10 @@ import { Accordion } from "../../../elements/Accordion"
 import "./filters.css"
 
 interface RoleDemandSelectProps {
-    onFilterChange?: () => void;
+    // onFilterChange?: () => void;
 }
 
-export function RoleDemandSelect({ onFilterChange }: RoleDemandSelectProps) {
+export function RoleDemandSelect({  }: RoleDemandSelectProps) {
 
     const { addRole, removeRole, selectedRoles } = useFilters();
 
@@ -24,7 +24,7 @@ export function RoleDemandSelect({ onFilterChange }: RoleDemandSelectProps) {
         } else { 
             addRole(position) 
         }; 
-        onFilterChange?.();  
+        // onFilterChange?.();  
     }
 
 

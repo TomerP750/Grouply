@@ -1,8 +1,9 @@
 import { BiCalendar } from "react-icons/bi";
-import type { ProjectDTO } from "../../../dtos/models_dtos/project_dto";
-import { fmtDate } from "../../../util/util_functions";
-import { StatusBadge } from "../../../util/ui_helper";
-import { technologyIconMap } from "../../../util/technology_icon_mapper";
+import type { ProjectDTO } from "../../../../dtos/models_dtos/project_dto";
+import { technologyIconMap } from "../../../../util/technology_icon_mapper";
+import { StatusBadge } from "../../../../util/ui_helper";
+import { fmtDate } from "../../../../util/util_functions";
+
 
 
 export function ProfileProjectCard({ project }: { project: ProjectDTO }) {

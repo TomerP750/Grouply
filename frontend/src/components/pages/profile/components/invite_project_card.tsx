@@ -1,12 +1,13 @@
-import { HiUserAdd } from "react-icons/hi"
-import type { ProjectDTO } from "../../../dtos/models_dtos/project_dto"
+
+import { useState, useEffect } from "react"
 import { BiLoaderAlt } from "react-icons/bi"
-import { ProjectPosition } from "../../../dtos/enums/ProjectPosition"
-import { toNormal } from "../../../util/util_functions"
-import { useEffect, useState } from "react"
-import { useInviteToProject } from "../../../context/invite_to_project_context"
-import invitationService from "../../../service/invitation_service"
+import { HiUserAdd } from "react-icons/hi"
 import { toast } from "react-toastify"
+import { useInviteToProject } from "../../../../context/invite_to_project_context"
+import { ProjectPosition } from "../../../../dtos/enums/ProjectPosition"
+import type { ProjectDTO } from "../../../../dtos/models_dtos/project_dto"
+import invitationService from "../../../../service/invitation_service"
+import { toNormal } from "../../../../util/util_functions"
 
 const btn = `inline-flex items-center gap-2 px-4 py-2 rounded-lg
                 bg-teal-600 text-white shadow-sm

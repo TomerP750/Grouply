@@ -10,8 +10,9 @@ import { PostCard } from "./post_card/post_card";
 import { usePagination } from "../../../util/helper_hooks";
 import postService from "../../../service/post_service";
 import { toast } from "react-toastify";
-import { MessageDock } from "../../layout/message-box/message_dock";
 import { MobileFilters } from "./filters_area/mobile_filters";
+import { useNavigate } from "react-router-dom";
+import { useSyncFiltersWithUrl } from "../../../hooks/useFiltersWithUrls";
 
 
 
@@ -24,6 +25,8 @@ export function Feed() {
     const [loading, setLoading] = useState<boolean>(false);
 
     const { pageCount, pagination } = usePagination(5);
+
+    const navigate = useNavigate();
 
 
     const [hasMore, setHasMore] = useState<boolean>(false);
@@ -76,6 +79,11 @@ export function Feed() {
         handleFilterChange();
     }, [handleFilterChange])
 
+    
+    useSyncFiltersWithUrl(selectedRoles, selectedTechnologies);
+
+    
+
 
     return (
         <main className="min-h-screen pb-10">
@@ -84,7 +92,7 @@ export function Feed() {
 
             {/* POSTS AND FILTERS */}
             <div className="flex flex-col pt-10 md:pt-0 md:mt-5 px-5 md:px-0 lg:flex-row w-full items-center lg:items-start gap-6">
-                <Filters onFilterChange={handleFilterChange} posts={posts} />
+                <Filters />
 
                 <MobileFilters/>
                 {/* Main area */}

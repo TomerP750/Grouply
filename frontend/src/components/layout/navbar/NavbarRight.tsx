@@ -92,12 +92,12 @@ export function NavbarRight({ user, className }: NavbarRightProps) {
           >
             Login
           </NavLink>
-          <NavLink
+          {/* <NavLink
             to="/recruiter/login"
             className={`${loginBtn}`}
           >
             Recruiter Login
-          </NavLink>
+          </NavLink> */}
           </div>}
 
 
