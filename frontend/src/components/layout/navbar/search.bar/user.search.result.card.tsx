@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import type { UserDTO } from "../../../../dtos/models_dtos/user_dto";
 
 
@@ -6,8 +7,11 @@ interface UserSearchResultCardProps {
 }
 
 export function UserSearchResultCard({ user }: UserSearchResultCardProps) {
+
+    const navigate = useNavigate();
+
     return (
-        <article className="flex items-center gap-3">
+        <article onClick={() => navigate(`/profile/${user.id}`)} className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-full bg-slate-300 dark:bg-slate-600"></div>
 
             <div className="flex flex-col">

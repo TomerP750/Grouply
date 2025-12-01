@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { FaLink } from "react-icons/fa";
 import { MdMail } from "react-icons/md";
 import { toast } from "react-toastify";
-
+import throttle from "lodash/throttle";
 import { EditProfileModal } from "./edit_profile_modal";
 import { FaPencil } from "react-icons/fa6";
 import type { ProfileDTO } from "../../../../dtos/models_dtos/profile_dto";
@@ -13,25 +13,21 @@ import { useThrottleClick } from "../../../../util/helper_hooks";
 import { InviteToProjectModal } from "./invite_to_project_modal";
 
 
-const baseBtn =
-  "cursor-pointer inline-flex items-center gap-2 px-4 py-3 rounded-xl text-sm font-medium " +
-  "border border-white/10 bg-white/5 hover:bg-white/10 active:bg-white/15 " +
-  "backdrop-blur-md shadow-sm transition-all duration-200 " +
-  "focus:outline-none focus:ring-2 focus:ring-teal-400/40 " +
-  "disabled:opacity-60 disabled:cursor-not-allowed";
+const buttonStyle = `
+  inline-flex items-center gap-2
+  px-4 py-3 rounded-xl text-sm font-medium
+  
+  text-slate-900 dark:text-white
+  bg-slate-900/10 dark:bg-white/10
+  border border-slate-900/20 dark:border-white/20
 
-const primaryBtn =
-  baseBtn +
-  " dark:text-white " +
-  "ring-0";
+  hover:bg-slate-900/15 dark:hover:bg-white/15
+  active:bg-slate-900/20 dark:active:bg-white/20
 
-const dangerBtn =
-  baseBtn +
-  " text-white border-rose-500/30 bg-rose-500/15 hover:bg-rose-500/25 " +
-  "focus:ring-rose-400/40";
-
-const subtleBtn =
-  baseBtn + " text-slate-200 hover:text-white";
+  backdrop-blur-md shadow-sm transition-all duration-200
+  focus:outline-none focus:ring-2 focus:ring-teal-400/40
+  disabled:opacity-60 disabled:cursor-not-allowed
+`;
 
 
 
@@ -43,14 +39,12 @@ interface ProfileActionsProps {
 
 }
 
-
 export function ProfileActions({ profile, user }: ProfileActionsProps) {
-    const { run: throttleConnect, cooling: coolingConnect } = useThrottleClick(5000);
-    const { run: throttleRemove, cooling: coolingRemove } = useThrottleClick(5000);
 
     const [areConnected, setAreConnected] = useState(false);
     const [sentRequest, setSentRequest] = useState(false);
     const [modalOpen, setModalOpen] = useState<boolean>(false);
+    const [inviteMenuOpen, setInviteMenuOpen] = useState<boolean>(false);
 
     useEffect(() => {
         const targetId = profile?.user?.id;
@@ -58,64 +52,91 @@ export function ProfileActions({ profile, user }: ProfileActionsProps) {
         connectionService
             .areConnected(targetId)
             .then(setAreConnected)
-            .catch((err) => toast.error(err?.response?.data ?? "Failed to check connection"));
+            .catch((err) => toast.error(err.response.data));
     }, [profile?.user?.id]);
 
-    
+
+    const throttleConnect = useMemo(
+        () =>
+            throttle((targetId: number) => {
+                connectionRequestService
+                    .toggleRequest(targetId)
+                    .then((res) => {
+                        setSentRequest(res);
+                        toast.success(res ? "Connect Request Sent!" : "Connect Request Canceled");
+                    })
+                    .catch((err) => toast.error(err?.response?.data ?? "Action failed"));
+            }, 5000),
+        []
+    );
+
+
     const handleConnectRequest = () => {
 
-        throttleConnect(() => {
-            const targetId = profile?.user?.id;
-            if (!targetId) return;
-            connectionRequestService
-                .toggleRequest(targetId)
-                .then((res) => {
-                    setSentRequest(res);
-                    toast.success(res ? "Connect Request Sent!" : "Connect Request Canceled");
-                })
-                .catch((err) => toast.error(err?.response?.data ?? "Action failed"));
-        })
+        const targetId = profile?.user?.id;
+        if (!targetId) return;
+
+        throttleConnect(targetId);
 
     };
 
+    useEffect(() => {
+        return () => throttleConnect.cancel();
+    }, [throttleConnect]);
+
+
+    const throttleRemove = useMemo(
+        () =>
+            throttle((targetId: number) => {
+                connectionService
+                    .removeConnection(targetId)
+                    .then((res) => {
+                        setAreConnected(res);
+                        toast.success("Removed connection");
+                    })
+                    .catch((err) => {
+                        toast.error(err?.response?.data ?? "Action failed");
+                    });
+            }, 5000), 
+        []
+    );
+
+
     const handleRemoveConnection = () => {
 
-        throttleRemove(() => {
-            const targetId = profile?.user.id;
-            if (!targetId) return;
-            connectionService.removeConnection(targetId)
-                .then(res => {
-                    setAreConnected(res);
-                    toast.success("Removed connection");
-                })
-                .catch(err => {
-                    toast.error(err.response.data);
-                })
-        })
+        const targetId = profile?.user?.id;
+        if (!targetId) return;
+
+        throttleRemove(targetId);
     }
+
+    useEffect(() => {
+        return () => throttleRemove.cancel();
+    }, [throttleRemove]);
+
 
     return (
         <div className="flex flex-wrap items-center justify-end gap-3">
             {user.id !== profile?.user.id ? (
                 <>
                     {areConnected ? (
-                        <button onClick={handleRemoveConnection} disabled={coolingRemove} className={dangerBtn}>
+                        <button onClick={handleRemoveConnection} className={buttonStyle}>
                             <FaLink size={16} />
                             Remove
                         </button>
                     ) : (
-                        <button onClick={handleConnectRequest} disabled={coolingConnect} className={primaryBtn}>
+                        <button onClick={handleConnectRequest} className={buttonStyle}>
                             <FaLink size={16} />
                             {sentRequest ? "Cancel" : "Connect"}
                         </button>
                     )}
 
-                    <button className={subtleBtn}>
+                    <button className={buttonStyle}>
                         <MdMail size={18} />
                         Message
                     </button>
 
-                    <button onClick={() => setModalOpen(true)} className={subtleBtn}>
+                    <button onClick={() => setInviteMenuOpen(true)} className={buttonStyle}>
                         <MdMail size={18} />
                         Invite To Project
                     </button>
@@ -123,13 +144,13 @@ export function ProfileActions({ profile, user }: ProfileActionsProps) {
                     {modalOpen && <InviteToProjectModal recipientId={profile.user.id} open={modalOpen} onClose={() => setModalOpen(false)} />}
                 </>
             ) : (
-                <button onClick={() => setModalOpen(true)} className={primaryBtn}>
+                <button onClick={() => setModalOpen(true)} className={buttonStyle}>
                     <FaPencil size={16} />
                     Edit Profile
                 </button>
             )}
 
-            {modalOpen && <EditProfileModal profile={profile} open={modalOpen} onClose={() => setModalOpen(false)}/>}
+            {modalOpen && <EditProfileModal profile={profile} open={modalOpen} onClose={() => setModalOpen(false)} />}
         </div>
     )
 }
