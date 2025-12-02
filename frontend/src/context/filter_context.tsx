@@ -1,7 +1,9 @@
-import { createContext, useContext, useEffect, useState, type ReactNode } from "react"
+import React, { createContext, useContext, useEffect, useState, type ReactNode, type SetStateAction } from "react"
 import type { ProjectPosition } from "../dtos/enums/ProjectPosition"
 import type { TechnologyDTO } from "../dtos/models_dtos/technology_dto";
 
+
+export type Direction = "ASC" | "DESC";
 
 const FILTER_ROLES = "filter_roles";
 const FILTER_TECHNOLOGIES = "filter_technologies";
@@ -9,6 +11,7 @@ const FILTER_TECHNOLOGIES = "filter_technologies";
 type FilterState = {
     selectedRoles: ProjectPosition[],
     selectedTechnologies: TechnologyDTO[],
+    sortDirection: Direction,
     empty: boolean,
 }
 
@@ -17,6 +20,7 @@ type FilterContextValues = FilterState & {
     removeRole: (role: ProjectPosition) => void;
     addTech: (tech: TechnologyDTO) => void;
     removeTech: (tech: TechnologyDTO) => void;
+    toggleSortDirection: () => void;
     clear: () => void;
 }
 
@@ -40,6 +44,7 @@ export function FilterProvider({ children }: FilterProviderProps) {
 
     const [selectedRoles, setSelectedRoles] = useState<ProjectPosition[]>(getInitialRoles);
     const [selectedTechnologies, setSelectedTechnologies] = useState<TechnologyDTO[]>(getInitialTechs);
+    const [sortDirection, setSortDirection] = useState<Direction>("DESC");
 
     useEffect(() => {
         sessionStorage.setItem(FILTER_ROLES, JSON.stringify(selectedRoles));
@@ -67,6 +72,10 @@ export function FilterProvider({ children }: FilterProviderProps) {
         setSelectedTechnologies(prev => prev.filter(t => t.id !== tech.id));
     };
 
+    const toggleSortDirection = () => {
+        setSortDirection(prev => prev === "ASC" ? "DESC" : "ASC");
+    }
+
 
     const clear = () => {
         setSelectedRoles([]);
@@ -76,7 +85,7 @@ export function FilterProvider({ children }: FilterProviderProps) {
         setEmpty(true);
     };
 
-    const ctx: FilterContextValues = { selectedRoles, selectedTechnologies, empty, addRole, removeRole, addTech, removeTech, clear };
+    const ctx: FilterContextValues = { sortDirection ,selectedRoles, selectedTechnologies, empty, addRole, removeRole, addTech, removeTech, toggleSortDirection ,clear };
 
     return (
         <FilterContext.Provider value={ctx}>

@@ -9,7 +9,6 @@ import { TechnologySelect } from "./technologies_select";
 
 
 
-
 export function Filters() {
 
   const [open, setOpen] = useState(true);

@@ -20,7 +20,7 @@ export function Feed() {
 
     const [posts, setPosts] = useState<PostDTO[]>([]);
 
-    const { selectedRoles, selectedTechnologies } = useFilters();
+    const { sortDirection ,selectedRoles, selectedTechnologies } = useFilters();
 
     const [loading, setLoading] = useState<boolean>(false);
 
@@ -60,7 +60,7 @@ export function Feed() {
 
     const handleFilterChange = useCallback(() => {
         setLoading(true);
-        postService.searchPosts(selectedRoles, selectedTechnologies)
+        postService.searchPosts(selectedRoles, selectedTechnologies, sortDirection)
             .then(res => {
                 setPosts(res.content);
             })
@@ -73,17 +73,14 @@ export function Feed() {
                 console.log("selected techs:", selectedTechnologies);
 
             })
-    }, [selectedRoles, selectedTechnologies]);
+    }, [selectedRoles, selectedTechnologies, sortDirection]);
 
     useEffect(() => {
         handleFilterChange();
     }, [handleFilterChange])
 
     
-    useSyncFiltersWithUrl(selectedRoles, selectedTechnologies);
-
-    
-
+    useSyncFiltersWithUrl(selectedRoles, selectedTechnologies, sortDirection);
 
     return (
         <main className="min-h-screen pb-10">

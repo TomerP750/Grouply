@@ -135,9 +135,9 @@ public class PostService implements IPostService {
         return page.map(EntityToDtoMapper::toPostDto);
     }
 
-    // TEST
 
 
+    //TODO change to Specification Object
     public Page<PostDTO> searchPosts(List<ProjectPosition> roles, List<Long> techIds, Pageable pageable) {
         boolean noRoles = roles == null || roles.isEmpty();
         boolean noTechs = techIds == null || techIds.isEmpty();
@@ -156,7 +156,7 @@ public class PostService implements IPostService {
         return page.map(EntityToDtoMapper::toPostDto);
     }
 
-    // END TEST
+
 
     @Override
     public boolean requestToJoinProject(Long userId, Long ownerId, Long projectId) {

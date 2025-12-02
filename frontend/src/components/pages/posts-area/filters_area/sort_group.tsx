@@ -1,3 +1,4 @@
+import { useFilters } from "../../../../context/filter_context";
 import { Accordion } from "../../../elements/Accordion";
 
 const inputStyle = `
@@ -11,38 +12,41 @@ const inputStyle = `
 `;
 
 
-interface SortGroupProps {
-
-}
 
 export function SortGroup() {
-    return (
-        <Accordion title="Sort By">
-        <ul className="flex flex-col items-center gap-5">
-          
 
-          <label className="inline-flex items-center gap-2 cursor-pointer">
-            <input
-              type="radio"
-              name="sort"
-              value="newest"
-              defaultChecked
-              className={`${inputStyle}`}
-            />
-            <span className="text-sm text-slate-800 dark:text-slate-200">Newest - Oldest</span>
-          </label>
+  const { sortDirection , toggleSortDirection } = useFilters();
 
-          <label className="inline-flex items-center gap-2 cursor-pointer">
-            <input
-              type="radio"
-              name="sort"
-              value="newest"
-              className={`${inputStyle}`}
-            />
-            <span className="text-sm text-slate-800 dark:text-slate-200">Oldest - Newest</span>
-          </label>
+  return (
+    <Accordion title="Sort By">
+      <ul className="flex flex-col items-center gap-5">
 
-        </ul>
-      </Accordion>
-    )
+
+        <label className="inline-flex items-center gap-2 cursor-pointer">
+          <input
+            type="radio"
+            name="sort"
+            value="DESC"
+            checked={sortDirection === "DESC"}
+            onChange={toggleSortDirection}
+            className={`${inputStyle}`}
+          />
+          <span className="text-sm text-slate-800 dark:text-slate-200">Newest - Oldest</span>
+        </label>
+
+        <label className="inline-flex items-center gap-2 cursor-pointer">
+          <input
+            type="radio"
+            name="sort"
+            value="ASC"
+            checked={sortDirection === "ASC"}
+            onChange={toggleSortDirection}
+            className={`${inputStyle}`}
+          />
+          <span className="text-sm text-slate-800 dark:text-slate-200">Oldest - Newest</span>
+        </label>
+
+      </ul>
+    </Accordion>
+  )
 }

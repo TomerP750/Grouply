@@ -1,0 +1,7 @@
+{
+  "language.select_placeholder": "Select Language",
+  "hero.title": "Welcome to my app",
+  "hero.subtitle": "This is a multi-language React app",
+  "button.save": "Save",
+  "button.cancel": "Cancel"
+}

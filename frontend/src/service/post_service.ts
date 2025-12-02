@@ -6,18 +6,18 @@ import type { ProjectPosition } from "../dtos/enums/ProjectPosition";
 import type { TechnologyDTO } from "../dtos/models_dtos/technology_dto";
 import type { EditPostRequestDTO } from "../components/pages/posts-area/forms/edit_post_form";
 
+type Direction = "ASC" | "DESC";
 
 class PostService {
 
     async allPosts(page = 0, size = 10, roles?: ProjectPosition[]) {
+        
         const params = new URLSearchParams({
             page: String(page),
-            size: String(size)
+            size: String(size),
         });
 
-        if (roles?.length) {
-            roles.forEach(r => params.append("roles", r));
-        }
+        if (roles?.length) roles.forEach(r => params.append("roles", r));
 
         return (await axios.get(`${BASE_API}/post/all${params.toString()}`)).data
     }
@@ -42,11 +42,14 @@ class PostService {
         return (await axios.get(`${BASE_API}/post/dashboard/all?page=${page}&size=${size}`)).data
     }
 
-    async searchPosts(roles: ProjectPosition[], techs: TechnologyDTO[]) {
+    async searchPosts(roles: ProjectPosition[], techs: TechnologyDTO[], dir: Direction) {
+
         const params = new URLSearchParams();
         roles.forEach(r => params.append("roles", r));
         techs.forEach(t => params.append("techIds", String(t.id)));
-        return (await axios.get(`${BASE_API}/post/search?${params.toString()}`)).data
+
+
+        return (await axios.get(`${BASE_API}/post/search?${params.toString()}&dir=${dir}`)).data
     } 
 
 

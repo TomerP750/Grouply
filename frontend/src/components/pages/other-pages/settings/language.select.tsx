@@ -1,11 +1,9 @@
 import { useTranslation } from "react-i18next";
-import { BiChevronDown } from "react-icons/bi";
 
 const languages = ["en", "he"];
 
 export function LanguageSelect() {
-  
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const lang = e.target.value;
@@ -16,7 +14,7 @@ export function LanguageSelect() {
   return (
     <div className="relative w-48">
       <select
-        value={i18n.language}
+        value={languages.includes(i18n.language) ? i18n.language : ""}
         onChange={handleChange}
         className="
           w-full
@@ -34,24 +32,16 @@ export function LanguageSelect() {
           cursor-pointer
         "
       >
-        <option value="">Select Language</option>
+        <option value="">{t("language.select_placeholder")}</option>
         {languages.map((l) => (
-          <option key={l} value={l}>
+          <option value={l} key={l}>
             {l === "en" ? "English" : "עברית"}
           </option>
         ))}
       </select>
 
-      {/* custom arrow */}
-      <span
-        className="
-          pointer-events-none
-          absolute inset-y-0 right-3
-          flex items-center
-          text-slate-400 dark:text-slate-500
-        "
-      >
-        <BiChevronDown size={20}/>
+      <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-slate-400 dark:text-slate-500">
+        ▼
       </span>
     </div>
   );

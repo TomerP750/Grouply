@@ -82,7 +82,7 @@ export function CreatePostForm({ onAdd }: CreatePostFormProps) {
   };
 
   return (
-    <div className="min-h-screen flex justify-center py-5">
+    <div className="min-h-screen flex justify-center">
    
       <form
         onSubmit={handleSubmit(sendCreation)}

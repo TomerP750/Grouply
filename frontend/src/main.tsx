@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom'
 
 import { ThemeProvider } from './context/ThemeContext.tsx'
 import './index.css'
+import "./i18n";
 import { store } from './redux/store.ts'
 import { ToastConfig } from './util/ToastConfig.tsx'
 import { ScrollToTop } from './util/scroll_to_top.tsx'
