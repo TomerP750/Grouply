@@ -3,6 +3,8 @@ import { MdDisplaySettings } from "react-icons/md";
 import { useDispatch } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import { logout } from "../../../../redux/AuthSlice";
+import { useTransition } from "react";
+import { useTranslation } from "react-i18next";
 
 const menuItem =
   "cursor-pointer inline-flex items-center gap-3 w-full py-2 px-3 rounded-lg transition-colors text-slate-600 dark:text-slate-300 hover:bg-sky-500/10 hover:text-sky-600 dark:hover:bg-teal-500/10 dark:hover:text-teal-400";
@@ -16,6 +18,8 @@ export function SettingsSidebar() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const { t } = useTranslation();
 
   const handleLogout = () => {
     dispatch(logout());
@@ -35,7 +39,7 @@ export function SettingsSidebar() {
             }
           >
             <BiUser size={25} />
-            <p>Account</p>
+            <p>{t("setting.account")}</p>
           </NavLink>
         </li>
 
@@ -47,7 +51,7 @@ export function SettingsSidebar() {
             }
           >
             <BiShield size={25} />
-            <p>Security</p>
+            <p>{t('setting.security')}</p>
           </NavLink>
         </li>
 
@@ -59,14 +63,14 @@ export function SettingsSidebar() {
             }
           >
             <MdDisplaySettings size={25} />
-            <p>Display</p>
+            <p>{t('setting.display')}</p>
           </NavLink>
         </li>
 
         <li className="w-full">
           <button onClick={handleLogout} className={`${menuItem}`}>
             <BiLogOut size={25} />
-            <p>Logout</p>
+            <p>{t('setting.logout')}</p>
           </button>
         </li>
 

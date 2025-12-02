@@ -6,6 +6,7 @@ import { NavLink, useLocation } from "react-router-dom";
 import type { JwtUser } from "../../../redux/AuthSlice";
 import { SearchBar } from "./search.bar/search_bar";
 import { useFilters } from "../../../context/filter_context";
+import { useTranslation } from "react-i18next";
 
 const linkClasses = ({ isActive }: { isActive: boolean }) =>
   [
@@ -30,6 +31,9 @@ const btn =
     "cursor-pointer text-slate-600 dark:text-slate-300 hover:bg-gray-500/20 p-3",
   ].join(" ");
 
+const hebrewStyle = "font-semibold text-xl";
+const englishStyle = "font-normal text-sm";
+
 interface NavbarCenterProps {
   user: JwtUser | null;
 }
@@ -37,52 +41,44 @@ interface NavbarCenterProps {
 export function NavbarCenter({ user }: NavbarCenterProps) {
 
   const [searchOpen, setSearchOpen] = useState<boolean>(false);
+  const { t, i18n } = useTranslation();
+  const isHebrew = i18n.language === "he";
+  const textClass = isHebrew ? hebrewStyle : englishStyle;
 
   const { clear } = useFilters();
-
-  const { pathname } = useLocation();
 
   return (
     <div className="">
       {/* {user && <SearchBar />} */}
       {user && <ul className="hidden lg:flex items-center gap-5 text-lg ">
         <li>
+        <NavLink onClick={clear} to="/" className={linkClasses}>
+          <MdHome size={22} />
+          <span className={textClass}>{t("nav.home")}</span>
+        </NavLink>
+      </li>
 
-          <NavLink onClick={clear} to="/" className={linkClasses}>
-            <MdHome size={22} />
-            <span className="text-sm">Home</span>
-          </NavLink>
+      <li>
+        <NavLink onClick={clear} to="/archived" className={linkClasses}>
+          <MdBookmarkBorder size={22} />
+          <span className={textClass}>{t("nav.archived")}</span>
+        </NavLink>
+      </li>
 
-        </li>
+      <li>
+        <NavLink to="/review-project" className={linkClasses}>
+          <FaCode size={22} />
+          <span className={textClass}>{t("nav.reviewProject")}</span>
+        </NavLink>
+      </li>
 
-        <li>
+      <li>
+        <NavLink to={`/dashboard/${user?.id}`} className={linkClasses}>
+          <MdDashboard size={22} />
+          <span className={textClass}>{t("nav.dashboard")}</span>
+        </NavLink>
+      </li>
 
-          <NavLink onClick={clear} to="/archived" className={linkClasses}>
-            <MdBookmarkBorder size={22} />
-            <span className="text-sm">Archived</span>
-          </NavLink>
-
-        </li>
-
-        <li>
-          <NavLink to="/review-project" className={linkClasses}>
-            <FaCode size={22} />
-            <span className="text-sm">Review Project</span>
-          </NavLink>
-        </li>
-
-        <li>
-          <NavLink to={`/dashboard/${user?.id}`} className={linkClasses}>
-            <MdDashboard size={22} />
-            <span className="text-sm">Dashboard</span>
-          </NavLink>
-        </li>
-
-        <li>
-          <button onClick={() => setSearchOpen(true)} className={`${btn}`}>
-            <span className="text-sm"><BiSearch size={20} /></span>
-          </button>
-        </li>
 
       </ul>}
 

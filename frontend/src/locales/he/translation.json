@@ -3,5 +3,15 @@
   "hero.title": "ברוך הבא לאפליקציה שלי",
   "hero.subtitle": "זו אפליקציית ריאקט רב־לשונית",
   "button.save": "שמור",
-  "button.cancel": "בטל"
+  "button.cancel": "בטל",
+  "setting.account": "חשבון",
+  "setting.security": "אבטחה",
+  "setting.display": "תצוגה",
+  "setting.logout": "התנתקות",
+  "nav": {
+    "home": "דף הבית",
+    "archived": "ארכיון",
+    "reviewProject": "סקירת פרויקט",
+    "dashboard": "לוח בקרה"
+  }
 }

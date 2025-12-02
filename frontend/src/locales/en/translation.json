@@ -3,5 +3,15 @@
   "hero.title": "Welcome to my app",
   "hero.subtitle": "This is a multi-language React app",
   "button.save": "Save",
-  "button.cancel": "Cancel"
+  "button.cancel": "Cancel",
+  "setting.account": "Account",
+  "setting.security": "Security",
+  "setting.display": "Display",
+  "setting.logout": "Logout",
+  "nav": {
+    "home": "Home",
+    "archived": "Archived",
+    "reviewProject": "Review Project",
+    "dashboard": "Dashboard"
+  }
 }
