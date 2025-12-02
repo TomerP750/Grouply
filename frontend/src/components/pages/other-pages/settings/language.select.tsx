@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 const languages = ["en", "he"];
 
 export function LanguageSelect() {
+
   const { i18n, t } = useTranslation();
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -32,7 +33,6 @@ export function LanguageSelect() {
           cursor-pointer
         "
       >
-        <option value="">{t("language.select_placeholder")}</option>
         {languages.map((l) => (
           <option value={l} key={l}>
             {l === "en" ? "English" : "עברית"}

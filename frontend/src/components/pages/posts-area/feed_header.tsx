@@ -2,12 +2,15 @@ import { useState } from "react";
 import { BiPlus } from "react-icons/bi";
 import type { PostDTO } from "../../../dtos/models_dtos/post_dto";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 
 
 export function FeedHeader() {
 
     const navigate = useNavigate();
+
+    const { t } = useTranslation();
 
     return (
         <button
@@ -20,7 +23,7 @@ export function FeedHeader() {
         dark:border-teal-500/20 transition-all duration-200">
 
             <BiPlus size={50} className={`text-teal-400 text-5xl`} />
-            <span className="dark:text-slate-200 font-medium">Create Post</span>
+            <span className="dark:text-slate-200 font-medium">{t('Create Post')}</span>
 
         </button>
         // <button

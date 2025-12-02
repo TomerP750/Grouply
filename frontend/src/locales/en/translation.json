@@ -13,5 +13,72 @@
     "archived": "Archived",
     "reviewProject": "Review Project",
     "dashboard": "Dashboard"
-  }
+  },
+  "userMenu": {
+    "viewProfile": "View Profile",
+    "dashboard": "Dashboard",
+    "projects": "Projects",
+    "settings": "Settings",
+    "theme": "Theme",
+    "themeDark": "Dark",
+    "themeLight": "Light",
+    "helpAbout": "Help and About",
+    "logout": "Logout"
+  },
+  "settings": {
+    "display": {
+      "title": "Display Settings",
+      "description": "Settings for display information"
+    },
+    "password": {
+      "title": "Change Password",
+      "description": "Settings for updating user information",
+      "current": "Current Password",
+      "new": "Password",
+      "confirm": "Confirm Password",
+      "errors": {
+        "required": "Password is required",
+        "confirmRequired": "Please confirm your password",
+        "min": "At least 6 characters",
+        "max": "No more than 15 characters",
+        "match": "Passwords do not match"
+      }
+    },
+    "user": {
+      "nav": {
+        "user": "User",
+        "notifications": "Notifications"
+      },
+      "title": "Personal Information",
+      "description": "Settings for updating user information",
+      "avatar": {
+        "change": "Change Avatar",
+        "cancel": "Cancel"
+      },
+      "fields": {
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "email": "Email",
+        "username": "Username"
+      },
+      "username": {
+        "check": "Check Availability",
+        "reset": "Reset",
+        "available": "Username Available",
+        "notAvailable": "Username Not Available"
+      },
+      "delete": {
+        "title": "Delete Account",
+        "description": "No longer want to use our service? You can delete it here.",
+        "password": "Password",
+        "button": "Delete Account",
+        "errors": {
+          "required": "Password is required",
+          "min": "At least 6 characters",
+          "max": "No more than 15 characters"
+        }
+      }
+    }
+  },
+  "Create Post": "Create Post"
 }

@@ -5,6 +5,7 @@ import type { UpdateUserDTO } from "../../../../../dtos/models_dtos/request_dto/
 import userService from "../../../../../service/user_service";
 import { toast } from "react-toastify";
 import { DeleteAccount } from "./delete_account";
+import { useTranslation } from "react-i18next";
 
 
 const inputStyle = "rounded-lg border border-gray-500/50 bg-indigo-200 dark:bg-gray-800 px-3 py-1";
@@ -13,6 +14,8 @@ const inputStyle = "rounded-lg border border-gray-500/50 bg-indigo-200 dark:bg-g
 export function UserSettings() {
 
   const { register, handleSubmit, formState: { errors }, setValue, getValues, watch, resetField } = useForm<UpdateUserDTO>();
+
+  const { t } = useTranslation();
 
   const user = useUser();
   const [usernameChecked, setUsernameChecked] = useState<boolean>(false);
@@ -61,65 +64,78 @@ export function UserSettings() {
     <div className="pb-10">
       {/* Nav */}
       <nav className="h-20 border-b border-gray-500/60 flex justify-start items-center gap-6 px-8 text-sm font-medium dark:text-white">
-        <span>User</span>
-        <span>Notifications</span>
+        <span>{t("settings.user.nav.user")}</span>
+        <span>{t("settings.user.nav.notifications")}</span>
       </nav>
 
       {/* Inputs */}
-      <form onSubmit={handleSubmit(updateUser)} className="mt-20 flex flex-col md:flex-row items-center md:items-start px-6 gap-10 overflow-y-auto text-black dark:text-white">
+      <form
+        onSubmit={handleSubmit(updateUser)}
+        className="mt-20 flex flex-col md:flex-row items-center md:items-start px-6 gap-10 overflow-y-auto text-black dark:text-white"
+      >
         {/* header */}
         <div className="space-y-2 dark:text-white">
-          <p className="font-semibold text-lg">Personal Information</p>
-          <p className="text-slate-500 dark:text-gray-400">Settings for update user information</p>
+          <p className="font-semibold text-lg">
+            {t("settings.user.title")}
+          </p>
+          <p className="text-slate-500 dark:text-gray-400">
+            {t("settings.user.description")}
+          </p>
         </div>
 
         {/* Main area */}
         <div className="flex-1 flex flex-col items-start gap-8 px-5 dark:text-white">
-
           {/* avatar upload */}
           <div className="flex items-start gap-8">
-
             <div className="w-30 aspect-square rounded-lg bg-white" />
-            
+
             <div className="flex flex-col gap-5 items-start">
-              {/* <img src={defaultImage} className="w-30 aspect-square rounded-lg bg-white" /> */}
-              <button type="button" onClick={() => setAvatarInputOpen(true)} className="text-white cursor-pointer bg-indigo-500 hover:bg-indigo-400 dark:bg-gray-700 dark:hover:bg-gray-600 px-3 py-2 rounded-lg">
-                Change Avatar
+              <button
+                type="button"
+                onClick={() => setAvatarInputOpen(true)}
+                className="text-white cursor-pointer bg-indigo-500 hover:bg-indigo-400 dark:bg-gray-700 dark:hover:bg-gray-600 px-3 py-2 rounded-lg"
+              >
+                {t("settings.user.avatar.change")}
               </button>
 
-              {avatarInputOpen && <div className="flex gap-4">
-                <input
-                  {...register("avatarUrl")}
-                  type="url"
-                  className={`${inputStyle} `}
-                />
-                <button 
-                onClick={() => {
-                  setAvatarInputOpen(false);
-                  resetField("avatarUrl");
-                }}
-                className="text-sm cursor-pointer">Cancel</button>
-              </div>}
-
+              {avatarInputOpen && (
+                <div className="flex gap-4">
+                  <input
+                    {...register("avatarUrl")}
+                    type="url"
+                    className={`${inputStyle} `}
+                  />
+                  <button
+                    onClick={() => {
+                      setAvatarInputOpen(false);
+                      resetField("avatarUrl");
+                    }}
+                    className="text-sm cursor-pointer"
+                  >
+                    {t("settings.user.avatar.cancel")}
+                  </button>
+                </div>
+              )}
             </div>
-
           </div>
 
           {/* Inputs section */}
           <section className="grid grid-cols-1 lg:grid-cols-2 w-full gap-5">
             <div className="flex flex-col gap-1.5">
-              <label className="font-medium ">First Name</label>
+              <label className="font-medium ">
+                {t("settings.user.fields.firstName")}
+              </label>
               <input
                 {...register("firstName")}
-
                 type="text"
                 className={`${inputStyle}`}
-
               />
             </div>
 
             <div className="flex flex-col gap-1.5">
-              <label>Last Name</label>
+              <label>
+                {t("settings.user.fields.lastName")}
+              </label>
               <input
                 {...register("lastName")}
                 type="text"
@@ -128,7 +144,9 @@ export function UserSettings() {
             </div>
 
             <div className="flex flex-col gap-1.5 col-span-1 lg:col-span-2">
-              <label>Email</label>
+              <label>
+                {t("settings.user.fields.email")}
+              </label>
               <input
                 {...register("email")}
                 type="email"
@@ -139,7 +157,7 @@ export function UserSettings() {
 
           {/* username input and check*/}
           <section className="flex flex-col gap-1.5 w-full">
-            <label>Username</label>
+            <label>{t("settings.user.fields.username")}</label>
 
             {/* Input and check */}
             <div className="flex flex-col md:flex-row items-start md:items-center gap-5 w-full">
@@ -151,12 +169,14 @@ export function UserSettings() {
 
               {/* Username check */}
               <div className="flex gap-2">
-
                 <button
                   type="button"
                   disabled={usernameQuery === user.username || !usernameQuery}
                   onClick={checkUsername}
-                  className="text-sm cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed">Check Avilability</button>
+                  className="text-sm cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {t("settings.user.username.check")}
+                </button>
 
                 <button
                   type="button"
@@ -164,31 +184,37 @@ export function UserSettings() {
                   onClick={() => {
                     setValue("username", user.username ?? "");
                     setUsernameChecked(false);
-                  }} className="text-sm cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed">Reset</button>
-
+                  }}
+                  className="text-sm cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {t("settings.user.username.reset")}
+                </button>
               </div>
             </div>
 
-            {usernameChecked && (
-              isTaken
-                ? <span className="text-red-500">Username Not Available</span>
-                : <span className="text-green-500">Username Available</span>
-            )}
-
+            {usernameChecked &&
+              (isTaken ? (
+                <span className="text-red-500">
+                  {t("settings.user.username.notAvailable")}
+                </span>
+              ) : (
+                <span className="text-green-500">
+                  {t("settings.user.username.available")}
+                </span>
+              ))}
           </section>
 
           <button className="text-white cursor-pointer rounded-lg bg-sky-500 hover:bg-sky-600 dark:hover:bg-teal-500 dark:bg-teal-600 px-4 py-2">
-            Save
+            {t("button.save")}
           </button>
         </div>
-
       </form>
 
       <hr className="border-0 h-px bg-gradient-to-r from-transparent via-gray-400 to-transparent dark:via-gray-600 my-15 rounded-full" />
 
       {/* Delete account */}
       <DeleteAccount />
-
     </div>
   );
+
 }

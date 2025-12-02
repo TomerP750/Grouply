@@ -3,6 +3,7 @@ import userService from "../../../../service/user_service";
 import { useState } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 
 const inputStyle = "w-80 rounded-lg border border-gray-500/50 bg-indigo-200 dark:bg-gray-800 px-3 py-1";
@@ -15,6 +16,8 @@ export interface ChangePasswordDTO {
 
 export function SecuritySettings() {
 
+    const { t } = useTranslation();
+
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
 
@@ -23,34 +26,39 @@ export function SecuritySettings() {
 
     const sendUpdate = (data: ChangePasswordDTO) => {
         userService.changePassword(data)
-        .then(() => {
-            toast.success("Password has been changed");
-        })
-        .catch(err => {
-            toast.error(err.response.data);
-        })
-        
+            .then(() => {
+                toast.success("Password has been changed");
+            })
+            .catch(err => {
+                toast.error(err.response.data);
+            })
+
     }
 
     return (
         <div className="pb-10">
 
-            <form onSubmit={handleSubmit(sendUpdate)} className="p-10 flex flex-col md:flex-row items-center md:items-start px-6 gap-10 overflow-y-auto text-black dark:text-white">
+            <form
+                onSubmit={handleSubmit(sendUpdate)}
+                className="p-10 flex flex-col md:flex-row items-center md:items-start px-6 gap-10 overflow-y-auto text-black dark:text-white"
+            >
                 {/* header */}
                 <div className="space-y-2 dark:text-white">
-                    <p className="font-semibold text-lg">Change Password</p>
-                    <p className="text-slate-500 dark:text-gray-400">Settings for update user information</p>
+                    <p className="font-semibold text-lg">{t("settings.password.title")}</p>
+                    <p className="text-slate-500 dark:text-gray-400">
+                        {t("settings.password.description")}
+                    </p>
                 </div>
 
                 {/* Inputs section */}
                 <div className="flex flex-col items-start w-full gap-5">
-
-
                     <div className="relative flex flex-col gap-1.5">
-                        <label className="font-medium">Current Password *</label>
+                        <label className="font-medium">
+                            {t("settings.password.current")} *
+                        </label>
                         <input
                             {...register("currentPassword", {
-                                required: "Password is required",
+                                required: t("settings.password.errors.required"),
                             })}
                             type={showPassword ? "text" : "password"}
                             className={`${inputStyle} pr-10 focus:ring-2 focus:ring-teal-500 focus:outline-none`}
@@ -63,17 +71,27 @@ export function SecuritySettings() {
                             {showPassword ? <FiEye size={18} /> : <FiEyeOff size={18} />}
                         </button>
                         {errors.password && (
-                            <span className="text-sm text-red-400 mt-0.5">{errors.password.message}</span>
+                            <span className="text-sm text-red-400 mt-0.5">
+                                {errors.password.message}
+                            </span>
                         )}
                     </div>
 
                     <div className="relative flex flex-col gap-1.5">
-                        <label className="font-medium">Password *</label>
+                        <label className="font-medium">
+                            {t("settings.password.new")} *
+                        </label>
                         <input
                             {...register("password", {
-                                required: "Password is required",
-                                minLength: { value: 6, message: "At least 6 characters" },
-                                maxLength: { value: 15, message: "No more than 15 characters" },
+                                required: t("settings.password.errors.required"),
+                                minLength: {
+                                    value: 6,
+                                    message: t("settings.password.errors.min"),
+                                },
+                                maxLength: {
+                                    value: 15,
+                                    message: t("settings.password.errors.max"),
+                                },
                             })}
                             type={showPassword ? "text" : "password"}
                             className={`${inputStyle} pr-10 focus:ring-2 focus:ring-teal-500 focus:outline-none`}
@@ -86,19 +104,30 @@ export function SecuritySettings() {
                             {showPassword ? <FiEye size={18} /> : <FiEyeOff size={18} />}
                         </button>
                         {errors.password && (
-                            <span className="text-sm text-red-400 mt-0.5">{errors.password.message}</span>
+                            <span className="text-sm text-red-400 mt-0.5">
+                                {errors.password.message}
+                            </span>
                         )}
                     </div>
 
                     <div className="relative flex flex-col gap-1.5">
-                        <label className="font-medium">Confirm Password *</label>
+                        <label className="font-medium">
+                            {t("settings.password.confirm")} *
+                        </label>
                         <input
                             {...register("confirmPassword", {
-                                required: "Please confirm your password",
-                                minLength: { value: 6, message: "At least 6 characters" },
-                                maxLength: { value: 15, message: "No more than 15 characters" },
+                                required: t("settings.password.errors.confirmRequired"),
+                                minLength: {
+                                    value: 6,
+                                    message: t("settings.password.errors.min"),
+                                },
+                                maxLength: {
+                                    value: 15,
+                                    message: t("settings.password.errors.max"),
+                                },
                                 validate: (val) =>
-                                    val === watch("password") || "Passwords do not match",
+                                    val === watch("password") ||
+                                    t("settings.password.errors.match"),
                             })}
                             type={showConfirmPassword ? "text" : "password"}
                             className={`${inputStyle} pr-10 focus:ring-2 focus:ring-teal-500 focus:outline-none`}
@@ -117,13 +146,12 @@ export function SecuritySettings() {
                         )}
                     </div>
 
-
                     <button className="text-white cursor-pointer rounded-lg hover:bg-teal-500 bg-teal-600 px-4 py-2">
-                        Save
+                        {t("button.save")}
                     </button>
-
                 </div>
             </form>
+
 
         </div>
     )
