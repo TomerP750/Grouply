@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { BiLoaderAlt } from "react-icons/bi";
+import { useInView } from "react-intersection-observer";
 import { toast } from "react-toastify";
 import { useFilters } from "../../../context/filter_context";
 import type { PostDTO } from "../../../dtos/models_dtos/post_dto";
@@ -11,7 +12,6 @@ import { FeedHeader } from "./feed_header";
 import { Filters } from "./filters_area/filters";
 import { MobileFilters } from "./filters_area/mobile_filters";
 import { PostCard } from "./post_card/post_card";
-import { useInView } from "react-intersection-observer";
 
 
 
@@ -41,6 +41,9 @@ export function Feed() {
                 } else {
                     setPosts(prev => [...prev, ...res.content]);
                 }
+
+                console.log("fetching");
+                
             })
             .catch((err) => {
                 toast.error(err.response?.data || "Something went wrong");
@@ -49,7 +52,7 @@ export function Feed() {
                 setLoading(false);
             });
 
-    }, [selectedRoles, selectedTechnologies, sortDirection, pagination.pageIndex, pagination.pageSize]);
+    }, [selectedRoles, selectedTechnologies, sortDirection ,pagination.pageIndex, pagination.pageSize]);
 
 
 
@@ -61,8 +64,6 @@ export function Feed() {
     const handleRemove = (deletePostId: number) => {
         setPosts(prev => prev.filter(p => p.id !== deletePostId))
     }
-
-
 
     const loadMore = useCallback(() => {
 
@@ -78,14 +79,16 @@ export function Feed() {
 
 
     useEffect(() => {
-        if (inView && !loading && hasMore) {
-            loadMore();
-        }
-    }, [inView]);
+        if (!inView) return;
+        if (loading || !hasMore) return;
+
+        loadMore();
+    }, [inView, hasMore]);
+
 
     useEffect(() => {
         setPagination(prev => ({
-            ...prev, 
+            ...prev,
             pageIndex: 0
         }));
     }, [selectedRoles, selectedTechnologies, sortDirection]);
