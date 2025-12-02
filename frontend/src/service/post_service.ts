@@ -42,14 +42,14 @@ class PostService {
         return (await axios.get(`${BASE_API}/post/dashboard/all?page=${page}&size=${size}`)).data
     }
 
-    async searchPosts(roles: ProjectPosition[], techs: TechnologyDTO[], dir: Direction) {
+    async searchPosts(page: number, size: number ,roles: ProjectPosition[], techs: TechnologyDTO[], dir: Direction) {
 
         const params = new URLSearchParams();
         roles.forEach(r => params.append("roles", r));
         techs.forEach(t => params.append("techIds", String(t.id)));
 
 
-        return (await axios.get(`${BASE_API}/post/search?${params.toString()}&dir=${dir}`)).data
+        return (await axios.get(`${BASE_API}/post/search?page=${page}&size=${size}&${params.toString()}&dir=${dir}`)).data
     } 
 
 

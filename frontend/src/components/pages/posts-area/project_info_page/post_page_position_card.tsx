@@ -74,12 +74,12 @@ export function PostPositionPageCard({ postPosition, post }: PostPositionPageCar
 
     return (
         <div className="w-full  py-1 cursor-pointer flex items-center justify-between px-3">
-            <span className="dark:text-teal-500 font-medium">{postPosition.position}</span>
+            <span className="dark:text-teal-500 font-medium text-sm md:text-base">{postPosition.position}</span>
             <button
                 disabled={loading || isMember}
                 onClick={handleRequestToJoin}
                 className={`py-1 px-2 ${applied ? 'bg-green-600' : 'bg-blue-600'} rounded-lg cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed`}>
-                {loading ? <BiLoaderAlt size={20}/> : applied ? <BiCheck /> : <span className="text-white">Request to Join</span>}
+                {loading ? <BiLoaderAlt size={20}/> : applied ? <BiCheck /> : <span className="text-white text-sm md:text-base">Request to Join</span>}
             </button>
         </div>
     )
