@@ -34,6 +34,7 @@ export function Feed() {
         postService
             .searchPosts(pagination.pageIndex, pagination.pageSize, selectedRoles, selectedTechnologies, sortDirection)
             .then((res) => {
+                
                 setHasMore(!res.last);
 
                 if (pagination.pageIndex === 0) {

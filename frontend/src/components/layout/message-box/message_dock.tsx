@@ -1,41 +1,51 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { formatRelative } from "../../../util/util_functions";
 import { MessageButton } from "./message_button";
 import { Panel } from "./panel";
 import { type ChatPreview, RecentChats } from "./recent_chat";
 import { Conversation } from "./conversation";
+import type { ChatRoomDTO } from "./model/chatroom.DTO";
+import directMessageRoomService from "../../../service/direct.message.room.service";
+import { toast } from "react-toastify";
 
 
 type DockState =
     | { view: "closed" }
     | { view: "list" }
-    | { view: "conversation"; chatId: string };
+    | { view: "conversation"; chatId: number };
 
-const mockChats: ChatPreview[] = [
-    { id: "1", name: "user1", lastMessage: "Cool, let’s ship it today.", lastTimestamp: Date.now() - 1000 * 60 * 3, unread: 2 },
-    { id: "2", name: "user2", lastMessage: "pushed the fix to main", lastTimestamp: Date.now() - 1000 * 60 * 40, unread: 0 },
-    { id: "3", name: "user3", lastMessage: "Call me when you’re free", lastTimestamp: Date.now() - 1000 * 60 * 60 * 3, unread: 1 },
-];
+
 
 export function MessageDock() {
 
     const [state, setState] = useState<DockState>({ view: "closed" });
 
+    const [rooms, setRooms] = useState<ChatRoomDTO[]>([]);
+
+    useEffect(() => {
+        directMessageRoomService.listRooms()
+        .then(res => {
+            setRooms(res)   
+        })
+        .catch(err => toast.error(err.resposne.data));
+    }, []);
+
+
     if (state.view === "closed") {
-        return <MessageButton chats={mockChats} onOpen={() => setState({ view: "list" })} />;
+        return <MessageButton chats={rooms} onOpen={() => setState({ view: "list" })} />;
     }
 
     function getPanel(dock: DockState, deps: {
-        chats: ChatPreview[];
+        chats: ChatRoomDTO[];
         onOpen: () => void;
         onClose: () => void;
-        onSelect: (id: string) => void;
+        onSelect: (id: number) => void;
         onBack: () => void;
     }) {
         switch (dock.view) {
             case "closed":
                 return (
-                    <MessageButton chats={deps.chats} onOpen={deps.onOpen} />
+                    <MessageButton chats={rooms} onOpen={deps.onOpen} />
                 );
 
             case "list":
@@ -43,7 +53,7 @@ export function MessageDock() {
                     <div className="fixed bottom-5 right-5 z-50">
                         <Panel onClose={deps.onClose} title="Messages">
                             <RecentChats
-                                chats={deps.chats}
+                                chats={rooms}
                                 formatRelative={formatRelative}
                                 onSelect={deps.onSelect}
                             />
@@ -54,21 +64,27 @@ export function MessageDock() {
             case "conversation":
                 const chat = deps.chats.find(c => c.id === dock.chatId);
                 const name = chat?.name ?? "User";
-
+                
                 return (
                     <div className="fixed bottom-5 right-5 z-50">
                         <Panel onClose={deps.onClose} title="Messages">
-                            <Conversation name={name} onBack={deps.onBack} />
+                            <Conversation
+                                name={name}
+                                chatId={dock.chatId}   
+                                onBack={deps.onBack}
+                            />
                         </Panel>
                     </div>
                 );
+
+
         }
     }
 
     return (
         <div className=" text-black dark:text-white">
             {getPanel(state, {
-                chats: mockChats,
+                chats: rooms,
                 onOpen: () => setState({ view: "list" }),
                 onClose: () => setState({ view: "closed" }),
                 onSelect: (id) => setState({ view: "conversation", chatId: id }),

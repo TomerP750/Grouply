@@ -2,9 +2,12 @@ package com.grouply.backend.connection;
 
 import com.grouply.backend.exceptions.UnauthorizedException;
 import com.grouply.backend.security.CustomUserDetails;
+import com.grouply.backend.user.Dtos.UserDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/connection")
@@ -25,5 +28,10 @@ public class ConnectionController {
         return connectionService.removeConnection(userId, removedUserId);
     }
 
+    @GetMapping("/all")
+    public List<UserDTO> allConnections(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        Long userId = userDetails.getId();
+        return connectionService.allConnectedUsers(userId);
+    }
 
 }

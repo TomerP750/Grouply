@@ -20,8 +20,6 @@ axios.interceptors.request.use(function (config) {
   return config;
 });
 
-
-
 createRoot(document.getElementById('root')!).render(
   <BrowserRouter>
     <Provider store={store}>

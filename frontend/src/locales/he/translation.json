@@ -80,5 +80,15 @@
       }
     }
   },
+  "filters": {
+    "header": {
+      "title": "סינון ומיון",
+      "clear": "ניקוי"
+    },
+    "sort": {
+      "newest_oldest": "מהחדש לישן",
+      "oldest_newest": "מהישן לחדש"
+    }
+  },
   "Create Post": "יצירת פוסט"
 }

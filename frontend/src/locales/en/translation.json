@@ -80,5 +80,15 @@
       }
     }
   },
+  "filters": {
+    "header": {
+      "title": "Filter & Sort",
+      "clear": "Clear All"
+    },
+    "sort": {
+      "newest_oldest": "Newest - Oldest",
+      "oldest_newest": "Oldest - Newest"
+    }
+  },
   "Create Post": "Create Post"
 }

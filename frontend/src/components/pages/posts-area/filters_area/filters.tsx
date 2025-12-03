@@ -6,6 +6,7 @@ import { MobileFilters } from "./mobile_filters";
 import { RoleDemandSelect } from "./role_demand_select";
 import { SortGroup } from "./sort_group";
 import { TechnologySelect } from "./technologies_select";
+import { useTranslation } from "react-i18next";
 
 
 
@@ -13,6 +14,7 @@ export function Filters() {
 
   const [open, setOpen] = useState(true);
   const { clear, empty } = useFilters();
+  const { t } = useTranslation();  
 
   return (
     
@@ -26,7 +28,7 @@ export function Filters() {
           
           <h2 className={`text-sm font-semibold tracking-wide ${open ? 'mb-5' : ''} inline-flex gap-1 items-center`}>
             <BiFilter size={22} />
-            <span>{'Filter & Sort'.toUpperCase()}</span>
+            <span>{t('filters.header.title').toUpperCase()}</span>
           </h2>
           <button
             onClick={(e) => { 
@@ -35,7 +37,7 @@ export function Filters() {
             }}
             className={`${empty ? 'cursor-not-allowed opacity-50' : 'cursor-pointer hover:underline hover:underline-offset-2'} text-sm`}
           >
-            Clear All
+            {t("filters.header.clear")}
           </button>
         </div>
 

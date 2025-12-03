@@ -79,6 +79,12 @@ export function NavbarCenter({ user }: NavbarCenterProps) {
         </NavLink>
       </li>
 
+      <li>
+        <button onClick={() => setSearchOpen(true)}>
+          <BiSearch size={22} />
+        </button>
+      </li>
+
 
       </ul>}
 

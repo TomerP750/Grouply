@@ -14,6 +14,9 @@ class ConnectionService {
         return (await axios.delete(`${BASE_API}/connection/remove/${removedUserId}`)).data;
     }
 
+    async allConnections() {
+        return (await axios.get(`${BASE_API}/connection/all`)).data;
+    }
 
 }
 

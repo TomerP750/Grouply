@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { useFilters } from "../../../../context/filter_context";
 import { Accordion } from "../../../elements/Accordion";
 
@@ -16,6 +17,7 @@ const inputStyle = `
 export function SortGroup() {
 
   const { sortDirection , toggleSortDirection } = useFilters();
+  const { t } = useTranslation();
 
   return (
     <Accordion title="Sort By">
@@ -31,7 +33,7 @@ export function SortGroup() {
             onChange={toggleSortDirection}
             className={`${inputStyle}`}
           />
-          <span className="text-sm text-slate-800 dark:text-slate-200">Newest - Oldest</span>
+          <span className="text-sm text-slate-800 dark:text-slate-200">{t("filters.sort.newest_oldest")}</span>
         </label>
 
         <label className="inline-flex items-center gap-2 cursor-pointer">
@@ -43,7 +45,7 @@ export function SortGroup() {
             onChange={toggleSortDirection}
             className={`${inputStyle}`}
           />
-          <span className="text-sm text-slate-800 dark:text-slate-200">Oldest - Newest</span>
+          <span className="text-sm text-slate-800 dark:text-slate-200">{t("filters.sort.oldest_newest")}</span>
         </label>
 
       </ul>

@@ -4,12 +4,15 @@ import com.grouply.backend.activity.ActivityRepository;
 import com.grouply.backend.exceptions.UnauthorizedException;
 import com.grouply.backend.statistics.Statistics;
 import com.grouply.backend.statistics.StatisticsRepository;
+import com.grouply.backend.user.Dtos.UserDTO;
 import com.grouply.backend.user.User;
 import com.grouply.backend.user.UserRepository;
+import com.grouply.backend.util.EntityToDtoMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -55,7 +58,14 @@ public class ConnectionService implements IConnectionService {
 
     }
 
+    List<UserDTO> allConnectedUsers(Long userId) {
 
+        List<Connection> connections = connectionRepository
+                .findByUserId(userId);
+
+        return connections.stream().map(c -> EntityToDtoMapper.toUserDto(c.getConnectedUser())).toList();
+
+    }
 
 
 
