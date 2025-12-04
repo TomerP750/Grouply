@@ -1,25 +1,13 @@
 package com.grouply.backend.notification.dto;
 
-import com.grouply.backend.notification.NotificationType;
-import com.grouply.backend.user.Dtos.UserDTO;
-import lombok.Builder;
-import lombok.Data;
 
+import com.grouply.backend.notification.NotificationType;
 
 import java.time.Instant;
 
-@Data
-@Builder
-public class NotificationDTO {
 
-    private NotificationType type;
+public record NotificationDTO (
+        Long targetUserId,
+        String message
+) {}
 
-    private UserDTO recipient;
-
-    private UserDTO sender;
-
-    private String message;
-
-    private Instant createdAt;
-
-}

@@ -6,6 +6,9 @@ import com.grouply.backend.connection.Connection;
 import com.grouply.backend.connection.ConnectionRepository;
 import com.grouply.backend.connection_request.dto.ConnectionRequestDTO;
 import com.grouply.backend.exceptions.UnauthorizedException;
+import com.grouply.backend.notification.NotificationService;
+import com.grouply.backend.notification.NotificationType;
+import com.grouply.backend.notification.dto.NotificationDTO;
 import com.grouply.backend.statistics.Statistics;
 import com.grouply.backend.statistics.StatisticsRepository;
 import com.grouply.backend.user.User;
@@ -15,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,7 +34,8 @@ public class ConnectionRequestService implements IConnectionRequestService {
     private final UserRepository userRepository;
     private final StatisticsRepository statisticsRepository;
     private final ActivityService activityService;
-//    private final NotificationService notificationService;
+    private final NotificationService notificationService;
+    private final SimpMessagingTemplate messagingTemplate;
 
 
     public Page<ConnectionRequestDTO> allConnectionRequests(Long recipientId, Pageable pageable) {
@@ -77,13 +82,8 @@ public class ConnectionRequestService implements IConnectionRequestService {
                         , ActivityType.SENT_CONNECTION_REQUEST
                         , sender);
 
-
-//        notificationService.sendUserNotification(
-//                recipientId,
-//                NotificationType.CONNECTION_REQUEST,
-//                senderId,
-//                sender.getUsername() + " Sent you connection request."
-//        );
+        NotificationDTO notificationDTO = new NotificationDTO(recipientId, "I want you connect");
+        notificationService.sendNotification(notificationDTO);
 
         return true;
     }

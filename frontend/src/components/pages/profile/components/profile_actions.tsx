@@ -11,6 +11,8 @@ import connectionRequestService from "../../../../service/connection_request_ser
 import connectionService from "../../../../service/connection_service";
 import { useThrottleClick } from "../../../../util/helper_hooks";
 import { InviteToProjectModal } from "./invite_to_project_modal";
+import notificationService from "../../../../service/notification.service";
+import type { NotificationDTO } from "../../../../models/notification.dto";
 
 
 const buttonStyle = `
@@ -59,13 +61,22 @@ export function ProfileActions({ profile, user }: ProfileActionsProps) {
     const throttleConnect = useMemo(
         () =>
             throttle((targetId: number) => {
+
                 connectionRequestService
                     .toggleRequest(targetId)
                     .then((res) => {
                         setSentRequest(res);
+                        // const data: NotificationDTO = {
+                        //     targetUserId: targetId,
+                        //     message: "I want to connect"
+                        // }
+                        // notificationService.pushConnectionNotification(data)
+                        // .then()
+                        // .catch(err => toast.error(err.response.data))
                         toast.success(res ? "Connect Request Sent!" : "Connect Request Canceled");
                     })
                     .catch((err) => toast.error(err?.response?.data ?? "Action failed"));
+
             }, 5000),
         []
     );

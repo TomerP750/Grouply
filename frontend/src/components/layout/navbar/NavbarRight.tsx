@@ -10,6 +10,7 @@ import { UserMenu } from "./user_menu";
 import { Menu } from "../../elements/Menu";
 import { ConnectionMenu } from "./menus/connections_menu";
 import { NotificationMenu } from "./menus/notification_menu";
+import { ConnectionBadge } from "./connection.badge";
 
 
 interface NavbarRightProps {
@@ -33,7 +34,15 @@ export function NavbarRight({ user, className }: NavbarRightProps) {
 
   const [notificationOpen, setNotificationOpen] = useState<boolean>(false);
   const [connectionsOpen, setConnectionOpen] = useState<boolean>(false);
- 
+
+
+  const [notificationCount, setNotificationCount] = useState<number>(0);
+
+  const onConnectionOpen = () => {
+    setConnectionOpen(notificationOpen ? false : true);
+    setMenuOpen(false);
+    setNotificationOpen(false);
+  }
 
   return (
     <nav className="flex items-center gap-5">
@@ -41,18 +50,8 @@ export function NavbarRight({ user, className }: NavbarRightProps) {
       <ul className="hidden lg:flex items-center text-lg">
 
         {/* Connection Menu */}
-        {user && <div className="relative hover:bg-gray-500/20">
-          <button onClick={() => {
-            setConnectionOpen(!connectionsOpen);
-            setMenuOpen(false);
-            setNotificationOpen(false);
-          }}>
-            <Badge Icon={HiOutlineGlobeAlt} size={28} count={2} className="cursor-pointer p-3" />
-          </button>
+        <ConnectionBadge onOpen={onConnectionOpen} open={connectionsOpen} />
 
-          {connectionsOpen && <ConnectionMenu />}
-
-        </div>}
 
         {/* Notifications Menu */}
         {user && <div className="relative hover:bg-gray-500/20">
@@ -61,7 +60,7 @@ export function NavbarRight({ user, className }: NavbarRightProps) {
             setMenuOpen(false);
             setConnectionOpen(false);
           }}>
-            <Badge Icon={BiBell} size={28} count={3} className="cursor-pointer p-3" />
+            <Badge Icon={BiBell} size={28} count={notificationCount} className="cursor-pointer p-3" />
           </button>
           {notificationOpen && <NotificationMenu />}
         </div>}
@@ -77,22 +76,22 @@ export function NavbarRight({ user, className }: NavbarRightProps) {
                 setNotificationOpen(false);
               }}
               className={"relative inline-flex items-center gap-1 transition-colors duration-200 cursor-pointer"}>
-              
-              <Avatar size={40} className="rounded-lg"/>
-              <BiChevronDown/>
-              
+
+              <Avatar size={40} className="rounded-lg" />
+              <BiChevronDown />
+
             </button>
             {menuOpen && <UserMenu user={user} />}
           </div>
           :
           <div className="flex items-center gap-3">
-          <NavLink
-            to="/login"
-            className={`${loginBtn}`}
-          >
-            Login
-          </NavLink>
-          {/* <NavLink
+            <NavLink
+              to="/login"
+              className={`${loginBtn}`}
+            >
+              Login
+            </NavLink>
+            {/* <NavLink
             to="/recruiter/login"
             className={`${loginBtn}`}
           >
