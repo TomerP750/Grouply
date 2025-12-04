@@ -4,14 +4,16 @@ import {
     useState,
     type ReactNode,
 } from "react";
+import type { DirectMessageRoomDTO } from "../components/direct.messages/models/direct.message.room.dto";
+import { useUser } from "../redux/hooks";
 
 export type DmDockState = "button" | "history" | "conversation";
 
 type DmContextValue = {
     state: DmDockState;
-    selectedRecipientId: number | null; 
+    selectedRecipientId: number | null;
     openHistory: () => void;
-    openConversation: (recipientId: number) => void;
+    openConversation: (room: DirectMessageRoomDTO) => void;
     closeDock: () => void;
 };
 
@@ -26,13 +28,19 @@ export function DmProvider({ children }: DmProviderProps) {
     const [state, setState] = useState<DmDockState>("button");
     const [selectedRecipientId, setSelectedRecipientId] = useState<number | null>(null);
 
+    const user = useUser();
+
     const openHistory = () => {
         setSelectedRecipientId(null);
         setState("history");
     }
 
-    const openConversation = (recipientId: number) => {
-        setSelectedRecipientId(recipientId);
+    const openConversation = (room: DirectMessageRoomDTO) => {
+
+        const other =
+            room.sender.id === user.id ? room.recipient : room.sender;
+
+        setSelectedRecipientId(other.id);
         setState("conversation");
     };
 

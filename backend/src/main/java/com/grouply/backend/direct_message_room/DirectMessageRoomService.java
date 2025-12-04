@@ -32,9 +32,11 @@ public class DirectMessageRoomService {
      */
 
     @Transactional
-    public DirectMessageRoomDTO getOrCreateRoom(Long userId ,Long recipientUserId) {
+    public DirectMessageRoomDTO getOrCreateRoom(Long userId, Long recipientUserId) {
 
-        log.info("Entering get or create room");
+        if (userId.equals(recipientUserId)) {
+            throw new IllegalArgumentException("Cannot create a chat with yourself");
+        }
 
         User currentUser = fetchUser(userId);
 
@@ -45,18 +47,16 @@ public class DirectMessageRoomService {
         User roomRecipient = currentUser.getId() < recipientUser.getId() ? recipientUser : currentUser;
 
         DirectMessageRoom room = roomRepository.findBySenderAndRecipient(roomSender, roomRecipient)
-                .orElseGet(() -> {
-                    DirectMessageRoom r = DirectMessageRoom.builder()
-                            .sender(roomSender)
-                            .recipient(roomRecipient)
-                            .build();
-                    return roomRepository.save(r);
-                });
-
-        log.info("Success fetch room");
+                .orElseGet(() -> roomRepository.save(
+                        DirectMessageRoom.builder()
+                                .sender(roomSender)
+                                .recipient(roomRecipient)
+                                .build()
+                ));
 
         return toDto(room);
     }
+
 
     public DirectMessageRoomDTO getRoom(Long chatId) {
         return toDto(roomRepository.findById(chatId).orElseThrow(() -> new NoSuchElementException("User not found")));
