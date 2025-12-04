@@ -1,19 +1,43 @@
-import { BiMailSend } from "react-icons/bi";
-
+import { BiMailSend, BiSearch } from "react-icons/bi";
+import { HiPaperAirplane } from "react-icons/hi";
 
 export function DirectMessageHistoryHeader() {
 
-
     const handleCreateChatRoom = () => {
 
-    }
+    };
 
     return (
-        <section className="flex items-center justify-between  gap-3 py-3">
+        <section className="flex items-center gap-3 py-3">
 
-            <input type="text" className="border border-white w-full px-2 py-1 focus:outline-none rounded-xl focus:border-teal-500"/>
-            <button className="cursor-pointer"><BiMailSend size={25}/></button>
+            {/* Search */}
+            <div className="flex flex-1 items-center gap-2 rounded-2xl border border-slate-300 bg-slate-50 px-3 py-1.5 text-sm
+                      focus-within:border-teal-500 focus-within:ring-1 focus-within:ring-teal-500
+                      dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100">
+                <BiSearch className="text-slate-400 dark:text-slate-500" size={18} />
+                <input
+                    type="text"
+                    placeholder="Search conversations..."
+                    className="w-full bg-transparent text-sm text-slate-900 placeholder:text-slate-400
+                     focus:outline-none dark:text-slate-100 dark:placeholder:text-slate-500"
+                />
+            </div>
+
+            {/* New DM */}
+            <button
+                type="button"
+                onClick={handleCreateChatRoom}
+                className=" inline-flex items-center justify-center cursor-pointer h-10 w-10
+                rounded-full
+              dark:bg-teal-500 bg-sky-500
+              text-white shadow-md
+                hover:brightness-110 hover:shadow-lg
+                active:scale-95
+                transition-all duration-150"
+            >
+                <HiPaperAirplane className="-rotate-45 text-lg" />
+            </button>
 
         </section>
-    )
+    );
 }

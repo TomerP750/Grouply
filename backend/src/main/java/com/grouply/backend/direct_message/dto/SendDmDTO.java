@@ -9,6 +9,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateDMRequest {
+public class SendDmDTO {
     String message;
 }

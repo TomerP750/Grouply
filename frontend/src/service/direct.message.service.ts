@@ -1,35 +1,22 @@
 import axios from "axios";
-import { BASE_API } from "../util/base_api";
-import type { DirectMessageDTO } from "../components/layout/message-box/model/direct.message.dto";
 import type { CreateDMRequest } from "../components/layout/message-box/model/create.dm.request";
+import { BASE_API } from "../util/base_api";
 
 
 class DirectMessageService {
 
-    async listRooms() {
-        return (await axios.get(`${BASE_API}/dm/rooms`)).data;
-    }
 
-    async getOrCreateRoom(otherUserId: number) {
-        return (await axios.post(`${BASE_API}/dm/rooms/${otherUserId}`)).data;
-    }
-
-    async listMessages(roomId: number, page = 0, size = 50) {
+    async roomMessages(roomId: number, page = 0, size = 50) {
         return (
-            await axios.get(`${BASE_API}/dm/rooms/${roomId}/messages`, {
+            await axios.get(`${BASE_API}/dm/${roomId}/messages`, {
                 params: { page, size },
             })
-        ).data as {
-            content: DirectMessageDTO[];
-            totalElements: number;
-            totalPages: number;
-            number: number;
-        };
+        ).data
     }
 
     async sendMessage(roomId: number, payload: CreateDMRequest) {
         return (
-            await axios.post(`${BASE_API}/dm/rooms/${roomId}/messages`, payload)
+            await axios.post(`${BASE_API}/dm/${roomId}/send`, payload)
         ).data ;
     }
 

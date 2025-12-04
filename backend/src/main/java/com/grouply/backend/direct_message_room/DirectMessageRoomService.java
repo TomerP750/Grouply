@@ -6,6 +6,7 @@ import com.grouply.backend.user.UserRepository;
 import com.grouply.backend.util.EntityToDtoMapper;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -15,30 +16,31 @@ import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class DirectMessageRoomService {
 
     private final DirectMessageRoomRepository roomRepository;
     private final UserRepository userRepository;
 
-    private User getCurrentUser() {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        return userRepository.findByUsername(username)
-                .orElseThrow(() -> new IllegalStateException("User not found: " + username));
-    }
+
+
+
+    /**
+     *
+     * @param recipientUserId
+     * @return
+     */
 
     @Transactional
-    public DirectMessageRoomDTO getOrCreateRoom(Long recipientUserId) {
+    public DirectMessageRoomDTO getOrCreateRoom(Long userId ,Long recipientUserId) {
 
-        System.out.println("recid: " + recipientUserId);
+        log.info("Entering get or create room");
 
-        User currentUser = getCurrentUser();
-        System.err.println("current: " + currentUser);
+        User currentUser = fetchUser(userId);
 
         User recipientUser = userRepository.findById(recipientUserId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
-        System.err.println("rec: " + recipientUser);
 
-        // canonical ordering by id so we don't create duplicate rooms
         User roomSender = currentUser.getId() < recipientUser.getId() ? currentUser : recipientUser;
         User roomRecipient = currentUser.getId() < recipientUser.getId() ? recipientUser : currentUser;
 
@@ -51,7 +53,7 @@ public class DirectMessageRoomService {
                     return roomRepository.save(r);
                 });
 
-        System.out.println("room: " + room);
+        log.info("Success fetch room");
 
         return toDto(room);
     }
@@ -61,12 +63,19 @@ public class DirectMessageRoomService {
     }
 
     @Transactional
-    public List<DirectMessageRoomDTO> allRooms() {
-        User me = getCurrentUser();
+    public List<DirectMessageRoomDTO> allRooms(Long userId) {
+        User me = fetchUser(userId);
         List<DirectMessageRoom> rooms = roomRepository.findBySenderOrRecipient(me, me);
         return rooms.stream()
                 .map(this::toDto)
                 .toList();
+    }
+
+//    Utils Methods
+
+    private User fetchUser(Long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalStateException("User not found"));
     }
 
     private DirectMessageRoomDTO toDto(DirectMessageRoom room) {

@@ -1,6 +1,7 @@
 package com.grouply.backend.direct_message_room;
 
 
+import com.grouply.backend.direct_message.DirectMessage;
 import com.grouply.backend.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -11,6 +12,8 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "direct_messages_rooms")
@@ -35,6 +38,8 @@ public class DirectMessageRoom {
     @Column(nullable = false, updatable = false)
     private Instant createdAt;
 
+//    @OneToMany(mappedBy = "room", fetch = FetchType.LAZY)
+//    private List<DirectMessage> messages = new ArrayList<>();
 
 
 }

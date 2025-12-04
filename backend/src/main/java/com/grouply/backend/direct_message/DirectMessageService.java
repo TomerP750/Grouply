@@ -1,10 +1,9 @@
 package com.grouply.backend.direct_message;
 
-import com.grouply.backend.direct_message.dto.CreateDMRequest;
+import com.grouply.backend.direct_message.dto.SendDmDTO;
 import com.grouply.backend.direct_message.dto.DirectMessageDTO;
 import com.grouply.backend.direct_message_room.DirectMessageRoom;
 import com.grouply.backend.direct_message_room.DirectMessageRoomRepository;
-import com.grouply.backend.direct_message_room.dto.DirectMessageRoomDTO;
 import com.grouply.backend.user.User;
 import com.grouply.backend.user.UserRepository;
 import com.grouply.backend.util.EntityToDtoMapper;
@@ -12,11 +11,11 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +24,7 @@ public class DirectMessageService {
     private final DirectMessageRoomRepository roomRepository;
     private final DirectMessageRepository messageRepository;
     private final UserRepository userRepository;
+    private final SimpMessagingTemplate messagingTemplate;
 
     private User getCurrentUser() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -32,42 +32,9 @@ public class DirectMessageService {
                 .orElseThrow(() -> new IllegalStateException("User not found: " + username));
     }
 
-    @Transactional
-    public DirectMessageRoomDTO getOrCreateRoom(Long recipientUserId) {
-
-        User senderUser = getCurrentUser();
-        User recipientUser = userRepository.findById(recipientUserId)
-                .orElseThrow(() -> new IllegalArgumentException("User not found"));
-
-        // canonical ordering by id so we don't create duplicate rooms
-        User roomSender = senderUser.getId() < recipientUser.getId() ? senderUser : recipientUser;
-        User roomRecipient = senderUser.getId() < recipientUser.getId() ? recipientUser : senderUser;
-
-        DirectMessageRoom room = roomRepository.findBySenderAndRecipient(roomSender, roomRecipient)
-                .orElseGet(() -> {
-                    DirectMessageRoom r = DirectMessageRoom.builder()
-                            .sender(roomSender)
-                            .recipient(roomRecipient)
-                            .createdAt(Instant.now())
-                            .build();
-                    return roomRepository.save(r);
-                });
-
-        return toRoomDto(room, senderUser);
-    }
 
     @Transactional
-    public List<DirectMessageRoomDTO> listMyRooms() {
-        User me = getCurrentUser();
-        List<DirectMessageRoom> rooms = roomRepository.findBySenderOrRecipient(me, me);
-
-        return rooms.stream()
-                .map(room -> toRoomDto(room, me))
-                .toList();
-    }
-
-    @Transactional
-    public Page<DirectMessageDTO> listMessages(Long roomId, int page, int size) {
+    public Page<DirectMessageDTO> roomMessages(Long roomId, int page, int size) {
 
         User me = getCurrentUser();
         DirectMessageRoom room = roomRepository.findById(roomId)
@@ -89,13 +56,13 @@ public class DirectMessageService {
     }
 
     @Transactional
-    public DirectMessageDTO sendMessage(Long roomId, CreateDMRequest req) {
+    public DirectMessageDTO sendMessage(Long roomId, SendDmDTO req) {
 
         User senderUser = getCurrentUser();
         DirectMessageRoom room = roomRepository.findById(roomId)
                 .orElseThrow(() -> new IllegalArgumentException("Room not found"));
 
-        // ensure current user is part of this room
+
         boolean isSender = room.getSender().getId().equals(senderUser.getId());
         boolean isRecipient = room.getRecipient().getId().equals(senderUser.getId());
 
@@ -103,7 +70,6 @@ public class DirectMessageService {
             throw new SecurityException("Forbidden");
         }
 
-        // decide recipient of this message based on current sender
         User recipientUser = room.getSender().getId().equals(senderUser.getId())
                 ? room.getRecipient()
                 : room.getSender();
@@ -118,19 +84,14 @@ public class DirectMessageService {
 
         DirectMessage saved = messageRepository.save(message);
 
-        return toMessageDto(saved);
+        DirectMessageDTO dto = toMessageDto(saved);
+
+        messagingTemplate.convertAndSend("/topic/dm/" + roomId, dto);
+
+        return dto;
     }
 
     // ===== mapping helpers =====
-
-    private DirectMessageRoomDTO toRoomDto(DirectMessageRoom room, User currentUser) {
-        // In the DTO, "sender" and "recipient" are the canonical ones from the room.
-        return DirectMessageRoomDTO.builder()
-                .id(room.getId())
-                .sender(EntityToDtoMapper.toUserDto(room.getSender()))
-                .recipient(EntityToDtoMapper.toUserDto(room.getRecipient()))
-                .build();
-    }
 
     private DirectMessageDTO toMessageDto(DirectMessage dm) {
         return DirectMessageDTO.builder()
