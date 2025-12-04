@@ -10,7 +10,6 @@ import type { DirectMessageRoomDTO } from "../models/direct.message.room.dto";
 import type { SendDmDTO } from "../models/send.dm.dto";
 import type { DirectMessageDTO } from "../models/direct.message.dto";
 import directMessageService from "../../../service/direct.message.service";
-import { fmtDate } from "../../../util/util_functions";
 import { useUser } from "../../../redux/hooks";
 import { Client } from "@stomp/stompjs";
 import "./dm.styles.css"
@@ -43,7 +42,6 @@ export function DirectMessageConversation() {
     const otherUsername = getOtherUsername();
 
 
-
     useEffect(() => {
 
         if (!room?.id) return;
@@ -55,8 +53,6 @@ export function DirectMessageConversation() {
             debug: (str) => console.log(str),
             onConnect: () => {
                 console.log("STOMP connected");
-
-
                 stompClient?.subscribe(`/topic/dm/${room.id}`, (msg) => {
                     const body: DirectMessageDTO = JSON.parse(msg.body);
                     setMessages((prev) => [...prev, body]);
@@ -72,6 +68,7 @@ export function DirectMessageConversation() {
         return () => {
             stompClient?.deactivate();
         };
+        
     }, [room?.id]);
 
 
@@ -96,8 +93,6 @@ export function DirectMessageConversation() {
                 toast.error(err.response?.data || "Something went wrong");
             });
     }, [selectedRecipientId]);
-
-
 
     const sendDm = (data: SendDmDTO) => {
 

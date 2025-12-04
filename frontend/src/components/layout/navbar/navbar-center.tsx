@@ -80,7 +80,7 @@ export function NavbarCenter({ user }: NavbarCenterProps) {
       </li>
 
       <li>
-        <button onClick={() => setSearchOpen(true)}>
+        <button onClick={() => setSearchOpen(true)} className="cursor-pointer hover:bg-gray-100/20 p-3">
           <BiSearch size={22} />
         </button>
       </li>

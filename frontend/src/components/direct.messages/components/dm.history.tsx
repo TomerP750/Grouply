@@ -8,13 +8,13 @@ import { DmHistoryRow } from "./dm.history.row";
 
 export function DirectMessagesHistory() {
 
-    const [dms, setDms] = useState<DirectMessageRoomDTO[]>([]);
+    const [rooms, setRooms] = useState<DirectMessageRoomDTO[]>([]);
     
 
     useEffect(() => {
         directMessageRoomService.directMessagesHistory()
             .then(res => {
-                setDms(res);
+                setRooms(res);
             })
             .catch(err => toast.error(err.response.data))
     }, []);
@@ -24,7 +24,7 @@ export function DirectMessagesHistory() {
 
             <DirectMessageHistoryHeader />
 
-            {dms.length > 0 && dms.map(r => {
+            {rooms.length > 0 && rooms.map(r => {
                 return <DmHistoryRow key={r.id} room={r} />
             })}
 

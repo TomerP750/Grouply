@@ -1,11 +1,8 @@
-import { DmProvider, useDm } from "../../../context/Dm_context";
+import { useDm } from "../../../context/Dm_context";
 import { Panel } from "../../layout/message-box/panel";
 import { DirectMessageConversation } from "../components/dm.conversation";
 import { DirectMessagesHistory } from "../components/dm.history";
 import { MessageButton } from "../components/dm.message.button";
-
-
-
 
 export function DirectMessagesDock() {
 
@@ -22,7 +19,7 @@ export function DirectMessagesDock() {
     function getPanel() {
         
         switch (state) {
-            
+
             case "history":
                 return (
                     <Panel onClose={closeDock} title="Messages">
@@ -53,3 +50,5 @@ export function DirectMessagesDock() {
 
     );
 }
+
+
