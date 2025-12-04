@@ -13,6 +13,7 @@ import directMessageService from "../../../service/direct.message.service";
 import { fmtDate } from "../../../util/util_functions";
 import { useUser } from "../../../redux/hooks";
 import { Client } from "@stomp/stompjs";
+import "./dm.styles.css"
 
 export function DirectMessageConversation() {
 
@@ -26,19 +27,36 @@ export function DirectMessageConversation() {
         new Date(iso).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 
 
+    const getOtherUsername = () => {
+        if (!room) return "Username";
+
+        const { sender, recipient } = room;
+
+        if (!sender || !recipient) return "Username";
+
+        // If I'm the sender, show the recipient; otherwise show the sender
+        return loggedInUser.id === sender.id
+            ? recipient.username
+            : sender.username;
+    };
+
+    const otherUsername = getOtherUsername();
+
+
+
     useEffect(() => {
 
         if (!room?.id) return;
 
         const stompClient = new Client({
 
-            brokerURL: "ws://localhost:8080/ws", 
+            brokerURL: "ws://localhost:8080/ws",
             reconnectDelay: 5000,
             debug: (str) => console.log(str),
             onConnect: () => {
                 console.log("STOMP connected");
 
-               
+
                 stompClient?.subscribe(`/topic/dm/${room.id}`, (msg) => {
                     const body: DirectMessageDTO = JSON.parse(msg.body);
                     setMessages((prev) => [...prev, body]);
@@ -97,7 +115,7 @@ export function DirectMessageConversation() {
     }
 
     return (
-        <div className="flex h-[420px] flex-col">
+        <div className="flex max-h-[400px] flex-col">
 
             {/* Header */}
             <header className="flex items-center gap-3 border-b border-slate-200 px-4 py-3 dark:border-slate-700">
@@ -114,16 +132,18 @@ export function DirectMessageConversation() {
                     <Avatar className="w-10 aspect-square" />
 
                     <div className="flex flex-col">
+                      
                         <span className="text-sm font-semibold text-slate-900 dark:text-slate-100">
-                            {room?.recipient?.username ?? "Username"}
+                            {otherUsername}
                         </span>
+
                     </div>
                 </div>
 
             </header>
 
             {/* Messages */}
-            <div className="flex-1 space-y-3 overflow-y-auto px-4 py-3 text-sm">
+            <div className="flex-1 space-y-3 overflow-y-auto px-4 py-3 text-sm dm-conversation">
 
                 <div className="justify-start rounded-bl-sm bg-slate-100 
                 text-slate-900 dark:bg-slate-800 dark:text-slate-100
@@ -172,7 +192,7 @@ export function DirectMessageConversation() {
                 <div className="flex items-center gap-2 rounded-2xl bg-slate-100 px-3 py-1.5 dark:bg-slate-800/80">
                     <input
                         autoComplete="off"
-                        placeholder={`Message @${room?.recipient?.username ?? "Username"}...`}
+                        placeholder={`Message @${otherUsername}...`}
                         {...register("message", {
                             required: true,
                             max: 300,

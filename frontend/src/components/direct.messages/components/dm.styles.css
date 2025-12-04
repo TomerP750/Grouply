@@ -1,0 +1,9 @@
+.dm-conversation {
+  overflow-y: auto;      
+  scrollbar-width: none;    
+  -ms-overflow-style: none; 
+}
+
+.dm-conversation::-webkit-scrollbar {
+  display: none;       
+}
