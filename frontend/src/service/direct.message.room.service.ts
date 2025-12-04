@@ -4,7 +4,7 @@ import { BASE_API } from "../util/base_api";
 
 class DirectMessageRoomService {
 
-    async listRooms() {
+    async directMessagesHistory() {
         return (await axios.get(`${BASE_API}/dm/rooms/all`)).data ;
     }
 

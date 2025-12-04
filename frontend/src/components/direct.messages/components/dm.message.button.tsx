@@ -1,19 +1,13 @@
-import { useMemo } from "react";
 import { BiChat } from "react-icons/bi";
 import { Badge } from "../../elements/Badge";
-import type { ChatPreview } from "./recent_chat";
-import type { ChatRoomDTO } from "./model/chatroom.DTO";
 
 
 interface MessageButtonProps {
-  chats: ChatRoomDTO[];
   onOpen: () => void;
 }
 
 
 export function MessageButton({ onOpen }: MessageButtonProps) {
-
-
 
   return (
     <div className="hidden lg:block md:fixed bottom-5 right-5 z-50">

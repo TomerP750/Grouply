@@ -1,6 +1,7 @@
 // adjust this import path if needed
 
-import type { UserDTO } from "../../../../dtos/models_dtos/user_dto";
+import type { UserDTO } from "../../../dtos/models_dtos/user_dto";
+
 
 
 export interface DirectMessageDTO {

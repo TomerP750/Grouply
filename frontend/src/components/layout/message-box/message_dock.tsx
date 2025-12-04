@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { formatRelative } from "../../../util/util_functions";
-import { MessageButton } from "./message_button";
+import { MessageButton } from "../../direct.messages/components/dm.message.button";
 import { Panel } from "./panel";
 import { type ChatPreview, RecentChats } from "./recent_chat";
 import { Conversation } from "./conversation";

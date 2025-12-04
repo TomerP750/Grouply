@@ -5,10 +5,11 @@ import { toast } from "react-toastify";
 import type { UserDTO } from "../../../dtos/models_dtos/user_dto";
 import connectionService from "../../../service/connection_service";
 import { Avatar } from "../../elements/Avatar";
-import type { DirectMessageRoomDTO } from "./model/direct.message.room.dto";
+
 import directMessageRoomService from "../../../service/direct.message.room.service";
 import directMessageService from "../../../service/direct.message.service";
 import type { ChatRoomDTO } from "./model/chatroom.DTO";
+import type { DirectMessageRoomDTO } from "../../direct.messages/models/direct.message.room.dto";
 
 export type ChatPreview = {
   id: number;
