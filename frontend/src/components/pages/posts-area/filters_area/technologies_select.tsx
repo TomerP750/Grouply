@@ -6,6 +6,7 @@ import technologyService from "../../../../service/technology_service";
 import { technologyIconMap } from "../../../../util/technology_icon_mapper";
 import { toNormal } from "../../../../util/util_functions";
 import { Accordion } from "../../../elements/Accordion";
+import { useTranslation } from "react-i18next";
 
 
 
@@ -14,6 +15,8 @@ export function TechnologySelect() {
 
     const { addTech, removeTech, selectedTechnologies } = useFilters();
     const [techs, setTechs] = useState<TechnologyDTO[]>([]);
+
+    const { t } = useTranslation();
 
     const isSelected = (tech: TechnologyDTO) => {
         return selectedTechnologies.some(t => t.id === tech.id);
@@ -35,7 +38,7 @@ export function TechnologySelect() {
 
 
     return (
-        <Accordion title="Technologies">
+        <Accordion title={t("filters.technologies.label")}>
 
             <label className="tech-select py-2 flex flex-col items-center h-62 overflow-y-scroll gap-3 text-sm">
                 {techs?.map(t => {

@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next"
 import { useFilters } from "../../../../context/filter_context"
 import { ProjectPosition } from "../../../../dtos/enums/ProjectPosition"
 import { toNormal } from "../../../../util/util_functions"
@@ -11,6 +12,8 @@ interface RoleDemandSelectProps {
 export function RoleDemandSelect({  }: RoleDemandSelectProps) {
 
     const { addRole, removeRole, selectedRoles } = useFilters();
+
+    const { t } = useTranslation();
 
     const isSelected = (position: ProjectPosition) => {
         return selectedRoles.includes(position);
@@ -29,7 +32,7 @@ export function RoleDemandSelect({  }: RoleDemandSelectProps) {
 
 
     return (
-        <Accordion title="Role Demand">
+        <Accordion title={t("filters.roleDemand.label")}>
             <label className="role-select py-2 flex flex-col items-center h-62 overflow-y-auto gap-3 text-sm">
                 {Object.values(ProjectPosition).map(pp => {
                     return <div

@@ -87,7 +87,14 @@
     },
     "sort": {
       "newest_oldest": "מהחדש לישן",
-      "oldest_newest": "מהישן לחדש"
+      "oldest_newest": "מהישן לחדש",
+      "label": "מיון לפי"
+    },
+    "roleDemand": {
+      "label": "ביקוש לתפקיד"
+    },
+    "technologies": {
+      "label": "טכנולוגיות"
     }
   },
   "Create Post": "יצירת פוסט"

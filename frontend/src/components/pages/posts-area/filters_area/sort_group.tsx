@@ -20,7 +20,7 @@ export function SortGroup() {
   const { t } = useTranslation();
 
   return (
-    <Accordion title="Sort By">
+    <Accordion title={t("filters.sort.label")}>
       <ul className="flex flex-col items-center gap-5">
 
 

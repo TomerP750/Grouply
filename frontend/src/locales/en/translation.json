@@ -87,7 +87,14 @@
     },
     "sort": {
       "newest_oldest": "Newest - Oldest",
-      "oldest_newest": "Oldest - Newest"
+      "oldest_newest": "Oldest - Newest",
+      "label": "Sort By"
+    },
+    "roleDemand": {
+      "label": "Role Demand"
+    },
+    "technologies": {
+      "label": "Technologies"
     }
   },
   "Create Post": "Create Post"
