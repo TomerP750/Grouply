@@ -95,7 +95,7 @@ public class NotificationService {
         if (emitter == null) {
             // user is not connected right now
             log.info("User {} is not connected; cannot send SSE notification", receiverId);
-            // here you could save the notification in DB for later delivery
+            // here could save the notification in DB for later delivery
             return;
         }
 

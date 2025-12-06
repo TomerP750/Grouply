@@ -10,7 +10,6 @@ import { usePagination } from "../../../util/helper_hooks";
 import { Navbar } from "../../layout/navbar/Navbar";
 import { FeedHeader } from "./feed_header";
 import { Filters } from "./filters_area/filters";
-import { MobileFilters } from "./filters_area/mobile_filters";
 import { PostCard } from "./post_card/post_card";
 
 
@@ -107,7 +106,7 @@ export function Feed() {
             <div className="flex flex-col pt-10 md:pt-0 md:mt-5 px-5 md:px-0 lg:flex-row w-full items-center lg:items-start gap-6">
                 <Filters />
 
-                <MobileFilters />
+                {/* <MobileFilters /> */}
                 {/* Main area */}
                 <section className="w-full flex justify-center px-0 sm:px-5 pt-6">
 
