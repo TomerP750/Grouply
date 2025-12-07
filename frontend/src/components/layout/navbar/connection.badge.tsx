@@ -28,25 +28,32 @@ export function ConnectionBadge({ onOpen, open }: ConnectionBadgeProps) {
 
     const user = useUserSelector(state => state.authSlice.user);
 
+
+
     useEffect(() => {
+        if (!user) return;
 
-        if (user) {
+        const userId = user.id;
+        const url = `http://localhost:8080/api/notifications/stream/${userId}`;
+        console.log("[ConnectionBadge] opening SSE:", url);
 
-            console.log(count);
-            
-            const userId = user.id;
-            const eventSource = new EventSource(`http://localhost:8080/api/notifications/stream/${userId}`);
+        const eventSource = new EventSource(url);
 
-            eventSource.addEventListener("message", (event) => {
-                console.log("New message:", event.data);
-                setCount(prev => prev + 1);
-            });
+        eventSource.addEventListener("connection-badge", (event) => {
+            const msgEvent = event as MessageEvent;
+            console.log("[ConnectionBadge] connection-badge:", msgEvent.data);
+            setCount(prev => prev + 1);
+        });
 
-            return () => eventSource.close();
+        eventSource.onerror = (err) => {
+            console.error("[ConnectionBadge] SSE error:", err);
+        };
 
-        }
+        return () => eventSource.close();
+    }, [user?.id]);
 
-    }, []);
+
+
 
     return (
 

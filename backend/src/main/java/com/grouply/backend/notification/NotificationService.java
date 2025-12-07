@@ -34,7 +34,8 @@ public class NotificationService {
     private final List<SseEmitter> broadcastEmitters = new CopyOnWriteArrayList<>();
 
     // For per-user notifications (connected on /stream/{userId})
-    private final Map<Long, SseEmitter> userEmitters = new ConcurrentHashMap<>();
+    private final Map<Long, List<SseEmitter>> userEmitters = new ConcurrentHashMap<>();
+
 
     /** Subscribe to global/broadcast notifications */
     public SseEmitter subscribeToBroadcast() {
@@ -54,17 +55,46 @@ public class NotificationService {
     /** Subscribe a specific user to their private notification stream */
     public SseEmitter subscribeUser(Long userId) {
         SseEmitter emitter = new SseEmitter(Long.MAX_VALUE);
-        userEmitters.put(userId, emitter);
 
-        emitter.onCompletion(() -> userEmitters.remove(userId));
-        emitter.onTimeout(() -> userEmitters.remove(userId));
+        userEmitters
+                .computeIfAbsent(userId, id -> new CopyOnWriteArrayList<>())
+                .add(emitter);
+
+        emitter.onCompletion(() -> {
+            List<SseEmitter> emitters = userEmitters.get(userId);
+            if (emitters != null) {
+                emitters.remove(emitter);
+                if (emitters.isEmpty()) {
+                    userEmitters.remove(userId);
+                }
+            }
+        });
+
+        emitter.onTimeout(() -> {
+            List<SseEmitter> emitters = userEmitters.get(userId);
+            if (emitters != null) {
+                emitters.remove(emitter);
+                if (emitters.isEmpty()) {
+                    userEmitters.remove(userId);
+                }
+            }
+        });
+
         emitter.onError(e -> {
             log.warn("User emitter error for user {}: {}", userId, e.getMessage());
-            userEmitters.remove(userId);
+            List<SseEmitter> emitters = userEmitters.get(userId);
+            if (emitters != null) {
+                emitters.remove(emitter);
+                if (emitters.isEmpty()) {
+                    userEmitters.remove(userId);
+                }
+            }
         });
-        System.err.println("I am subsribed");
+
+        System.err.println("I am subscribed");
         return emitter;
     }
+
 
     /** Send a broadcast notification to everyone listening on /stream */
     public void sendPublicNotification(String message) {
@@ -87,29 +117,102 @@ public class NotificationService {
     }
 
     /** Send a notification to a specific user */
-    public void sendNotification(NotificationDTO request) {
+    public void sendConnectionNotification(NotificationDTO request) {
 
         Long receiverId = request.targetUserId();
-        SseEmitter emitter = userEmitters.get(receiverId);
+        List<SseEmitter> emitters = userEmitters.get(receiverId);
 
-        if (emitter == null) {
-            // user is not connected right now
+        if (emitters == null || emitters.isEmpty()) {
             log.info("User {} is not connected; cannot send SSE notification", receiverId);
-            // here could save the notification in DB for later delivery
             return;
         }
 
-        try {
-            emitter.send(
-                    SseEmitter.event()
-                            .name("message")
-                            .data(request.message())
-            );
-        } catch (IOException e) {
-            log.warn("Error sending notification to user {}: {}", receiverId, e.getMessage());
+        List<SseEmitter> deadEmitters = new ArrayList<>();
+
+        for (SseEmitter emitter : emitters) {
+            try {
+                emitter.send(
+                        SseEmitter.event()
+                                .name("connection-badge")
+                                .data(request.message())
+                );
+            } catch (IOException e) {
+                log.warn("Error sending connection notification to user {}: {}", receiverId, e.getMessage());
+                emitter.completeWithError(e);
+                deadEmitters.add(emitter);
+            }
+        }
+
+        emitters.removeAll(deadEmitters);
+        if (emitters.isEmpty()) {
             userEmitters.remove(receiverId);
         }
     }
+
+
+    //TODO change based on notificationType the message
+    public void sendNotificationBadge(NotificationDTO dto) {
+
+        Long receiverId = dto.targetUserId();
+        List<SseEmitter> emitters = userEmitters.get(receiverId);
+
+        if (emitters == null || emitters.isEmpty()) {
+            log.info("User {} is not connected; cannot send notification badge", receiverId);
+            return;
+        }
+
+        List<SseEmitter> deadEmitters = new ArrayList<>();
+
+        for (SseEmitter emitter : emitters) {
+            try {
+                emitter.send(
+                        SseEmitter.event()
+                                .name("notification-badge")
+                                .data(dto)
+                );
+            } catch (IOException e) {
+                log.warn("Error sending notification badge to user {}: {}", receiverId, e.getMessage());
+                emitter.completeWithError(e);
+                deadEmitters.add(emitter);
+            }
+        }
+
+        emitters.removeAll(deadEmitters);
+        if (emitters.isEmpty()) {
+            userEmitters.remove(receiverId);
+        }
+    }
+
+
+    public NotificationDTO buildNotification(
+            NotificationType type,
+            Long targetUserId,
+            String actorUsername,
+            String actorAvatarUrl,
+            String context
+    ) {
+        String message = switch (type) {
+            case CONNECTION_REQUEST ->
+                    actorUsername + " sent you a connection request";
+
+            case ACCEPTED_CONNECTION ->
+                    actorUsername + " accepted your connection request";
+
+            case APPLIED_TO_POST ->
+                    actorUsername + " applied to your post" +
+                            (context != null && !context.isBlank() ? " \"" + context + "\"" : "");
+        };
+
+        return new NotificationDTO(
+                type,
+                targetUserId,
+                actorUsername,
+                actorAvatarUrl,
+                message
+        );
+    }
+
+
 
     private User fetchUser(Long id) {
         return userRepository.findById(id).orElseThrow(() -> new NoSuchElementException("User not found"));

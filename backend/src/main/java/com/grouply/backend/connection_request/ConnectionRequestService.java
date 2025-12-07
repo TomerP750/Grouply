@@ -82,8 +82,15 @@ public class ConnectionRequestService implements IConnectionRequestService {
                         , ActivityType.SENT_CONNECTION_REQUEST
                         , sender);
 
-        NotificationDTO notificationDTO = new NotificationDTO(recipientId, "I want you connect");
-        notificationService.sendNotification(notificationDTO);
+        NotificationDTO notification = notificationService.buildNotification(
+                NotificationType.CONNECTION_REQUEST,
+                recipientId,
+                sender.getUsername(),
+                sender.getAvatarUrl(),
+                null
+        );
+
+        notificationService.sendConnectionNotification(notification);
 
         return true;
     }
@@ -106,13 +113,17 @@ public class ConnectionRequestService implements IConnectionRequestService {
         connectionRequestRepository.deleteById(request.getId());
 
         User recipient = fetchUser(recipientId);
+        User sender = fetchUser(senderId);
 
-//        notificationService.sendUserNotification(
-//                senderId,
-//                NotificationType.ACCEPTED_CONNECTION,
-//                recipientId,
-//                recipient.getUsername() + " accepted your connection request."
-//        );
+        NotificationDTO notificationDTO = notificationService.buildNotification(
+                NotificationType.ACCEPTED_CONNECTION,
+                sender.getId(),
+                recipient.getUsername(),
+                recipient.getAvatarUrl(),
+                null
+        );
+
+        notificationService.sendNotificationBadge(notificationDTO);
 
     }
 

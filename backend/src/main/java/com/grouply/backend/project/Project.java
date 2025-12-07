@@ -42,11 +42,18 @@ public class Project {
 
     private String githubRepositoryUrl;
 
+
+
     @ManyToMany
     private Set<Technology> technologies = new HashSet<>();
 
     public void addMember(ProjectMember member) {
         projectMembers.add(member);
         member.setProject(this);
+    }
+
+    public void removeProject(ProjectMember member) {
+        projectMembers.remove(member);
+        member.setProject(null);
     }
 }

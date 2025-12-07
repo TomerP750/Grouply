@@ -1,6 +1,10 @@
+import type { NotificationType } from "./notification.type";
 
 
 export interface NotificationDTO {
-  targetUserId: number
-  message: string
+  type: NotificationType;
+  targetUserId: number;
+  actorUsername: string;
+  actorAvatarUrl: string;
+  message: string;
 }

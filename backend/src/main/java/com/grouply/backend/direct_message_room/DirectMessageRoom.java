@@ -1,6 +1,7 @@
 package com.grouply.backend.direct_message_room;
 
 
+import com.grouply.backend.chat_message.ChatMessage;
 import com.grouply.backend.direct_message.DirectMessage;
 import com.grouply.backend.user.User;
 import jakarta.persistence.*;
@@ -33,6 +34,8 @@ public class DirectMessageRoom {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private User recipient;
+
+//    private ChatMessage lastMessage;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)

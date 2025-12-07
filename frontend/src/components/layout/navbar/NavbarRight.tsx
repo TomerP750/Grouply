@@ -11,6 +11,7 @@ import { Menu } from "../../elements/Menu";
 import { ConnectionMenu } from "./menus/connections_menu";
 import { NotificationMenu } from "./menus/notification_menu";
 import { ConnectionBadge } from "./connection.badge";
+import { NotificationBadge } from "./notification.badge";
 
 
 interface NavbarRightProps {
@@ -39,9 +40,15 @@ export function NavbarRight({ user, className }: NavbarRightProps) {
   const [notificationCount, setNotificationCount] = useState<number>(0);
 
   const onConnectionOpen = () => {
-    setConnectionOpen(notificationOpen ? false : true);
+    setConnectionOpen(!connectionsOpen);
     setMenuOpen(false);
     setNotificationOpen(false);
+  }
+
+  const onNotificationOpen = () => {
+    setNotificationOpen(!notificationOpen);
+    setMenuOpen(false);
+    setConnectionOpen(false);
   }
 
   return (
@@ -52,18 +59,9 @@ export function NavbarRight({ user, className }: NavbarRightProps) {
         {/* Connection Menu */}
         <ConnectionBadge onOpen={onConnectionOpen} open={connectionsOpen} />
 
+        <NotificationBadge onOpen={onNotificationOpen} open={notificationOpen} />
 
-        {/* Notifications Menu */}
-        {user && <div className="relative hover:bg-gray-500/20">
-          <button onClick={() => {
-            setNotificationOpen(!notificationOpen);
-            setMenuOpen(false);
-            setConnectionOpen(false);
-          }}>
-            <Badge Icon={BiBell} size={28} count={notificationCount} className="cursor-pointer p-3" />
-          </button>
-          {notificationOpen && <NotificationMenu />}
-        </div>}
+
 
         {/* Avatar / Login */}
         {user

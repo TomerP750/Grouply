@@ -34,10 +34,17 @@ public class NotificationController {
 
 
     /** Send a notification to a specific user */
-    @PostMapping("/send")
-    public void sendNotification(@RequestBody NotificationDTO request) {
-        notificationService.sendNotification(request);
+    @PostMapping("/send/connection")
+    public void sendConnectionNotification(@RequestBody NotificationDTO request) {
+        notificationService.sendConnectionNotification(request);
     }
+
+    @PostMapping("/send/notification")
+    public void sendNotification(@RequestBody NotificationDTO request) {
+        notificationService.sendNotificationBadge(request);
+    }
+
+
 
 
 }
