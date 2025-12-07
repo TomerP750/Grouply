@@ -6,7 +6,9 @@ import { MessageButton } from "../components/dm.message.button";
 
 export function DirectMessagesDock() {
 
-    const { state, openHistory, closeDock } = useDm();
+    const { state, openHistory, closeDock, selectedRecipientId } = useDm();
+
+    console.log("Dock state:", state, "selectedRecipientId:", selectedRecipientId);
 
     if (state === "button") {
         return (

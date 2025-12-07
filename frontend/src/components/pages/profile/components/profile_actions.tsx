@@ -10,6 +10,8 @@ import connectionRequestService from "../../../../service/connection_request_ser
 import connectionService from "../../../../service/connection_service";
 import { EditProfileModal } from "./edit_profile_modal";
 import { InviteToProjectModal } from "./invite_to_project_modal";
+import { useDm } from "../../../../context/Dm_context";
+import directMessageRoomService from "../../../../service/direct.message.room.service";
 
 
 const buttonStyle = `
@@ -45,14 +47,16 @@ export function ProfileActions({ profile, user }: ProfileActionsProps) {
     const [modalOpen, setModalOpen] = useState<boolean>(false);
     const [inviteMenuOpen, setInviteMenuOpen] = useState<boolean>(false);
 
+    const { openConversation } = useDm();
+
     useEffect(() => {
         const targetId = profile?.user?.id;
         if (!targetId) return;
         connectionService
             .areConnected(targetId)
-            .then(setAreConnected)
+            .then(res => setAreConnected(res))
             .catch((err) => toast.error(err.response.data));
-    }, [profile?.user?.id]);
+    }, [profile?.user?.id, sentRequest]);
 
 
     const throttleConnect = useMemo(
@@ -63,13 +67,6 @@ export function ProfileActions({ profile, user }: ProfileActionsProps) {
                     .toggleRequest(targetId)
                     .then((res) => {
                         setSentRequest(res);
-                        // const data: NotificationDTO = {
-                        //     targetUserId: targetId,
-                        //     message: "I want to connect"
-                        // }
-                        // notificationService.pushConnectionNotification(data)
-                        // .then()
-                        // .catch(err => toast.error(err.response.data))
                         toast.success(res ? "Connect Request Sent!" : "Connect Request Canceled");
                     })
                     .catch((err) => toast.error(err?.response?.data ?? "Action failed"));
@@ -123,6 +120,16 @@ export function ProfileActions({ profile, user }: ProfileActionsProps) {
     }, [throttleRemove]);
 
 
+    const handleMessage = () => {
+        directMessageRoomService.getOrCreateRoom(profile.user.id)
+        .then(res => {
+            openConversation(res);            
+        })
+        .catch(err => {
+            toast.error(err.response.data);
+        })
+    }
+
     return (
         <div className="flex flex-wrap items-center justify-end gap-3">
             {user.id !== profile?.user.id ? (
@@ -139,7 +146,7 @@ export function ProfileActions({ profile, user }: ProfileActionsProps) {
                         </button>
                     )}
 
-                    <button className={buttonStyle}>
+                    <button onClick={handleMessage} className={buttonStyle}>
                         <MdMail size={18} />
                         Message
                     </button>

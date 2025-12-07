@@ -36,10 +36,11 @@ export function DmProvider({ children }: DmProviderProps) {
     }
 
     const openConversation = (room: DirectMessageRoomDTO) => {
-
+        
         const other =
             room.sender.id === user.id ? room.recipient : room.sender;
 
+    
         setSelectedRecipientId(other.id);
         setState("conversation");
     };

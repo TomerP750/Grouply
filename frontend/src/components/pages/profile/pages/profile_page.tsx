@@ -11,6 +11,7 @@ import { Hr } from "../../../elements/Hr";
 import { ProfileActions } from "../components/profile_actions";
 import { ProfileBanner } from "../components/profile_banner";
 import { ProjectGrid } from "../components/project_grid";
+import { DmProvider } from "../../../../context/Dm_context";
 
 
 export function ProfilePage() {
@@ -37,6 +38,7 @@ export function ProfilePage() {
 
 
   return (
+
     <main className="min-h-screen  dark:text-white">
 
       <Navbar />
@@ -48,7 +50,7 @@ export function ProfilePage() {
 
       {/* Page container */}
       <div className="w-full flex justify-end">
-        
+
         <section className="w-[83%] xl:mt-0  px-4 sm:px-10 ">
 
           {/* Header  */}
@@ -85,5 +87,6 @@ export function ProfilePage() {
 
 
     </main>
+
   );
 }

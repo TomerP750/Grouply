@@ -1,5 +1,5 @@
 import { useUserSelector } from "../../redux/hooks";
-import { DmDockWrapper } from "../direct.messages/pages/dm.dock.wrapper";
+import { DirectMessagesDock } from "../direct.messages/pages/dm.dock";
 import { Footer } from "./footer/Footer";
 import { BottomNav } from "./navbar/BottomNav";
 import { Routing } from "./routing";
@@ -13,7 +13,7 @@ export function Layout() {
         <div className="">
             {/* <Navbar/> */}
             <BottomNav/>
-            {user && <DmDockWrapper/>}
+            {user && <DirectMessagesDock/>}
             <Routing/>
             <Footer/>
         </div>
