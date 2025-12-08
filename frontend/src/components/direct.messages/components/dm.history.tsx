@@ -20,7 +20,7 @@ export function DirectMessagesHistory() {
     }, []);
 
     return (
-        <section className="grid grid-cols-1 px-5 gap-3">
+        <section className="grid grid-cols-1 px-3 gap-3">
 
             <DirectMessageHistoryHeader />
 

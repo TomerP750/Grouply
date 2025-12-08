@@ -1,8 +1,9 @@
-
 @keyframes open {
   from {
     height: 0rem;
-  } to {
+  }
+
+  to {
     height: 15.5rem;
   }
 }
@@ -12,24 +13,24 @@
 
   animation: open 0.1s ease-out forwards;
 
-  scrollbar-width: none;         
-  -ms-overflow-style: none;      
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 .tech-select {
 
   animation: open 0.1s ease-out forwards;
 
-  scrollbar-width: none;         
-  -ms-overflow-style: none;      
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
-.role-select::-webkit-scrollbar {  
+.role-select::-webkit-scrollbar {
   width: 0;
   height: 0;
 }
 
 
-.mobile-filters-menu {
-  
-}
+
+
+.mobile-filters-menu {}

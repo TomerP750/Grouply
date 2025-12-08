@@ -1,5 +1,4 @@
-import { BiMailSend, BiSearch } from "react-icons/bi";
-import { HiPaperAirplane } from "react-icons/hi";
+import { BiSearch, BiSolidSend } from "react-icons/bi";
 
 export function DirectMessageHistoryHeader() {
 
@@ -12,7 +11,7 @@ export function DirectMessageHistoryHeader() {
 
             {/* Search */}
             <div className="flex flex-1 items-center gap-2 rounded-2xl border border-slate-300 bg-slate-50 px-3 py-1.5 text-sm
-                      focus-within:border-teal-500 focus-within:ring-1 focus-within:ring-teal-500
+                      focus-within:border-sky-500 focus-within:ring-1 focus-within:ring-sky-500
                       dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100">
                 <BiSearch className="text-slate-400 dark:text-slate-500" size={18} />
                 <input
@@ -29,13 +28,13 @@ export function DirectMessageHistoryHeader() {
                 onClick={handleCreateChatRoom}
                 className=" inline-flex items-center justify-center cursor-pointer h-10 w-10
                 rounded-full
-              dark:bg-teal-500 bg-sky-500
+                bg-sky-500
               text-white shadow-md
                 hover:brightness-110 hover:shadow-lg
                 active:scale-95
                 transition-all duration-150"
             >
-                <HiPaperAirplane className="-rotate-45 text-lg" />
+                <BiSolidSend className="-rotate-45 text-lg" />
             </button>
 
         </section>

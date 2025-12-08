@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { BiDotsVertical } from "react-icons/bi";
+import { BiDotsVertical, BiHistory } from "react-icons/bi";
 import { MdBookmarkAdd } from "react-icons/md";
 import { toast } from "react-toastify";
 import type { PostDTO } from "../../../../dtos/models_dtos/post_dto";
@@ -49,12 +49,12 @@ export function PostCardContent({ post, onEdit, onDelete, sentRequest }: Project
 
     useEffect(() => {
         archivedPostService.isPostArchived(post.id)
-        .then(res => {
-            setArchived(res);
-        })
-        .catch(err => {
-            toast.error(err.response.data);
-        })
+            .then(res => {
+                setArchived(res);
+            })
+            .catch(err => {
+                toast.error(err.response.data);
+            })
     })
 
     useEffect(() => {
@@ -107,7 +107,13 @@ export function PostCardContent({ post, onEdit, onDelete, sentRequest }: Project
 
     return (
         <div className="flex flex-col flex-grow w-full px-6 py-4 gap-2">
-            <p className="text-sm font-medium dark:text-gray-300">{timeAgo(postedAt)}</p>
+            
+            {/* Time ago */}
+            <div className="flex items-center gap-1">
+                <BiHistory size={18} className="mt-1"/>
+                <p className="text-sm font-medium dark:text-gray-300">{timeAgo(postedAt)}</p> 
+            </div>
+            
             <div className="flex w-full justify-between items-center">
                 {/* Title + isowner */}
                 <div className="flex flex-col-reverse items-start sm:flex justify-between w-full gap-3 font-bold text-2xl text-gray-900 dark:text-white">
@@ -136,7 +142,7 @@ export function PostCardContent({ post, onEdit, onDelete, sentRequest }: Project
 
                             </div>}
 
-                            {editModalOpen && <EditPostFormModal post={post} open={editModalOpen} onClose={() => setEditModalOpen(false)}/>}
+                        {editModalOpen && <EditPostFormModal post={post} open={editModalOpen} onClose={() => setEditModalOpen(false)} />}
 
                     </div>
 
@@ -170,7 +176,7 @@ export function PostCardContent({ post, onEdit, onDelete, sentRequest }: Project
 
             </div>
 
-            {dialogOpen && <Dialog onConfirm={onDelete} open={dialogOpen} message={"Are you sure you want to delete this post?"} onClose={() => setDialogOpen(false)}/>}
+            {dialogOpen && <Dialog onConfirm={onDelete} open={dialogOpen} message={"Are you sure you want to delete this post?"} onClose={() => setDialogOpen(false)} />}
 
 
         </div>

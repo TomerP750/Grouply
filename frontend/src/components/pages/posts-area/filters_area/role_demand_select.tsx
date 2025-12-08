@@ -5,11 +5,9 @@ import { toNormal } from "../../../../util/util_functions"
 import { Accordion } from "../../../elements/Accordion"
 import "./filters.css"
 
-interface RoleDemandSelectProps {
-    // onFilterChange?: () => void;
-}
 
-export function RoleDemandSelect({  }: RoleDemandSelectProps) {
+
+export function RoleDemandSelect() {
 
     const { addRole, removeRole, selectedRoles } = useFilters();
 
@@ -26,8 +24,7 @@ export function RoleDemandSelect({  }: RoleDemandSelectProps) {
             removeRole(position)
         } else { 
             addRole(position) 
-        }; 
-        // onFilterChange?.();  
+        };  
     }
 
 

@@ -1,8 +1,6 @@
-import { useState } from "react";
-import { BiPlus } from "react-icons/bi";
-import type { PostDTO } from "../../../dtos/models_dtos/post_dto";
-import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { BiPlus } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -13,29 +11,49 @@ export function FeedHeader() {
     const { t } = useTranslation();
 
     return (
-        <button
-            onClick={() => navigate("/create-post")}
-            className="cursor-pointer flex items-center justify-center w-3/4
-        bg-gradient-to-r dark:from-slate-900 dark:via-teal-950 dark:to-slate-900 
-        from-indigo-100 via-sky-200 to-indigo-200
-        hover-gradient-move border border-indigo-200/80 border-dotted
-        rounded-2xl p-8 
-        dark:border-teal-500/20 transition-all duration-200">
+       <button
+  onClick={() => navigate("/create-post")}
+  className="
+    group w-3/4 
+    cursor-pointer rounded-2xl
+    border px-6 py-6
+    bg-slate-50 border-slate-200 text-slate-900
+    hover:bg-slate-100 hover:border-blue-400
+    dark:bg-slate-900/90 dark:border-slate-800 dark:text-slate-100
+    dark:hover:bg-slate-900 dark:hover:border-blue-500/70
+    transition-colors duration-200
+  "
+>
+  <div className="flex flex-col items-center gap-2 text-center">
+    {/* Icon */}
+    <span
+      className="
+        flex items-center justify-center
+        w-10 h-10 rounded-full
+        bg-slate-100 text-blue-600
+        border border-slate-200
+        group-hover:border-blue-400
+        dark:bg-slate-800 dark:text-blue-400 dark:border-slate-700
+        dark:group-hover:border-blue-500
+      "
+    >
+      <BiPlus className="text-xl" />
+    </span>
 
-            <BiPlus size={50} className={`text-teal-400 text-5xl`} />
-            <span className="dark:text-slate-200 font-medium">{t('Create Post')}</span>
+    {/* Title */}
+    <span className="font-medium text-sm sm:text-base">
+      {t("Create Post")}
+    </span>
 
-        </button>
-        // <button
-        //     onClick={() => navigate("/create-post")}
-        //     className="cursor-pointer flex items-center justify-center w-3/4
-        // border-3 border-black dark:border-white border-dotted
-        // rounded-2xl p-8 
-        //  transition-all duration-200">
+    {/* Subtitle */}
+    <span className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+      Start a new post to share your project or idea.
+    </span>
+  </div>
+</button>
 
-        //     <BiPlus size={50} className={`dark:text-teal-400 text-5xl`} />
-        //     <span className="dark:text-slate-200 font-medium">Create Post</span>
 
-        // </button>
+
+
     )
 }

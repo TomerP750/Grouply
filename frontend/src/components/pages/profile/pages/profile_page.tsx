@@ -12,6 +12,11 @@ import { ProfileActions } from "../components/profile_actions";
 import { ProfileBanner } from "../components/profile_banner";
 import { ProjectGrid } from "../components/project_grid";
 import { DmProvider } from "../../../../context/Dm_context";
+import { ProfileSocials } from "../components/profile_socials";
+
+
+
+
 
 
 export function ProfilePage() {
@@ -39,47 +44,71 @@ export function ProfilePage() {
 
   return (
 
-    <main className="min-h-screen  dark:text-white">
+    <main className="min-h-screen dark:text-white bg-neutral-100 dark:bg-slate-950">
 
       <Navbar />
 
       {/* Banner */}
       {profile && <ProfileBanner user={profile.user} />}
 
-
-
       {/* Page container */}
-      <div className="w-full flex justify-end">
+      <div className="w-full flex justify-center">
 
-        <section className="w-[83%] xl:mt-0  px-4 sm:px-10 ">
+        <section className="w-full max-w-5xl px-4 sm:px-6 lg:px-8">
 
           {/* Header  */}
-          <div className=" flex items-center  w-4/5 md:w-9/10 xl:w-full justify-between lg:items-center gap-4 sm:gap-6 md:gap-8 pt-6">
-
-            {/* Name/handle */}
-            <div>
-              <p className="font-semibold text-2xl sm:text-3xl leading-tight max-w-1/2">
+          <div className="flex flex-col items-center gap-4 sm:gap-5 pt-24 sm:pt-28 md:pt-32">
+            {/* Name / handle / connections */}
+            <div className="text-center space-y-1.5">
+              <p className="font-semibold text-2xl sm:text-3xl leading-tight">
                 {profile?.user.firstName} {profile?.user.lastName}
               </p>
-              <p className="text-gray-800 dark:text-gray-300 text-sm sm:text-base">@{profile?.user.username}</p>
+
+              <p className="text-gray-800 dark:text-gray-300 text-sm sm:text-base">
+                @{profile?.user.username}
+              </p>
+
+              <p className="text-xs sm:text-sm font-medium text-slate-500 dark:text-slate-400">
+                2 Connections
+              </p>
             </div>
+
+            {/* Socials */}
+            {profile && <ProfileSocials profile={profile} />}
 
             {/* Actions */}
             <ProfileActions profile={profile!} user={user} />
           </div>
 
+
           {/* About */}
-          <section className="mt-6 sm:mt-10 md:mt-14 pb-10 space-y-2 bg-white dark:bg-slate-800/80 rounded-2xl shadow-sm p-5 min-h-80">
-            <p className="text-lg font-medium">About {user.username}</p>
-            <p className="">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis accusantium optio error
-              voluptates, cum autem quibusdam ut molestiae sunt minus ratione itaque unde cupiditate
-              dolores enim obcaecati veritatis, commodi ex.
-            </p>
+          <section className="mt-6 sm:mt-10 md:mt-14">
+            <div className="max-w-3xl mx-auto rounded-2xl border
+      bg-white/95 border-slate-200 shadow-sm
+      dark:bg-slate-900/85 dark:border-slate-800
+      px-5 sm:px-7 py-5 sm:py-6
+      space-y-3
+    "
+            >
+              <h2 className="text-lg sm:text-xl font-semibold text-slate-900 dark:text-slate-50">
+                About @{profile?.user.username}
+              </h2>
+
+              <p className="text-sm sm:text-base leading-relaxed text-slate-600 dark:text-slate-300">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis
+                accusantium optio error voluptates, cum autem quibusdam ut molestiae
+                sunt minus ratione itaque unde cupiditate dolores enim obcaecati
+                veritatis, commodi ex.
+              </p>
+            </div>
           </section>
 
+
         </section>
+
+
       </div>
+
 
       <Hr />
 

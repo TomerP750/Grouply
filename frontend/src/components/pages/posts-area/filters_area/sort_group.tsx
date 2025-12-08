@@ -6,8 +6,8 @@ const inputStyle = `
   appearance-none
   w-4 h-4
   rounded-full
-  border border-slate-400
-  checked:bg-black dark:checked:bg-teal-500
+  border-2 border-black
+  checked:bg-black dark:checked:bg-sky-500
   transition-colors duration-200
   cursor-pointer
 `;

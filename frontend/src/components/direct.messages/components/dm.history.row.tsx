@@ -31,13 +31,11 @@ export function DmHistoryRow({ room }: DmHistoryRowProps) {
       className="group flex cursor-pointer items-center gap-3 rounded-xl
                  bg-slate-800/60 px-4 py-3
                  border border-slate-700/70
-                 hover:bg-slate-800 hover:border-teal-500/70
+                 hover:bg-slate-800 hover:border-sky-500/70
                  transition-colors duration-150"
     >
       <div className="relative flex-shrink-0">
         <Avatar className="w-10 h-10 aspect-square" />
-      
-        {/* <span className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full bg-emerald-400 ring-2 ring-slate-900" /> */}
       </div>
 
       <div className="flex min-w-0 flex-col">

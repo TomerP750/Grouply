@@ -1,35 +1,44 @@
 import { FaLinkedin, FaGithub, FaLink } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
-import type { ProfileDTO } from "../../../dtos/models_dtos/profile_dto";
+import type { ProfileDTO } from "../../../../dtos/models_dtos/profile_dto";
 
+const linkStyle = [
+  "inline-flex items-center justify-center gap-2",
+  "rounded-full px-4 py-1.5",
+  "border text-xs sm:text-sm font-medium",
+  // light
+  "border-slate-300 text-slate-700 bg-white/95",
+  "hover:border-blue-500 hover:text-blue-600 hover:bg-blue-50",
+  // dark
+  "dark:border-slate-700 dark:text-slate-100 dark:bg-slate-900/90",
+  "dark:hover:border-blue-500 dark:hover:text-blue-300 dark:hover:bg-slate-800",
+  "transition-colors duration-150",
+].join(" ");
 
-const linkStyle = "border px-3 w-1/2 py-2 inline-flex justify-center gap-2 items-center hover:bg-black dark:hover:text-black dark:hover:bg-white hover:text-white transition-colors duration-200"
 
 interface ProfileSocialsProps {
-    profile: ProfileDTO
+  profile: ProfileDTO;
 }
 
-export function ProfileSocials() {
-    return (
-        <section className="w-80 aspect-square mt-30 flex flex-col items-center text-sm gap-3">
-        
-                  <button className="font-medium mb-3 cursor-pointer">2 Connections</button>
-        
-                  {<NavLink to={"/"} className={`${linkStyle}`}>
-                    <FaLinkedin size={22} />
-                    <span>LinkedIn</span>
-                  </NavLink>}
-        
-                  {<NavLink to={"/"} className={`${linkStyle}`}>
-                    <FaGithub size={22} />
-                    <span>GitHub</span>
-                  </NavLink>}
-        
-                  {<NavLink to={"/"} className={`${linkStyle}`}>
-                    <FaLink size={22} />
-                    <span>Portfolio</span>
-                  </NavLink>}
-        
-                </section>
-    )
+export function ProfileSocials({ profile }: ProfileSocialsProps) {
+  
+  return (
+    <section className="flex flex-wrap items-center gap-2 sm:gap-3 text-sm">
+      <NavLink to="/" className={linkStyle}>
+        <FaLinkedin size={18} />
+        <span>LinkedIn</span>
+      </NavLink>
+
+      <NavLink to="/" className={linkStyle}>
+        <FaGithub size={18} />
+        <span>GitHub</span>
+      </NavLink>
+
+      <NavLink to="/" className={linkStyle}>
+        <FaLink size={18} />
+        <span>Portfolio</span>
+      </NavLink>
+    </section>
+  );
 }
+

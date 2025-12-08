@@ -15,9 +15,9 @@ export function MessageButton({ onOpen }: MessageButtonProps) {
         onClick={onOpen}
         aria-label="Open messages"
         className="hidden md:flex justify-center items-center w-15
-                   aspect-square rounded-full bg-gradient-to-r from-sky-600 to-sky-800 dark:from-teal-600 dark:to-teal-800
+                   aspect-square rounded-full bg-gradient-to-r from-sky-600 to-sky-800 
                    text-white shadow-xl hover:scale-110 duration-200
-                   focus:outline-none focus:ring-4 focus:ring-teal-500/40"
+                   focus:outline-none focus:ring-4 focus:ring-sky-500/40"
       >
         <Badge Icon={BiChat} size={25} count={0} countPosition="tr"/>
       </button>

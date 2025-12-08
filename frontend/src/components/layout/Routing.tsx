@@ -9,7 +9,7 @@ import { Login } from "../pages/authentication/user_auth/Login";
 
 import { ProjectMembersTable } from "../pages/dashboard/tables/user_tables/project_members_table";
 import { ProjectsTable } from "../pages/dashboard/tables/user_tables/projects-tables";
-import { NotFound } from "../pages/other-pages/NotFound";
+import { NotFound } from "../pages/other-pages/not.found.page";
 import { DisplaySettings } from "../pages/other-pages/settings/display_settings";
 import { SecuritySettings } from "../pages/other-pages/settings/security_settings";
 import { SettingsPage } from "../pages/other-pages/settings/SettingsPage";

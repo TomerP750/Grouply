@@ -14,23 +14,22 @@ import { useDm } from "../../../../context/Dm_context";
 import directMessageRoomService from "../../../../service/direct.message.room.service";
 
 
-const buttonStyle = `
-  inline-flex items-center gap-2
-  px-4 py-3 rounded-xl text-sm font-medium
-  
-  text-slate-900 dark:text-white
-  bg-slate-900/10 dark:bg-white/10
-  border border-slate-900/20 dark:border-white/20
 
-  hover:bg-slate-900/15 dark:hover:bg-white/15
-  active:bg-slate-900/20 dark:active:bg-white/20
+const buttonStyle = [
+    "inline-flex items-center justify-center gap-2 rounded-full px-4 py-1.5",
+    "text-sm font-medium",
 
-  backdrop-blur-md shadow-sm transition-all duration-200
-  focus:outline-none focus:ring-2 focus:ring-teal-400/40
-  disabled:opacity-60 disabled:cursor-not-allowed
-`;
+    "bg-sky-600 text-white shadow-sm",
+    "hover:bg-sky-500 active:bg-sky-700",
 
+    "dark:bg-sky-500 dark:hover:bg-sky-400 dark:active:bg-sky-600",
 
+    "transition-colors duration-150",
+    "focus-visible:outline-none focus-visible:ring-2",
+    "focus-visible:ring-sky-400",
+    "focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900",
+    "disabled:opacity-60 disabled:cursor-not-allowed",
+].join(" ");
 
 
 interface ProfileActionsProps {
@@ -102,7 +101,7 @@ export function ProfileActions({ profile, user }: ProfileActionsProps) {
                     .catch((err) => {
                         toast.error(err?.response?.data ?? "Action failed");
                     });
-            }, 5000), 
+            }, 5000),
         []
     );
 
@@ -122,16 +121,16 @@ export function ProfileActions({ profile, user }: ProfileActionsProps) {
 
     const handleMessage = () => {
         directMessageRoomService.getOrCreateRoom(profile.user.id)
-        .then(res => {
-            openConversation(res);            
-        })
-        .catch(err => {
-            toast.error(err.response.data);
-        })
+            .then(res => {
+                openConversation(res);
+            })
+            .catch(err => {
+                toast.error(err.response.data);
+            })
     }
 
     return (
-        <div className="flex flex-wrap items-center justify-end gap-3">
+        <div className="flex flex-wrap items-center justify-center gap-3">
             {user.id !== profile?.user.id ? (
                 <>
                     {areConnected ? (
@@ -156,7 +155,13 @@ export function ProfileActions({ profile, user }: ProfileActionsProps) {
                         Invite To Project
                     </button>
 
-                    {modalOpen && <InviteToProjectModal recipientId={profile.user.id} open={modalOpen} onClose={() => setModalOpen(false)} />}
+                    {inviteMenuOpen && (
+                        <InviteToProjectModal
+                            recipientId={profile.user.id}
+                            open={inviteMenuOpen}
+                            onClose={() => setInviteMenuOpen(false)}
+                        />
+                    )}
                 </>
             ) : (
                 <button onClick={() => setModalOpen(true)} className={buttonStyle}>
@@ -165,7 +170,14 @@ export function ProfileActions({ profile, user }: ProfileActionsProps) {
                 </button>
             )}
 
-            {modalOpen && <EditProfileModal profile={profile} open={modalOpen} onClose={() => setModalOpen(false)} />}
+            {modalOpen && (
+                <EditProfileModal
+                    profile={profile}
+                    open={modalOpen}
+                    onClose={() => setModalOpen(false)}
+                />
+            )}
         </div>
-    )
+    );
+
 }

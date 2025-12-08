@@ -69,7 +69,7 @@ export function DeleteAccount() {
                 </div>
 
                 <button className="mt-4 font-medium text-white bg-red-500 hover:bg-red-400 px-3 py-1 rounded-xl cursor-pointer">
-                    {t("settings.delete.button")}
+                    {t("settings.user.delete.button")}
                 </button>
 
             </form>

@@ -89,7 +89,7 @@ export function CreatePostForm({ onAdd }: CreatePostFormProps) {
         className="flex flex-col w-1/2 pb-10 bg-sky-300/10"
       >
         {/* Body */}
-        <div className="flex-1 overflow-y-auto mt-8 sm:mt-10 px-3 sm:px-5 space-y-6">
+        <div className="flex-1 overflow-y-auto mt-5 px-3 sm:px-5 space-y-6">
 
           <h1 className="text-2xl font-semibold text-center dark:text-slate-200">Create Post</h1>
 
