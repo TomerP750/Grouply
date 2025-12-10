@@ -160,7 +160,7 @@ export function DirectMessageConversation() {
                                 className={
                                     "max-w-3/4 rounded-2xl px-3 py-2 text-sm shadow-sm " +
                                     (isMine
-                                        ? "rounded-br-sm bg-teal-700 text-white"
+                                        ? "rounded-br-sm bg-sky-700 text-white"
                                         : "rounded-bl-sm bg-slate-100 text-slate-900 dark:bg-slate-800 dark:text-slate-100")
                                 }
                             >
@@ -203,7 +203,7 @@ export function DirectMessageConversation() {
 
                     <button
                         type="submit"
-                        className="cursor-pointer inline-flex h-8 w-8 items-center justify-center rounded-full bg-teal-700 text-white text-xs shadow-sm transition hover:bg-teal-600"
+                        className="cursor-pointer inline-flex h-8 w-8 items-center justify-center rounded-full bg-sky-700 text-white text-xs shadow-sm transition hover:bg-sky-600"
                     >
                         <BiSend size={18} />
                     </button>

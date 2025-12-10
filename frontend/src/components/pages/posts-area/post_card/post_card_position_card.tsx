@@ -57,14 +57,14 @@ export function PostCardPositionCard({ postPosition, postId, user }: PostCardPos
 
     return (
         <div className="flex justify-between items-center w-full">
-            <p className="inline-flex items-center gap-2 text-teal-300">
+            <p className="inline-flex items-center gap-2 dark:text-sky-300">
                 <BiGroup size={20} />
                 {toTitleCase(position)}
             </p>
             <button
                 disabled={loading}
                 onClick={() => handleRequestToJoin(postPosition.id)}
-                className={`disabled:cursor-not-allowed disabled:opacity-50 text-sm cursor-pointer transition-colors px-2 py-1 rounded-lg
+                className={`disabled:cursor-not-allowed disabled:opacity-50 text-sm text-white cursor-pointer transition-colors px-2 py-1 rounded-lg
                                 ${applied ? 'bg-green-600 hover:bg-green-500' : 'bg-blue-600 hover:bg-blue-500'}
                                 `}>
                 {applied ? <BiCheck size={20} /> : 'Request To Join'}

@@ -12,7 +12,7 @@ export function Navbar() {
 
     return (
         <FilterProvider>
-            <nav className={`hidden Navbar backdrop-blur-md  bg-white/80 dark:bg-slate-900/40 w-full h-25 md:flex justify-between items-center px-5 sm:px-10 text-[#1e293b] dark:text-white`}>
+            <nav className={`hidden Navbar backdrop-blur-md  bg-white/80 dark:bg-slate-900 w-full h-25 md:flex justify-between items-center px-5 sm:px-10 text-[#1e293b] dark:text-white`}>
 
                 <NavbarLeft user={user} />
 

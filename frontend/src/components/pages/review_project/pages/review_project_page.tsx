@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { BiChevronLeft, BiLoaderAlt } from "react-icons/bi";
+import { BiChevronDown, BiChevronLeft, BiLoaderAlt } from "react-icons/bi";
 import { toast } from "react-toastify";
 import type { ProjectDTO } from "../../../../dtos/models_dtos/project_dto";
 import projectService from "../../../../service/project_service";
@@ -88,8 +88,10 @@ export function ReviewProjectPage() {
     }
 
     if (result) {
+       
         return (
-            <div className="min-h-screen bg-gradient-to-br from-slate-100 via-indigo-100 to-sky-200 dark:from-slate-900 dark:via-teal-950 dark:to-stone-900">
+            <div className="min-h-screen bg-gradient-to-br from-slate-100 via-indigo-100 to-sky-200 dark:from-slate-900 dark:via-sky-950 dark:to-stone-900">
+                
                 <Navbar />
 
                 <main className="w-full ">
@@ -97,7 +99,7 @@ export function ReviewProjectPage() {
                     <div className=" max-w-5xl mx-auto w-full px-4 sm:px-6 lg:px-8 mt-6">
                         <button
                             onClick={() => setResult(false)}
-                            className="cursor-pointer inline-flex items-center gap-1 px-4 py-2 rounded-lg  bg-white text-slate-700 hover:bg-slate-50 transition  dark:bg-teal-600/50 dark:text-slate-100 dark:hover:bg-teal-500/50"
+                            className="cursor-pointer inline-flex items-center gap-1 px-4 py-2 rounded-lg text-slate-700  transition bg-sky-500 hover:bg-sky-600 dark:text-slate-100 "
                         >
                             <BiChevronLeft size={22} />
                             <span>Back</span>
@@ -138,11 +140,11 @@ export function ReviewProjectPage() {
                                 </div>
 
                                 {/* Positives */}
-                                <Positives/>
+                                <Positives />
 
                                 {/* Improvements */}
-                                <Improvements/>
-                                
+                                <Improvements />
+
                             </div>
 
                             {/* Metrics card */}
@@ -161,7 +163,7 @@ export function ReviewProjectPage() {
 
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-100 via-indigo-100 to-sky-200 dark:bg-gradient-to-br dark:from-slate-900 dark:via-teal-950 dark:to-stone-900">
+        <div className="min-h-screen bg-gradient-to-br from-slate-100 via-indigo-100 to-sky-200 dark:bg-gradient-to-br dark:from-slate-900 dark:via-sky-950 dark:to-stone-900">
             <Navbar />
 
             <section className="mx-auto max-w-3xl px-4 py-10 mt-20 flex flex-col items-center justify-center gap-8 dark:text-white">
@@ -178,7 +180,7 @@ export function ReviewProjectPage() {
                         inputMode="url"
                         pattern="https?://.+"
                         className="w-full rounded-full bg-indigo-200 dark:bg-slate-700/60 px-4 py-2 shadow-md shadow-black/20 dark:shadow-black/40 outline-none transition
-                    focus:ring-2 focus:ring-sky-500/50 dark:focus:ring-teal-500 "
+                    focus:ring-2 focus:ring-sky-500/50 dark:focus:ring-sky-500 "
                     />
                 </div>
 
@@ -186,9 +188,9 @@ export function ReviewProjectPage() {
                     <button
                         disabled={!hasUrl || loading}
                         onClick={handleReview}
-                        className={`${btn} inline-flex items-center justify-center rounded-full bg-sky-500 dark:bg-teal-500 px-5 py-2 font-medium text-white transition
-                      dark:hover:bg-teal-600 hover:bg-sky-600 focus:outline-none focus:ring-2 focus:ring-teal-400
-                      disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-sky-500 dark:disabled:hover:bg-teal-500`}
+                        className={`${btn} inline-flex items-center justify-center rounded-full bg-sky-500  px-5 py-2 font-medium text-white transition
+                       hover:bg-sky-600 focus:outline-none focus:ring-2 focus:ring-sky-500
+                      disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-sky-500`}
                     >
                         {loading ? "Reviewing" : "Review"}
                     </button>
@@ -207,34 +209,53 @@ export function ReviewProjectPage() {
             </section>
 
             <section className="mx-auto flex w-full max-w-3xl flex-col items-center gap-6 px-4 pb-16 dark:text-white">
-                <select
-                    disabled={url.length > 0}
-                    value={url}
-                    required
-                    onChange={(e) => setUrl(e.target.value)}
-                    className="w-60 appearance-none rounded-lg border border-slate-300 px-3 py-2 text-center shadow-sm
-                   disabled:opacity-50 disabled:cursor-not-allowed
-                    outline-none cursor-pointer
-                   focus:ring-2 focus:ring-teal-500
-                  
-                   dark:border-slate-700 dark:text-white
-                   from-indigo-200 via-sky-200 to-indigo-200
-                   bg-gradient-to-r 
-                   dark:from-slate-900 dark:via-teal-700 dark:to-slate-900 
-                   hover-gradient-move duration-100
-                   "
-                >
-                    <option value="">Select Project</option>
-                    {projects.length > 0 ? (
-                        projects.map((p) => (
-                            <option className=" bg-indigo-200 hover:bg-sky-100 dark:bg-slate-800 dark:hover:bg-slate-700" key={p.id} value={p.githubRepositoryUrl}>
-                                {p.name}
-                            </option>
-                        ))
-                    ) : (
-                        <option disabled>You have no projects</option>
-                    )}
-                </select>
+                {/* Select project */}
+                <div className="flex flex-col items-center gap-2">
+                
+                    <div className="relative inline-block">
+                        <select
+                            disabled={url.length > 0}
+                            value={url}
+                            required
+                            onChange={(e) => setUrl(e.target.value)}
+                            className="
+          w-64 appearance-none
+          rounded-full border px-4 py-2.5 text-sm font-medium text-center
+          cursor-pointer outline-none shadow-sm
+          border-slate-300 bg-white/95 text-slate-800
+          hover:border-blue-400 hover:bg-slate-50
+          focus:ring-2 focus:ring-blue-500/60 focus:border-blue-500
+          disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:bg-white
+
+          dark:bg-slate-900/90 dark:text-slate-100
+          dark:border-slate-700
+          dark:hover:border-blue-500 dark:hover:bg-slate-900
+          dark:focus:ring-blue-500/70 dark:focus:border-blue-500
+          dark:disabled:bg-slate-900
+        "
+                        >
+                            <option value="">Select Project</option>
+                            {projects.length > 0 ? (
+                                projects.map((p) => (
+                                    <option
+                                        key={p.id}
+                                        value={p.githubRepositoryUrl}
+                                        className="bg-white text-slate-900 dark:bg-slate-900 dark:text-slate-100"
+                                    >
+                                        {p.name}
+                                    </option>
+                                ))
+                            ) : (
+                                <option disabled>You have no projects</option>
+                            )}
+                        </select>
+
+                        {/* dropdown arrow */}
+                        <span className="pointer-events-none absolute inset-y-0 right-4 flex items-center">
+                            <BiChevronDown className="text-slate-500 dark:text-slate-400 text-lg" />
+                        </span>
+                    </div>
+                </div>
 
                 {loading && (
                     <div className="fixed inset-0 z-50 flex min-h-screen w-full items-center justify-center bg-black/60 backdrop-blur-sm">
@@ -242,6 +263,7 @@ export function ReviewProjectPage() {
                     </div>
                 )}
             </section>
+
         </div>
     );
 

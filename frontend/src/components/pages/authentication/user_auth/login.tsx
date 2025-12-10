@@ -53,7 +53,7 @@ export function Login() {
 
                 <NavLink
                     to={"/"}
-                    className="mb-8 inline-flex items-center gap-2 rounded-full border border-sky-500/40 dark:border-teal-400/40 bg-white/70 px-4 py-2 text-sm font-medium text-sky-600  dark:hover:bg-slate-900 dark:bg-slate-800/60 dark:text-teal-300"
+                    className="mb-8 inline-flex items-center gap-2 rounded-full border border-sky-500/40 dark:border-sky-400/40 bg-white/70 px-4 py-2 text-sm font-medium text-sky-600  dark:hover:bg-slate-900 dark:bg-slate-800/60 dark:text-slate-300"
                 >
                     <BsArrowLeft /> Return to home
                 </NavLink>
@@ -63,7 +63,7 @@ export function Login() {
                     <div className="rounded-3xl border border-slate-200/70 p-6 shadow-xl backdrop-blur dark:border-slate-700/60 dark:bg-slate-900/60">
                         {/* Logo / Title */}
                         <div className="mb-6 flex flex-col items-center text-center">
-                            <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-500 dark:bg-teal-500 text-white">
+                            <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-500 dark:bg-sky-500 text-white">
                                 <BiGroup size={30} />
                             </div>
 
@@ -85,7 +85,7 @@ export function Login() {
                                     type="email"
                                     autoComplete="email"
                                     placeholder="you@example.com"
-                                    className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm shadow-sm outline-none ring-indigo-400/0 transition placeholder:text-slate-400 focus:ring-1 focus:ring-sky-600 dark:focus:ring-teal-500 dark:border-slate-700 dark:bg-slate-800"
+                                    className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm shadow-sm outline-none ring-indigo-400/0 transition placeholder:text-slate-400 focus:ring-1 focus:ring-sky-600 dark:border-slate-700 dark:bg-slate-800"
                                     {...register("email", {
                                         required: "Email is required",
                                         pattern: {
@@ -105,7 +105,7 @@ export function Login() {
                                     <label htmlFor="password" className="block text-sm font-medium">
                                         Password
                                     </label>
-                                    <NavLink to="/forgot" className="text-xs text-sky-600 hover:underline dark:text-teal-400">
+                                    <NavLink to="/forgot" className="text-xs text-sky-600 hover:underline dark:text-sky-400">
                                         Forgot password?
                                     </NavLink>
                                 </div>
@@ -115,7 +115,7 @@ export function Login() {
                                         type={showPassword ? "text" : "password"}
                                         autoComplete="current-password"
                                         placeholder="••••••••"
-                                        className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 pr-10 text-sm outline-none ring-indigo-400/0 transition placeholder:text-slate-400 focus:ring-1 focus:ring-sky-600 dark:focus:ring-teal-500 dark:border-slate-700 dark:bg-slate-800"
+                                        className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 pr-10 text-sm outline-none ring-indigo-400/0 transition placeholder:text-slate-400 focus:ring-1 focus:ring-sky-600  dark:border-slate-700 dark:bg-slate-800"
                                         {...register("password", {
                                             required: "Password is required",
                                             minLength: { value: 6, message: "Minimum 6 characters" },
@@ -148,7 +148,7 @@ export function Login() {
                                 </label>
                                 <span className="text-sm text-slate-600 dark:text-slate-300">
                                     No account?{" "}
-                                    <NavLink to={`/signup`} className="cursor-pointer font-medium text-sky-600 hover:underline dark:text-teal-400">
+                                    <NavLink to={`/signup`} className="cursor-pointer font-medium text-sky-600 hover:underline dark:text-sky-400">
                                         Sign up
                                     </NavLink>
                                 </span>
@@ -158,7 +158,7 @@ export function Login() {
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className="cursor-pointer mt-2 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-sky-500 hover:bg-sky-600 dark:bg-teal-500 dark:hover:bg-teal-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition disabled:cursor-not-allowed disabled:opacity-70"
+                                className="cursor-pointer mt-2 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-sky-500 hover:bg-sky-600  px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition disabled:cursor-not-allowed disabled:opacity-70"
                             >
                                 
                                 {loading ? <BiLoaderAlt size={20} className="animate-spin" /> : 'Sign in'}

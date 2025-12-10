@@ -107,7 +107,7 @@ export function Conversation({ name, chatId, onBack }: Props) {
 
   return (
     <>
-      {/* Header row inside the panel body, under the panel header */}
+      {/* Header row  */}
       <div className="flex items-center gap-2 p-3 border-b dark:border-slate-800">
         <button
           type="button"
@@ -170,7 +170,7 @@ export function Conversation({ name, chatId, onBack }: Props) {
           onChange={(e) => setInput(e.target.value)}
           placeholder="Type a message…"
           className="w-full rounded-xl px-3 py-2 border border-slate-200 dark:border-slate-700
-                     bg-white dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-teal-600"
+                     bg-white dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-600"
         />
       </form>
     </>

@@ -43,7 +43,7 @@ export function SignUp() {
       <div className="mx-auto flex min-h-screen max-w-6xl flex-col items-center justify-center px-4 py-10">
         <NavLink
           to={"/"}
-          className="mb-8 inline-flex items-center gap-2 rounded-full border border-teal-500/40 bg-white/70 px-4 py-2 text-sm font-medium text-teal-700 dark:border-teal-400/40 dark:hover:bg-slate-900 dark:bg-slate-800/60 dark:text-teal-500"
+          className="mb-8 inline-flex items-center gap-2 rounded-full border border-teal-500/40 bg-white/70 px-4 py-2 text-sm font-medium text-teal-700 dark:border-sky-400/40 dark:hover:bg-slate-900 dark:bg-slate-800/60 dark:text-sky-500"
         >
           <BsArrowLeft /> Return to home
         </NavLink>
@@ -184,8 +184,8 @@ export function SignUp() {
                   disabled={loading}
                   className="cursor-pointer mt-1 inline-flex w-full 
                                     items-center justify-center gap-2 rounded-xl 
-                                    bg-gradient-to-r from-teal-500 to-teal-700 hover:from-teal-600 hover:to-teal-800 
-                                    px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-teal-500 
+                                    bg-gradient-to-r from-sky-500 to-sky-700 hover:from-sky-600 hover:to-sky-800 
+                                    px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-sky-500 
                                     disabled:cursor-not-allowed disabled:opacity-70"
                 >
                   {loading ? <BiLoaderAlt size={20} className="animate-spin" /> : 'Create Account'}
@@ -201,7 +201,7 @@ export function SignUp() {
               {/* Alt */}
               <div className="sm:col-span-2 mt-1 text-center text-sm text-slate-600 dark:text-slate-300">
                 Already have an account?{" "}
-                <NavLink to="/login" className="font-medium text-teal-600 hover:underline dark:text-teal-400">Sign in</NavLink>
+                <NavLink to="/login" className="font-medium text-sky-600 hover:underline dark:text-sky-400">Sign in</NavLink>
               </div>
             </form>
           </div>

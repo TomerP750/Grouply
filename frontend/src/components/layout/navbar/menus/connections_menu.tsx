@@ -33,7 +33,7 @@ export function ConnectionMenu() {
 
         return (
             <Menu>
-                <div className="animate-[bounceUp_0.25s_ease-out_forwards] bg-gradient-to-br from-white to-slate-100 dark:from-slate-800 dark:to-slate-900 py-5 px-4 absolute top-5 mt-15 right-25 w-95 max-w-95 min-h-64 rounded-2xl shadow-2xl dark:text-gray-300">
+                <div className="z-1000 animate-[bounceUp_0.25s_ease-out_forwards] bg-gradient-to-br from-white to-slate-100 dark:from-slate-800 dark:to-slate-900 py-5 px-4 absolute top-5 mt-15 right-25 w-95 max-w-95 min-h-64 rounded-2xl shadow-2xl dark:text-gray-300">
                     <div className="w-full flex min-h-64 flex-col">
 
                         {/* List */}

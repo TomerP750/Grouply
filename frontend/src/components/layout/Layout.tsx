@@ -1,3 +1,4 @@
+import { DmProvider } from "../../context/Dm_context";
 import { useUserSelector } from "../../redux/hooks";
 import { DirectMessagesDock } from "../direct.messages/pages/dm.dock";
 import { Footer } from "./footer/Footer";
@@ -9,13 +10,25 @@ export function Layout() {
 
     const user = useUserSelector(state => state.authSlice.user);
 
+    if (!user) {
+        return (
+            <div>
+                <BottomNav />
+                <Routing />
+                <Footer />
+            </div>
+        )
+    }
+
     return (
+
         <div className="">
-            {/* <Navbar/> */}
-            <BottomNav/>
-            {user && <DirectMessagesDock/>}
-            <Routing/>
-            <Footer/>
+            <DmProvider>
+                <BottomNav />
+                <DirectMessagesDock />
+                <Routing />
+                <Footer />
+            </DmProvider>
         </div>
     )
 }

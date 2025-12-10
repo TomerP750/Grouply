@@ -9,7 +9,6 @@ import { Login } from "../pages/authentication/user_auth/Login";
 
 import { ProjectMembersTable } from "../pages/dashboard/tables/user_tables/project_members_table";
 import { ProjectsTable } from "../pages/dashboard/tables/user_tables/projects-tables";
-import { NotFound } from "../pages/other-pages/not.found.page";
 import { DisplaySettings } from "../pages/other-pages/settings/display_settings";
 import { SecuritySettings } from "../pages/other-pages/settings/security_settings";
 import { SettingsPage } from "../pages/other-pages/settings/SettingsPage";
@@ -28,6 +27,7 @@ import { JoinRequestsTable } from "../pages/dashboard/tables/user_tables/join_re
 import { Dashboard } from "../pages/dashboard/dashboard_index/dashboard";
 import { Overview } from "../pages/dashboard/dashboard_index/dashboard_index";
 import { CreatePostForm } from "../pages/posts-area/forms/create_post_form";
+import { NotFoundPage } from "../pages/other-pages/not.found.page";
 
 
 
@@ -75,7 +75,7 @@ export function Routing() {
 
 
 
-                <Route path="*" element={<NotFound />} />
+                <Route path="*" element={<NotFoundPage />} />
             </Routes>
         </div>
     )

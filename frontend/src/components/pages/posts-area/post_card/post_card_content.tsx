@@ -119,7 +119,7 @@ export function PostCardContent({ post, onEdit, onDelete, sentRequest }: Project
                 <div className="flex flex-col-reverse items-start sm:flex justify-between w-full gap-3 font-bold text-2xl text-gray-900 dark:text-white">
                     <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-semibold leading-tight">{toNormal(title)}</h1>
                     <div className="flex justify-between items-center w-full">
-                        {isMember && <span className="text-xs text-white bg-sky-500 dark:bg-teal-300/50 px-3 py-1 ">{isOwner ? getMemberTypeTitle("owner") : getMemberTypeTitle("member")}</span>}
+                        {isMember && <span className="text-xs text-white bg-sky-600 rounded-full px-3 py-1 ">{isOwner ? getMemberTypeTitle("owner") : getMemberTypeTitle("member")}</span>}
 
                         {/* OWNER CRUD BUTTONS MENU */}
                         {isOwner

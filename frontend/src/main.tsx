@@ -25,11 +25,11 @@ createRoot(document.getElementById('root')!).render(
   <BrowserRouter>
     <Provider store={store}>
       <ThemeProvider>
-        <DmProvider>
-          <ScrollToTop />
-          <Layout />
-          <ToastConfig />
-        </DmProvider>
+
+        <ScrollToTop />
+        <Layout />
+        <ToastConfig />
+
       </ThemeProvider>
     </Provider>
   </BrowserRouter>

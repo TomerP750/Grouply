@@ -45,7 +45,7 @@ export function PostPage() {
 
 
                 {/* Card */}
-                <section className="bg-gradient-to-br from-indigo-100 to-slate-200 dark:from-slate-800 dark:to-teal-950 shadow-xl shadow-gray-500 dark:shadow-slate-900 flex flex-col items-center w-full p-5  min-h-screen">
+                <section className="bg-gradient-to-br from-indigo-100 to-slate-200 dark:from-slate-800 dark:to-sky-950 shadow-xl shadow-gray-500 dark:shadow-slate-900 flex flex-col items-center w-full p-5  min-h-screen">
 
                     <div className="w-9/10 sm:w-4/5 space-y-2 py-10">
 
@@ -53,7 +53,7 @@ export function PostPage() {
                         <div className="mb-8 w-full flex justify-center">
                             <NavLink
                                 to="/"
-                                className="inline-flex rounded-full items-center gap-2 dark:text-teal-400 hover:scale-110 duration-200"
+                                className="inline-flex rounded-full items-center gap-2 dark:text-sky-400 hover:scale-110 duration-200"
                             >
                                 Back to home
                             </NavLink>
@@ -69,7 +69,7 @@ export function PostPage() {
                                 return (
                                     <li
                                         key={t.id}
-                                        className="flex items-center gap-2 bg-indigo-200 font-medium dark:bg-slate-700/30 text-black dark:text-slate-300 px-3 py-1 rounded-full text-sm"
+                                        className="flex items-center gap-2 bg-indigo-200 font-medium dark:border dark:border-sky-400/30 dark:bg-slate-700/30 text-black dark:text-slate-300 px-3 py-1 rounded-full text-sm"
                                     >
                                         {Icon && <Icon color={t.color ?? "#38bdf8"} size={18} />}
                                         <span>{t.name}</span>

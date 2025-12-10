@@ -47,7 +47,7 @@ export function Overview() {
       {/* Header */}
       <div className="space-y-2 mb-10 py-3">
         <h1 className="text-4xl font-semibold dark:text-white">
-          Welcome back, <span className="dark:text-teal-400">{user.username}</span>
+          Welcome back, <span className="dark:text-sky-400">{user.username}</span>
         </h1>
         <p className="text-slate-700 dark:text-slate-400">Here’s an overview of your workspace today.</p>
       </div>

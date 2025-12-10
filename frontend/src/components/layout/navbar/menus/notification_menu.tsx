@@ -29,7 +29,7 @@ export function NotificationMenu({ notifications }: NotificationMenuProps) {
 
     return (
         <Menu>
-            <div className="animate-[bounceUp_0.25s_ease-out_forwards] gap-4 bg-gradient-to-br from-white to-slate-100 dark:from-slate-800 dark:to-slate-900 flex flex-col items-stretch py-4 px-4 absolute top-2 mt-15 right-30 w-95 max-w-95 min-h-64 rounded-2xl shadow-2xl dark:text-gray-300">
+            <div className="z-1000 animate-[bounceUp_0.25s_ease-out_forwards] gap-4 bg-gradient-to-br from-white to-slate-100 dark:from-slate-800 dark:to-slate-900 flex flex-col items-stretch py-4 px-4 absolute top-2 mt-15 right-30 w-95 max-w-95 min-h-64 rounded-2xl shadow-2xl dark:text-gray-300">
 
                 <header className="flex items-center justify-between mb-1">
                     <p className="text-sm font-semibold text-slate-700 dark:text-slate-100">

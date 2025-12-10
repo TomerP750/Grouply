@@ -74,7 +74,7 @@ export function PostPositionPageCard({ postPosition, post }: PostPositionPageCar
 
     return (
         <div className="w-full  py-1 cursor-pointer flex items-center justify-between px-3">
-            <span className="dark:text-teal-500 font-medium text-sm md:text-base">{postPosition.position}</span>
+            <span className="dark:text-sky-400 font-medium text-sm md:text-base">{postPosition.position}</span>
             <button
                 disabled={loading || isMember}
                 onClick={handleRequestToJoin}

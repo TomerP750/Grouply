@@ -23,8 +23,8 @@ const loginBtn = `
   hidden md:inline-flex items-center justify-center
   rounded-3xl px-5 py-1 font-bold text-white
   bg-sky-600 hover:bg-sky-500
-  dark:bg-teal-700 dark:hover:bg-teal-600
-  focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-400
+  dark:bg-sky-700 dark:hover:bg-sky-600
+  focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400
   transition-transform duration-200 hover:scale-110
 `;
 
