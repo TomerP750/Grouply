@@ -16,6 +16,7 @@ export function LanguageSelect() {
     <div className="relative w-48">
       <select
         value={languages.includes(i18n.language) ? i18n.language : ""}
+        defaultValue={"en"}
         onChange={handleChange}
         className="
           w-full

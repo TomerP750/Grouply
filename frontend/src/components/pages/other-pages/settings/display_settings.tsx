@@ -1,7 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { LanguageSelect } from "./language.select";
 
-const languages = ["english", "hebrew"];
 
 export function DisplaySettings() {
 

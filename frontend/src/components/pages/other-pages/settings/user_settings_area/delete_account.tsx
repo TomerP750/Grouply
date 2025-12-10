@@ -29,10 +29,10 @@ export function DeleteAccount() {
             {/* header */}
             <div className="space-y-2 dark:text-white">
                 <p className="font-semibold text-lg">
-                    {t("settings.delete.title")}
+                    {t("settings.user.delete.title")}
                 </p>
                 <p className="text-gray-400 max-w-65">
-                    {t("settings.delete.description")}
+                    {t("settings.user.delete.description")}
                 </p>
             </div>
 
@@ -40,14 +40,14 @@ export function DeleteAccount() {
 
                 <div className="relative flex flex-col gap-1.5">
                     <label className="font-medium">
-                        {t("settings.delete.password")} *
+                        {t("settings.user.delete.password")} *
                     </label>
 
                     <input
                         {...register("password", {
                             required: t("settings.delete.errors.required"),
-                            minLength: { value: 6, message: t("settings.delete.errors.min") },
-                            maxLength: { value: 15, message: t("settings.delete.errors.max") }
+                            minLength: { value: 6, message: t("settings.user.delete.errors.min") },
+                            maxLength: { value: 15, message: t("settings.user.delete.errors.max") }
                         })}
                         type={showPassword ? "text" : "password"}
                         className={`${inputStyle} pr-10 focus:ring-2 focus:ring-teal-500 focus:outline-none`}
