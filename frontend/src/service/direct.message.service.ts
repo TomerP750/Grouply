@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { CreateDMRequest } from "../components/layout/message-box/model/create.dm.request";
+import type { SendDmDTO } from "../components/direct.messages/models/send.dm.dto";
 import { BASE_API } from "../util/base_api";
 
 
@@ -14,7 +14,7 @@ class DirectMessageService {
         ).data
     }
 
-    async sendMessage(roomId: number, payload: CreateDMRequest) {
+    async sendMessage(roomId: number, payload: SendDmDTO) {
         return (
             await axios.post(`${BASE_API}/dm/${roomId}/send`, payload)
         ).data ;

@@ -15,10 +15,6 @@ import { DmProvider } from "../../../../context/Dm_context";
 import { ProfileSocials } from "../components/profile_socials";
 
 
-
-
-
-
 export function ProfilePage() {
 
   const params = useParams();
@@ -82,7 +78,7 @@ export function ProfilePage() {
 
 
           {/* About */}
-          <section className="mt-6 sm:mt-10 md:mt-14">
+          {profile?.about && <section className="mt-6 sm:mt-10 md:mt-14">
             <div className="max-w-3xl mx-auto rounded-2xl border
       bg-white/95 border-slate-200 shadow-sm
       dark:bg-slate-900/85 dark:border-slate-800
@@ -95,13 +91,10 @@ export function ProfilePage() {
               </h2>
 
               <p className="text-sm sm:text-base leading-relaxed text-slate-600 dark:text-slate-300">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis
-                accusantium optio error voluptates, cum autem quibusdam ut molestiae
-                sunt minus ratione itaque unde cupiditate dolores enim obcaecati
-                veritatis, commodi ex.
+                {profile.about}
               </p>
             </div>
-          </section>
+          </section>}
 
 
         </section>
@@ -110,7 +103,7 @@ export function ProfilePage() {
       </div>
 
 
-      <Hr />
+      <Hr className="my-15"/>
 
       <ProjectGrid />
 

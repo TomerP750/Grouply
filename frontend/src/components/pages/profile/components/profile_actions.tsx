@@ -16,7 +16,7 @@ import directMessageRoomService from "../../../../service/direct.message.room.se
 
 
 const buttonStyle = [
-    "inline-flex items-center justify-center gap-2 rounded-full px-4 py-1.5",
+    "cursor-pointer inline-flex items-center justify-center gap-2 rounded-full px-4 py-1.5",
     "text-sm font-medium",
 
     "bg-sky-600 text-white shadow-sm",

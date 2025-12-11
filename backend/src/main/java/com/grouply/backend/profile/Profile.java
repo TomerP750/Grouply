@@ -4,6 +4,7 @@ import com.grouply.backend.position.Position;
 import com.grouply.backend.social_link.SocialLink;
 import com.grouply.backend.user.User;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -23,6 +24,8 @@ public class Profile {
     @Setter(AccessLevel.NONE)
     private Long id;
 
+    @Size(max = 500)
+    @Column(length = 500)
     private String about;
     private String bannerUrl;
 

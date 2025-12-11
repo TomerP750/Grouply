@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { EditProfileRequestDTO } from "../components/pages/profile/edit_profile_modal";
+import type { EditProfileRequestDTO } from "../components/pages/profile/components/edit_profile_modal";
 
 
 const BASE_API = "http://localhost:8080/api/profile";

@@ -3,9 +3,10 @@ import { UserSearchResultCard } from "./user.search.result.card"
 
 interface SearchBarResultsProps {
     users: UserDTO[]
+    onClose: () => void 
 }
 
-export function SearchBarResults({ users }: SearchBarResultsProps) {
+export function SearchBarResults({ users, onClose }: SearchBarResultsProps) {
     return (
         <div
             className="absolute top-full left-0 w-full mt-2 bg-white dark:bg-slate-800 
@@ -16,6 +17,7 @@ export function SearchBarResults({ users }: SearchBarResultsProps) {
                 {users.map((u) => (
                     <li
                         key={u.id}
+                        onClick={onClose}
                         className="px-4 py-3 hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer transition"
                     >
                         <UserSearchResultCard user={u}/>

@@ -59,6 +59,7 @@ public class DirectMessageService {
     public DirectMessageDTO sendMessage(Long roomId, SendDmDTO req) {
 
         User senderUser = getCurrentUser();
+
         DirectMessageRoom room = roomRepository.findById(roomId)
                 .orElseThrow(() -> new IllegalArgumentException("Room not found"));
 

@@ -1,12 +1,15 @@
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { useEffect } from "react";
 import type { ProfileDTO } from "../../../../dtos/models_dtos/profile_dto";
 import { Modal } from "../../../elements/Modal";
+import profileService from "../../../../service/profile_service";
+import { toast } from "react-toastify";
+import "./styles.css";
+import { BiLoaderAlt } from "react-icons/bi";
 
 
 
-
-interface EditProfileRequestDTO {
+export interface EditProfileRequestDTO {
     about: string
     bannerUrl: string
     link1: string
@@ -22,7 +25,10 @@ interface EditProfileModalProps {
 
 export function EditProfileModal({ open, onClose, profile }: EditProfileModalProps) {
 
-    const { register, handleSubmit, formState: { errors, isSubmitting }, watch, resetField, setValue } = useForm<EditProfileRequestDTO>();
+    const { register, handleSubmit, formState: { errors, isSubmitting }, watch, resetField, setValue, control } = useForm<EditProfileRequestDTO>();
+
+    const description = useWatch({ control, name: "about", defaultValue: "" });
+    const length = description?.length ?? 0;
 
     useEffect(() => {
         setValue("about", profile.about)
@@ -31,11 +37,21 @@ export function EditProfileModal({ open, onClose, profile }: EditProfileModalPro
 
     const handleUpdate = (data: EditProfileRequestDTO) => {
 
+        profileService.updateProfile(data)
+            .then(() => {
+                toast.success("profile updated");
+                onClose();
+            })
+            .catch(err => {
+                toast.error(err.response.data);
+            })
+
+
     }
 
     return (
-        <Modal open={open} onClose={onClose} title="Edit Profile">
-            <form onSubmit={handleSubmit(handleUpdate)} className="space-y-6 mt-7">
+        <Modal width="75%" open={open} onClose={onClose} title="Edit Profile">
+            <form onSubmit={handleSubmit(handleUpdate)} className="edit-profile space-y-6 mt-7">
 
                 {/* Banner URL */}
                 <div>
@@ -44,7 +60,7 @@ export function EditProfileModal({ open, onClose, profile }: EditProfileModalPro
                         <button
                             type="button"
                             onClick={() => resetField("bannerUrl")}
-                            className="text-sm rounded-md px-2 py-1 bg-slate-100 dark:bg-teal-600 hover:bg-slate-200 dark:hover:bg-teal-500 transition"
+                            className="cursor-pointer text-sm rounded-md px-2 py-1 bg-slate-100 dark:bg-sky-600 hover:bg-slate-200 dark:hover:bg-sky-500 transition"
                             title="Reset banner URL"
                         >
                             Reset
@@ -54,7 +70,7 @@ export function EditProfileModal({ open, onClose, profile }: EditProfileModalPro
 
                         <input
                             type="url"
-                            className="w-full rounded-md pr-3 py-2 outline-none bg-slate-100 dark:bg-slate-800 focus:bg-white dark:focus:bg-slate-700 focus:ring-2 focus:ring-teal-500 transition"
+                            className="w-full rounded-md pr-3 py-2 outline-none bg-slate-100 dark:bg-slate-800 focus:bg-white dark:focus:bg-slate-700 focus:ring-2 focus:ring-sky-500 transition"
                             {...register("bannerUrl", {
                                 validate: (v) =>
                                     !v || /^https?:\/\//i.test(v) || "Please enter a valid URL",
@@ -85,30 +101,33 @@ export function EditProfileModal({ open, onClose, profile }: EditProfileModalPro
                     <button
                         type="button"
                         onClick={() => resetField("about")}
-                        className="text-sm rounded-md px-2 py-1 bg-slate-100 dark:bg-teal-600 hover:bg-slate-200 dark:hover:bg-teal-500 transition"
+                        className="cursor-pointer text-sm rounded-md px-2 py-1 bg-slate-100 dark:bg-sky-600 hover:bg-slate-200 dark:hover:bg-sky-500 transition"
                     >
                         Reset
                     </button>
                 </div>
-                <textarea
-                    rows={10}
-                    className="resize-none w-full rounded-md px-3 py-2 outline-none bg-slate-100 dark:bg-slate-800 focus:bg-white dark:focus:bg-slate-700 focus:ring-2 focus:ring-teal-500 transition"
-                    {...register("about", {
-                        maxLength: { value: 500, message: "Max 500 characters" },
-                    })}
-                />
+                <div className="flex flex-col gap-1">
+                    <textarea
+                        rows={10}
+                        className="resize-none w-full rounded-md px-3 py-2 outline-none bg-slate-100 dark:bg-slate-800 focus:bg-white dark:focus:bg-slate-700 focus:ring-1 focus:ring-sky-500 transition"
+                        {...register("about", {
+                            maxLength: { value: 500, message: "Max 500 characters" },
+                        })}
+                    />
+                    <span className="text-right text-xs dark:text-slate-400 font-medium">{length} / 500</span>
+                </div>
                 {errors.about && (
                     <p className="mt-1 text-sm text-rose-600">{errors.about.message}</p>
                 )}
 
 
                 {/* Links */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                     <div>
                         <label className="block text-sm font-medium mb-2">Link 1</label>
                         <input
                             type="url"
-                            className="w-full rounded-md px-3 py-2 outline-none bg-slate-100 dark:bg-slate-800 focus:bg-white dark:focus:bg-slate-700 focus:ring-2 focus:ring-teal-500 transition"
+                            className="w-full rounded-md px-3 py-2 outline-none bg-slate-100 dark:bg-slate-800 focus:bg-white dark:focus:bg-slate-700 focus:ring-2 focus:ring-sky-500 transition"
                             placeholder="https://…"
                             {...register("link1", {
                                 validate: (v) => !v || /^https?:\/\//i.test(v) || "Invalid URL",
@@ -122,7 +141,7 @@ export function EditProfileModal({ open, onClose, profile }: EditProfileModalPro
                         <label className="block text-sm font-medium mb-2">Link 2</label>
                         <input
                             type="url"
-                            className="w-full rounded-md px-3 py-2 outline-none bg-slate-100 dark:bg-slate-800 focus:bg-white dark:focus:bg-slate-700 focus:ring-2 focus:ring-teal-500 transition"
+                            className="w-full rounded-md px-3 py-2 outline-none bg-slate-100 dark:bg-slate-800 focus:bg-white dark:focus:bg-slate-700 focus:ring-2 focus:ring-sky-500 transition"
                             placeholder="https://…"
                             {...register("link2", {
                                 validate: (v) => !v || /^https?:\/\//i.test(v) || "Invalid URL",
@@ -136,7 +155,7 @@ export function EditProfileModal({ open, onClose, profile }: EditProfileModalPro
                         <label className="block text-sm font-medium mb-2">Link 3</label>
                         <input
                             type="url"
-                            className="w-full rounded-md px-3 py-2 outline-none bg-slate-100 dark:bg-slate-800 focus:bg-white dark:focus:bg-slate-700 focus:ring-2 focus:ring-teal-500 transition"
+                            className="w-full rounded-md px-3 py-2 outline-none bg-slate-100 dark:bg-slate-800 focus:bg-white dark:focus:bg-slate-700 focus:ring-2 focus:ring-sky-500 transition"
                             placeholder="https://…"
                             {...register("link3", {
                                 validate: (v) => !v || /^https?:\/\//i.test(v) || "Invalid URL",
@@ -159,10 +178,10 @@ export function EditProfileModal({ open, onClose, profile }: EditProfileModalPro
                     </button>
                     <button
                         type="submit"
-                        className="rounded-md px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white transition"
+                        className="cursor-pointer rounded-md px-4 py-2 bg-sky-600 hover:bg-sky-700 text-white transition"
                         disabled={isSubmitting}
                     >
-                        {isSubmitting ? "Saving..." : "Save Changes"}
+                        {isSubmitting ? <BiLoaderAlt size={20} className="animate-spin"/> : "Save Changes"}
                     </button>
                 </div>
             </form>

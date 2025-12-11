@@ -1,5 +1,6 @@
 import { useEffect, type ReactNode } from "react";
 import { BiX } from "react-icons/bi";
+import "./element_styles.css"
 
 interface ModalProps {
     open: boolean;
@@ -42,7 +43,7 @@ export function Modal({ open, onClose, title, children, width, height, className
             {/* Wrapper */}
             <div className="fixed inset-0 flex items-center justify-center p-4 sm:p-6 pointer-events-none">
                 {/* Panel */}
-                <div
+                <div style={{width: width}}
                     className={`
                     ${className}
                     pointer-events-auto 
@@ -75,7 +76,7 @@ export function Modal({ open, onClose, title, children, width, height, className
 
 
                     {/* Body */}
-                    <div className="overflow-y-auto flex-1 scrollbar-thin">{children}</div>
+                    <div className="overflow-y-auto flex-1 no-scrollbar">{children}</div>
                 </div>
             </div>
         </div>

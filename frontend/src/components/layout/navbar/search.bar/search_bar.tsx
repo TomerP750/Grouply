@@ -121,7 +121,7 @@ export function SearchBar({ open, onClose }: SearchBarProps) {
               </button>
             )}
 
-            {users.length > 0 && <SearchBarResults users={users} />}
+            {users.length > 0 && <SearchBarResults users={users} onClose={onClose}/>}
 
           </div>
 

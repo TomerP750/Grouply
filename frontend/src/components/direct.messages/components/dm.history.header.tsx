@@ -22,7 +22,7 @@ export function DirectMessageHistoryHeader() {
                 />
             </div>
 
-            {/* New DM */}
+            {/* New DM Button*/}
             <button
                 type="button"
                 onClick={handleCreateChatRoom}
