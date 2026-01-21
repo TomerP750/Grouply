@@ -7,10 +7,8 @@ import com.grouply.backend.util.EntityToDtoMapper;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -21,9 +19,6 @@ public class DirectMessageRoomService {
 
     private final DirectMessageRoomRepository roomRepository;
     private final UserRepository userRepository;
-
-
-
 
     /**
      *

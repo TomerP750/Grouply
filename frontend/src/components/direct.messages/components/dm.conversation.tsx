@@ -52,7 +52,6 @@ export function DirectMessageConversation() {
             reconnectDelay: 5000,
             debug: (str) => console.log(str),
             onConnect: () => {
-                console.log("STOMP connected");
                 stompClient?.subscribe(`/topic/dm/${room.id}`, (msg) => {
                     const body: DirectMessageDTO = JSON.parse(msg.body);
                     setMessages((prev) => [...prev, body]);
@@ -81,13 +80,10 @@ export function DirectMessageConversation() {
             .getOrCreateRoom(selectedRecipientId)
             .then(res => {
                 setRoom(res);
-                console.log("room: ", res);
                 return directMessageService.roomMessages(res.id);
             })
             .then(res => {
                 setMessages(res.content);
-                console.log("msgs: ", res);
-
             })
             .catch(err => {
                 toast.error(err.response?.data || "Something went wrong");

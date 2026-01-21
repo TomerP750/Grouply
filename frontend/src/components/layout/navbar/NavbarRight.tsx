@@ -57,9 +57,9 @@ export function NavbarRight({ user, className }: NavbarRightProps) {
       <ul className="hidden lg:flex items-center text-lg">
 
         {/* Connection Menu */}
-        <ConnectionBadge onOpen={onConnectionOpen} open={connectionsOpen} />
+        {user && <ConnectionBadge onOpen={onConnectionOpen} open={connectionsOpen} />}
 
-        <NotificationBadge onOpen={onNotificationOpen} open={notificationOpen} />
+        {user && <NotificationBadge onOpen={onNotificationOpen} open={notificationOpen} />}
 
 
 
@@ -89,12 +89,7 @@ export function NavbarRight({ user, className }: NavbarRightProps) {
             >
               Login
             </NavLink>
-            {/* <NavLink
-            to="/recruiter/login"
-            className={`${loginBtn}`}
-          >
-            Recruiter Login
-          </NavLink> */}
+
           </div>}
 
 

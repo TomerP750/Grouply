@@ -8,6 +8,9 @@ import { usePagination } from "../../../../../util/helper_hooks";
 import { extractPageCount } from "../../../../../util/pagination_helper";
 import { Dialog } from "../../../../elements/Dialog";
 import { DataTable } from "./data_table";
+import { Modal } from "../../../../elements/Modal";
+import { CreateProjectForm } from "../../forms/create_project_form";
+import { CreateTechnologyForm } from "../../forms/create_technology_form";
 
 const ch = createColumnHelper<TechnologyDTO>();
 
@@ -20,6 +23,7 @@ export function TechnologiesTable() {
   const [loading, setLoading] = useState(true);
 
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
+  const [createFormOpen, setCreateFormOpen] = useState<boolean>(false);
 
   const [editedTechId, setEditedTechId] = useState<number | undefined>();
   const [selectedTechId, setSelectedTechId] = useState<number | undefined>();
@@ -180,11 +184,21 @@ export function TechnologiesTable() {
         <h2 className="text-lg font-semibold">Technologies</h2>
         <button
           type="button"
-          onClick={() => { }}
-          className="inline-flex items-center gap-2 bg-teal-600 hover:bg-teal-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+          onClick={() => setCreateFormOpen(true)}
+          className="cursor-pointer inline-flex items-center gap-2 bg-sky-600 hover:bg-sky-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
         >
           Add Technology
         </button>
+
+        {createFormOpen && (
+                <Modal
+                  className="dark:bg-gradient-to-br dark:from-slate-900 via-teal-950 to-slate-800"
+                  open={createFormOpen}
+                  onClose={() => setCreateFormOpen(false)}
+                >
+                  <CreateTechnologyForm onClose={() => setCreateFormOpen(false)} />
+                </Modal>
+              )}
       </div>
 
       <DataTable<TechnologyDTO>
@@ -205,8 +219,7 @@ export function TechnologiesTable() {
           message={`Are you sure you want to delete ${techName} ?`}
           open={dialogOpen}
           onConfirm={() => handleDelete(selectedTechId!)}
-          onClose={() => setDialogOpen(false)}
-        />
+          onClose={() => setDialogOpen(false)} type={"danger"} />
       )}
     </div>
   );

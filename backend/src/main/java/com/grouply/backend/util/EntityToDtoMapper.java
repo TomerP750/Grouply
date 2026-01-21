@@ -241,6 +241,7 @@ public class EntityToDtoMapper {
                 .id(entity.getId())
                 .projectPostId(entity.getPost().getId())
                 .projectPostPositionId(entity.getPosition().getId())
+                .senderUsername(entity.getSender().getUsername())
                 .senderId(entity.getSender().getId())
                 .requestedAt(entity.getRequestedAt())
                 .build();

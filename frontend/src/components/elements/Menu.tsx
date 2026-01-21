@@ -9,9 +9,6 @@ interface MenuProps {
 
 export function Menu({ children }: MenuProps) {
     return (
-        // <menu className={`menu ${className} z-[1000]`}>
-        //     {children}
-        // </menu>
         createPortal(children, document.body)
     )
 }

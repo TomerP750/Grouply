@@ -61,6 +61,7 @@ public class ProjectService implements IProjectService {
                 .projectMembers(new HashSet<>())
                 .status(ProjectStatus.PREPARATION)
                 .technologies(resolveTechnologies(dto.getTechnologies()))
+                .defaultDmLinks(dto.getDefaultDmLinks())
                 .build();
 
         ProjectMember owner = ProjectMember.builder()
@@ -98,7 +99,6 @@ public class ProjectService implements IProjectService {
 
         Project project = fetchProject(dto.getProjectId());
 
-
         ProjectStatus currentStatus = project.getStatus();
         ProjectStatus newStatus = dto.getStatus();
 
@@ -112,6 +112,7 @@ public class ProjectService implements IProjectService {
 
         project.setName(dto.getName());
         project.setStatus(dto.getStatus());
+        project.setDefaultDmLinks(dto.getDefaultDmLinks());
 //        project.setTechnologies(dto.getTechnologies());
         projectRepository.save(project);
 

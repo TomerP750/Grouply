@@ -204,7 +204,7 @@ export function UserSettings() {
               ))}
           </section>
 
-          <button className="text-white cursor-pointer rounded-lg bg-sky-500 hover:bg-sky-600 dark:hover:bg-teal-500 dark:bg-teal-600 px-4 py-2">
+          <button className="text-white cursor-pointer rounded-lg bg-sky-500 hover:bg-sky-600 transition-colors duration-200 px-4 py-2">
             {t("button.save")}
           </button>
         </div>

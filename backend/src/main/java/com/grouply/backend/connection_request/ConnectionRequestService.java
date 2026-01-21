@@ -21,6 +21,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.event.TransactionPhase;
+import org.springframework.transaction.event.TransactionalEventListener;
 
 import java.util.NoSuchElementException;
 
@@ -52,6 +54,7 @@ public class ConnectionRequestService implements IConnectionRequestService {
 
     @Override
     @Transactional
+//    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     public boolean toggleConnectionRequest(Long senderId, Long recipientId) throws UnauthorizedException {
 
         if (senderId.equals(recipientId)) {

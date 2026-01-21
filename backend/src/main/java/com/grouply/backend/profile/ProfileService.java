@@ -41,8 +41,18 @@ public class ProfileService implements IProfileService {
 
         log.info("Entering update profile");
         Profile profile = fetchProfile(userId);
-        profile.setAbout(dto.getAbout());
-        profile.setBannerUrl(dto.getBannerUrl());
+        if (dto.getAbout().isEmpty()) {
+            profile.setAbout(profile.getAbout());
+        } else {
+            profile.setAbout(dto.getAbout());
+        }
+
+        if (dto.getBannerUrl().isEmpty()) {
+            profile.setBannerUrl(profile.getBannerUrl());
+        } else {
+            profile.setBannerUrl(dto.getBannerUrl());
+        }
+
 //        profile.setSocialLinks(toEntities(dto.getSocialLinkDTOS(), profile));
 
         profileRepository.save(profile);

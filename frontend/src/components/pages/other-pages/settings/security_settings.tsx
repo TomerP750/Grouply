@@ -61,7 +61,7 @@ export function SecuritySettings() {
                                 required: t("settings.password.errors.required"),
                             })}
                             type={showPassword ? "text" : "password"}
-                            className={`${inputStyle} pr-10 focus:ring-2 focus:ring-teal-500 focus:outline-none`}
+                            className={`${inputStyle} pr-10 focus:ring-1 focus:ring-sky-500 focus:outline-none`}
                         />
                         <button
                             type="button"
@@ -94,7 +94,7 @@ export function SecuritySettings() {
                                 },
                             })}
                             type={showPassword ? "text" : "password"}
-                            className={`${inputStyle} pr-10 focus:ring-2 focus:ring-teal-500 focus:outline-none`}
+                            className={`${inputStyle} pr-10 focus:ring-1 focus:ring-sky-500 focus:outline-none`}
                         />
                         <button
                             type="button"
@@ -130,7 +130,7 @@ export function SecuritySettings() {
                                     t("settings.password.errors.match"),
                             })}
                             type={showConfirmPassword ? "text" : "password"}
-                            className={`${inputStyle} pr-10 focus:ring-2 focus:ring-teal-500 focus:outline-none`}
+                            className={`${inputStyle} pr-10 focus:ring-1 focus:ring-sky-500 focus:outline-none`}
                         />
                         <button
                             type="button"
@@ -146,7 +146,7 @@ export function SecuritySettings() {
                         )}
                     </div>
 
-                    <button className="text-white cursor-pointer rounded-lg hover:bg-teal-500 bg-teal-600 px-4 py-2">
+                    <button className="text-white cursor-pointer rounded-lg hover:bg-sky-500 bg-sky-600 transition-colors duration-200 px-4 py-2">
                         {t("button.save")}
                     </button>
                 </div>

@@ -38,9 +38,6 @@ public class PostService implements IPostService {
     private final ProjectRepository projectRepository;
     private final ProjectPostPositionRepository projectPostPositionRepository;
     private final ActivityService activityService;
-    
-
-
 
 
     @Override
@@ -176,4 +173,6 @@ public class PostService implements IPostService {
         return projectMemberRepository
                 .existsByUserIdAndProjectIdAndProjectRole(userId, projectId, ProjectRole.OWNER);
     }
+
+
 }

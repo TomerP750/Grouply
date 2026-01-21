@@ -48,7 +48,7 @@ const userColumns: ColumnDef<UserDTO, any>[] = [
             e.stopPropagation();
             handleEdit(row.original.id);
           }}
-          className="cursor-pointer rounded text-teal-400 hover:text-teal-300 px-2 py-1"
+          className="cursor-pointer rounded px-2 py-1"
         >
           Edit
         </button>

@@ -36,7 +36,7 @@ export function ProjectMembersTable() {
 
   const { pagination, setPagination, pageCount, setPageCount } = usePagination();
 
-  // ───────────────────────────────── Columns ─────────────────────────────────
+
 
   const columns: ColumnDef<ProjectMemberDTO, any>[] = [
     
@@ -286,6 +286,7 @@ export function ProjectMembersTable() {
       {dialogOpen && (
         <Dialog
           open={dialogOpen}
+          type="danger"
           message={"Are you sure you want to remove this member?"}
           onClose={() => {
             setDialogOpen(false);

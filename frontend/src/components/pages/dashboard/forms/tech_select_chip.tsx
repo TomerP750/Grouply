@@ -46,18 +46,19 @@ export function TechSelectChips({ technologies, value, onChange, label = "Techno
                     type="button"
                     onClick={add}
                     disabled={disabled || !selectedId || (max ? value.length >= max : false)}
-                    className="cursor-pointer px-3 py-2 rounded-md text-sm bg-sky-600 hover:bg-sky-700 dark:bg-teal-600 text-white
-                     dark:hover:bg-teal-700 transition disabled:opacity-50"
+                    className="cursor-pointer px-3 py-2 rounded-md text-sm bg-sky-600 hover:bg-sky-700 text-white
+                    transition disabled:opacity-50"
                 >
                     Add
                 </button>
+
                 <select
                     disabled={disabled}
                     value={selectedId}
                     onChange={(e) => setSelectedId(e.target.value ? Number(e.target.value) : "")}
                     className={`appearance-none w-full rounded-lg px-3 py-2 text-sm outline-none transition border
                      bg-indigo-300 dark:bg-slate-800 dark:text-white border-slate-700
-                     focus:ring-2 dark:focus:ring-teal-500/40 focus:ring-sky-500 dark:focus:border-teal-500
+                     focus:ring-2 focus:ring-sky-500 dark:focus:border-sky-500
                      ${disabled ? "opacity-60 cursor-not-allowed" : ""}`}
                 >
                     <option value="">{disabled ? "Loading..." : "Select Technology"}</option>

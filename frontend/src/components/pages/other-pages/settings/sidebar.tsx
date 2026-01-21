@@ -3,8 +3,9 @@ import { MdDisplaySettings } from "react-icons/md";
 import { useDispatch } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import { logout } from "../../../../redux/AuthSlice";
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 import { useTranslation } from "react-i18next";
+import { Dialog } from "../../../elements/Dialog";
 
 const menuItem =
   "cursor-pointer inline-flex items-center gap-3 w-full py-2 px-3 rounded-lg transition-colors text-slate-600 dark:text-slate-300 hover:bg-sky-500/10 hover:text-sky-600 dark:hover:bg-teal-500/10 dark:hover:text-teal-400";
@@ -15,6 +16,8 @@ const active =
 
 
 export function SettingsSidebar() {
+
+  const [dialogOpen, setDialogOpen] = useState<boolean>(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -68,12 +71,17 @@ export function SettingsSidebar() {
         </li>
 
         <li className="w-full">
-          <button onClick={handleLogout} className={`${menuItem}`}>
+          <button onClick={() => setDialogOpen(true)} className={`${menuItem}`}>
             <BiLogOut size={25} />
             <p>{t('setting.logout')}</p>
           </button>
         </li>
-
+        {dialogOpen && <Dialog
+          type="warning"
+          open={dialogOpen}
+          message={"Are you sure you want to logout?"}
+          onClose={() => setDialogOpen(false)}
+          onConfirm={handleLogout} />}
       </ul>
     </aside>
   );

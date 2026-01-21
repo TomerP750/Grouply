@@ -91,7 +91,7 @@ public class NotificationService {
             }
         });
 
-        System.err.println("I am subscribed");
+        log.info("User subscribed");
         return emitter;
     }
 

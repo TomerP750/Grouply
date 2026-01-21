@@ -10,9 +10,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.NoSuchElementException;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "projects")
@@ -42,7 +40,14 @@ public class Project {
 
     private String githubRepositoryUrl;
 
+    @ElementCollection
+    @CollectionTable(
+            joinColumns = @JoinColumn(name = "project_id")
 
+    )
+    @Column(name = "dm_link")
+    @Builder.Default
+    private List<String> defaultDmLinks = new ArrayList<>();
 
     @ManyToMany
     private Set<Technology> technologies = new HashSet<>();

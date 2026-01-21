@@ -50,7 +50,7 @@ export function DeleteAccount() {
                             maxLength: { value: 15, message: t("settings.user.delete.errors.max") }
                         })}
                         type={showPassword ? "text" : "password"}
-                        className={`${inputStyle} pr-10 focus:ring-2 focus:ring-teal-500 focus:outline-none`}
+                        className={`${inputStyle} pr-10 focus:ring-1 focus:ring-sky-500 focus:outline-none`}
                     />
 
                     <button
@@ -63,12 +63,12 @@ export function DeleteAccount() {
 
                     {errors.password && (
                         <span className="text-sm text-red-400 mt-0.5">
-                            {errors.password.message}
+                            {t("settings.user.delete.errors.required")}
                         </span>
                     )}
                 </div>
 
-                <button className="mt-4 font-medium text-white bg-red-500 hover:bg-red-400 px-3 py-1 rounded-xl cursor-pointer">
+                <button className="mt-4 font-medium text-white bg-red-500 hover:bg-red-400 transition-colors duration-200 px-3 py-1 rounded-xl cursor-pointer">
                     {t("settings.user.delete.button")}
                 </button>
 

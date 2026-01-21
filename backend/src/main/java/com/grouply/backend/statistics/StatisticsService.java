@@ -13,7 +13,7 @@ import java.util.NoSuchElementException;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class StatisticsService implements IStatisticsService{
+public class StatisticsService implements IStatisticsService {
 
     private final StatisticsRepository statisticsRepository;
     private final UserRepository userRepository;

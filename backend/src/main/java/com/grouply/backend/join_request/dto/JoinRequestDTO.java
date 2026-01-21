@@ -12,6 +12,7 @@ public class JoinRequestDTO {
 
     Long id;
     Long senderId;
+    String senderUsername;
     Long projectPostPositionId;
     Long projectPostId;
     LocalDateTime requestedAt;

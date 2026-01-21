@@ -10,7 +10,6 @@ import { store } from './redux/store.ts'
 import { ToastConfig } from './util/ToastConfig.tsx'
 import { ScrollToTop } from './util/scroll_to_top.tsx'
 import { Layout } from './components/layout/layout.tsx'
-import { DmProvider } from './context/Dm_context.tsx'
 
 
 

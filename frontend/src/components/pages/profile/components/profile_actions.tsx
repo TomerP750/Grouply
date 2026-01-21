@@ -22,7 +22,7 @@ const buttonStyle = [
     "bg-sky-600 text-white shadow-sm",
     "hover:bg-sky-500 active:bg-sky-700",
 
-    "dark:bg-sky-500 dark:hover:bg-sky-400 dark:active:bg-sky-600",
+    "dark:bg-sky-600 dark:hover:bg-sky-500 dark:active:bg-sky-600",
 
     "transition-colors duration-150",
     "focus-visible:outline-none focus-visible:ring-2",

@@ -4,6 +4,10 @@ import com.grouply.backend.activity.ActivityService;
 import com.grouply.backend.activity.ActivityType;
 import com.grouply.backend.archived_post.ArchivedPost;
 import com.grouply.backend.archived_post.ArchivedPostRepository;
+import com.grouply.backend.direct_message.DirectMessageService;
+import com.grouply.backend.direct_message.dto.SendDmDTO;
+import com.grouply.backend.direct_message_room.DirectMessageRoomService;
+import com.grouply.backend.direct_message_room.dto.DirectMessageRoomDTO;
 import com.grouply.backend.exceptions.ExistsException;
 import com.grouply.backend.exceptions.UnauthorizedException;
 import com.grouply.backend.join_request.dto.JoinRequestDTO;
@@ -41,6 +45,8 @@ public class JoinRequestService {
     private final ProjectPostPositionRepository projectPostPositionRepository;
     private final ActivityService activityService;
     private final ArchivedPostRepository archivedPostRepository;
+    private final DirectMessageService directMessageService;
+    private final DirectMessageRoomService directMessageRoomService;
 //    private final NotificationService notificationService;
 
     /**
@@ -115,17 +121,28 @@ public class JoinRequestService {
         return true;
     }
 
+    /**
+     * Accepting join request from the sender, if the sender have archived the post of the project, it will remove it from archived
+     * @param userId
+     * @param joinRequestId
+     * @throws UnauthorizedException
+     */
 
     public void acceptJoinRequest(Long userId, Long joinRequestId) throws UnauthorizedException {
+
         JoinRequest joinRequest = fetchJoinRequest(joinRequestId);
         Project project = joinRequest.getPost().getProject();
+
+        // im using userId only to check authority
         if (!isOwner(userId, project.getId())) {
             throw new UnauthorizedException("Unauthorized to response");
         }
+
         log.info("Starting to create member");
-        User user = fetchUser(joinRequest.getSender().getId());
+
+        User sender = fetchUser(joinRequest.getSender().getId());
         ProjectMember newMember = ProjectMember.builder()
-                .user(user)
+                .user(sender)
                 .projectRole(ProjectRole.MEMBER)
                 .projectPosition(joinRequest.getPosition().getPosition())
                 .project(project)
@@ -133,6 +150,7 @@ public class JoinRequestService {
         project.getProjectMembers().add(newMember);
         projectRepository.save(project);
 
+        //TODO UX check if i should remove from archive after i get accepted
         if (archivedPostRepository.existsByUserIdAndPostId(joinRequest.getSender().getId(), project.getId())) {
             log.info("Archived post found");
             ArchivedPost archivedPost = archivedPostRepository
@@ -144,9 +162,26 @@ public class JoinRequestService {
         joinRequestRepository.deleteById(joinRequestId);
 
         log.info("Created new member!");
+
+
+        //TODO check if this works its a live links after acceptance
+        DirectMessageRoomDTO room = directMessageRoomService.getOrCreateRoom(userId, sender.getId());
+
+        for (int i = 0; i < project.getDefaultDmLinks().size(); i++) {
+            String link = project.getDefaultDmLinks().get(i);
+            SendDmDTO dto = new SendDmDTO(link);
+            directMessageService.sendMessage(room.getId(), dto);
+        }
     }
 
+    /**
+     * Decline a join request from a sender, it removes only the request from the database
+     * @param userId
+     * @param joinRequestId
+     * @throws UnauthorizedException
+     */
     public void declineJoinRequest(Long userId, Long joinRequestId) throws UnauthorizedException {
+        log.info("Entering decline join request");
         JoinRequest joinRequest = fetchJoinRequest(joinRequestId);
         Project project = joinRequest.getPost().getProject();
         if (!isOwner(userId, project.getId())) {
