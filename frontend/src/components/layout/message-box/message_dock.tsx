@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
-import { formatRelative } from "../../../util/util_functions";
+import { toast } from "react-toastify";
+import directMessageRoomService from "../../../service/direct.message.room.service";
 import { MessageButton } from "../../direct.messages/components/dm.message.button";
-import { Panel } from "./panel";
-import { type ChatPreview, RecentChats } from "./recent_chat";
 import { Conversation } from "./conversation";
 import type { ChatRoomDTO } from "./model/chatroom.DTO";
-import directMessageRoomService from "../../../service/direct.message.room.service";
-import { toast } from "react-toastify";
+import { Panel } from "./panel";
+import { RecentChats } from "./recent_chats";
 
 
 type DockState =
@@ -23,7 +22,7 @@ export function MessageDock() {
     const [rooms, setRooms] = useState<ChatRoomDTO[]>([]);
 
     useEffect(() => {
-        directMessageRoomService.listRooms()
+        directMessageRoomService.directMessagesHistory()
         .then(res => {
             setRooms(res)   
         })
@@ -32,7 +31,7 @@ export function MessageDock() {
 
 
     if (state.view === "closed") {
-        return <MessageButton chats={rooms} onOpen={() => setState({ view: "list" })} />;
+        return <MessageButton onOpen={() => setState({ view: "list" })} />;
     }
 
     function getPanel(dock: DockState, deps: {
@@ -45,7 +44,7 @@ export function MessageDock() {
         switch (dock.view) {
             case "closed":
                 return (
-                    <MessageButton chats={rooms} onOpen={deps.onOpen} />
+                    <MessageButton onOpen={deps.onOpen} />
                 );
 
             case "list":
@@ -54,7 +53,6 @@ export function MessageDock() {
                         <Panel onClose={deps.onClose} title="Messages">
                             <RecentChats
                                 chats={rooms}
-                                formatRelative={formatRelative}
                                 onSelect={deps.onSelect}
                             />
                         </Panel>
@@ -62,6 +60,7 @@ export function MessageDock() {
                 );
 
             case "conversation":
+                
                 const chat = deps.chats.find(c => c.id === dock.chatId);
                 const name = chat?.name ?? "User";
                 

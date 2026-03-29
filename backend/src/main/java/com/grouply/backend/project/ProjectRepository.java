@@ -11,9 +11,25 @@ import java.util.List;
 
 public interface ProjectRepository extends JpaRepository<Project, Long> {
 
-    @Query("SELECT p FROM Project p " +
-            "JOIN p.projectMembers pm " +
-            "WHERE pm.user.id = :userId AND pm.projectRole = :projectRole")
+//    @Query("SELECT p FROM Project p " +
+//            "JOIN p.projectMembers pm " +
+//            "WHERE pm.user.id = :userId AND pm.projectRole = :projectRole")
+@Query(
+        value = """
+    SELECT DISTINCT p
+    FROM Project p
+    JOIN p.projectMembers pm
+    WHERE pm.user.id = :userId
+      AND pm.projectRole = :projectRole
+  """,
+        countQuery = """
+    SELECT COUNT(DISTINCT p.id)
+    FROM Project p
+    JOIN p.projectMembers pm
+    WHERE pm.user.id = :userId
+      AND pm.projectRole = :projectRole
+  """
+)
     Page<Project> getUserOwnedProjects(@Param("userId") Long userId,
                                        @Param("projectRole") ProjectRole projectRole,
                                        Pageable pageable);
@@ -27,7 +43,7 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
 
     @Query("SELECT p FROM Project p " +
             "JOIN p.projectMembers pm " +
-            "WHERE pm.user.id = :userId AND pm.projectRole = :projectRole AND status = :status")
+            "WHERE pm.user.id = :userId AND pm.projectRole = :projectRole AND p.status = :status")
     List<Project> getAllUserOwnedFinishedProjects(@Param("userId") Long userId,
                                                   @Param("projectRole") ProjectRole projectRole,
                                                   @Param("status") ProjectStatus status);

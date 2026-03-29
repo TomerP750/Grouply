@@ -1,5 +1,5 @@
 import { BiChat } from "react-icons/bi";
-import { Badge } from "../../elements/Badge";
+import { Badge } from "../../shared/Badge";
 
 
 interface MessageButtonProps {

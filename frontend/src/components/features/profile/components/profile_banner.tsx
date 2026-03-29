@@ -1,0 +1,36 @@
+
+import type { UserDTO } from "../../../../dtos/models_dtos/user_dto";
+import defaultBanner from "../../../../assets/defaultProfileBanner.jpg";
+import { Avatar } from "../../../shared/Avatar";
+import { ProfileSocials } from "./profile_socials";
+
+type ProfileBannerProps = {
+  bannerUrl?: string | null;
+  user: UserDTO;
+};
+
+export function ProfileBanner({ bannerUrl, user }: ProfileBannerProps) {
+  return (
+    <div className="w-full z-0">
+      {/* Banner */}
+      <div className="relative w-full h-48 sm:h-64">
+
+        <img src={bannerUrl ? bannerUrl : defaultBanner} alt="Banner" className="w-full h-full object-center object-cover" />
+
+
+        {/* Avatar */}
+        <div className="absolute bottom-0 translate-y-1/2 left-1/2 -translate-x-1/2">
+          
+            <Avatar user={user} className="object-cover rounded-full w-28 aspect-square
+              sm:w-36 
+              md:w-44 
+              lg:w-52 " />
+          </div>
+
+        </div>
+
+        
+     
+    </div>
+  );
+}

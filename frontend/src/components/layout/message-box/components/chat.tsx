@@ -7,14 +7,15 @@ interface ChatMessage {
 }
 
 export function Chat() {
+
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const stompClientRef = useRef<Client | null>(null);
 
   useEffect(() => {
     const client = new Client({
-      // PURE WebSocket (no SockJS)
-      brokerURL: "ws://localhost:8080/ws", // 👈 make sure this matches your Spring endpoint
+     
+      brokerURL: "ws://localhost:8080/ws", 
 
       reconnectDelay: 5000,
 
@@ -47,7 +48,7 @@ export function Chat() {
     if (!input.trim()) return;
 
     const msg: ChatMessage = {
-      from: "Tomer", // replace with auth user
+      from: "", 
       content: input,
     };
 

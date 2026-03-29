@@ -1,7 +1,7 @@
 import axios from "axios";
 import { BASE_API } from "../util/base_api";
 import type { UpdateUserDTO } from "../dtos/models_dtos/request_dto/update_user_dto";
-import type { ChangePasswordDTO } from "../components/pages/other-pages/settings/security_settings";
+import type { ChangePasswordDTO } from "../components/pages/other-pages/settings/pages/security_settings";
 import type { DeleteUserRequestDTO } from "../components/pages/other-pages/settings/user_settings_area/delete_account";
 
 

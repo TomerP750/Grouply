@@ -1,7 +1,7 @@
 import { BiChevronRight } from "react-icons/bi";
 import type { NotificationDTO } from "../../../../models/notification.dto";
 import type { NotificationType } from "../../../../models/notification.type";
-import { Avatar } from "../../../elements/Avatar";
+import { Avatar } from "../../../shared/Avatar";
 import defaultAvatar from "../../../../assets/defaultAvatar.png"
 
 interface NotificationCardProps {

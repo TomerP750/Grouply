@@ -11,7 +11,7 @@ export function Panel({ children, onClose, title }: PanelProps) {
   return (
     <div
       className="w-[22rem] sm:w-[24rem] h-[28rem]
-                 bg-white dark:bg-slate-900 shadow-2xl rounded-2xl
+                 bg-white dark:bg-stone-900 shadow-2xl rounded-2xl
                  flex flex-col overflow-hidden"
       role="dialog"
       aria-modal="true"

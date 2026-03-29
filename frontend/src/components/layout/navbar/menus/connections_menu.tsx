@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { ConnectionRequestCard } from "./connection_request_card";
 import { BiGroup } from "react-icons/bi";
 import { NavLink } from "react-router-dom";
-import { Menu } from "../../../elements/Menu";
+import { Menu } from "../../../shared/Menu";
 
 
 export function ConnectionMenu() {

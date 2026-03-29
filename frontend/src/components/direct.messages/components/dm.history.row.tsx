@@ -1,6 +1,6 @@
 import { useDm } from "../../../context/Dm_context";
 import { useUser } from "../../../redux/hooks";
-import { Avatar } from "../../elements/Avatar";
+import { Avatar } from "../../shared/Avatar";
 import type { DirectMessageRoomDTO } from "../models/direct.message.room.dto";
 
 interface DmHistoryRowProps {
@@ -29,9 +29,9 @@ export function DmHistoryRow({ room }: DmHistoryRowProps) {
     <article
       onClick={() => openConversation(room)}
       className="group flex cursor-pointer items-center gap-3 rounded-xl
-                 bg-slate-800/60 px-4 py-3
-                 border border-slate-700/70
-                 hover:bg-slate-800 hover:border-sky-500/70
+                 bg-neutral-200 dark:bg-stone-800 px-4 py-3
+                 
+                 hover:bg-neutral-300 dark:hover:bg-stone-900 
                  transition-colors duration-150"
     >
       <div className="relative flex-shrink-0">

@@ -1,33 +1,32 @@
 import { Route, Routes } from "react-router-dom";
-import { Home } from "../pages/home/Home";
-
 import { useUserSelector } from "../../redux/hooks";
-import About from "../pages/about/About";
-import { RecruiterSignUp } from "../pages/authentication/recruiter-auth/recruiter_signup";
-import { SignUpWizard } from "../pages/authentication/signup-wizard/SignUpWizard";
-import { Login } from "../pages/authentication/user_auth/Login";
+import About from "../features/about/About";
+import { ArchivedPostsFeed } from "../features/archived_posts-area/archived_posts_feed";
+import { RecruiterLogin } from "../features/authentication/recruiter-auth/recruiter_login";
+import { RecruiterSignUp } from "../features/authentication/recruiter-auth/recruiter_signup";
+import { SignUpWizard } from "../features/authentication/signup-wizard/SignUpWizard";
+import { Login } from "../features/authentication/user_auth/login";
+import { Dashboard } from "../features/dashboard/dashboard_index/dashboard";
+import { Overview } from "../features/dashboard/dashboard_index/dashboard_index";
+import { TechnologiesTable } from "../features/dashboard/tables/admin_tables/technologies_table";
+import { UsersTable } from "../features/dashboard/tables/admin_tables/users-tabel";
+import { JoinRequestsTable } from "../features/dashboard/tables/user_tables/join_requests_table";
+import { PostsTable } from "../features/dashboard/tables/user_tables/posts_table";
+import { ProjectMembersTable } from "../features/dashboard/tables/user_tables/project_members_table";
+import { ProjectsTable } from "../features/dashboard/tables/user_tables/projects-tables";
+import { Home } from "../features/home/Home";
+import { NotFoundPage } from "../features/other-pages/not-found/not.found.page";
+import { DisplaySettings } from "../features/other-pages/settings/pages/display_settings";
+import { SecuritySettings } from "../features/other-pages/settings/pages/security_settings";
+import { SettingsPage } from "../features/other-pages/settings/pages/SettingsPage";
+import { UserSettings } from "../features/other-pages/settings/pages/user_settings_area/user_settings";
+import { Feed } from "../features/posts-area/feed/pages/feed";
+import FeedPage from "../features/posts-area/feed/pages/feed_page";
+import { CreatePostForm } from "../features/posts-area/forms/create_post_form";
+import { PostPage } from "../features/posts-area/project_info_page/post_page";
+import { ProfilePage } from "../features/profile/pages/profile_page";
+import { ReviewProjectPage } from "../features/review_project/pages/review_project_page";
 
-import { ProjectMembersTable } from "../pages/dashboard/tables/user_tables/project_members_table";
-import { ProjectsTable } from "../pages/dashboard/tables/user_tables/projects-tables";
-import { DisplaySettings } from "../pages/other-pages/settings/display_settings";
-import { SecuritySettings } from "../pages/other-pages/settings/security_settings";
-import { SettingsPage } from "../pages/other-pages/settings/SettingsPage";
-import { UserSettings } from "../pages/other-pages/settings/user_settings_area/user_settings";
-import { Feed } from "../pages/posts-area/feed";
-import { PostPage } from "../pages/posts-area/project_info_page/post_page";
-import { ProfilePage } from "../pages/profile/pages/profile_page";
-import { RecruiterLogin } from "../pages/authentication/recruiter-auth/recruiter_login";
-import { ArchivedPostsFeed } from "../pages/archived_posts-area/archived_posts_feed";
-import { UsersTable } from "../pages/dashboard/tables/admin_tables/users-tabel";
-import { TechnologiesTable } from "../pages/dashboard/tables/admin_tables/technologies_table";
-import FeedPage from "../pages/posts-area/feed_page";
-import { ReviewProjectPage } from "../pages/review_project/pages/review_project_page";
-import { PostsTable } from "../pages/dashboard/tables/user_tables/posts_table";
-import { JoinRequestsTable } from "../pages/dashboard/tables/user_tables/join_requests_table";
-import { Dashboard } from "../pages/dashboard/dashboard_index/dashboard";
-import { Overview } from "../pages/dashboard/dashboard_index/dashboard_index";
-import { CreatePostForm } from "../pages/posts-area/forms/create_post_form";
-import { NotFoundPage } from "../pages/other-pages/not.found.page";
 
 
 

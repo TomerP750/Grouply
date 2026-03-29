@@ -5,7 +5,7 @@ import { FaArrowLeft } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { useDm } from "../../../context/Dm_context";
 import directMessageRoomService from "../../../service/direct.message.room.service";
-import { Avatar } from "../../elements/Avatar";
+import { Avatar } from "../../shared/Avatar";
 import type { DirectMessageRoomDTO } from "../models/direct.message.room.dto";
 import type { SendDmDTO } from "../models/send.dm.dto";
 import type { DirectMessageDTO } from "../models/direct.message.dto";

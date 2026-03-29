@@ -11,14 +11,14 @@ export function DirectMessageHistoryHeader() {
 
             {/* Search */}
             <div className="flex flex-1 items-center gap-2 rounded-2xl border border-slate-300 bg-slate-50 px-3 py-1.5 text-sm
-                      focus-within:border-sky-500 focus-within:ring-1 focus-within:ring-sky-500
-                      dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100">
-                <BiSearch className="text-slate-400 dark:text-slate-500" size={18} />
+                    focus-within:ring-1 focus-within:ring-white/30
+                      dark:border-slate-700 dark:bg-stone-800 dark:text-slate-100">
+                <BiSearch className="text-slate-400 dark:text-white/50" size={18} />
                 <input
                     type="text"
                     placeholder="Search conversations..."
-                    className="w-full bg-transparent text-sm text-slate-900 placeholder:text-slate-400
-                     focus:outline-none dark:text-slate-100 dark:placeholder:text-slate-500"
+                    className="w-full bg-transparent text-sm text-white/90 placeholder:text-black/50
+                     focus:outline-none dark:text-slate-100 dark:placeholder:text-white/50"
                 />
             </div>
 

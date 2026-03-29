@@ -14,15 +14,6 @@
   --bp-2xl: 1530px;
 }
 
-body {
-  background: linear-gradient(to right, #e0f2fe, #e0e7ff); /* light mode */
-}
-
-.dark body {
-  background: linear-gradient(to right, #0f172a, #02284f, #1c1917); /* dark */
-}
-
-
 
 
 html::-webkit-scrollbar,
