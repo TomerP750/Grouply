@@ -90,13 +90,11 @@ export function ReviewProjectPage() {
     if (result) {
        
         return (
-            <div className="min-h-screen bg-gradient-to-br from-slate-100 via-indigo-100 to-sky-200 dark:from-slate-900 dark:via-sky-950 dark:to-stone-900">
+            <div className="min-h-screen bg-gradient-to-br from-slate-100 via-indigo-100 to-sky-200 dark:from-stone-900 dark:to-stone-950">
                 
-                <Navbar />
-
                 <main className="w-full ">
                     {/* Top actions */}
-                    <div className=" max-w-5xl mx-auto w-full px-4 sm:px-6 lg:px-8 mt-6">
+                    <div className=" max-w-5xl mx-auto w-full px-4 sm:px-6 lg:px-8 mt-6 lg:pt-20">
                         <button
                             onClick={() => setResult(false)}
                             className="cursor-pointer inline-flex items-center gap-1 px-4 py-2 rounded-lg text-slate-700  transition bg-sky-500 hover:bg-sky-600 dark:text-slate-100 "
@@ -163,10 +161,10 @@ export function ReviewProjectPage() {
 
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-100 via-indigo-100 to-sky-200 dark:bg-gradient-to-br dark:from-slate-900 dark:via-sky-950 dark:to-stone-900">
-            <Navbar />
-
-            <section className="mx-auto max-w-3xl px-4 py-10 mt-20 flex flex-col items-center justify-center gap-8 dark:text-white">
+        <div className="min-h-screen bg-gradient-to-br from-slate-100 to-sky-200 dark:bg-gradient-to-br dark:from-stone-900 dark:to-stone-950">
+            
+            <section className="mx-auto max-w-3xl px-4 py-10 lg:pt-35 flex flex-col items-center justify-center gap-8 dark:text-white">
+                
                 <h1 className="text-center text-3xl font-semibold tracking-wide">
                     {loading ? "Reviewing Project" : "Review Your Projects"}
                 </h1>
@@ -179,7 +177,7 @@ export function ReviewProjectPage() {
                         required
                         inputMode="url"
                         pattern="https?://.+"
-                        className="w-full rounded-full bg-indigo-200 dark:bg-slate-700/60 px-4 py-2 shadow-md shadow-black/20 dark:shadow-black/40 outline-none transition
+                        className="w-full rounded-full bg-indigo-200 dark:bg-stone-700/60 px-4 py-2 shadow-md shadow-black/20 dark:shadow-black/40 outline-none transition
                     focus:ring-2 focus:ring-sky-500/50 dark:focus:ring-sky-500 "
                     />
                 </div>
@@ -223,13 +221,13 @@ export function ReviewProjectPage() {
           rounded-full border px-4 py-2.5 text-sm font-medium text-center
           cursor-pointer outline-none shadow-sm
           border-slate-300 bg-white/95 text-slate-800
-          hover:border-blue-400 hover:bg-slate-50
+          hover:border-blue-400 hover:bg-neutral-50
           focus:ring-2 focus:ring-blue-500/60 focus:border-blue-500
           disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:bg-white
 
-          dark:bg-slate-900/90 dark:text-slate-100
+          dark:bg-stone-800 dark:text-slate-100
           dark:border-slate-700
-          dark:hover:border-blue-500 dark:hover:bg-slate-900
+          dark:hover:border-white/50 dark:hover:bg-stone-900
           dark:focus:ring-blue-500/70 dark:focus:border-blue-500
           dark:disabled:bg-slate-900
         "
@@ -240,7 +238,7 @@ export function ReviewProjectPage() {
                                     <option
                                         key={p.id}
                                         value={p.githubRepositoryUrl}
-                                        className="bg-white text-slate-900 dark:bg-slate-900 dark:text-slate-100"
+                                        className="bg-white text-slate-900 dark:bg-stone-900 dark:text-slate-100"
                                     >
                                         {p.name}
                                     </option>

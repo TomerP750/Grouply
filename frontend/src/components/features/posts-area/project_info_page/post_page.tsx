@@ -1,15 +1,13 @@
 import { useEffect, useState } from "react";
-import { NavLink, useParams } from "react-router-dom"
-import postService from "../../../../service/post_service";
-import type { PostDTO } from "../../../../dtos/models_dtos/post_dto";
+import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { Navbar } from "../../../layout/navbar/pages/Navbar";
-import { useScrollToTop } from "../../../../util/helper_hooks";
-import { PostCardPositionCard } from "../post_card/post_card_position_card";
+import type { PostDTO } from "../../../../dtos/models_dtos/post_dto";
 import { useUser } from "../../../../redux/hooks";
-import { PostPositionPageCard } from "./post_page_position_card";
-import { toNormal } from "../../../../util/util_functions";
+import postService from "../../../../service/post_service";
+import { useScrollToTop } from "../../../../util/helper_hooks";
 import { technologyIconMap } from "../../../../util/technology_icon_mapper";
+import { toNormal } from "../../../../util/util_functions";
+import { PostPositionPageCard } from "./post_page_position_card";
 
 
 export function PostPage() {
@@ -38,27 +36,17 @@ export function PostPage() {
 
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-white to-slate-100 dark:via-teal-950 dark:to-stone-900 text-slate-900 dark:text-white">
-            <Navbar />
-
+        <div className="min-h-screen bg-gradient-to-br from-neutral-100 to-neutral-200 dark:via-teal-950 dark:to-stone-900 text-slate-900 dark:text-white">
+            
             <main className="w-full flex flex-col items-center mx-auto pb-8">
 
 
                 {/* Card */}
-                <section className="bg-gradient-to-br from-indigo-100 to-slate-200 dark:from-slate-800 dark:to-sky-950 shadow-xl shadow-gray-500 dark:shadow-slate-900 flex flex-col items-center w-full p-5  min-h-screen">
+                <section className="bg-gradient-to-br from-indigo-100 to-slate-200 dark:from-stone-800 dark:to-stone-950 shadow-xl shadow-gray-500 dark:shadow-slate-900 flex flex-col items-center w-full p-5  min-h-screen">
 
-                    <div className="w-9/10 sm:w-4/5 space-y-2 py-10">
+                    <div className="w-9/10 sm:w-4/5 space-y-2 py-10 lg:pt-25">
 
-                        {/* Back to home*/}
-                        <div className="mb-8 w-full flex justify-center">
-                            <NavLink
-                                to="/"
-                                className="inline-flex rounded-full items-center gap-2 dark:text-sky-400 hover:scale-110 duration-200"
-                            >
-                                Back to home
-                            </NavLink>
-                        </div>
-
+                       
                         <p className="text-lg sm:text-4xl font-semibold mb-8">{post && toNormal(post?.title)}</p>
                         <p className="dark:text-gray-300 max-w-9/10 break-words">{post && toNormal(post?.description)}</p>
                         <p className="mb-5">Project's Technologies:</p>

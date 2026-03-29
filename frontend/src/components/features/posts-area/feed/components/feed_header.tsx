@@ -19,8 +19,8 @@ export function FeedHeader() {
     border px-6 py-6
     bg-slate-50 border-slate-200 text-slate-900
     hover:bg-slate-100 hover:border-blue-400
-    dark:bg-slate-900/90 dark:border-slate-800 dark:text-slate-100
-    dark:hover:bg-slate-900 dark:hover:border-blue-500/70
+    dark:bg-stone-900/90 dark:border-stone-800 dark:text-slate-100
+    dark:hover:bg-stone-900 dark:hover:border-stone-500/70
     transition-colors duration-200
   "
 >
@@ -32,9 +32,9 @@ export function FeedHeader() {
         w-10 h-10 rounded-full
         bg-slate-100 text-blue-600
         border border-slate-200
-        group-hover:border-blue-400
-        dark:bg-slate-800 dark:text-blue-400 dark:border-slate-700
-        dark:group-hover:border-blue-500
+        
+        dark:bg-stone-800 dark:text-white dark:border-white/10
+        
       "
     >
       <BiPlus className="text-xl" />

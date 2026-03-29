@@ -20,7 +20,7 @@ const labelCls = "text-sm font-medium text-slate-700 dark:text-slate-200";
 const inputBase =
   "w-full rounded-md border bg-white px-3 py-2 text-sm " +
   "text-slate-900 outline-none transition " +
-  "dark:bg-slate-900 dark:text-slate-100 " +
+  "dark:bg-stone-900 dark:text-white/80 " +
   "border-slate-300 dark:border-slate-600 " +
   "focus:border-teal-500 focus:ring-2 focus:ring-sky-500 dark:focus:ring-teal-500/60 focus:ring-offset-0";
 const errorCls = "text-xs text-red-500 mt-1";
@@ -83,11 +83,11 @@ export function CreatePostForm({ onAdd }: CreatePostFormProps) {
   };
 
   return (
-    <div className="min-h-screen flex justify-center">
+    <div className="min-h-screen flex justify-center dark:bg-stone-900">
    
       <form
         onSubmit={handleSubmit(sendCreation)}
-        className="flex flex-col w-1/2 pb-10 bg-sky-300/10"
+        className="flex flex-col w-1/2 pb-10 pt-25"
       >
         {/* Body */}
         <div className="flex-1 overflow-y-auto mt-5 px-3 sm:px-5 space-y-6">

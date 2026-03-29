@@ -11,7 +11,7 @@ export function Navbar() {
 
     const { pathname } = useLocation();
 
-    const hideNavbar = pathname.startsWith("/dashboard");
+    const hideNavbar = pathname.startsWith("/dashboard") || pathname.startsWith("/login") || pathname.startsWith("/signup");
 
     if (hideNavbar) {
         return null;

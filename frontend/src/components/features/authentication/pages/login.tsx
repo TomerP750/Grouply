@@ -1,5 +1,3 @@
-
-
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
@@ -12,29 +10,32 @@ import { BiGroup, BiLoader, BiLoaderAlt } from "react-icons/bi";
 import authService from "../../../../service/auth_service";
 import { login } from "../../../../redux/AuthSlice";
 import { toast } from "react-toastify";
-import { MdWorkOutline } from "react-icons/md";
+import { inputStyle } from "../components/shared/ui/style";
 
-export interface RecruiterLoginRequestDTO {
+export type LoginRequestDTO = {
     email: string;
     password: string;
 };
 
 
-export function RecruiterLogin() {
+
+
+export function Login() {
+
     const [loading, setLoading] = useState<boolean>(false);
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [checkedRememberMe, setCheckedRememberMe] = useState<boolean>(false);
 
-    const { register, handleSubmit, formState: { errors } } = useForm<RecruiterLoginRequestDTO>();
+    const { register, handleSubmit, formState: { errors } } = useForm<LoginRequestDTO>();
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const handleLogin = async (data: RecruiterLoginRequestDTO) => {
+    const handleLogin = async (data: LoginRequestDTO) => {
 
         setLoading(true);
 
-        authService.recruiterLogin(data)
+        authService.login(data)
             .then(res => {
                 localStorage.token = res.token;
                 dispatch(login(res.token));
@@ -50,24 +51,24 @@ export function RecruiterLogin() {
     };
 
     return (
-        <div className="min-h-screen overflow-hidden bg-gradient-to-br from-slate-100 via-white to-slate-100 text-slate-800 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 dark:text-slate-100">
+        <div className="min-h-screen overflow-hidden dark:bg-stone-900  text-slate-800 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 dark:text-slate-100">
 
             <div className="mx-auto flex min-h-screen max-w-6xl flex-col items-center justify-center px-4 py-10">
 
                 <NavLink
                     to={"/"}
-                    className="mb-8 inline-flex items-center gap-2 rounded-full border border-indigo-500/40 bg-white/70 px-4 py-2 text-sm font-medium text-indigo-700 dark:border-teal-400/40 dark:hover:bg-slate-900 dark:bg-slate-800/60 dark:text-teal-300"
+                    className="mb-8 inline-flex items-center gap-2 rounded-full border border-sky-500/40 dark:border-sky-400/40 bg-white/70 px-4 py-2 text-sm font-medium text-sky-600  dark:hover:bg-slate-900 dark:bg-slate-800/60 dark:text-slate-300"
                 >
                     <BsArrowLeft /> Return to home
                 </NavLink>
 
                 <div className="w-full max-w-md">
                     {/* Card */}
-                    <div className="rounded-3xl border border-slate-200/70 bg-white/80 p-6 shadow-xl backdrop-blur dark:border-slate-700/60 dark:bg-slate-900/60">
+                    <div className="rounded-3xl p-6 shadow-xl backdrop-blur ">
                         {/* Logo / Title */}
                         <div className="mb-6 flex flex-col items-center text-center">
-                            <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-teal-500 text-white">
-                                <MdWorkOutline size={30} />
+                            <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-500 dark:bg-sky-500 text-white">
+                                <BiGroup size={30} />
                             </div>
 
                             <h1 className="text-2xl font-bold">Sign in to Grouply</h1>
@@ -88,7 +89,7 @@ export function RecruiterLogin() {
                                     type="email"
                                     autoComplete="email"
                                     placeholder="you@example.com"
-                                    className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm shadow-sm outline-none ring-indigo-400/0 transition placeholder:text-slate-400 focus:ring-1 focus:ring-teal-500 dark:border-slate-700 dark:bg-slate-800"
+                                    className={`${inputStyle}`}
                                     {...register("email", {
                                         required: "Email is required",
                                         pattern: {
@@ -108,7 +109,7 @@ export function RecruiterLogin() {
                                     <label htmlFor="password" className="block text-sm font-medium">
                                         Password
                                     </label>
-                                    <NavLink to="/forgot" className="text-xs text-indigo-600 hover:underline dark:text-teal-400">
+                                    <NavLink to="/forgot" className="text-xs text-sky-600 hover:underline dark:text-sky-400">
                                         Forgot password?
                                     </NavLink>
                                 </div>
@@ -118,7 +119,7 @@ export function RecruiterLogin() {
                                         type={showPassword ? "text" : "password"}
                                         autoComplete="current-password"
                                         placeholder="••••••••"
-                                        className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 pr-10 text-sm outline-none ring-indigo-400/0 transition placeholder:text-slate-400 focus:ring-1 focus:ring-teal-500 dark:border-slate-700 dark:bg-slate-800"
+                                        className={`${inputStyle}`}
                                         {...register("password", {
                                             required: "Password is required",
                                             minLength: { value: 6, message: "Minimum 6 characters" },
@@ -151,7 +152,7 @@ export function RecruiterLogin() {
                                 </label>
                                 <span className="text-sm text-slate-600 dark:text-slate-300">
                                     No account?{" "}
-                                    <NavLink to={`/signup`} className="cursor-pointer font-medium text-teal-600 hover:underline dark:text-teal-400">
+                                    <NavLink to={`/signup`} className="cursor-pointer font-medium text-sky-600 hover:underline dark:text-sky-400">
                                         Sign up
                                     </NavLink>
                                 </span>
@@ -161,11 +162,11 @@ export function RecruiterLogin() {
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className="cursor-pointer mt-2 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-teal-500 to-teal-700 hover:from-teal-600 hover:to-teal-800 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-teal-500 disabled:cursor-not-allowed disabled:opacity-70"
+                                className="cursor-pointer mt-2 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-sky-500 hover:bg-sky-600  px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition disabled:cursor-not-allowed disabled:opacity-70"
                             >
-                                
+
                                 {loading ? <BiLoaderAlt size={20} className="animate-spin" /> : 'Sign in'}
-                            
+
                             </button>
                         </form>
                     </div>

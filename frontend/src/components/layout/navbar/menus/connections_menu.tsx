@@ -33,7 +33,7 @@ export function ConnectionMenu() {
 
         return (
             <Menu>
-                <div className="z-1000 animate-[bounceUp_0.25s_ease-out_forwards] bg-gradient-to-br from-white to-slate-100 dark:from-slate-800 dark:to-slate-900 py-5 px-4 absolute top-5 mt-15 right-25 w-95 max-w-95 min-h-64 rounded-2xl shadow-2xl dark:text-gray-300">
+                <div className="z-1000 animate-[bounceUp_0.25s_ease-out_forwards] bg-gradient-to-br from-white to-slate-100 dark:from-stone-800 dark:to-stone-900 py-5 px-4 absolute top-5 mt-15 right-25 w-95 max-w-95 min-h-64 rounded-2xl shadow-2xl dark:text-gray-300">
                     <div className="w-full flex min-h-64 flex-col">
 
                         {/* List */}
@@ -59,7 +59,7 @@ export function ConnectionMenu() {
 
     return (
         <Menu>
-            <div className="animate-[bounceUp_0.25s_ease-out_forwards] bg-gradient-to-br from-white to-slate-100 dark:from-slate-800 dark:to-slate-900 flex items-center justify-center py-5 px-4 absolute top-2 mt-15 right-45 w-95 max-w-95 min-h-64 rounded-2xl shadow-2xl dark:text-gray-300">
+            <div className="animate-[bounceUp_0.25s_ease-out_forwards] bg-gradient-to-br from-white to-slate-100 dark:from-stone-900 dark:to-stone-900 flex items-center justify-center py-5 px-4 absolute top-2 mt-15 right-45 w-95 max-w-95 min-h-64 rounded-2xl shadow-2xl dark:text-gray-300">
 
                 <menu className="w-full flex flex-col items-center">
 

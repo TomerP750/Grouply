@@ -85,7 +85,7 @@ export function SearchBar({ open, onClose }: SearchBarProps) {
 
         <div className="w-9/10 flex justify-between items-center gap-2 relative">
 
-          <div></div>
+          <div aria-hidden={true}></div>
 
           <div className="relative w-4/10">
             {/* Search / Loader Icon */}
@@ -95,7 +95,8 @@ export function SearchBar({ open, onClose }: SearchBarProps) {
                 className="animate-spin absolute left-3 top-1/2 -translate-y-1/2 text-black dark:text-slate-400"
               />
             ) : (
-              <div
+              <button
+              onClick={() => debouncedSearch(query)}
                 className="
     absolute left-3 top-1/2 flex h-9 w-9 -translate-y-1/2
     items-center justify-center rounded-full
@@ -104,9 +105,9 @@ export function SearchBar({ open, onClose }: SearchBarProps) {
               >
                 <BiSearch
                   size={20}
-                  className="text-black/30 dark:text-white/50"
+                  className="text-black/30 dark:text-white/50 cursor-pointer"
                 />
-              </div>
+              </button>
             )}
 
             {/* Query Input */}
@@ -116,7 +117,7 @@ export function SearchBar({ open, onClose }: SearchBarProps) {
               onChange={handleChange}
               placeholder="Search users..."
               className=" block dark:text-white w-full rounded-full dark:bg-stone-800 dark:hover:bg-stone-900 py-4 pl-15 pr-10 
-      placeholder:text-black/30 dark:placeholder:text-white/30 focus:outline-none"
+      placeholder:text-black/30 dark:placeholder:text-white/30 focus:bg-stone-900 focus:outline-none"
             />
 
             {query.length > 0 && (

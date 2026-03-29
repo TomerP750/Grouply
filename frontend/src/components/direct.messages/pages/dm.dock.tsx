@@ -12,14 +12,12 @@ export function DirectMessagesDock() {
 
     if (state === "button") {
         return (
-            <div className="text-black dark:text-white fixed bottom-5 right-5 z-50">
-                <MessageButton onOpen={openHistory} />
-            </div>
+            <MessageButton onOpen={openHistory} />
         );
     }
 
     function getPanel() {
-        
+
         switch (state) {
 
             case "history":

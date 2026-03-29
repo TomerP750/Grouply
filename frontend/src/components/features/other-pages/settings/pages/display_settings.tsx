@@ -7,7 +7,7 @@ export function DisplaySettings() {
     const { t } = useTranslation();
 
     return (
-        <form className="p-10 flex flex-col md:flex-row items-center md:items-start px-6 gap-10 overflow-y-auto text-black dark:text-white">
+        <form className="p-10 flex flex-col md:flex-row items-center md:items-start px-6 gap-10 lg:pt-30 overflow-y-auto text-black dark:text-white">
             {/* header */}
             <div className="space-y-2 dark:text-white">
                 <p className="font-semibold text-lg">{t("settings.display.title")}</p>

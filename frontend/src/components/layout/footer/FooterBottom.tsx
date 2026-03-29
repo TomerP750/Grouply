@@ -3,8 +3,8 @@ import { NavLink } from "react-router-dom";
 
 export function FooterBottom() {
   return (
-    <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4 dark:text-slate-400">
-      <p className="text-sm font-medium ">
+    <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4 dark:text-white/80">
+      <p className="text-sm  ">
         &copy; {new Date().getFullYear()} Grouply, Inc. All rights reserved.
       </p>
       <div className="flex items-center gap-5">

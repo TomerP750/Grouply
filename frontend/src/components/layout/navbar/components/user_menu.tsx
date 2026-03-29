@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { BiChevronRight, BiCog, BiFolder, BiLogOut } from 'react-icons/bi';
 import { HiOutlineQuestionMarkCircle } from 'react-icons/hi';
 import { IoColorPaletteOutline } from 'react-icons/io5';
@@ -7,9 +7,8 @@ import { useDispatch } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useTheme } from '../../../../context/ThemeContext';
 import { logout, type JwtUser } from '../../../../redux/AuthSlice';
-import './user_menu_styles.css';
 import { Menu } from '../../../shared/Menu';
-import { useTranslation } from 'react-i18next';
+import './user_menu_styles.css';
 
 
 const rowStyle = "flex items-center justify-between hover:bg-gray-300/40 dark:hover:bg-gray-300/10 py-1 px-2 cursor-pointer";
@@ -41,7 +40,7 @@ export function UserMenu({ user }: UserMenuProps) {
 
     return (
         <Menu>
-            <main className="user-menu gap-5 bg-gradient-to-br from-white to-slate-100 dark:from-slate-800 dark:to-slate-900 flex flex-col items-start py-5 px-4 absolute top-7 mt-15 right-13 w-85 min-h-64 rounded-2xl shadow-2xl dark:text-gray-300 z-[1000]">
+            <main className="user-menu gap-5 bg-gradient-to-br from-white to-slate-100 dark:from-stone-800 dark:to-stone-900 border border-white/10 flex flex-col items-start py-5 px-4 absolute top-7 mt-15 right-13 w-85 min-h-64 rounded-2xl shadow-2xl dark:text-gray-300 z-[1000]">
 
                 <section className='flex flex-col w-full '>
                     <p>{fullName}</p>

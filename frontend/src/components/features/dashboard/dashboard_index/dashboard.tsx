@@ -31,7 +31,7 @@ export function Dashboard() {
     }, [])
 
     return (
-        <main aria-label="dashboard" className="min-h-screen flex flex-col">
+        <main aria-label="dashboard" className="min-h-screen flex flex-col dark:bg-stone-900">
 
             <DashboardNavbar user={user} />
             <Panel />

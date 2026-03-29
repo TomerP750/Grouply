@@ -2,10 +2,8 @@ import { Route, Routes } from "react-router-dom";
 import { useUserSelector } from "../../redux/hooks";
 import About from "../features/about/About";
 import { ArchivedPostsFeed } from "../features/archived_posts-area/archived_posts_feed";
-import { RecruiterLogin } from "../features/authentication/recruiter-auth/recruiter_login";
-import { RecruiterSignUp } from "../features/authentication/recruiter-auth/recruiter_signup";
 import { SignUpWizard } from "../features/authentication/signup-wizard/SignUpWizard";
-import { Login } from "../features/authentication/user_auth/login";
+import { Login } from "../features/authentication/pages/login";
 import { Dashboard } from "../features/dashboard/dashboard_index/dashboard";
 import { Overview } from "../features/dashboard/dashboard_index/dashboard_index";
 import { TechnologiesTable } from "../features/dashboard/tables/admin_tables/technologies_table";
@@ -41,8 +39,6 @@ export function Routing() {
                 <Route path="/about" element={<About />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<SignUpWizard />} />
-                <Route path="/recruiter/signup" element={<RecruiterSignUp />} />
-                <Route path="/recruiter/login" element={<RecruiterLogin />} />
                 <Route path="/settings" element={<SettingsPage />}>
                     <Route index element={<UserSettings />} />
                     <Route path="display" element={<DisplaySettings />} />

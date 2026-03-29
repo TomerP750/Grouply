@@ -13,10 +13,10 @@ export function FooterItem({ footerItem }: FooterItemProps) {
 
     return (
         <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wider dark:text-slate-300">
+            <h3 className="text-sm font-medium uppercase tracking-wide dark:text-white">
                 {title}
             </h3>
-            <ul className="mt-4 space-y-3 dark:text-slate-400">
+            <ul className="mt-4 space-y-3 dark:text-white/80 text-sm">
                 <li><NavLink to="#" className={`${linkStyle}`}>{link1}</NavLink></li>
                 <li><NavLink to="#" className={`${linkStyle}`}>{link2}</NavLink></li>
                 <li><NavLink to="#" className={`${linkStyle}`}>{link3}</NavLink></li>

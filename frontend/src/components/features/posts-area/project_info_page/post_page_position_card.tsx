@@ -17,6 +17,7 @@ interface PostPositionPageCardProps {
 export function PostPositionPageCard({ postPosition, post }: PostPositionPageCardProps) {
 
     const user = useUser();
+    
     const [applied, setApplied] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
     const [isMember, setIsMember] = useState<boolean>(false);
@@ -78,7 +79,7 @@ export function PostPositionPageCard({ postPosition, post }: PostPositionPageCar
             <button
                 disabled={loading || isMember}
                 onClick={handleRequestToJoin}
-                className={`py-1 px-2 ${applied ? 'bg-green-600' : 'bg-blue-600'} rounded-lg cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed`}>
+                className={`py-1 px-2 ${applied ? 'bg-green-600' : 'bg-blue-600'} text-white rounded-lg cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed`}>
                 {loading ? <BiLoaderAlt size={20}/> : applied ? <BiCheck /> : <span className="text-white text-sm md:text-base">Request to Join</span>}
             </button>
         </div>

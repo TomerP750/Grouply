@@ -3,15 +3,16 @@ import { useForm } from "react-hook-form";
 import { BiLoaderAlt } from "react-icons/bi";
 import { BsArrowLeft } from "react-icons/bs";
 import { FiEye, FiEyeOff } from "react-icons/fi";
-import { NavLink, useNavigate, useParams } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useWizardStep } from "../../../../../context/WizardStepContext";
 import authService from "../../../../../service/auth_service";
 import { useDispatch } from "react-redux";
 import { login } from "../../../../../redux/AuthSlice";
 import type { SignUpRequestDTO } from "../Dtos/SignUpRequestDTO";
-import { ProgressBar } from "../progress_bar";
+import { inputStyle } from "../../components/shared/ui/style";
 
 export function SignUp() {
+
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -39,7 +40,7 @@ export function SignUp() {
   };
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-slate-100 via-white to-slate-100 text-slate-800 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 dark:text-slate-100">
+    <div className="relative min-h-screen overflow-hidden  bg-neutral-100 dark:bg-stone-900 text-slate-800  dark:text-white/80">
       <div className="mx-auto flex min-h-screen max-w-6xl flex-col items-center justify-center px-4 py-10">
         <NavLink
           to={"/"}
@@ -48,10 +49,10 @@ export function SignUp() {
           <BsArrowLeft /> Return to home
         </NavLink>
 
-        
+
         <div className="w-full max-w-xl">
           {/* Card */}
-          <div className="rounded-3xl border border-slate-200/70 bg-white/80 p-6 shadow-xl backdrop-blur dark:border-slate-700/60 dark:bg-slate-900/60">
+          <div className="rounded-3xl p-6 shadow-xl backdrop-blur ">
             {/* Title */}
             <div className="mb-6 text-center">
               <h1 className="text-3xl font-bold">Create your Grouply account</h1>
@@ -67,7 +68,7 @@ export function SignUp() {
                   id="firstName"
                   type="text"
                   autoComplete="given-name"
-                  className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm shadow-sm outline-none ring-indigo-400/0 transition placeholder:text-slate-400 focus:ring-2 dark:border-slate-700 dark:bg-slate-800"
+                  className={`${inputStyle}`}
                   {...register("accountDetails.firstName", { required: "First name is required", maxLength: { value: 40, message: "Max 40 chars" } })}
                 />
                 {errors.accountDetails?.firstName && <p className="mt-1 text-xs text-rose-500">{errors.accountDetails.firstName.message}</p>}
@@ -80,7 +81,7 @@ export function SignUp() {
                   id="lastName"
                   type="text"
                   autoComplete="family-name"
-                  className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm shadow-sm outline-none ring-indigo-400/0 transition placeholder:text-slate-400 focus:ring-2 dark:border-slate-700 dark:bg-slate-800"
+                  className={`${inputStyle}`}
                   {...register("accountDetails.lastName", { required: "Last name is required", maxLength: { value: 40, message: "Max 40 chars" } })}
                 />
                 {errors.accountDetails?.lastName && <p className="mt-1 text-xs text-rose-500">{errors.accountDetails.lastName.message}</p>}
@@ -94,7 +95,7 @@ export function SignUp() {
                   type="text"
                   autoComplete="username"
                   placeholder="dev_jane"
-                  className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm shadow-sm outline-none ring-indigo-400/0 transition placeholder:text-slate-400 focus:ring-2 dark:border-slate-700 dark:bg-slate-800"
+                  className={`${inputStyle}`}
                   {...register("accountDetails.username", {
                     required: "Username is required",
                     minLength: { value: 3, message: "Min 3 characters" },
@@ -113,8 +114,7 @@ export function SignUp() {
                   type="email"
                   autoComplete="email"
                   placeholder="you@example.com"
-                  className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-sm shadow-sm outline-none ring-indigo-400/0 transition placeholder:text-slate-400 focus:ring-2 dark:border-slate-700 dark:bg-slate-800"
-                  {...register("accountDetails.email", {
+                  className={`${inputStyle}`}                  {...register("accountDetails.email", {
                     required: "Email is required",
                     pattern: { value: /[^\s@]+@[^\s@]+\.[^\s@]+/, message: "Enter a valid email" },
                   })}
@@ -131,7 +131,7 @@ export function SignUp() {
                     type={showPassword ? "text" : "password"}
                     autoComplete="new-password"
                     placeholder="••••••••"
-                    className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 pr-10 text-sm shadow-sm outline-none ring-indigo-400/0 transition placeholder:text-slate-400 focus:ring-2 dark:border-slate-700 dark:bg-slate-800"
+                    className={`${inputStyle}`}
                     {...register("accountDetails.password", {
                       required: "Password is required",
                       minLength: { value: 6, message: "Minimum 6 characters" },
@@ -158,7 +158,7 @@ export function SignUp() {
                     type={showConfirmPassword ? "text" : "password"}
                     autoComplete="new-password"
                     placeholder="••••••••"
-                    className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 pr-10 text-sm shadow-sm outline-none ring-indigo-400/0 transition placeholder:text-slate-400 focus:ring-2 dark:border-slate-700 dark:bg-slate-800"
+                    className={`${inputStyle}`}
                     {...register("accountDetails.confirmPassword", {
                       required: "Please confirm your password",
                       validate: (val) =>
