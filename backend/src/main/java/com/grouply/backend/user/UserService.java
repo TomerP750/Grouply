@@ -1,23 +1,21 @@
 package com.grouply.backend.user;
 
-import com.grouply.backend.exceptions.ExistsException;
-import com.grouply.backend.exceptions.InvalidInputException;
-import com.grouply.backend.exceptions.UnauthorizedException;
+import com.grouply.backend.shared.exceptions.ExistsException;
+import com.grouply.backend.shared.exceptions.InvalidInputException;
+import com.grouply.backend.shared.exceptions.UnauthorizedException;
 import com.grouply.backend.user.Dtos.ChangePasswordRequestDTO;
 import com.grouply.backend.user.Dtos.DeleteUserDTO;
 import com.grouply.backend.user.Dtos.UpdateUserDTO;
 import com.grouply.backend.user.Dtos.UserDTO;
-import com.grouply.backend.util.EntityToDtoMapper;
+import com.grouply.backend.shared.util.EntityToDtoMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

@@ -1,9 +1,8 @@
 package com.grouply.backend.invitation;
 
-import com.grouply.backend.project.Project;
-import com.grouply.backend.project_member.ProjectMember;
-import com.grouply.backend.project_member.ProjectPosition;
-import com.grouply.backend.project_member.ProjectRole;
+import com.grouply.backend.project.project.Project;
+import com.grouply.backend.project.project_member.ProjectMember;
+import com.grouply.backend.project.project_member.ProjectPosition;
 import com.grouply.backend.user.User;
 import jakarta.persistence.*;
 import lombok.*;

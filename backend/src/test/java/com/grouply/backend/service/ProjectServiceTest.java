@@ -1,11 +1,10 @@
 package com.grouply.backend.service;
 
-import com.grouply.backend.project.Dtos.ProjectDTO;
-import com.grouply.backend.project.Project;
-import com.grouply.backend.project.ProjectRepository;
-import com.grouply.backend.project.ProjectService;
-import com.grouply.backend.project.ProjectStatus;
-import com.grouply.backend.project_member.ProjectMember;
+import com.grouply.backend.project.project.Dtos.ProjectDTO;
+import com.grouply.backend.project.project.Project;
+import com.grouply.backend.project.project.ProjectRepository;
+import com.grouply.backend.project.project.ProjectService;
+import com.grouply.backend.project.project.ProjectStatus;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -13,8 +12,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.*;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 

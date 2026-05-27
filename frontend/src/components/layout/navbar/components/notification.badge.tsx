@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from "react";
-import { useUserSelector } from "../../../../redux/hooks";
-import { Badge } from "../../../shared/Badge";
+import { useUserSelector } from "../../../shared/store/hooks";
+import { Badge } from "../../../shared/ui/Badge";
 import { NotificationMenu } from "../menus/notification_menu";
 import { BiBell } from "react-icons/bi";
 import type { NotificationDTO } from "../../../../models/notification.dto";

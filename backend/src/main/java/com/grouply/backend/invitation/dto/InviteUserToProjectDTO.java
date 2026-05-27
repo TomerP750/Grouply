@@ -1,6 +1,6 @@
 package com.grouply.backend.invitation.dto;
 
-import com.grouply.backend.project_member.ProjectPosition;
+import com.grouply.backend.project.project_member.ProjectPosition;
 import lombok.Data;
 
 @Data

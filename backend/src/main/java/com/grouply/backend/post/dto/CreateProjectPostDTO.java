@@ -1,6 +1,6 @@
 package com.grouply.backend.post.dto;
 
-import com.grouply.backend.project_member.ProjectPosition;
+import com.grouply.backend.project.project_member.ProjectPosition;
 import lombok.Data;
 
 import java.util.List;

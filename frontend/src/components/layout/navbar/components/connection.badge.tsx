@@ -1,8 +1,8 @@
 
 import { useEffect, useState } from "react";
-import { useUser, useUserSelector } from "../../../../redux/hooks";
+import { useUser, useUserSelector } from "../../../shared/store/hooks";
 import { HiOutlineGlobeAlt } from "react-icons/hi";
-import { Badge } from "../../../shared/Badge";
+import { Badge } from "../../../shared/ui/Badge";
 import { ConnectionMenu } from "../menus/connections_menu";
 
 interface ConnectionBadgeProps {

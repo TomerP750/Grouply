@@ -5,7 +5,7 @@ import { IoInformation } from "react-icons/io5";
 import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { logout } from "../../../../redux/AuthSlice";
-import { useUserSelector } from "../../../../redux/hooks";
+import { useUserSelector } from "../../../shared/store/hooks";
 
 
 const baseClasses = "flex flex-col items-center gap-1 flex-1 py-2";

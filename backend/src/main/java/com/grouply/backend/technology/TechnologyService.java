@@ -1,8 +1,8 @@
 package com.grouply.backend.technology;
 
-import com.grouply.backend.exceptions.InvalidInputException;
+import com.grouply.backend.shared.exceptions.InvalidInputException;
 import com.grouply.backend.technology.dto.TechnologyDTO;
-import com.grouply.backend.util.EntityToDtoMapper;
+import com.grouply.backend.shared.util.EntityToDtoMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;

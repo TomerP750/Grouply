@@ -1,6 +1,6 @@
 package com.grouply.backend.post.dto;
 
-import com.grouply.backend.project_post_position.ProjectPostPosition;
+import com.grouply.backend.post.project_post_position.ProjectPostPosition;
 import lombok.Data;
 
 import java.time.LocalDateTime;

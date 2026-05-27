@@ -5,7 +5,7 @@ import {
     type ReactNode,
 } from "react";
 import type { DirectMessageRoomDTO } from "../components/direct.messages/models/direct.message.room.dto";
-import { useUser } from "../redux/hooks";
+import { useUser } from "../components/shared/store/hooks";
 
 export type DmDockState = "button" | "history" | "conversation";
 

@@ -1,6 +1,6 @@
 package com.grouply.backend.statistics;
 
-import com.grouply.backend.security.CustomUserDetails;
+import com.grouply.backend.shared.security.CustomUserDetails;
 import com.grouply.backend.statistics.dto.StatisticsDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

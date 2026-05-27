@@ -1,8 +1,8 @@
 import { useForm, useWatch } from "react-hook-form";
 import { useEffect } from "react";
 import type { ProfileDTO } from "../../../../dtos/models_dtos/profile_dto";
-import { Modal } from "../../../shared/Modal";
-import profileService from "../../../../service/profile_service";
+import { Modal } from "../../../shared/ui/Modal";
+import profileService from "../../../../features/profile/api/profile_service";
 import { toast } from "react-toastify";
 import "./styles.css";
 import { BiLoaderAlt } from "react-icons/bi";

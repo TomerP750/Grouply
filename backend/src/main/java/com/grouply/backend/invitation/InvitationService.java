@@ -1,14 +1,14 @@
 package com.grouply.backend.invitation;
 
-import com.grouply.backend.exceptions.UnauthorizedException;
+import com.grouply.backend.shared.exceptions.UnauthorizedException;
 import com.grouply.backend.invitation.dto.InvitationResponseDTO;
 import com.grouply.backend.invitation.dto.InviteUserToProjectDTO;
-import com.grouply.backend.project.Project;
-import com.grouply.backend.project.ProjectRepository;
-import com.grouply.backend.project_member.ProjectMember;
-import com.grouply.backend.project_member.ProjectMemberRepository;
-import com.grouply.backend.project_member.ProjectPosition;
-import com.grouply.backend.project_member.ProjectRole;
+import com.grouply.backend.project.project.Project;
+import com.grouply.backend.project.project.ProjectRepository;
+import com.grouply.backend.project.project_member.ProjectMember;
+import com.grouply.backend.project.project_member.ProjectMemberRepository;
+import com.grouply.backend.project.project_member.ProjectPosition;
+import com.grouply.backend.project.project_member.ProjectRole;
 import com.grouply.backend.user.User;
 import com.grouply.backend.user.UserRepository;
 import lombok.RequiredArgsConstructor;

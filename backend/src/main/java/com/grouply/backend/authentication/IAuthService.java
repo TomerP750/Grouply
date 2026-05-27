@@ -1,7 +1,7 @@
 package com.grouply.backend.authentication;
 
 import com.grouply.backend.authentication.dto.*;
-import com.grouply.backend.exceptions.InvalidInputException;
+import com.grouply.backend.shared.exceptions.InvalidInputException;
 
 public interface IAuthService {
 

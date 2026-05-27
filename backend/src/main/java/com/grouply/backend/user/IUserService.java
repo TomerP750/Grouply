@@ -1,8 +1,8 @@
 package com.grouply.backend.user;
 
 
-import com.grouply.backend.exceptions.ExistsException;
-import com.grouply.backend.exceptions.InvalidInputException;
+import com.grouply.backend.shared.exceptions.ExistsException;
+import com.grouply.backend.shared.exceptions.InvalidInputException;
 import com.grouply.backend.user.Dtos.DeleteUserDTO;
 import com.grouply.backend.user.Dtos.UpdateUserDTO;
 import com.grouply.backend.user.Dtos.UserDTO;

@@ -1,8 +1,8 @@
 package com.grouply.backend.service;
 
-import com.grouply.backend.profile.Profile;
-import com.grouply.backend.profile.ProfileRepository;
-import com.grouply.backend.profile.ProfileService;
+import com.grouply.backend.profile.profile.Profile;
+import com.grouply.backend.profile.profile.ProfileRepository;
+import com.grouply.backend.profile.profile.ProfileService;
 import com.grouply.backend.profile.dto.ProfileDTO;
 import com.grouply.backend.user.User;
 import com.grouply.backend.user.UserRepository;

@@ -1,15 +1,12 @@
 package com.grouply.backend.invitation;
 
-import com.grouply.backend.exceptions.UnauthorizedException;
+import com.grouply.backend.shared.exceptions.UnauthorizedException;
 import com.grouply.backend.invitation.dto.InviteUserToProjectDTO;
-import com.grouply.backend.project.Dtos.ProjectDTO;
-import com.grouply.backend.project_member.ProjectPosition;
-import com.grouply.backend.security.CustomUserDetails;
+import com.grouply.backend.project.project_member.ProjectPosition;
+import com.grouply.backend.shared.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/invite")

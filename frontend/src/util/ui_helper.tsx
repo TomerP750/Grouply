@@ -1,6 +1,6 @@
 import { ProjectStatus } from "../dtos/enums/ProjectStatus";
 import { Role } from "../dtos/enums/Role";
-import { toNormal } from "./util_functions";
+import { toNormal } from "./format_functions";
 
 export function RoleBadge({ role }: { role: Role }) {
   let styles = "bg-slate-500/15 text-slate-400";

@@ -1,4 +1,4 @@
-import { useUserSelector } from "../../redux/hooks";
+import { useUserSelector } from "../shared/store/hooks";
 import { Footer } from "./footer/Footer";
 import { BottomNav } from "./navbar/pages/BottomNav";
 import { Navbar } from "./navbar/pages/Navbar";

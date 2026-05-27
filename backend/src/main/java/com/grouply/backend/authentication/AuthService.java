@@ -1,13 +1,13 @@
 package com.grouply.backend.authentication;
 
 import com.grouply.backend.authentication.dto.*;
-import com.grouply.backend.exceptions.InvalidInputException;
-import com.grouply.backend.profile.Profile;
-import com.grouply.backend.profile.ProfileRepository;
+import com.grouply.backend.shared.exceptions.InvalidInputException;
+import com.grouply.backend.profile.profile.Profile;
+import com.grouply.backend.profile.profile.ProfileRepository;
 import com.grouply.backend.recruiter.Recruiter;
 import com.grouply.backend.recruiter.RecruiterRepository;
-import com.grouply.backend.security.CustomUserDetails;
-import com.grouply.backend.security.JwtService;
+import com.grouply.backend.shared.security.CustomUserDetails;
+import com.grouply.backend.shared.security.JwtService;
 import com.grouply.backend.statistics.Statistics;
 import com.grouply.backend.statistics.StatisticsRepository;
 import com.grouply.backend.user.Role;

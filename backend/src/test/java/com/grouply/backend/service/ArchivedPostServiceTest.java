@@ -1,12 +1,11 @@
 package com.grouply.backend.service;
 
-import com.grouply.backend.archived_post.ArchivedPost;
-import com.grouply.backend.archived_post.ArchivedPostRepository;
-import com.grouply.backend.archived_post.ArchivedPostService;
-import com.grouply.backend.post.Post;
-import com.grouply.backend.post.PostRepository;
-import com.grouply.backend.project_member.ProjectMember;
-import com.grouply.backend.project_member.ProjectMemberRepository;
+import com.grouply.backend.post.archived_post.ArchivedPost;
+import com.grouply.backend.post.archived_post.ArchivedPostRepository;
+import com.grouply.backend.post.archived_post.ArchivedPostService;
+import com.grouply.backend.post.post.Post;
+import com.grouply.backend.post.post.PostRepository;
+import com.grouply.backend.project.project_member.ProjectMemberRepository;
 import com.grouply.backend.user.User;
 import com.grouply.backend.user.UserRepository;
 import org.junit.jupiter.api.BeforeEach;

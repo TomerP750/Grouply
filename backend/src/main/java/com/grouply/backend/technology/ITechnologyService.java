@@ -1,6 +1,6 @@
 package com.grouply.backend.technology;
 
-import com.grouply.backend.exceptions.InvalidInputException;
+import com.grouply.backend.shared.exceptions.InvalidInputException;
 import com.grouply.backend.technology.dto.TechnologyDTO;
 
 import java.util.List;

@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import { useUser, useUserSelector } from "../../../../redux/hooks";
+import { useUser, useUserSelector } from "../../../shared/store/hooks";
 import { NavbarCenter } from "../components/navbar-center";
 import './Navbar.css';
 import { NavbarLeft } from "../components/navbar_left";

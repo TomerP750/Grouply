@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useTheme } from '../../../../context/ThemeContext';
 import { logout, type JwtUser } from '../../../../redux/AuthSlice';
-import { Menu } from '../../../shared/Menu';
+import { Menu } from '../../../shared/ui/Menu';
 import './user_menu_styles.css';
 
 

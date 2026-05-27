@@ -1,5 +1,5 @@
 import { BiBellMinus, BiChat, BiGroup } from "react-icons/bi";
-import { Menu } from "../../../shared/Menu";
+import { Menu } from "../../../shared/ui/Menu";
 import type { NotificationDTO } from "../../../../models/notification.dto";
 import { NotificationCard } from "./notification.card";
 

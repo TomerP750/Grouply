@@ -1,9 +1,9 @@
 package com.grouply.backend.user;
 
-import com.grouply.backend.exceptions.ExistsException;
-import com.grouply.backend.exceptions.InvalidInputException;
-import com.grouply.backend.exceptions.UnauthorizedException;
-import com.grouply.backend.security.CustomUserDetails;
+import com.grouply.backend.shared.exceptions.ExistsException;
+import com.grouply.backend.shared.exceptions.InvalidInputException;
+import com.grouply.backend.shared.exceptions.UnauthorizedException;
+import com.grouply.backend.shared.security.CustomUserDetails;
 import com.grouply.backend.user.Dtos.ChangePasswordRequestDTO;
 import com.grouply.backend.user.Dtos.DeleteUserDTO;
 import com.grouply.backend.user.Dtos.UpdateUserDTO;

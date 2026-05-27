@@ -1,9 +1,9 @@
 package com.grouply.backend.join_request;
 
-import com.grouply.backend.exceptions.ExistsException;
-import com.grouply.backend.exceptions.UnauthorizedException;
+import com.grouply.backend.shared.exceptions.ExistsException;
+import com.grouply.backend.shared.exceptions.UnauthorizedException;
 import com.grouply.backend.join_request.dto.JoinRequestDTO;
-import com.grouply.backend.security.CustomUserDetails;
+import com.grouply.backend.shared.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

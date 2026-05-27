@@ -1,6 +1,6 @@
 package com.grouply.backend.profile.dto;
 
-import com.grouply.backend.social_link.dto.SocialLinkDTO;
+import com.grouply.backend.profile.social_link.dto.SocialLinkDTO;
 import lombok.Data;
 
 import java.util.Set;

@@ -1,8 +1,8 @@
 import { toast } from "react-toastify";
 import type { ConnectionRequestDTO } from "../../../../dtos/models_dtos/request_dto/connection_request_dto"
 import connectionRequestService from "../../../../service/connection_request_service";
-import { timeAgo } from "../../../../util/util_functions";
-import { Avatar } from "../../../shared/Avatar";
+import { timeAgo } from "../../../../util/format_functions";
+import { Avatar } from "../../../shared/ui/Avatar";
 
 
 const baseBtn = "cursor-pointer px-3 py-2 rounded-lg"

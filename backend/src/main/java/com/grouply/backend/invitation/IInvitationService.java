@@ -1,6 +1,6 @@
 package com.grouply.backend.invitation;
 
-import com.grouply.backend.exceptions.UnauthorizedException;
+import com.grouply.backend.shared.exceptions.UnauthorizedException;
 import com.grouply.backend.invitation.dto.InvitationResponseDTO;
 import com.grouply.backend.invitation.dto.InviteUserToProjectDTO;
 

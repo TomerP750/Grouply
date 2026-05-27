@@ -1,7 +1,7 @@
 package com.grouply.backend.post.dto;
 
 import com.grouply.backend.join_request.RequestStatus;
-import com.grouply.backend.post.Post;
+import com.grouply.backend.post.post.Post;
 import com.grouply.backend.user.User;
 import lombok.Data;
 

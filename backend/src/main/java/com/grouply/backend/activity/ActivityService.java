@@ -2,7 +2,7 @@ package com.grouply.backend.activity;
 
 import com.grouply.backend.activity.dto.ActivityDTO;
 import com.grouply.backend.user.User;
-import com.grouply.backend.util.EntityToDtoMapper;
+import com.grouply.backend.shared.util.EntityToDtoMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

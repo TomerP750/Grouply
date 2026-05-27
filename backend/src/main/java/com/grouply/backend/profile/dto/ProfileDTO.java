@@ -1,11 +1,8 @@
 package com.grouply.backend.profile.dto;
 
-import com.grouply.backend.position.Position;
 import com.grouply.backend.position.dto.PositionDTO;
-import com.grouply.backend.social_link.SocialLink;
-import com.grouply.backend.social_link.dto.SocialLinkDTO;
+import com.grouply.backend.profile.social_link.dto.SocialLinkDTO;
 import com.grouply.backend.user.Dtos.UserDTO;
-import com.grouply.backend.user.User;
 import lombok.Builder;
 import lombok.Data;
 

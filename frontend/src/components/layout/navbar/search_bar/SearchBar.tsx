@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import type { UserDTO } from "../../../../dtos/models_dtos/user_dto";
 import userService from "../../../../service/user_service";
 import { useBodyScrollLock } from "../../../../util/helper_hooks";
-import { Drawer } from "../../../shared/drawer";
+import { Drawer } from "../../../shared/ui/drawer";
 import './SearchBar.css';
 import { SearchBarResults } from "./SearchBarResults";
 
