@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { BiFilter } from "react-icons/bi";
-import { useFilters } from "../../../../context/filter_context";
 import { Hr } from "../../../shared/Hr";
 import { MobileFilters } from "./mobile_filters";
-import { RoleDemandSelect } from "./role_demand_select";
+// import { RoleDemandSelect } from "./role_demand_select";
 import { SortGroup } from "./sort_group";
 import { TechnologySelect } from "./technologies_select";
 import { useTranslation } from "react-i18next";
@@ -12,9 +11,10 @@ import "./filters.css";
 
 export function Filters() {
 
+  const [empty] = useState<boolean>(true);
+
   const [open, setOpen] = useState(true);
   const [moblieFiltersOpen, setMobileFiltersOpen] = useState<boolean>(false);
-  const { clear, empty } = useFilters();
   const { t } = useTranslation();
 
 
@@ -38,7 +38,7 @@ export function Filters() {
             <button
               onClick={(e) => {
                 e.stopPropagation();
-                clear();
+              
               }}
               className={`${empty ? 'cursor-not-allowed opacity-50' : 'cursor-pointer hover:underline hover:underline-offset-2'} text-sm`}
             >
@@ -51,7 +51,7 @@ export function Filters() {
               <Hr />
               <SortGroup />
               <Hr />
-              <RoleDemandSelect />
+              {/* <RoleDemandSelect /> */}
               <Hr />
               <TechnologySelect />
             </div>

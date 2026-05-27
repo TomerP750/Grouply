@@ -72,9 +72,9 @@ export function SearchBar({ open, onClose }: SearchBarProps) {
 
       {/* search bar component*/}
       <div
-        className={`search-bar
+        className={`search-bar z-1000
           fixed top-0 left-0 w-full h-50 flex flex-col items-center justify-start p-5  
-          z-40
+          
           dark:bg-stone-950 backdrop-blur border-b border-white/10
           transition-transform duration-300 ease-out will-change-transform
         `}

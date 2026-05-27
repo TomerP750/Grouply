@@ -79,7 +79,7 @@ export function NavbarRight({ user, className }: NavbarRightProps) {
               <BiChevronDown />
 
             </button>
-            {menuOpen && <UserMenu user={user} />}
+            {menuOpen && <UserMenu user={user} onNavigate={() => setMenuOpen(false)}/>}
           </div>
           :
           <div className="flex items-center gap-3">

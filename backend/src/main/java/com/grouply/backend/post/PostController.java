@@ -70,17 +70,7 @@ public class PostController {
     
 
 
-    @GetMapping("/search")
-    public Page<PostDTO> search(
-            @RequestParam(required = false) List<ProjectPosition> roles,
-            @RequestParam(required = false, name = "techIds") List<Long> techIds,
-            @RequestParam(value = "page", defaultValue = "0") int page,
-            @RequestParam(value = "size", defaultValue = "5") int size,
-            @RequestParam(value = "dir",defaultValue = "DESC") Sort.Direction dir
-            ) {
-        Pageable pageable = PageRequest.of(page, size, dir, "postedAt");
-        return postService.searchPosts(roles, techIds, pageable);
-    }
+
 
 
 

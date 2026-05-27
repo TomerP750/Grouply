@@ -1,5 +1,4 @@
 import { useLocation } from "react-router-dom";
-import { FilterProvider } from "../../../../context/filter_context";
 import { useUser, useUserSelector } from "../../../../redux/hooks";
 import { NavbarCenter } from "../components/navbar-center";
 import './Navbar.css';
@@ -9,29 +8,32 @@ import { NavbarRight } from "../components/NavbarRight";
 
 export function Navbar() {
 
+    const user = useUserSelector(state => state.authSlice.user);
+
     const { pathname } = useLocation();
 
     const hideNavbar = pathname.startsWith("/dashboard") || pathname.startsWith("/login") || pathname.startsWith("/signup");
+
+    const noBackground = pathname === "/" && !user;
 
     if (hideNavbar) {
         return null;
     }
 
-    const user = useUserSelector(state => state.authSlice.user);
-
     return (
-        <FilterProvider>
-            <nav className={`hidden fixed top-0 Navbar backdrop-blur-md bg-white/80 dark:bg-stone-800 
+
+        <nav className={`z-1000 hidden fixed top-0 Navbar  
+                ${noBackground ? 'bg-transparent' : 'bg-white/80 dark:bg-stone-800 backdrop-blur-md '}
                 w-full h-24 md:flex justify-between items-center px-5 
                 sm:px-10 text-[#1e293b] dark:text-white`}>
 
-                <NavbarLeft user={user} />
+            <NavbarLeft user={user} />
 
-                <NavbarCenter user={user} />
+            <NavbarCenter user={user} />
 
-                <NavbarRight user={user} />
+            <NavbarRight user={user} />
 
-            </nav>
-        </FilterProvider>
+        </nav>
+
     )
 }

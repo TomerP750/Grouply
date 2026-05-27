@@ -1,6 +1,5 @@
 import { useTranslation } from "react-i18next";
 import { BiFilter } from "react-icons/bi";
-import { useFilters } from "../../../../context/filter_context";
 import { useBodyScrollLock } from "../../../../util/helper_hooks";
 import "./filters.css";
 import { RoleDemandSelect } from "./role_demand_select";
@@ -14,7 +13,7 @@ interface MobileFiltersProps {
 
 export function MobileFilters({ onClose, open }: MobileFiltersProps) {
 
-    const { clear, empty } = useFilters();
+
     const { t } = useTranslation();
 
     useBodyScrollLock(open);
@@ -48,12 +47,11 @@ export function MobileFilters({ onClose, open }: MobileFiltersProps) {
                         <button
                             onClick={(e) => {
                                 e.stopPropagation();
-                                clear();
+
                             }}
-                            className={`${empty
-                                    ? "cursor-not-allowed opacity-50"
-                                    : "cursor-pointer hover:underline hover:underline-offset-2"
-                                } text-sm`}
+                            className={` "cursor-not-allowed opacity-50"
+                                     "cursor-pointer hover:underline hover:underline-offset-2"
+                                 text-sm`}
                         >
                             {t("filters.header.clear")}
                         </button>

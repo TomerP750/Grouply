@@ -22,8 +22,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -129,27 +131,6 @@ public class PostService implements IPostService {
     public Page<PostDTO> getOwnedPosts(Long userId, Pageable pageable) {
 
         Page<Post> page = postRepository.findAllPostsOnProjectsWhereUserHasRole(userId, ProjectRole.OWNER, pageable);
-        return page.map(EntityToDtoMapper::toPostDto);
-    }
-
-
-
-    //TODO change to Specification Object
-    public Page<PostDTO> searchPosts(List<ProjectPosition> roles, List<Long> techIds, Pageable pageable) {
-        boolean noRoles = roles == null || roles.isEmpty();
-        boolean noTechs = techIds == null || techIds.isEmpty();
-
-        Page<Post> page;
-        if (noRoles && noTechs) {
-            page = postRepository.findAll(pageable);
-        } else if (noTechs) {
-            page = postRepository.findDistinctByPositions_PositionIn(roles, pageable);
-        } else if (noRoles) {
-            page = postRepository.findDistinctByProject_Technologies_IdIn(techIds, pageable);
-        } else {
-            page = postRepository.findDistinctByPositions_PositionInAndProject_Technologies_IdIn(roles, techIds, pageable);
-        }
-
         return page.map(EntityToDtoMapper::toPostDto);
     }
 

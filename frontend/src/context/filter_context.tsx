@@ -1,103 +1,103 @@
-import React, { createContext, useContext, useEffect, useState, type ReactNode, type SetStateAction } from "react"
-import type { ProjectPosition } from "../dtos/enums/ProjectPosition"
-import type { TechnologyDTO } from "../dtos/models_dtos/technology_dto";
+// import React, { createContext, useContext, useEffect, useState, type ReactNode, type SetStateAction } from "react"
+// import type { ProjectPosition } from "../dtos/enums/ProjectPosition"
+// import type { TechnologyDTO } from "../dtos/models_dtos/technology_dto";
 
 
-export type Direction = "ASC" | "DESC";
+// export type Direction = "ASC" | "DESC";
 
-const FILTER_ROLES = "filter_roles";
-const FILTER_TECHNOLOGIES = "filter_technologies";
+// const FILTER_ROLES = "filter_roles";
+// const FILTER_TECHNOLOGIES = "filter_technologies";
 
-type FilterState = {
-    selectedRoles: ProjectPosition[],
-    selectedTechnologies: TechnologyDTO[],
-    sortDirection: Direction,
-    empty: boolean,
-}
+// type FilterState = {
+//     selectedRoles: ProjectPosition[],
+//     selectedTechnologies: TechnologyDTO[],
+//     sortDirection: Direction,
+//     empty: boolean,
+// }
 
-type FilterContextValues = FilterState & {
-    addRole: (role: ProjectPosition) => void;
-    removeRole: (role: ProjectPosition) => void;
-    addTech: (tech: TechnologyDTO) => void;
-    removeTech: (tech: TechnologyDTO) => void;
-    toggleSortDirection: () => void;
-    clear: () => void;
-}
+// type FilterContextValues = FilterState & {
+//     addRole: (role: ProjectPosition) => void;
+//     removeRole: (role: ProjectPosition) => void;
+//     addTech: (tech: TechnologyDTO) => void;
+//     removeTech: (tech: TechnologyDTO) => void;
+//     toggleSortDirection: () => void;
+//     clear: () => void;
+// }
 
-const FilterContext = createContext<FilterContextValues | undefined>(undefined);
+// const FilterContext = createContext<FilterContextValues | undefined>(undefined);
 
-interface FilterProviderProps {
-    children: ReactNode
-}
+// interface FilterProviderProps {
+//     children: ReactNode
+// }
 
-const getInitialRoles = () => {
-    const stored = sessionStorage.getItem(FILTER_ROLES);
-    return stored ? JSON.parse(stored) as ProjectPosition[] : [];
-}
+// const getInitialRoles = () => {
+//     const stored = sessionStorage.getItem(FILTER_ROLES);
+//     return stored ? JSON.parse(stored) as ProjectPosition[] : [];
+// }
 
-const getInitialTechs = () => {
-    const stored = sessionStorage.getItem(FILTER_TECHNOLOGIES);
-    return stored ? JSON.parse(stored) as TechnologyDTO[] : [];
-}
+// const getInitialTechs = () => {
+//     const stored = sessionStorage.getItem(FILTER_TECHNOLOGIES);
+//     return stored ? JSON.parse(stored) as TechnologyDTO[] : [];
+// }
 
-export function FilterProvider({ children }: FilterProviderProps) {
+// export function FilterProvider({ children }: FilterProviderProps) {
 
-    const [selectedRoles, setSelectedRoles] = useState<ProjectPosition[]>(getInitialRoles);
-    const [selectedTechnologies, setSelectedTechnologies] = useState<TechnologyDTO[]>(getInitialTechs);
-    const [sortDirection, setSortDirection] = useState<Direction>("DESC");
+//     const [selectedRoles, setSelectedRoles] = useState<ProjectPosition[]>(getInitialRoles);
+//     const [selectedTechnologies, setSelectedTechnologies] = useState<TechnologyDTO[]>(getInitialTechs);
+//     const [sortDirection, setSortDirection] = useState<Direction>("DESC");
 
-    useEffect(() => {
-        sessionStorage.setItem(FILTER_ROLES, JSON.stringify(selectedRoles));
-        sessionStorage.setItem(FILTER_TECHNOLOGIES, JSON.stringify(selectedTechnologies));
-        setEmpty(selectedRoles.length === 0 && selectedTechnologies.length === 0);
-    }, [selectedRoles, selectedTechnologies]);
+//     useEffect(() => {
+//         sessionStorage.setItem(FILTER_ROLES, JSON.stringify(selectedRoles));
+//         sessionStorage.setItem(FILTER_TECHNOLOGIES, JSON.stringify(selectedTechnologies));
+//         setEmpty(selectedRoles.length === 0 && selectedTechnologies.length === 0);
+//     }, [selectedRoles, selectedTechnologies]);
 
-    const [empty, setEmpty] = useState<boolean>(selectedRoles.length === 0 && selectedTechnologies.length === 0);
+//     const [empty, setEmpty] = useState<boolean>(selectedRoles.length === 0 && selectedTechnologies.length === 0);
 
-    const addRole = (role: ProjectPosition) => {
-        setSelectedRoles(prev => (prev.includes(role) ? prev : [...prev, role]));
-    };
+//     const addRole = (role: ProjectPosition) => {
+//         setSelectedRoles(prev => (prev.includes(role) ? prev : [...prev, role]));
+//     };
 
-    const removeRole = (role: ProjectPosition) => {
-        setSelectedRoles(prev => prev.filter(r => r !== role));
-    };
+//     const removeRole = (role: ProjectPosition) => {
+//         setSelectedRoles(prev => prev.filter(r => r !== role));
+//     };
 
-    const addTech = (tech: TechnologyDTO) => {
-        setSelectedTechnologies(prev =>
-            prev.some(t => t.id === tech.id) ? prev : [...prev, tech]
-        );
-    };
+//     const addTech = (tech: TechnologyDTO) => {
+//         setSelectedTechnologies(prev =>
+//             prev.some(t => t.id === tech.id) ? prev : [...prev, tech]
+//         );
+//     };
 
-    const removeTech = (tech: TechnologyDTO) => {
-        setSelectedTechnologies(prev => prev.filter(t => t.id !== tech.id));
-    };
+//     const removeTech = (tech: TechnologyDTO) => {
+//         setSelectedTechnologies(prev => prev.filter(t => t.id !== tech.id));
+//     };
 
-    const toggleSortDirection = () => {
-        setSortDirection(prev => prev === "ASC" ? "DESC" : "ASC");
-    }
+//     const toggleSortDirection = () => {
+//         setSortDirection(prev => prev === "ASC" ? "DESC" : "ASC");
+//     }
 
 
-    const clear = () => {
-        setSelectedRoles([]);
-        setSelectedTechnologies([]);
-        sessionStorage.removeItem(FILTER_ROLES);
-        sessionStorage.removeItem(FILTER_TECHNOLOGIES);
-        setEmpty(true);
-    };
+//     const clear = () => {
+//         setSelectedRoles([]);
+//         setSelectedTechnologies([]);
+//         sessionStorage.removeItem(FILTER_ROLES);
+//         sessionStorage.removeItem(FILTER_TECHNOLOGIES);
+//         setEmpty(true);
+//     };
 
-    const ctx: FilterContextValues = { sortDirection ,selectedRoles, selectedTechnologies, empty, addRole, removeRole, addTech, removeTech, toggleSortDirection ,clear };
+//     const ctx: FilterContextValues = { sortDirection ,selectedRoles, selectedTechnologies, empty, addRole, removeRole, addTech, removeTech, toggleSortDirection ,clear };
 
-    return (
-        <FilterContext.Provider value={ctx}>
-            {children}
-        </FilterContext.Provider>
-    )
-}
+//     return (
+//         <FilterContext.Provider value={ctx}>
+//             {children}
+//         </FilterContext.Provider>
+//     )
+// }
 
-export function useFilters() {
-    const ctx = useContext(FilterContext);
-    if (!ctx) {
-        throw new Error("useFilters must be used within a FilterProvider");
-    }
-    return ctx;
-}
+// export function useFilters() {
+//     const ctx = useContext(FilterContext);
+//     if (!ctx) {
+//         throw new Error("useFilters must be used within a FilterProvider");
+//     }
+//     return ctx;
+// }

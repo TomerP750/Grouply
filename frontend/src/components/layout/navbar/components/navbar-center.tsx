@@ -5,7 +5,6 @@ import { MdBookmarkBorder, MdDashboard, MdHome } from "react-icons/md";
 import { NavLink, useLocation } from "react-router-dom";
 import type { JwtUser } from "../../../../redux/AuthSlice";
 import { SearchBar } from "../search_bar/SearchBar";
-import { useFilters } from "../../../../context/filter_context";
 import { useTranslation } from "react-i18next";
 
 const linkClasses = ({ isActive }: { isActive: boolean }) =>
@@ -43,21 +42,19 @@ export function NavbarCenter({ user }: NavbarCenterProps) {
   const isHebrew = i18n.language === "he";
   const textClass = isHebrew ? hebrewStyle : englishStyle;
 
-  const { clear } = useFilters();
-
   return (
     <div className="">
       {/* {user && <SearchBar />} */}
       {user && <ul className="hidden lg:flex items-center gap-5 text-lg ">
         <li>
-        <NavLink onClick={clear} to="/" className={linkClasses}>
+        <NavLink to="/" className={linkClasses}>
           <MdHome size={22} />
           <span className={textClass}>{t("nav.home")}</span>
         </NavLink>
       </li>
 
       <li>
-        <NavLink onClick={clear} to="/archived" className={linkClasses}>
+        <NavLink to="/archived" className={linkClasses}>
           <MdBookmarkBorder size={22} />
           <span className={textClass}>{t("nav.archived")}</span>
         </NavLink>

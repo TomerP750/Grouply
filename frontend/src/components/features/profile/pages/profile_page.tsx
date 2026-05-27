@@ -36,7 +36,7 @@ export function ProfilePage() {
 
   return (
 
-    <main className="min-h-screen dark:text-white bg-neutral-100 dark:bg-stone-950">
+    <main className="min-h-screen dark:text-white bg-neutral-100 dark:bg-stone-950 pt-25">
 
       {/* Banner */}
       {profile && <ProfileBanner user={profile.user} />}

@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
-import { useFilters } from "../../../../context/filter_context";
 import { Accordion } from "../../../shared/Accordion";
+import { useProjectFilters } from "./hooks/useProjectFilters";
+import type { Direction } from "./models/Direction";
 
 const inputStyle = `
   appearance-none
@@ -16,8 +17,16 @@ const inputStyle = `
 
 export function SortGroup() {
 
-  const { sortDirection , toggleSortDirection } = useFilters();
+  const { dir, updateFilters } = useProjectFilters();
+
   const { t } = useTranslation();
+
+  const handleSortChange = (newDir: Direction) => {
+    updateFilters({
+      dir: newDir,
+      page: "0"
+    });
+  };
 
   return (
     <Accordion title={t("filters.sort.label")}>
@@ -29,8 +38,8 @@ export function SortGroup() {
             type="radio"
             name="sort"
             value="DESC"
-            checked={sortDirection === "DESC"}
-            onChange={toggleSortDirection}
+            checked={dir === "desc"}
+            onChange={() => handleSortChange("desc")}
             className={`${inputStyle}`}
           />
           <span className="text-sm text-slate-800 dark:text-slate-200">{t("filters.sort.newest_oldest")}</span>
@@ -41,8 +50,8 @@ export function SortGroup() {
             type="radio"
             name="sort"
             value="ASC"
-            checked={sortDirection === "ASC"}
-            onChange={toggleSortDirection}
+            checked={dir === "asc"}
+            onChange={() => handleSortChange("asc")}
             className={`${inputStyle}`}
           />
           <span className="text-sm text-slate-800 dark:text-slate-200">{t("filters.sort.oldest_newest")}</span>

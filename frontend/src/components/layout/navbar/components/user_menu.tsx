@@ -15,9 +15,10 @@ const rowStyle = "flex items-center justify-between hover:bg-gray-300/40 dark:ho
 
 interface UserMenuProps {
     user: JwtUser | null;
+    onNavigate: () => void;
 }
 
-export function UserMenu({ user }: UserMenuProps) {
+export function UserMenu({ user, onNavigate }: UserMenuProps) {
 
     if (!user) return null;
 
@@ -51,7 +52,7 @@ export function UserMenu({ user }: UserMenuProps) {
                 <section className='flex flex-col gap-1 w-full'>
 
                     {/* Dashboard */}
-                    <NavLink to={`/dashboard/${user.id}`} className={`${rowStyle}`}>
+                    <NavLink onClick={onNavigate} to={`/dashboard/${user.id}`} className={`${rowStyle}`}>
                         <div className='flex gap-2'>
                             <MdDashboard size={20} />
                             <span className='text-sm'>{t("userMenu.dashboard")}</span>
@@ -60,7 +61,7 @@ export function UserMenu({ user }: UserMenuProps) {
                     </NavLink>
 
                     {/* Projects */}
-                    <NavLink to={"/"} className={`${rowStyle}`}>
+                    <NavLink onClick={onNavigate} to={"/"} className={`${rowStyle}`}>
                         <div className='flex gap-2'>
                             <BiFolder size={20} />
                             <span className='text-sm'>{t("userMenu.projects")}</span>
@@ -69,7 +70,12 @@ export function UserMenu({ user }: UserMenuProps) {
                     </NavLink>
 
                     {/* Settings */}
-                    <div className={`${rowStyle}`} onClick={() => navigate("/settings")}>
+                    <div className={`${rowStyle}`}
+                        onClick={() => {
+                            onNavigate()
+                            navigate("/settings")
+
+                        }}>
                         <div className='flex gap-2'>
                             <BiCog size={20} />
                             <span className='text-sm'>{t("userMenu.settings")}</span>
