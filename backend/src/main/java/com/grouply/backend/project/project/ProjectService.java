@@ -2,15 +2,12 @@ package com.grouply.backend.project.project;
 
 import com.grouply.backend.activity.ActivityService;
 import com.grouply.backend.activity.ActivityType;
+import com.grouply.backend.project.project_member.*;
 import com.grouply.backend.shared.exceptions.InvalidInputException;
 import com.grouply.backend.shared.exceptions.UnauthorizedException;
 import com.grouply.backend.project.project.Dtos.CreateProjectDTO;
 import com.grouply.backend.project.project.Dtos.ProjectDTO;
 import com.grouply.backend.project.project.Dtos.UpdateProjectDTO;
-import com.grouply.backend.project.project_member.ProjectMember;
-import com.grouply.backend.project.project_member.ProjectMemberRepository;
-import com.grouply.backend.project.project_member.ProjectPosition;
-import com.grouply.backend.project.project_member.ProjectRole;
 import com.grouply.backend.post.post.Post;
 import com.grouply.backend.post.post.PostRepository;
 import com.grouply.backend.statistics.Statistics;
@@ -37,13 +34,12 @@ import java.util.stream.Collectors;
 public class ProjectService implements IProjectService {
 
     private final ProjectRepository projectRepository;
-    private final ProjectMemberRepository projectMemberRepository;
-//    private final UserRepository userRepository;
     private final PostRepository postRepository;
     private final TechnologyRepository technologyRepository;
     private final StatisticsRepository statisticsRepository;
     private final ActivityService activityService;
     private final UserService userService;
+    private final ProjectMemberService projectMemberService;
 
 
     @Override
@@ -61,7 +57,7 @@ public class ProjectService implements IProjectService {
                 .name(dto.getName())
                 .projectMembers(new HashSet<>())
                 .status(ProjectStatus.PREPARATION)
-                .technologies(resolveTechnologies(dto.getTechnologies()))
+                .technologies(toTechEntities(dto.getTechnologies()))
                 .defaultDmLinks(dto.getDefaultDmLinks())
                 .build();
 
@@ -72,8 +68,7 @@ public class ProjectService implements IProjectService {
                 .project(project)
                 .build();
 
-        updateActiveProjectsStats(userId, '+');
-
+        incrementActiveProjects(userId);
 
         project.addMember(owner);
         projectRepository.save(project); // because i put cascade so it automatically saves the project member in the database
@@ -89,7 +84,7 @@ public class ProjectService implements IProjectService {
     @Transactional
     public void updateProject(Long userId, UpdateProjectDTO dto) throws UnauthorizedException, InvalidInputException {
 
-        if (!isOwner(userId, dto.getProjectId())) {
+        if (!projectMemberService.isProjectOwner(userId, dto.getProjectId())) {
             throw new UnauthorizedException("You are not allowed to update the project");
         }
 //        if (dto.getTechnologies().isEmpty()) {
@@ -123,7 +118,7 @@ public class ProjectService implements IProjectService {
     @Transactional
     public void deleteProject(Long userId, Long projectId) throws UnauthorizedException {
 
-        if (!isOwner(userId, projectId)) {
+        if (!projectMemberService.isProjectOwner(userId, projectId)) {
             throw new UnauthorizedException("You are not allowed to delete this project");
         }
 
@@ -141,7 +136,7 @@ public class ProjectService implements IProjectService {
 
         projectRepository.deleteById(projectId);
 
-        updateActiveProjectsStats(userId, '-');
+        decrementActiveProjects(userId);
 
 
 
@@ -163,18 +158,18 @@ public class ProjectService implements IProjectService {
 
 
     public Page<ProjectDTO> getUserOwnedProjects(Long userId, Pageable pageable) {
-        Page<Project> page = projectRepository.getUserOwnedProjects(userId, ProjectRole.OWNER, pageable);
+        Page<Project> page = projectRepository.findOwnedProjects(userId, ProjectRole.OWNER, pageable);
         return page.map(EntityToDtoMapper::toProjectDto);
     }
 
     public List<ProjectDTO> getAllUserOwnedProjects(Long userId) {
-        List<Project> projects = projectRepository.getAllUserOwnedProjects(userId, ProjectRole.OWNER);
+        List<Project> projects = projectRepository.findOwnedProjectsByUserList(userId, ProjectRole.OWNER);
         return projects.stream().map(EntityToDtoMapper::toProjectDto).toList();
     }
 
     public List<ProjectDTO> getFinishedProject(Long userId) {
         List<Project> projects = projectRepository
-                .getAllUserOwnedFinishedProjects(userId, ProjectRole.OWNER, ProjectStatus.COMPLETED);
+                .findOwnedProjectsByUserRoleAndStatus(userId, ProjectRole.OWNER, ProjectStatus.COMPLETED);
         return projects.stream().map(EntityToDtoMapper::toProjectDto).toList();
     }
 
@@ -184,24 +179,15 @@ public class ProjectService implements IProjectService {
      * @return
      */
     public List<ProjectDTO> getAllUserProjectsWithNoPosts(Long userId) {
-        List<Project> projects = projectRepository.findOwnedProjectsWithNoPosts(userId, ProjectRole.OWNER);
+        List<Project> projects = projectRepository.findOwnedProjectsWithoutPosts(userId, ProjectRole.OWNER);
         return projects.stream().map(EntityToDtoMapper::toProjectDto).toList();
     }
 
 
     //  ------------------------- HELPER METHODS --------------------------
 
-    private boolean isOwner(Long userId, Long projectId) {
-        return projectMemberRepository
-                .existsByUserIdAndProjectIdAndProjectRole(userId, projectId, ProjectRole.OWNER);
-    }
 
-    private ProjectMember fetchProjectMember(Long memberId, Long projectId) {
-        return projectMemberRepository
-                .findByIdAndProjectId(memberId, projectId).orElseThrow(() -> new NoSuchElementException("Member not found"));
-    }
-
-    private Project fetchProject(Long projectId) {
+    public Project fetchProject(Long projectId) {
         return projectRepository.findById(projectId).orElseThrow(() -> new NoSuchElementException("Project not found"));
     }
 
@@ -209,29 +195,12 @@ public class ProjectService implements IProjectService {
         return statisticsRepository.findByUserId(userId).orElseThrow(() -> new NoSuchElementException("Stats not found"));
     }
 
-    private void updateActiveProjectsStats(Long userId, char op) {
-
-        Statistics stats = fetchStats(userId);
-
-        switch (op) {
-            case '+':
-                stats.setActiveProjects(stats.getActiveProjects() + 1);
-                break;
-            case '-':
-                stats.setActiveProjects(stats.getActiveProjects() - 1);
-                break;
-        }
-
-        statisticsRepository.save(stats);
+    private void incrementActiveProjects(Long userId) {
+        statisticsRepository.incrementActiveProjects(userId);
     }
 
-    private ProjectMember buildProjectMember(User user, ProjectPosition position, Project project) {
-        return ProjectMember.builder()
-                .user(user)
-                .project(project)
-                .projectRole(ProjectRole.MEMBER)
-                .projectPosition(position)
-                .build();
+    private void decrementActiveProjects(Long userId) {
+        statisticsRepository.decrementActiveProjects(userId);
     }
 
     private boolean isAllowedTransition(ProjectStatus currentStatus, ProjectStatus newStatus) {
@@ -242,7 +211,7 @@ public class ProjectService implements IProjectService {
 
     private void markAsFinished(User user, Project project) throws UnauthorizedException {
 
-        if (!isOwner(user.getId(), project.getId())) {
+        if (!projectMemberService.isProjectOwner(user.getId(), project.getId())) {
             throw new UnauthorizedException("Unauthorized");
         }
         if (project.getStatus() == ProjectStatus.COMPLETED) {
@@ -258,8 +227,25 @@ public class ProjectService implements IProjectService {
 
     }
 
-
-    private Set<Technology> resolveTechnologies(Set<TechnologyDTO> dtos) throws InvalidInputException {
+    /**
+     * Resolves and validates a set of technologies provided as DTOs into persistent Technology entities.
+     *
+     * This method is used during post creation to ensure that all referenced technologies exist in the database
+     * before associating them with the post.
+     *
+     * Validation rules:
+     * - The input set must not be null or empty.
+     * - All DTOs must contain valid non-null IDs.
+     * - All referenced Technology entities must exist in the database.
+     *
+     * If any of these conditions are violated, an exception is thrown to prevent creation of invalid post data.
+     *
+     * @param dtos the set of TechnologyDTO objects provided in the request
+     * @return a validated set of Technology entities corresponding to the provided DTO IDs
+     * @throws InvalidInputException if the input set is null or empty
+     * @throws NoSuchElementException if one or more technology IDs do not exist in the database
+     */
+    private Set<Technology> toTechEntities(Set<TechnologyDTO> dtos) throws InvalidInputException {
 
         if (dtos == null || dtos.isEmpty()) {
             throw new InvalidInputException("Technologies list is empty");

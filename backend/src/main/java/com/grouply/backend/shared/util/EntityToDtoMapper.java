@@ -14,7 +14,7 @@ import com.grouply.backend.project.project.Project;
 import com.grouply.backend.project.project_member.ProjectMember;
 import com.grouply.backend.project.project_member.dto.ProjectMemberDTO;
 import com.grouply.backend.post.post.Post;
-import com.grouply.backend.post.dto.PostDTO;
+import com.grouply.backend.post.post.dto.PostDTO;
 import com.grouply.backend.post.project_post_position.ProjectPostPosition;
 import com.grouply.backend.post.project_post_position.dto.ProjectPostPositionDTO;
 import com.grouply.backend.profile.social_link.SocialLink;
@@ -24,13 +24,13 @@ import com.grouply.backend.technology.dto.TechnologyDTO;
 import com.grouply.backend.user.Dtos.UserDTO;
 import com.grouply.backend.user.User;
 import java.util.*;
-import java.util.stream.Collectors;
 
 
 public class EntityToDtoMapper {
 
     private EntityToDtoMapper() {}
 
+    //remove
     public static UserDTO toUserDto(User entity) {
         if (entity == null) return null;
         return UserDTO.builder()
@@ -45,14 +45,7 @@ public class EntityToDtoMapper {
                 .build();
     }
 
-    public static List<UserDTO> toUserDtos(List<User> users) {
-        if (users == null || users.isEmpty()) return List.of();
-        List<UserDTO> result = new ArrayList<>(users.size());
-        for (User u : users) {
-            if (u != null) result.add(toUserDto(u));
-        }
-        return result;
-    }
+
 
 
     public static ProjectMemberDTO toProjectMemberDto(ProjectMember pm) {
@@ -64,17 +57,6 @@ public class EntityToDtoMapper {
                 .projectRole(pm.getProjectRole())
                 .build();
     }
-
-    public static List<ProjectMemberDTO> toProjectMemberDtos(List<ProjectMember> members) {
-        List<ProjectMemberDTO> result = new ArrayList<>();
-        if (members != null) {
-            for (ProjectMember pm : members) {
-                if (pm != null) result.add(toProjectMemberDto(pm));
-            }
-        }
-        return result;
-    }
-
 
 
     public static ProjectDTO toProjectDto(Project p) {
@@ -89,17 +71,6 @@ public class EntityToDtoMapper {
                 .build();
     }
 
-
-
-    public static List<ProjectDTO> toProjectDtos(List<Project> projects) {
-        List<ProjectDTO> result = new ArrayList<>();
-        if (projects != null) {
-            for (Project p : projects) {
-                if (p != null) result.add(toProjectDto(p));
-            }
-        }
-        return result;
-    }
 
 
 
@@ -206,6 +177,7 @@ public class EntityToDtoMapper {
         return result;
     }
 
+    // remove
     public static TechnologyDTO toTechnologyDto(Technology entity) {
         return TechnologyDTO.builder()
                 .id(entity.getId())
@@ -243,28 +215,5 @@ public class EntityToDtoMapper {
                 .sentAt(entity.getSentAt())
                 .build();
     }
-
-    public static SocialLinkDTO toSocialLinkDto(SocialLink entity) {
-        if (entity == null) return null;
-
-        return SocialLinkDTO.builder()
-                .id(entity.getId())
-                .link(entity.getLink())
-                .type(entity.getType())
-                .build();
-    }
-
-    public static Set<SocialLinkDTO> toSocialLinkDtos(Set<SocialLink> entities) {
-        if (entities == null || entities.isEmpty()) return Collections.emptySet();
-
-        Set<SocialLinkDTO> result = new HashSet<>(entities.size());
-        for (SocialLink sl : entities) {
-            if (sl != null) result.add(toSocialLinkDto(sl));
-        }
-        return result;
-    }
-
-
-
 
 }

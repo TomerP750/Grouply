@@ -1,4 +1,4 @@
-package com.grouply.backend.shared.security;
+package com.grouply.backend.infrastructure.security;
 
 import com.grouply.backend.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

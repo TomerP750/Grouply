@@ -2,7 +2,7 @@ package com.grouply.backend.connection.connection_request;
 
 import com.grouply.backend.connection.connection_request.dto.ConnectionRequestDTO;
 import com.grouply.backend.shared.exceptions.UnauthorizedException;
-import com.grouply.backend.shared.security.CustomUserDetails;
+import com.grouply.backend.infrastructure.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

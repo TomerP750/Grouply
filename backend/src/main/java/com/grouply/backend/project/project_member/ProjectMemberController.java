@@ -3,7 +3,7 @@ package com.grouply.backend.project.project_member;
 import com.grouply.backend.shared.exceptions.UnauthorizedException;
 import com.grouply.backend.project.project_member.dto.ChangeMemberRoleDTO;
 import com.grouply.backend.project.project_member.dto.ProjectMemberDTO;
-import com.grouply.backend.shared.security.CustomUserDetails;
+import com.grouply.backend.infrastructure.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -42,7 +42,7 @@ public class ProjectMemberController {
 
     @GetMapping("/isOwner/{userId}/{projectId}")
     public boolean isOwner(@PathVariable Long userId, @PathVariable Long projectId) {
-        return projectMemberService.isOwner(userId, projectId);
+        return projectMemberService.isProjectOwner(userId, projectId);
     }
 
     @PatchMapping("/changeRole")

@@ -2,11 +2,13 @@ package com.grouply.backend.post.post;
 
 import com.grouply.backend.activity.ActivityService;
 import com.grouply.backend.activity.ActivityType;
-import com.grouply.backend.post.dto.CreateProjectPostDTO;
-import com.grouply.backend.post.dto.PostDTO;
-import com.grouply.backend.post.dto.UpdateProjectPostDTO;
+import com.grouply.backend.post.post.dto.CreateProjectPostDTO;
+import com.grouply.backend.post.post.dto.PostDTO;
+import com.grouply.backend.post.post.dto.UpdateProjectPostDTO;
 import com.grouply.backend.post.project_post_position.ProjectPostPosition;
 import com.grouply.backend.post.project_post_position.ProjectPostPositionRepository;
+import com.grouply.backend.project.project.ProjectService;
+import com.grouply.backend.project.project_member.ProjectMemberService;
 import com.grouply.backend.shared.exceptions.ExistsException;
 import com.grouply.backend.shared.exceptions.InvalidInputException;
 import com.grouply.backend.shared.exceptions.UnauthorizedException;
@@ -16,8 +18,8 @@ import com.grouply.backend.project.project_member.ProjectMemberRepository;
 import com.grouply.backend.project.project_member.ProjectPosition;
 import com.grouply.backend.project.project_member.ProjectRole;
 import com.grouply.backend.user.User;
-import com.grouply.backend.user.UserRepository;
 import com.grouply.backend.shared.util.EntityToDtoMapper;
+import com.grouply.backend.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -32,11 +34,14 @@ import java.util.NoSuchElementException;
 public class PostService implements IPostService {
 
     private final PostRepository postRepository;
-    private final UserRepository userRepository;
     private final ProjectMemberRepository projectMemberRepository;
     private final ProjectRepository projectRepository;
     private final ProjectPostPositionRepository projectPostPositionRepository;
     private final ActivityService activityService;
+    private final UserService userService;
+    private final ProjectService projectService;
+    private final ProjectMemberService projectMemberService;
+
 
 
     @Override
@@ -45,13 +50,11 @@ public class PostService implements IPostService {
         if (postRepository.existsByProjectId(dto.getProjectId())) {
             throw new ExistsException("Post on project already exists");
         }
-        if (!isOwner(userId, dto.getProjectId())) {
+        if (!projectMemberService.isProjectOwner(userId, dto.getProjectId())) {
             throw new UnauthorizedException("You are not the owner of the project");
         }
 
-        Project project = projectRepository
-                .findById(dto.getProjectId()).orElseThrow(() -> new NoSuchElementException("Project not found"));
-
+        Project project = projectService.fetchProject(dto.getProjectId());
 
         Post newPost = Post.builder()
                 .description(dto.getDescription())
@@ -81,9 +84,9 @@ public class PostService implements IPostService {
     @Override
     public void updatePost(Long userId , UpdateProjectPostDTO dto) throws UnauthorizedException, InvalidInputException {
 
-        Post post = fetchProjectPost(dto.getPostId());
+        Post post = fetchPost(dto.getPostId());
 
-        if (!isOwner(userId, post.getProject().getId())) {
+        if (!projectMemberService.isProjectOwner(userId, post.getProject().getId())) {
             throw new UnauthorizedException("You are not the owner of the project");
         }
 
@@ -94,10 +97,11 @@ public class PostService implements IPostService {
 
     @Override
     public void deletePost(Long userId ,Long postId) throws UnauthorizedException {
-        Post post = fetchProjectPost(postId);
-        User user = fetchUser(userId);
 
-        if (!isOwner(user.getId(), post.getProject().getId())) {
+        Post post = fetchPost(postId);
+        User user = userService.findOneUser(userId);
+
+        if (!projectMemberService.isProjectOwner(user.getId(), post.getProject().getId())) {
             throw new UnauthorizedException("Unauthorized ,cannot delete this post");
         }
 
@@ -111,7 +115,7 @@ public class PostService implements IPostService {
 
     @Override
     public PostDTO getOnePost(Long postId) {
-        return EntityToDtoMapper.toPostDto(fetchProjectPost(postId));
+        return EntityToDtoMapper.toPostDto(fetchPost(postId));
     }
 
     @Override
@@ -129,18 +133,11 @@ public class PostService implements IPostService {
     }
 
 
-    private User fetchUser(Long userId) {
-        return userRepository.findById(userId).orElseThrow(() -> new NoSuchElementException("User not found"));
-    }
-
-    private Post fetchProjectPost(Long postId) {
+    private Post fetchPost(Long postId) {
         return postRepository.findById(postId).orElseThrow(() -> new NoSuchElementException("Post not found"));
     }
 
-    private boolean isOwner(Long userId, Long projectId) {
-        return projectMemberRepository
-                .existsByUserIdAndProjectIdAndProjectRole(userId, projectId, ProjectRole.OWNER);
-    }
+
 
 
 }

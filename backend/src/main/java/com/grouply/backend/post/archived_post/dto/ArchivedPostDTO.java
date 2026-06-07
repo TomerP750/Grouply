@@ -1,5 +1,5 @@
 package com.grouply.backend.post.archived_post.dto;
-import com.grouply.backend.post.dto.PostDTO;
+import com.grouply.backend.post.post.dto.PostDTO;
 import lombok.*;
 
 import java.time.LocalDateTime;

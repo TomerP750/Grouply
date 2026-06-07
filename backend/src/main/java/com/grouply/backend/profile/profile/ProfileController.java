@@ -2,7 +2,7 @@ package com.grouply.backend.profile.profile;
 
 import com.grouply.backend.profile.dto.ProfileDTO;
 import com.grouply.backend.profile.dto.UpdateProfileDTO;
-import com.grouply.backend.shared.security.CustomUserDetails;
+import com.grouply.backend.infrastructure.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;

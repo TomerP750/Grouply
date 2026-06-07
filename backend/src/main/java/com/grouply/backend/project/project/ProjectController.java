@@ -5,7 +5,8 @@ import com.grouply.backend.shared.exceptions.UnauthorizedException;
 import com.grouply.backend.project.project.Dtos.CreateProjectDTO;
 import com.grouply.backend.project.project.Dtos.ProjectDTO;
 import com.grouply.backend.project.project.Dtos.UpdateProjectDTO;
-import com.grouply.backend.shared.security.CustomUserDetails;
+import com.grouply.backend.infrastructure.security.CustomUserDetails;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -34,7 +35,7 @@ public class ProjectController {
     }
 
     @PostMapping("/create")
-    public void createProject(@AuthenticationPrincipal CustomUserDetails userDetails ,@RequestBody CreateProjectDTO dto) throws InvalidInputException {
+    public void createProject(@AuthenticationPrincipal CustomUserDetails userDetails ,@Valid @RequestBody CreateProjectDTO dto) throws InvalidInputException {
         Long userId = userDetails.getId();
         projectService.createProject(userId, dto);
     }

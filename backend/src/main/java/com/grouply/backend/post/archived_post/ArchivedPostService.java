@@ -1,7 +1,7 @@
 package com.grouply.backend.post.archived_post;
 
 import com.grouply.backend.shared.exceptions.ExistsException;
-import com.grouply.backend.post.dto.PostDTO;
+import com.grouply.backend.post.post.dto.PostDTO;
 import com.grouply.backend.project.project.ProjectRepository;
 import com.grouply.backend.project.project_member.ProjectMemberRepository;
 import com.grouply.backend.post.post.Post;

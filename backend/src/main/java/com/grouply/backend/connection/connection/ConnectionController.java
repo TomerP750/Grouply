@@ -1,7 +1,7 @@
 package com.grouply.backend.connection.connection;
 
 import com.grouply.backend.shared.exceptions.UnauthorizedException;
-import com.grouply.backend.shared.security.CustomUserDetails;
+import com.grouply.backend.infrastructure.security.CustomUserDetails;
 import com.grouply.backend.user.Dtos.UserDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

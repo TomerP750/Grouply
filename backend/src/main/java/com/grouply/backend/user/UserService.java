@@ -24,6 +24,7 @@ public class UserService implements IUserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder encoder;
+    private final UserMapper userMapper;
 
     @Override
     public void updateUser(Long userId ,UpdateUserDTO dto) throws ExistsException {
@@ -77,22 +78,17 @@ public class UserService implements IUserService {
     }
 
     public Page<UserDTO> searchUsers(String query, Pageable pageable) {
-        return userRepository.search(query ,pageable).map(EntityToDtoMapper::toUserDto);
+        return userRepository.search(query ,pageable).map(userMapper::toUserDto);
     }
 
     @Override
     public Page<UserDTO> findAllUsers(Pageable pageable) {
-        return userRepository.findAll(pageable).map(EntityToDtoMapper::toUserDto);
+        return userRepository.findAll(pageable).map(userMapper::toUserDto);
     }
 
     @Override
     public User findOneUser(Long id) {
-        log.info("getting user");
         return userRepository.findById(id).orElseThrow(()->new NoSuchElementException("User not found"));
-    }
-
-    public User findByUserName(String username) {
-        return userRepository.findByUsername(username).orElseThrow(() -> new NoSuchElementException("User not found"));
     }
 
     public boolean checkUsernameAvailability(String username) {

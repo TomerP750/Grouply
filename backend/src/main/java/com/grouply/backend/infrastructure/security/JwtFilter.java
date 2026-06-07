@@ -1,4 +1,4 @@
-package com.grouply.backend.shared.security;
+package com.grouply.backend.infrastructure.security;
 
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;

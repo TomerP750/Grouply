@@ -1,4 +1,4 @@
-package com.grouply.backend.post.dto;
+package com.grouply.backend.post.post.dto;
 
 import com.grouply.backend.join_request.RequestStatus;
 import com.grouply.backend.post.post.Post;

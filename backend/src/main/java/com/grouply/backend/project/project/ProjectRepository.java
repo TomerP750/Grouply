@@ -11,78 +11,61 @@ import java.util.List;
 
 public interface ProjectRepository extends JpaRepository<Project, Long> {
 
-//    @Query("SELECT p FROM Project p " +
-//            "JOIN p.projectMembers pm " +
-//            "WHERE pm.user.id = :userId AND pm.projectRole = :projectRole")
-@Query(
-        value = """
+
+    @Query(
+            value = """
     SELECT DISTINCT p
     FROM Project p
     JOIN p.projectMembers pm
     WHERE pm.user.id = :userId
       AND pm.projectRole = :projectRole
-  """,
-        countQuery = """
-    SELECT COUNT(DISTINCT p.id)
+  """
+    )
+    Page<Project> findOwnedProjects(
+            @Param("userId") Long userId,
+            @Param("projectRole") ProjectRole projectRole,
+            Pageable pageable
+    );
+
+    @Query("""
+    SELECT p
     FROM Project p
     JOIN p.projectMembers pm
     WHERE pm.user.id = :userId
       AND pm.projectRole = :projectRole
-  """
-)
-    Page<Project> getUserOwnedProjects(@Param("userId") Long userId,
-                                       @Param("projectRole") ProjectRole projectRole,
-                                       Pageable pageable);
-
-
-    @Query("SELECT p FROM Project p " +
-            "JOIN p.projectMembers pm " +
-            "WHERE pm.user.id = :userId AND pm.projectRole = :projectRole")
-    List<Project> getAllUserOwnedProjects(@Param("userId") Long userId,
-                                          @Param("projectRole") ProjectRole projectRole);
-
-    @Query("SELECT p FROM Project p " +
-            "JOIN p.projectMembers pm " +
-            "WHERE pm.user.id = :userId AND pm.projectRole = :projectRole AND p.status = :status")
-    List<Project> getAllUserOwnedFinishedProjects(@Param("userId") Long userId,
-                                                  @Param("projectRole") ProjectRole projectRole,
-                                                  @Param("status") ProjectStatus status);
-
-
-    @Query("""
-                SELECT DISTINCT p
-                FROM Project p
-                JOIN p.projectMembers pmOwner
-                WHERE pmOwner.user.id = :ownerId
-                AND pmOwner.projectRole = :ownerRole
-                AND NOT EXISTS (
-                  SELECT 1 FROM ProjectMember pm
-                  WHERE pm.project = p
-                  AND pm.user.id = :recipientId
-                )
-            """)
-    List<Project> findOwnedProjectsWhereUserNotMember(
-            @Param("ownerId") Long ownerId,
-            @Param("recipientId") Long recipientId,
-            @Param("ownerRole") ProjectRole ownerRole
+""")
+    List<Project> findOwnedProjectsByUserList(
+            @Param("userId") Long userId,
+            @Param("projectRole") ProjectRole projectRole
     );
 
     @Query("""
-                SELECT DISTINCT p
-                FROM Project p
-                JOIN p.projectMembers pmOwner
-                WHERE pmOwner.user.id = :ownerId
-                  AND pmOwner.projectRole = :ownerRole
-                  AND NOT EXISTS (
-                      SELECT 1
-                      FROM Post po
-                      WHERE po.project = p
-                  )
-            """)
-    List<Project> findOwnedProjectsWithNoPosts(
+    SELECT p
+    FROM Project p
+    JOIN p.projectMembers pm
+    WHERE pm.user.id = :userId
+      AND pm.projectRole = :projectRole
+      AND p.status = :status
+""")
+    List<Project> findOwnedProjectsByUserRoleAndStatus(
+            @Param("userId") Long userId,
+            @Param("projectRole") ProjectRole projectRole,
+            @Param("status") ProjectStatus status
+    );
+
+
+    @Query("""
+    SELECT DISTINCT p
+    FROM Project p
+    JOIN p.projectMembers pmOwner
+    LEFT JOIN Post po ON po.project = p
+    WHERE pmOwner.user.id = :ownerId
+      AND pmOwner.projectRole = :ownerRole
+      AND po.id IS NULL
+""")
+    List<Project> findOwnedProjectsWithoutPosts(
             @Param("ownerId") Long ownerId,
             @Param("ownerRole") ProjectRole ownerRole
     );
-
 
 }

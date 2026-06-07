@@ -1,4 +1,4 @@
-package com.grouply.backend.post.dto;
+package com.grouply.backend.post.post.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;

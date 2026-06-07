@@ -41,7 +41,6 @@ public class JoinRequestService {
     private final ProjectPostPositionRepository projectPostPositionRepository;
     private final ActivityService activityService;
     private final ArchivedPostRepository archivedPostRepository;
-//    private final NotificationService notificationService;
 
     /**
      * Toggles a join request for a given post position.

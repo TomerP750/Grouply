@@ -1,4 +1,4 @@
-package com.grouply.backend.shared.security;
+package com.grouply.backend.infrastructure.security;
 
 import com.grouply.backend.user.User;
 import com.grouply.backend.user.UserRepository;

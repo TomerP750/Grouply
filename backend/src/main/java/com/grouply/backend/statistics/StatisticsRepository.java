@@ -13,4 +13,12 @@ public interface StatisticsRepository extends JpaRepository<Statistics, Long> {
     @Modifying
     @Query("UPDATE Statistics s SET s.connections = s.connections + 1 WHERE s.user.id = :userId")
     void incrementConnections(@Param("userId") Long userId);
+
+    @Modifying
+    @Query("UPDATE Statistics s SET s.activeProjects = s.activeProjects + 1 WHERE s.user.id = :userId")
+    void incrementActiveProjects(Long userId);
+
+    @Modifying
+    @Query("UPDATE Statistics s SET s.activeProjects = s.activeProjects - 1 WHERE s.user.id = :userId")
+    void decrementActiveProjects(Long userId);
 }

@@ -1,12 +1,10 @@
 package com.grouply.backend.project.project_member;
 
+import com.grouply.backend.project.project.ProjectService;
 import com.grouply.backend.shared.exceptions.UnauthorizedException;
 import com.grouply.backend.project.project.Project;
-import com.grouply.backend.project.project.ProjectRepository;
 import com.grouply.backend.project.project_member.dto.ChangeMemberRoleDTO;
 import com.grouply.backend.project.project_member.dto.ProjectMemberDTO;
-import com.grouply.backend.user.User;
-import com.grouply.backend.user.UserRepository;
 import com.grouply.backend.shared.util.EntityToDtoMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,8 +21,7 @@ import java.util.NoSuchElementException;
 public class ProjectMemberService implements IProjectMemberService{
 
     private final ProjectMemberRepository projectMemberRepository;
-    private final ProjectRepository projectRepository;
-    private final UserRepository userRepository;
+    private final ProjectService projectService;
 
 
     /**
@@ -52,7 +49,7 @@ public class ProjectMemberService implements IProjectMemberService{
     public void changeMemberRole(Long userId, ChangeMemberRoleDTO dto) throws UnauthorizedException {
 
         log.info("Entering change member role");
-        if (!isOwner(userId, dto.getProjectId())) {
+        if (!isProjectOwner(userId, dto.getProjectId())) {
             throw new UnauthorizedException("You are not authorized to change member's user");
         }
 
@@ -69,11 +66,9 @@ public class ProjectMemberService implements IProjectMemberService{
      * @param projectId
      * @throws UnauthorizedException
      */
-
-
     @Override
     public void removeMemberFromProject(Long ownerId, Long memberToRemoveId, Long projectId) throws UnauthorizedException {
-        if (!isOwner(ownerId, projectId)) {
+        if (!isProjectOwner(ownerId, projectId)) {
             throw new UnauthorizedException("You are not authorized to remove user");
         }
 
@@ -86,7 +81,7 @@ public class ProjectMemberService implements IProjectMemberService{
             throw new IllegalStateException("Project must have at least one owner");
         }
 
-        Project project = fetchProject(projectId);
+        Project project = projectService.fetchProject(projectId);
         project.getProjectMembers().remove(memberToRemove);
 
         projectMemberRepository.deleteByIdAndProjectId(memberToRemoveId, projectId);
@@ -99,34 +94,19 @@ public class ProjectMemberService implements IProjectMemberService{
         return projectMemberRepository.existsByUserIdAndProjectId(userId, projectId);
     }
 
-    public boolean isOwner(Long userId, Long projectId) {
+    public boolean isProjectOwner(Long userId, Long projectId) {
         return projectMemberRepository
                 .existsByUserIdAndProjectIdAndProjectRole(userId, projectId, ProjectRole.OWNER);
     }
 
-
-    // HELPER METHODS
 
     private ProjectMember fetchProjectMember(Long memberId, Long projectId) {
         return projectMemberRepository
                 .findByIdAndProjectId(memberId, projectId).orElseThrow(() -> new NoSuchElementException("Member not found"));
     }
 
-    private Project fetchProject(Long projectId) {
-        return projectRepository.findById(projectId).orElseThrow(()->new NoSuchElementException("Project not found"));
-    }
 
-    private User fetchUser(Long userId) {
-        return userRepository.findById(userId).orElseThrow(()->new NoSuchElementException("User not found"));
-    }
 
-    private ProjectMember buildProjectMember(User user, ProjectPosition position, Project project) {
-        return ProjectMember.builder()
-                .user(user)
-                .project(project)
-                .projectRole(ProjectRole.MEMBER)
-                .projectPosition(position)
-                .build();
-    }
+
 
 }

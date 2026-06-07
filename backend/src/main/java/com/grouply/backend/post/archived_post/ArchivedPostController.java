@@ -1,8 +1,8 @@
 package com.grouply.backend.post.archived_post;
 
 import com.grouply.backend.shared.exceptions.ExistsException;
-import com.grouply.backend.post.dto.PostDTO;
-import com.grouply.backend.shared.security.CustomUserDetails;
+import com.grouply.backend.post.post.dto.PostDTO;
+import com.grouply.backend.infrastructure.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

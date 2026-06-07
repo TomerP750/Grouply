@@ -1,7 +1,7 @@
 package com.grouply.backend.activity;
 
 import com.grouply.backend.activity.dto.ActivityDTO;
-import com.grouply.backend.shared.security.CustomUserDetails;
+import com.grouply.backend.infrastructure.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
