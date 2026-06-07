@@ -26,15 +26,6 @@ public class AuthController {
     }
 
 
-    @PostMapping("/recruiter/login")
-    public AuthResponseDTO login(@RequestBody RecruiterLoginRequestDTO dto) {
-        return authService.recruiterLogin(dto);
-    }
-
-    @PostMapping("/recruiter/signup")
-    public AuthResponseDTO recruiterSignup(@RequestBody RecruiterSignupRequestDTO dto) throws InvalidInputException {
-        return authService.recruiterSignup(dto);
-    }
 
 
 

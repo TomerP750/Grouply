@@ -88,8 +88,6 @@ public class ProjectMemberService implements IProjectMemberService{
     }
 
 
-
-
     public boolean isMember(Long userId, Long projectId) {
         return projectMemberRepository.existsByUserIdAndProjectId(userId, projectId);
     }
