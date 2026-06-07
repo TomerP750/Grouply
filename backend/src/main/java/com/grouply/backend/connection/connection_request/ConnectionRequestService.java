@@ -6,22 +6,18 @@ import com.grouply.backend.connection.connection.Connection;
 import com.grouply.backend.connection.connection.ConnectionRepository;
 import com.grouply.backend.connection.connection_request.dto.ConnectionRequestDTO;
 import com.grouply.backend.shared.exceptions.UnauthorizedException;
-import com.grouply.backend.notification.NotificationService;
-import com.grouply.backend.notification.NotificationType;
-import com.grouply.backend.notification.dto.NotificationDTO;
-import com.grouply.backend.statistics.Statistics;
 import com.grouply.backend.statistics.StatisticsRepository;
 import com.grouply.backend.user.User;
-import com.grouply.backend.user.UserRepository;
 import com.grouply.backend.shared.util.EntityToDtoMapper;
+import com.grouply.backend.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -31,11 +27,9 @@ public class ConnectionRequestService implements IConnectionRequestService {
 
     private final ConnectionRequestRepository connectionRequestRepository;
     private final ConnectionRepository connectionRepository;
-    private final UserRepository userRepository;
     private final StatisticsRepository statisticsRepository;
     private final ActivityService activityService;
-    private final NotificationService notificationService;
-    private final SimpMessagingTemplate messagingTemplate;
+    private final UserService userService;
 
 
     public Page<ConnectionRequestDTO> allConnectionRequests(Long recipientId, Pageable pageable) {
@@ -65,8 +59,8 @@ public class ConnectionRequestService implements IConnectionRequestService {
             return false;
         }
 
-        User sender = fetchUser(senderId);
-        User recipient = fetchUser(recipientId);
+        User sender = userService.findOneUser(senderId);
+        User recipient = userService.findOneUser(recipientId);
 
         ConnectionRequest newRequest = ConnectionRequest.builder()
                 .sender(sender)
@@ -81,22 +75,15 @@ public class ConnectionRequestService implements IConnectionRequestService {
                 .createActivity("You sent connection request to " + " " + recipient.getUsername()
                         , "/profile/" + recipientId
                         , ActivityType.SENT_CONNECTION_REQUEST
-                        , sender);
+                        , sender.getId());
 
-        NotificationDTO notification = notificationService.buildNotification(
-                NotificationType.CONNECTION_REQUEST,
-                recipientId,
-                sender.getUsername(),
-                sender.getAvatarUrl(),
-                null
-        );
 
-        notificationService.sendConnectionNotification(notification);
 
         return true;
     }
 
     @Override
+    @Transactional
     public void acceptRequest(Long recipientId, Long senderId) throws UnauthorizedException {
 
         if (recipientId.equals(senderId)) {
@@ -105,26 +92,12 @@ public class ConnectionRequestService implements IConnectionRequestService {
 
         createConnectionPair(senderId, recipientId);
 
-
-        //TODO maybe remove this
         ConnectionRequest request = connectionRequestRepository
                 .findBySenderIdAndRecipientId(senderId, recipientId)
                 .orElseThrow(() -> new NoSuchElementException("Request not found"));
 
         connectionRequestRepository.deleteById(request.getId());
 
-        User recipient = fetchUser(recipientId);
-        User sender = fetchUser(senderId);
-
-        NotificationDTO notificationDTO = notificationService.buildNotification(
-                NotificationType.ACCEPTED_CONNECTION,
-                sender.getId(),
-                recipient.getUsername(),
-                recipient.getAvatarUrl(),
-                null
-        );
-
-        notificationService.sendNotificationBadge(notificationDTO);
 
     }
 
@@ -143,55 +116,58 @@ public class ConnectionRequestService implements IConnectionRequestService {
 
     }
 
-    private User fetchUser(Long userId) {
-        return userRepository.findById(userId).orElseThrow(() -> new NoSuchElementException("User not found"));
-    }
+
 
     private ConnectionRequest fetchRequest(Long senderId, Long recipientId) {
         return connectionRequestRepository.findBySenderIdAndRecipientId(senderId, recipientId).orElseThrow(() -> new NoSuchElementException("Request not found"));
     }
 
+    /**
+     * Creates a bidirectional connection between two users by persisting two reciprocal connection records.
+     *
+     * After establishing the relationship, the method updates both users' connection statistics by incrementing
+     * their total connections count and persists the updated statistics.
+     *
+     * It also generates activity records for both users to reflect the newly created connection, including
+     * navigation links to each user's profile.
+     *
+     * This operation involves multiple persistence steps and should be executed within a transactional boundary
+     * to ensure data consistency across connection creation, statistics updates, and activity logging.
+     */
     private void createConnectionPair(Long senderId, Long recipientId) {
 
+        User sender = userService.findOneUser(senderId);
+        User recipient = userService.findOneUser(recipientId);
+
         Connection connectionSender = Connection.builder()
-                .user(fetchUser(senderId))
-                .connectedUser(fetchUser(recipientId))
+                .user(sender)
+                .connectedUser(recipient)
                 .build();
 
         Connection connectionRecipient = Connection.builder()
-                .user(fetchUser(recipientId))
-                .connectedUser(fetchUser(senderId))
+                .user(recipient)
+                .connectedUser(sender)
                 .build();
 
-        connectionRepository.save(connectionSender);
-        connectionRepository.save(connectionRecipient);
+        connectionRepository.saveAll(List.of(connectionSender, connectionRecipient));
 
+        // Incrementing stats by 1
+        statisticsRepository.incrementConnections(senderId);
+        statisticsRepository.incrementConnections(recipientId);
 
-        Statistics senderStats = statisticsRepository.findByUserId(senderId).orElseThrow(() -> new NoSuchElementException("Sender id not found"));
-        senderStats.setConnections(senderStats.getConnections() + 1);
-        statisticsRepository.save(senderStats);
+        activityService.createActivity(
+                "You connected with " + recipient.getUsername(),
+                "/profile/" + recipientId,
+                ActivityType.CONNECTED,
+                senderId
+        );
 
-        Statistics recipientStats = statisticsRepository.findByUserId(recipientId).orElseThrow(() -> new NoSuchElementException("Recipient id not found"));
-        recipientStats.setConnections(recipientStats.getConnections() + 1);
-        statisticsRepository.save(recipientStats);
-
-
-        activityService
-                .createActivity("You connected with"
-                                + " "
-                                + connectionSender.getConnectedUser().getUsername(),
-                        "/profile/" + recipientId
-                        , ActivityType.CONNECTED
-                        , connectionSender.getUser());
-
-
-        activityService
-                .createActivity("You connected with"
-                                + " "
-                                + connectionRecipient.getConnectedUser().getUsername()
-                        , "/profile/" + senderId
-                        , ActivityType.CONNECTED
-                        , connectionRecipient.getUser());
+        activityService.createActivity(
+                "You connected with " + sender.getUsername(),
+                "/profile/" + senderId,
+                ActivityType.CONNECTED,
+                recipientId
+        );
 
 
     }

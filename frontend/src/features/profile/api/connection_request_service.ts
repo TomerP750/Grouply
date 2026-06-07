@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BASE_API } from "../util/base_api";
+import { BASE_API } from "../../../util/base_api";
 
 
 const CONNECTION_BASE_URL = `${BASE_API}/connection-request`; 

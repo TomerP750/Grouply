@@ -19,8 +19,8 @@ import com.grouply.backend.technology.Technology;
 import com.grouply.backend.technology.TechnologyRepository;
 import com.grouply.backend.technology.dto.TechnologyDTO;
 import com.grouply.backend.user.User;
-import com.grouply.backend.user.UserRepository;
 import com.grouply.backend.shared.util.EntityToDtoMapper;
+import com.grouply.backend.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -38,11 +38,12 @@ public class ProjectService implements IProjectService {
 
     private final ProjectRepository projectRepository;
     private final ProjectMemberRepository projectMemberRepository;
-    private final UserRepository userRepository;
+//    private final UserRepository userRepository;
     private final PostRepository postRepository;
     private final TechnologyRepository technologyRepository;
     private final StatisticsRepository statisticsRepository;
     private final ActivityService activityService;
+    private final UserService userService;
 
 
     @Override
@@ -54,7 +55,7 @@ public class ProjectService implements IProjectService {
             throw new InvalidInputException("Name is empty");
         }
 
-        User user = fetchUser(userId);
+        User user = userService.findOneUser(userId);
 
         Project project = Project.builder()
                 .name(dto.getName())
@@ -80,7 +81,7 @@ public class ProjectService implements IProjectService {
         activityService.createActivity("You created" + " " + project.getName() ,
                 "/dashboard/" + userId + "/project-members/" + project.getId(),
                 ActivityType.CREATED_PROJECT,
-                user);
+                userId);
 
     }
 
@@ -95,7 +96,7 @@ public class ProjectService implements IProjectService {
 //            throw new InvalidInputException("At least one technology is required");
 //        }
 
-        User user = fetchUser(userId);
+        User user = userService.findOneUser(userId);
 
         Project project = fetchProject(dto.getProjectId());
 
@@ -142,7 +143,9 @@ public class ProjectService implements IProjectService {
 
         updateActiveProjectsStats(userId, '-');
 
-        activityService.createActivity("You deleted project", null, ActivityType.DELETE_POST, fetchUser(userId));
+
+
+        activityService.createActivity("You deleted project", null, ActivityType.DELETE_POST, userId);
 
     }
 
@@ -200,10 +203,6 @@ public class ProjectService implements IProjectService {
 
     private Project fetchProject(Long projectId) {
         return projectRepository.findById(projectId).orElseThrow(() -> new NoSuchElementException("Project not found"));
-    }
-
-    private User fetchUser(Long userId) {
-        return userRepository.findById(userId).orElseThrow(() -> new NoSuchElementException("User not found"));
     }
 
     private Statistics fetchStats(Long userId) {

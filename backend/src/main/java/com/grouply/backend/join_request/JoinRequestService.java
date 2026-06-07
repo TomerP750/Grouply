@@ -4,10 +4,6 @@ import com.grouply.backend.activity.ActivityService;
 import com.grouply.backend.activity.ActivityType;
 import com.grouply.backend.post.archived_post.ArchivedPost;
 import com.grouply.backend.post.archived_post.ArchivedPostRepository;
-import com.grouply.backend.chat.direct_message.DirectMessageService;
-import com.grouply.backend.chat.direct_message.dto.SendDmDTO;
-import com.grouply.backend.chat.direct_message_room.DirectMessageRoomService;
-import com.grouply.backend.chat.direct_message_room.dto.DirectMessageRoomDTO;
 import com.grouply.backend.shared.exceptions.ExistsException;
 import com.grouply.backend.shared.exceptions.UnauthorizedException;
 import com.grouply.backend.join_request.dto.JoinRequestDTO;
@@ -45,8 +41,6 @@ public class JoinRequestService {
     private final ProjectPostPositionRepository projectPostPositionRepository;
     private final ActivityService activityService;
     private final ArchivedPostRepository archivedPostRepository;
-    private final DirectMessageService directMessageService;
-    private final DirectMessageRoomService directMessageRoomService;
 //    private final NotificationService notificationService;
 
     /**
@@ -117,7 +111,7 @@ public class JoinRequestService {
                 .createActivity("You sent join request to " + " " + post.getProject().getName() + " to position: " + position.getPosition()
                         ,"/post/"+post.getId()
                         , ActivityType.SENT_JOIN_REQUEST
-                        ,sender);
+                        , sender.getId());
         return true;
     }
 
@@ -163,15 +157,6 @@ public class JoinRequestService {
 
         log.info("Created new member!");
 
-
-        //TODO check if this works its a live links after acceptance
-        DirectMessageRoomDTO room = directMessageRoomService.getOrCreateRoom(userId, sender.getId());
-
-        for (int i = 0; i < project.getDefaultDmLinks().size(); i++) {
-            String link = project.getDefaultDmLinks().get(i);
-            SendDmDTO dto = new SendDmDTO(link);
-            directMessageService.sendMessage(room.getId(), dto);
-        }
     }
 
     /**

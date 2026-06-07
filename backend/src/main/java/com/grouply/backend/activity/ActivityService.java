@@ -3,6 +3,7 @@ package com.grouply.backend.activity;
 import com.grouply.backend.activity.dto.ActivityDTO;
 import com.grouply.backend.user.User;
 import com.grouply.backend.shared.util.EntityToDtoMapper;
+import com.grouply.backend.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -15,20 +16,23 @@ import java.util.List;
 public class ActivityService {
 
     private final ActivityRepository activityRepository;
+    private final UserService userService;
 
     public List<ActivityDTO> getAllActivities(Long userid) {
         return activityRepository.findAllByUserIdOrderByCreatedAtDesc(userid).stream().map(this::toActivityDto).toList();
     }
 
 
-    public void createActivity(String message, String navigateLink, ActivityType type ,User user) {
+    public void createActivity(String message, String navigateLink, ActivityType type ,Long userId) {
 
-        if (activityRepository.countByUserId(user.getId()) > 5) {
-            Activity oldest = activityRepository.findTopByUserIdOrderByCreatedAtAsc(user.getId());
+        if (activityRepository.countByUserId(userId) > 5) {
+            Activity oldest = activityRepository.findTopByUserIdOrderByCreatedAtAsc(userId);
             if (oldest != null) {
                 activityRepository.delete(oldest);
             }
         }
+
+        User user = userService.findOneUser(userId);
 
         Activity senderActivity = Activity.builder()
                 .message(message)

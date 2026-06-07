@@ -57,7 +57,7 @@ public class Project {
         member.setProject(this);
     }
 
-    public void removeProject(ProjectMember member) {
+    public void removeProjectMember(ProjectMember member) {
         projectMembers.remove(member);
         member.setProject(null);
     }

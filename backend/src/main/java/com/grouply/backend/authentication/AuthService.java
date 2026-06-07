@@ -4,8 +4,6 @@ import com.grouply.backend.authentication.dto.*;
 import com.grouply.backend.shared.exceptions.InvalidInputException;
 import com.grouply.backend.profile.profile.Profile;
 import com.grouply.backend.profile.profile.ProfileRepository;
-import com.grouply.backend.recruiter.Recruiter;
-import com.grouply.backend.recruiter.RecruiterRepository;
 import com.grouply.backend.shared.security.CustomUserDetails;
 import com.grouply.backend.shared.security.JwtService;
 import com.grouply.backend.statistics.Statistics;
@@ -32,7 +30,6 @@ public class AuthService implements IAuthService {
     private final UserRepository userRepository;
     private final ProfileRepository profileRepository;
     private final StatisticsRepository statisticsRepository;
-    private final RecruiterRepository recruiterRepository;
 
 
     /**
@@ -116,51 +113,8 @@ public class AuthService implements IAuthService {
 
     }
 
-    @Override
-    public AuthResponseDTO recruiterLogin(RecruiterLoginRequestDTO dto) {
-
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(dto.getEmail(), dto.getPassword())
-        );
-
-        CustomUserDetails principal = (CustomUserDetails) authentication.getPrincipal();
-
-        String token = jwtService.generateToken(principal.getId());
-
-        return new AuthResponseDTO(token);
 
 
-    }
-
-    @Override
-    public AuthResponseDTO recruiterSignup(RecruiterSignupRequestDTO dto) throws InvalidInputException {
-
-        if (!dto.getPassword().equals(dto.getConfirmPassword())) {
-            throw new InvalidInputException("Passwords are not match");
-        }
-
-        User user = User.builder()
-                .firstName(dto.getFirstName())
-                .lastName(dto.getLastName())
-                .username(dto.getUsername())
-                .email(dto.getEmail())
-                .password(encoder.encode(dto.getPassword()))
-                .role(Role.RECRUITER)
-                .build();
-
-        Recruiter recruiter = Recruiter.builder()
-                .companyName(dto.getCompanyName())
-                .user(user)
-                .build();
-
-        userRepository.save(user);
-        recruiterRepository.save(recruiter);
-
-
-        RecruiterLoginRequestDTO loginRequest = new RecruiterLoginRequestDTO(dto.getEmail(), dto.getPassword());
-        return recruiterLogin(loginRequest);
-
-    }
 
 
 }

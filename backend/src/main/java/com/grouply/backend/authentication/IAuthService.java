@@ -9,8 +9,5 @@ public interface IAuthService {
 
     AuthResponseDTO signup(SignUpRequestDTO dto) throws InvalidInputException;
 
-    AuthResponseDTO recruiterLogin(RecruiterLoginRequestDTO dto);
-
-    AuthResponseDTO recruiterSignup(RecruiterSignupRequestDTO dto) throws InvalidInputException;
 
 }

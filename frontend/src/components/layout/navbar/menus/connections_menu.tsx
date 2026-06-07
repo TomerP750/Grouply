@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import type { ConnectionRequestDTO } from "../../../../dtos/models_dtos/request_dto/connection_request_dto";
-import connectionRequestService from "../../../../service/connection_request_service";
+import connectionRequestService from "../../../../features/profile/api/connection_request_service";
 import { toast } from "react-toastify";
 import { ConnectionRequestCard } from "./connection_request_card";
 import { BiGroup } from "react-icons/bi";

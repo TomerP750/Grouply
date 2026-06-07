@@ -73,7 +73,7 @@ public class PostService implements IPostService {
         activityService.createActivity("You created a post",
                 "/post/"+newPost.getId(),
                 ActivityType.CREATED_POST,
-                fetchUser(userId));
+                userId);
 
         return EntityToDtoMapper.toPostDto(newPost);
     }
@@ -106,7 +106,7 @@ public class PostService implements IPostService {
         activityService.createActivity("You deleted post: "+ "\"" + post.getTitle() + "\"",
                 null,
                 ActivityType.DELETE_POST,
-                user);
+                userId);
     }
 
     @Override
