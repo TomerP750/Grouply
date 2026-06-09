@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { Panel } from "./panel";
 import { DashboardNavbar } from "./dashboard-navbar";
-import { useUserSelector } from "../../../components/shared/store/hooks";
+import { useUserSelector } from "../../../shared/store/hooks";
 import userService from "../../../service/user_service";
 
 

@@ -6,9 +6,9 @@ import type { TechnologyDTO } from "../../../../dtos/models_dtos/technology_dto"
 import technologyService from "../../../../service/technology_service";
 import { usePagination } from "../../../../../util/helper_hooks";
 import { extractPageCount } from "../../../../../util/pagination_helper";
-import { Dialog } from "../../../../components/shared/ui/Dialog";
+import { Dialog } from "../../../../shared/ui/Dialog";
 import { DataTable } from "./data_table";
-import { Modal } from "../../../../components/shared/ui/Modal";
+import { Modal } from "../../../../shared/ui/Modal";
 import { CreateProjectForm } from "../../forms/create_project_form";
 import { CreateTechnologyForm } from "../../forms/create_technology_form";
 

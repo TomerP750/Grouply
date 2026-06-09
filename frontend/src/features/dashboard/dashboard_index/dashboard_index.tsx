@@ -4,13 +4,13 @@ import { MdHistory } from "react-icons/md";
 import { toast } from "react-toastify";
 import type { ActivityDTO } from "../../../dtos/models_dtos/activity_dto";
 import type { StatisticsDTO } from "../../../dtos/models_dtos/statistics_dto";
-import { useUser } from "../../../components/shared/store/hooks";
+import { useUser } from "../../../shared/store/hooks";
 import activityService from "../../../service/activity_service";
-import statisticsService from "../../../service/statistics_service";
-import { Hr } from "../../../components/shared/ui/Hr";
+import statisticsService from "../../../shared/api/statistics_service";
+import { Hr } from "../../../shared/ui/Hr";
 import { ActiveProjectsChart } from "../charts/active_projects_chart";
 import { ConnectionsChart } from "../charts/connections_chart";
-import { ActivityRow } from "./activity_row";
+import { ActivityRow } from "../activity/components/activity_row";
 import { DashboardStatCard } from "./dashborard_stat_card";
 
 

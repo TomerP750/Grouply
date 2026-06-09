@@ -1,7 +1,7 @@
 import { useForm, useWatch } from "react-hook-form";
 import { useEffect } from "react";
 import type { ProfileDTO } from "../../../../dtos/models_dtos/profile_dto";
-import { Modal } from "../../../components/shared/ui/Modal";
+import { Modal } from "../../../shared/ui/Modal";
 import profileService from "../api/profile_service";
 import { toast } from "react-toastify";
 import "./styles.css";

@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { DeleteAccount } from "./delete_account";
 import { useTranslation } from "react-i18next";
 import type { UpdateUserDTO } from "../../../../../dtos/models_dtos/request_dto/update_user_dto";
-import { useUser } from "../../../../../components/shared/store/hooks";
+import { useUser } from "../../../../../shared/store/hooks";
 import userService from "../../../../../service/user_service";
 
 

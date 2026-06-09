@@ -11,7 +11,7 @@ import authService from "../api/auth_service";
 import { toast } from "react-toastify";
 import { inputStyle } from "../components/shared/ui/style";
 import type { LoginRequestDTO } from "../model/LoginRequestDto";
-import { login } from "../../../components/shared/store/AuthSlice";
+import { login } from "../../../shared/store/AuthSlice";
 
 
 

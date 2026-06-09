@@ -7,12 +7,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import type { JoinRequestDTO } from "../../../../dtos/models_dtos/request_dto/JoinRequestDTO";
-import { useUser } from "../../../../components/shared/store/hooks";
-import joinRequestService from "../../../../service/join_request_service";
+import { useUser } from "../../../../shared/store/hooks";
+import joinRequestService from "../../../../shared/api/join_request_service";
 import { usePagination } from "../../../../../util/helper_hooks";
 import { extractPageCount } from "../../../../../util/pagination_helper";
 import { fmtDate } from "../../../../util/format_functions";
-import { Dialog } from "../../../../components/shared/ui/Dialog";
+import { Dialog } from "../../../../shared/ui/Dialog";
 import { DataTable } from "../admin_tables/data_table";
 
 const ch = createColumnHelper<JoinRequestDTO>();

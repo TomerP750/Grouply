@@ -26,7 +26,6 @@ public class ProjectMemberController {
         return projectMemberService.allProjectMembers(id);
     }
 
-
     @GetMapping("/allPage/{id}")
     public Page<ProjectMemberDTO> allMembersByProjectId(@PathVariable Long id,
                                                         @RequestParam(value = "page", defaultValue = "0") int page,

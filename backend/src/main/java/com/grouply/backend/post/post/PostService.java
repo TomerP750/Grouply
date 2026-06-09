@@ -13,8 +13,6 @@ import com.grouply.backend.shared.exceptions.ExistsException;
 import com.grouply.backend.shared.exceptions.InvalidInputException;
 import com.grouply.backend.shared.exceptions.UnauthorizedException;
 import com.grouply.backend.project.project.Project;
-import com.grouply.backend.project.project.ProjectRepository;
-import com.grouply.backend.project.project_member.ProjectMemberRepository;
 import com.grouply.backend.project.project_member.ProjectPosition;
 import com.grouply.backend.project.project_member.ProjectRole;
 import com.grouply.backend.user.User;
@@ -34,15 +32,11 @@ import java.util.NoSuchElementException;
 public class PostService implements IPostService {
 
     private final PostRepository postRepository;
-    private final ProjectMemberRepository projectMemberRepository;
-    private final ProjectRepository projectRepository;
     private final ProjectPostPositionRepository projectPostPositionRepository;
     private final ActivityService activityService;
     private final UserService userService;
     private final ProjectService projectService;
     private final ProjectMemberService projectMemberService;
-
-
 
     @Override
     public PostDTO createPost(Long userId , CreateProjectPostDTO dto) throws ExistsException, UnauthorizedException {

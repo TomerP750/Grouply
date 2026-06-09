@@ -9,5 +9,6 @@ public interface IAuthService {
 
     AuthResponseDTO signup(SignUpRequestDTO dto) throws InvalidInputException;
 
+//    void logout(String refreshToken);
 
 }

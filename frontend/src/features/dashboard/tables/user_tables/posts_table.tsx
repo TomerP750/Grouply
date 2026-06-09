@@ -7,12 +7,12 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import type { PostDTO } from "../../../../dtos/models_dtos/post_dto";
-import { useUser } from "../../../../components/shared/store/hooks";
-import postService from "../../../posts-area/api/post_service";
+import { useUser } from "../../../../shared/store/hooks";
+import postService from "../../../feed/api/post_service";
 import { usePagination } from "../../../../../util/helper_hooks";
 import { extractPageCount } from "../../../../../util/pagination_helper";
 import { fmtDate } from "../../../../util/format_functions";
-import { Dialog } from "../../../../components/shared/ui/Dialog";
+import { Dialog } from "../../../../shared/ui/Dialog";
 import { DataTable } from "../admin_tables/data_table";
 
 const ch = createColumnHelper<PostDTO>();

@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import type { ProfileDTO } from "../../../../dtos/models_dtos/profile_dto";
-import { useUser } from "../../../components/shared/store/hooks";
+import { useUser } from "../../../shared/store/hooks";
 import profileService from "../api/profile_service";
 
-import { Hr } from "../../../components/shared/ui/Hr";
+import { Hr } from "../../../shared/ui/Hr";
 import { ProfileActions } from "../components/profile_actions";
 import { ProfileBanner } from "../components/profile_banner";
 import { ProfileSocials } from "../components/profile_socials";

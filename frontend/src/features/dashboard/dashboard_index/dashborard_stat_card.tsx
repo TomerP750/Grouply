@@ -1,5 +1,5 @@
 import type { IconType } from "react-icons";
-import { Hr } from "../../../components/shared/ui/Hr";
+import { Hr } from "../../../shared/ui/Hr";
 
 
 interface DashboardStatCardProps {

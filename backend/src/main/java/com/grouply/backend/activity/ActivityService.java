@@ -2,7 +2,6 @@ package com.grouply.backend.activity;
 
 import com.grouply.backend.activity.dto.ActivityDTO;
 import com.grouply.backend.user.User;
-import com.grouply.backend.shared.util.EntityToDtoMapper;
 import com.grouply.backend.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,11 +16,11 @@ public class ActivityService {
 
     private final ActivityRepository activityRepository;
     private final UserService userService;
+    private final ActivityMapper activityMapper;
 
     public List<ActivityDTO> getAllActivities(Long userid) {
-        return activityRepository.findAllByUserIdOrderByCreatedAtDesc(userid).stream().map(this::toActivityDto).toList();
+        return activityRepository.findAllByUserIdOrderByCreatedAtDesc(userid).stream().map(activityMapper::toActivityDto).toList();
     }
-
 
     public void createActivity(String message, String navigateLink, ActivityType type ,Long userId) {
 
@@ -44,15 +43,5 @@ public class ActivityService {
         activityRepository.save(senderActivity);
     }
 
-    private ActivityDTO toActivityDto(Activity entity) {
-        return ActivityDTO.builder()
-                .id(entity.getId())
-                .message(entity.getMessage())
-                .activityType(entity.getType())
-                .navigateLink(entity.getNavigateLink())
-                .user(EntityToDtoMapper.toUserDto(entity.getUser()))
-                .createdAt(entity.getCreatedAt())
-                .build();
-    }
 
 }

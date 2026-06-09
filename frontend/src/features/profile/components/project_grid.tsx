@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { toast } from "react-toastify";
 import { ProfileProjectCard } from "./profile_project_card";
 import type { ProjectDTO } from "../../../dtos/models_dtos/project_dto";
-import projectService from "../../../service/project_service";
+import projectService from "../../../shared/api/project_service";
 
 
 

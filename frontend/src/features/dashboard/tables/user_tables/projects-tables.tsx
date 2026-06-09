@@ -9,11 +9,11 @@ import { toast } from "react-toastify";
 
 import { ProjectStatus } from "../../../../dtos/enums/ProjectStatus";
 import type { ProjectDTO } from "../../../../dtos/models_dtos/project_dto";
-import { useUser } from "../../../../components/shared/store/hooks";
-import projectService from "../../../../service/project_service";
+import { useUser } from "../../../../shared/store/hooks";
+import projectService from "../../../../shared/api/project_service";
 import { fmtDate, toNormal } from "../../../../util/format_functions";
-import { Dialog } from "../../../../components/shared/ui/Dialog";
-import { Modal } from "../../../../components/shared/ui/Modal";
+import { Dialog } from "../../../../shared/ui/Dialog";
+import { Modal } from "../../../../shared/ui/Modal";
 import { CreateProjectForm } from "../../forms/create_project_form";
 import { DataTable } from "../admin_tables/data_table";
 import { extractPageCount } from "../../../../../util/pagination_helper";
