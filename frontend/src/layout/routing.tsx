@@ -2,15 +2,14 @@ import { Route, Routes } from "react-router-dom";
 import { Login } from "../features/authentication/pages/Login";
 import { Dashboard } from "../features/dashboard/layout/DashboardLayout";
 import { Overview } from "../features/dashboard/dashboard_index/DashboardIndex";
-import { TechnologiesTable } from "../features/dashboard/tables/admin_tables/technologies_table";
-import { UsersTable } from "../features/dashboard/tables/admin_tables/users-tabel";
-import { JoinRequestsTable } from "../features/dashboard/tables/user_tables/join_requests_table";
-import { PostsTable } from "../features/dashboard/tables/user_tables/posts_table";
-import { ProjectMembersTable } from "../features/dashboard/tables/user_tables/project_members_table";
-import { ProjectsTable } from "../features/dashboard/tables/user_tables/projects-tables";
+import { TechnologiesTable } from "../features/dashboard/tables/admin_tables/TechnologiesTable";
+import { UsersTable } from "../features/dashboard/tables/admin_tables/UsersTable";
+import { JoinRequestsTable } from "../features/dashboard/tables/user_tables/JoinRequestsTable";
+import { PostsTable } from "../features/dashboard/tables/user_tables/PostsTable";
+import { ProjectMembersTable } from "../features/dashboard/tables/user_tables/ProjectMembersTable";
+import { ProjectsTable } from "../features/dashboard/tables/user_tables/ProjectsTable";
 import { CreatePostForm } from "../features/feed/posts/forms/CreatePostForm";
 import { PostPage } from "../features/feed/posts/pages/PostPage";
-import About from "../features/home/components/about/About";
 import { Home } from "../features/home/pages/Home";
 import { NotFoundPage } from "../features/other-pages/not-found/NotFoundPage";
 import { DisplaySettings } from "../features/other-pages/settings/pages/DisplaySettings";
@@ -19,9 +18,9 @@ import { SettingsPage } from "../features/other-pages/settings/pages/SettingsPag
 import { UserSettings } from "../features/other-pages/settings/pages/user_settings/UserSettings";
 import { ProfilePage } from "../features/profile/pages/profile_page";
 import { useUserSelector } from "../shared/store/hooks";
-import { ArchivedPostsFeed } from "../features/feed/archived_posts/pages/archived_posts_feed";
+import { ArchivedPostsFeed } from "../features/feed/archived_posts/pages/ArchivedPostsFeed";
 import { SignUp } from "../features/authentication/pages/SignUp";
-import { Feed } from "../features/feed/posts/pages/feed";
+import { Feed } from "../features/feed/posts/pages/Feed";
 
 
 
@@ -35,7 +34,6 @@ export function Routing() {
         <div>
             <Routes>
                 <Route path="/" element={user ? <Feed /> : <Home />} />
-                <Route path="/about" element={<About />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/settings" element={<SettingsPage />}>

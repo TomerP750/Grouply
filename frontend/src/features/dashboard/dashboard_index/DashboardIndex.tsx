@@ -8,9 +8,9 @@ import statisticsService from "../../../shared/api/statistics_service";
 import { Hr } from "../../../shared/ui/Hr";
 import { ActiveProjectsChart } from "../charts/ActiveProjectsChart";
 import { JoinRequestChart } from "../charts/JoinRequestsChart";
-import { ActivityRow } from "../activity/components/activity_row";
+import { ActivityRow } from "../activity/components/ActivityRow";
 import { DashboardStatCard } from "./DashboardStatCard";
-import activityService from "../activity/api/activity_service";
+import activityService from "../activity/api/activityService";
 import type { StatisticsDTO } from "./StatisticsDto";
 
 

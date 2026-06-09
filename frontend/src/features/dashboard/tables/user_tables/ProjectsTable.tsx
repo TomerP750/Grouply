@@ -15,7 +15,7 @@ import { fmtDate, toNormal } from "../../../../util/format_functions";
 import { Dialog } from "../../../../shared/ui/Dialog";
 import { Modal } from "../../../../shared/ui/Modal";
 import { CreateProjectForm } from "../../admin/forms/create_project_form";
-import { DataTable } from "../admin_tables/data_table";
+import { DataTable } from "../../shared/ui/DataTable";
 import { extractPageCount } from "../../../../../util/pagination_helper";
 import { StatusBadge } from "../../../../util/ui_helper";
 import type { UpdateProjectDTO } from "../../../../dtos/models_dtos/request_dto/UpdateProjectDto";

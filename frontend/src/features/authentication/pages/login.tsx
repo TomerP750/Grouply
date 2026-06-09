@@ -1,71 +1,64 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { FiEye, FiEyeOff } from "react-icons/fi";
 import { NavLink, useNavigate } from "react-router-dom";
-
 import { BsArrowLeft } from "react-icons/bs";
-import { useDispatch } from "react-redux";
-
 import { BiGroup, BiLoaderAlt } from "react-icons/bi";
-import authService from "../api/auth_service";
+import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import { inputStyle } from "../components/shared/ui/style";
+
+import authService from "../api/authService";
 import type { LoginRequestDTO } from "../model/LoginRequestDto";
 import { login } from "../../../shared/store/AuthSlice";
-
-
-
-
+import { Input } from "../../../shared/ui/Input";
 
 
 export function Login() {
+    const [loading, setLoading] = useState(false);
+    const [checkedRememberMe, setCheckedRememberMe] = useState(false);
 
-    const [loading, setLoading] = useState<boolean>(false);
-    const [showPassword, setShowPassword] = useState<boolean>(false);
-    const [checkedRememberMe, setCheckedRememberMe] = useState<boolean>(false);
-
-    const { register, handleSubmit, formState: { errors } } = useForm<LoginRequestDTO>();
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<LoginRequestDTO>();
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const handleLogin = async (data: LoginRequestDTO) => {
-
         setLoading(true);
 
-        authService.login(data)
-            .then(res => {
+        authService
+            .login(data)
+            .then((res) => {
                 localStorage.token = res.token;
                 dispatch(login(res.token));
                 navigate("/");
             })
-            .catch(err => {
-                toast.error(err.response.data);
+            .catch((err) => {
+                toast.error(err.response?.data || "Login failed");
             })
             .finally(() => {
                 setLoading(false);
-            })
-
+            });
     };
 
     return (
-        <div className="min-h-screen overflow-hidden dark:bg-stone-900  text-slate-800 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 dark:text-slate-100">
-
+        <div className="min-h-screen overflow-hidden dark:bg-stone-900 text-slate-800 dark:text-slate-100">
             <div className="mx-auto flex min-h-screen max-w-6xl flex-col items-center justify-center px-4 py-10">
 
                 <NavLink
-                    to={"/"}
-                    className="mb-8 inline-flex items-center gap-2 rounded-full border border-sky-500/40 dark:border-sky-400/40 bg-white/70 px-4 py-2 text-sm font-medium text-sky-600  dark:hover:bg-slate-900 dark:bg-slate-800/60 dark:text-slate-300"
+                    to="/"
+                    className="mb-8 inline-flex items-center gap-2 rounded-full border border-sky-500/40 bg-white/70 px-4 py-2 text-sm font-medium text-sky-600 dark:bg-slate-800/60 dark:text-slate-300"
                 >
                     <BsArrowLeft /> Return to home
                 </NavLink>
 
                 <div className="w-full max-w-md">
-                    {/* Card */}
-                    <div className="rounded-3xl p-6 shadow-xl backdrop-blur ">
-                        {/* Logo / Title */}
+                    <div className="rounded-3xl p-6 shadow-xl backdrop-blur">
+
                         <div className="mb-6 flex flex-col items-center text-center">
-                            <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-500 dark:bg-sky-500 text-white">
+                            <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-sky-500 text-white">
                                 <BiGroup size={30} />
                             </div>
 
@@ -75,101 +68,73 @@ export function Login() {
                             </p>
                         </div>
 
-                        {/* Form */}
                         <form onSubmit={handleSubmit(handleLogin)} className="flex flex-col gap-4">
-                            {/* Email */}
-                            <div>
-                                <label htmlFor="email" className="mb-1 block text-sm font-medium">
-                                    Email
-                                </label>
-                                <input
-                                    id="email"
-                                    type="email"
-                                    autoComplete="email"
-                                    placeholder="you@example.com"
-                                    className={`${inputStyle}`}
-                                    {...register("email", {
-                                        required: "Email is required",
-                                        pattern: {
-                                            value: /[^\s@]+@[^\s@]+\.[^\s@]+/,
-                                            message: "Enter a valid email",
-                                        },
-                                    })}
-                                />
-                                {errors.email &&
-                                    <p className="mt-1 text-xs text-rose-500">{errors.email.message}</p>
-                                }
-                            </div>
 
-                            {/* Password */}
-                            <div>
-                                <div className="mb-1 flex items-center justify-between">
-                                    <label htmlFor="password" className="block text-sm font-medium">
-                                        Password
-                                    </label>
-                                    <NavLink to="/forgot" className="text-xs text-sky-600 hover:underline dark:text-sky-400">
-                                        Forgot password?
-                                    </NavLink>
-                                </div>
-                                <div className="relative">
-                                    <input
-                                        id="password"
-                                        type={showPassword ? "text" : "password"}
-                                        autoComplete="current-password"
-                                        placeholder="••••••••"
-                                        className={`${inputStyle}`}
-                                        {...register("password", {
-                                            required: "Password is required",
-                                            minLength: { value: 6, message: "Minimum 6 characters" },
-                                        })}
-                                    />
-                                    <button
-                                        type="button"
-                                        onClick={() => setShowPassword(!showPassword)}
-                                        className="absolute inset-y-0 right-2 flex items-center rounded-md px-2 cursor-pointer dark:text-slate-300 dark:hover:text-white"
-                                        aria-label={showPassword ? "Hide password" : "Show password"}
-                                    >
-                                        {showPassword ? <FiEyeOff size={18} /> : <FiEye size={18} />}
-                                    </button>
-                                </div>
-                                {errors.password &&
-                                    <p className="mt-1 text-xs text-rose-500">{errors.password.message}</p>
-                                }
-                            </div>
+                            <Input
+                                label="Email"
+                                type="email"
+                                placeholder="you@example.com"
+                                error={errors.email?.message}
+                                {...register("email", {
+                                    required: "Email is required",
+                                    pattern: {
+                                        value: /[^\s@]+@[^\s@]+\.[^\s@]+/,
+                                        message: "Enter a valid email",
+                                    },
+                                })}
+                            />
+
+                            <Input
+                                label="Password"
+                                type="password"
+                                placeholder="••••••••"
+                                error={errors.password?.message}
+                                {...register("password", {
+                                    required: "Password is required",
+                                    minLength: {
+                                        value: 6,
+                                        message: "Minimum 6 characters",
+                                    },
+                                })}
+                            />
 
                             {/* Remember + Signup */}
-                            <div className="mt-1 flex items-center justify-between">
+                            <div className="flex items-center justify-between">
                                 <label className="inline-flex cursor-pointer items-center gap-2 text-sm">
                                     <input
                                         type="checkbox"
                                         className="h-4 aspect-square"
                                         checked={checkedRememberMe}
-                                        onChange={(e) => setCheckedRememberMe(e.target.checked)}
+                                        onChange={(e) =>
+                                            setCheckedRememberMe(e.target.checked)
+                                        }
                                     />
                                     Remember me
                                 </label>
-                                <span className="text-sm text-slate-600 dark:text-slate-300">
-                                    No account?{" "}
-                                    <NavLink to={`/signup`} className="cursor-pointer font-medium text-sky-600 hover:underline dark:text-sky-400">
-                                        Sign up
-                                    </NavLink>
-                                </span>
+
+                                <NavLink
+                                    to="/signup"
+                                    className="text-sm text-sky-600 hover:underline dark:text-sky-400"
+                                >
+                                    Sign up
+                                </NavLink>
                             </div>
 
                             {/* Submit */}
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className="cursor-pointer mt-2 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-sky-500 hover:bg-sky-600  px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition disabled:cursor-not-allowed disabled:opacity-70"
+                                className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-sky-500 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-sky-600 disabled:opacity-70"
                             >
-
-                                {loading ? <BiLoaderAlt size={20} className="animate-spin" /> : 'Sign in'}
-
+                                {loading ? (
+                                    <BiLoaderAlt size={20} className="animate-spin" />
+                                ) : (
+                                    "Sign in"
+                                )}
                             </button>
                         </form>
                     </div>
 
-                    {/* Footer mini-links */}
                     <div className="mt-6 text-center text-xs text-slate-500 dark:text-slate-400">
                         © {new Date().getFullYear()} Grouply • Collaborate • Build • Grow
                     </div>

@@ -6,7 +6,7 @@ import { ProjectRole } from "../../../../shared/models/project/ProjectRole";
 import type { ProjectMemberDTO } from "../../../../shared/models/ProjectMemberDto";
 import projectMemberService from "../../../../shared/api/project_member_service";
 import { Dialog } from "../../../../shared/ui/Dialog";
-import { DataTable } from "../admin_tables/data_table";
+import { DataTable } from "../../shared/ui/DataTable";
 import { usePagination } from "../../../../../util/helper_hooks";
 import { extractPageCount } from "../../../../../util/pagination_helper";
 import { createColumnHelper, type ColumnDef } from "@tanstack/react-table";

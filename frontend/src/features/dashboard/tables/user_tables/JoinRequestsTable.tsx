@@ -13,7 +13,7 @@ import { usePagination } from "../../../../../util/helper_hooks";
 import { extractPageCount } from "../../../../../util/pagination_helper";
 import { fmtDate } from "../../../../util/format_functions";
 import { Dialog } from "../../../../shared/ui/Dialog";
-import { DataTable } from "../admin_tables/data_table";
+import { DataTable } from "../../shared/ui/DataTable";
 
 const ch = createColumnHelper<JoinRequestDTO>();
 

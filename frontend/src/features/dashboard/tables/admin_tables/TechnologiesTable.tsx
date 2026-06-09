@@ -7,10 +7,10 @@ import technologyService from "../../../../service/technology_service";
 import { usePagination } from "../../../../../util/helper_hooks";
 import { extractPageCount } from "../../../../../util/pagination_helper";
 import { Dialog } from "../../../../shared/ui/Dialog";
-import { DataTable } from "./data_table";
+import { DataTable } from "../../shared/ui/DataTable";
 import { Modal } from "../../../../shared/ui/Modal";
 import { CreateProjectForm } from "../../admin/forms/create_project_form";
-import { CreateTechnologyForm } from "../../admin/forms/create_technology_form";
+import { CreateTechnologyForm } from "../../admin/forms/CreateTechnologyForm";
 
 const ch = createColumnHelper<TechnologyDTO>();
 
