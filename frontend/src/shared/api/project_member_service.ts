@@ -1,6 +1,6 @@
 import axios from "axios";
 import { BASE_API } from "../util/base_api";
-import type { ProjectRole } from "../../dtos/enums/ProjectRole";
+import type { ProjectRole } from "../models/project/ProjectRole";
 import type { ChangeUserRoleDTO } from "../components/pages/dashboard/tables/user_tables/project_members_table";
 
 

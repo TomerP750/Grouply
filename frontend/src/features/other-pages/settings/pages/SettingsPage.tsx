@@ -1,5 +1,5 @@
-import { SettingsPanel } from "./settings_panel";
 import { SettingsSidebar } from "../components/sidebar";
+import { SettingsPanel } from "./SettingsPanel";
 
 
 

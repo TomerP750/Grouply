@@ -1,7 +1,7 @@
 import axios from "axios";
 import { BASE_API } from "../util/base_api";
 import type { InviteUserToProjectRequestDTO } from "../components/pages/profile/invite_project_card";
-import type { ProjectPosition } from "../../dtos/enums/ProjectPosition";
+import type { ProjectPosition } from "../models/project/ProjectPosition";
 
 
 

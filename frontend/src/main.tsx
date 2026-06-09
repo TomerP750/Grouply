@@ -3,14 +3,13 @@ import { createRoot } from 'react-dom/client'
 import { Provider } from 'react-redux'
 import { BrowserRouter } from 'react-router-dom'
 
-import { ThemeProvider } from './context/ThemeContext.tsx'
 import './index.css'
 import "./i18n";
-import { store } from './redux/store.ts'
-import { ToastConfig } from './util/ToastConfig.tsx'
-import { ScrollToTop } from './util/scroll_to_top.tsx'
-import { Layout } from './components/layout/layout.tsx'
-
+import { Layout } from './layout/layout'
+import { ThemeProvider } from './shared/context/ThemeContext'
+import { store } from './shared/store/store'
+import { ScrollToTop } from './shared/utils/scroll_to_top'
+import { ToastConfig } from './shared/utils/ToastConfig'
 
 
 axios.interceptors.request.use(function (config) {

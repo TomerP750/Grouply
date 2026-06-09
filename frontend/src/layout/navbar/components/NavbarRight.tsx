@@ -8,8 +8,8 @@ import { Badge } from "../../../../shared/ui/Badge";
 import { SearchBar } from "../search_bar/SearchBar";
 import { UserMenu } from "./user_menu";
 import { Menu } from "../../../../shared/ui/Menu";
-import { ConnectionMenu } from "../menus/connections_menu";
-import { NotificationMenu } from "../menus/notification_menu";
+import { ConnectionMenu } from "../menus/ConnectionsMenu";
+import { NotificationMenu } from "../menus/NotificationsMenu";
 import { ConnectionBadge } from "./connection.badge";
 import { NotificationBadge } from "./notification.badge";
 

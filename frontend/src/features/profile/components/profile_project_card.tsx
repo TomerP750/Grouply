@@ -1,5 +1,5 @@
 import { BiCalendar } from "react-icons/bi";
-import type { ProjectDTO } from "../../../dtos/models_dtos/project_dto";
+import type { ProjectDTO } from "../../feed/posts/models/ProjectDto";
 import { technologyIconMap } from "../../../util/technology_icon_mapper";
 import { StatusBadge } from "../../../util/ui_helper";
 import { fmtDate } from "../../../util/format_functions";

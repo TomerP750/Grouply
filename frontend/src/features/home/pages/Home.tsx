@@ -1,5 +1,5 @@
+import { Hero } from "../components/hero/Hero";
 
-import { Hero } from "./Hero";
 
 export function Home() {
     return (
@@ -9,8 +9,7 @@ export function Home() {
         text-black dark:text-white ">
 
             <Hero />
-            {/* <Features />
-            <RecruiterFeatures/> */}
+           
 
 
         </main>

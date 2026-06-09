@@ -2,12 +2,12 @@ import debounce from "lodash/debounce";
 import { useEffect, useMemo, useState } from "react";
 import { BiLoaderAlt, BiSearch, BiX } from "react-icons/bi";
 import { toast } from "react-toastify";
-import type { UserDTO } from "../../../../dtos/models_dtos/user_dto";
-import userService from "../../../../service/user_service";
-import { useBodyScrollLock } from "../../../../util/helper_hooks";
-import { Drawer } from "../../../../shared/ui/drawer";
+
 import './SearchBar.css';
 import { SearchBarResults } from "./SearchBarResults";
+import type { UserDTO } from "../../../shared/models/UserDto";
+import userService from "../../../features/other-pages/settings/api/userService";
+import { Drawer } from "../../../shared/ui/Drawer";
 
 
 interface SearchBarProps {
@@ -53,8 +53,6 @@ export function SearchBar({ open, onClose }: SearchBarProps) {
   useEffect(() => {
     return () => debouncedSearch.cancel();
   }, [debouncedSearch]);
-
-  useBodyScrollLock(open);
 
   return (
     <Drawer>

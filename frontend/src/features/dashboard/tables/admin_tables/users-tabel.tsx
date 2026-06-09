@@ -4,8 +4,8 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 import { DataTable } from "./data_table";
-import { Role } from "../../../../dtos/enums/Role";
-import type { UserDTO } from "../../../../dtos/models_dtos/user_dto";
+import { Role } from "../../../authentication/model/Role";
+import type { UserDTO } from "../../../../shared/models/UserDto";
 import { useUser } from "../../../../shared/store/hooks";
 import userService from "../../../../service/user_service";
 import { extractPageCount } from "../../../../../util/pagination_helper";

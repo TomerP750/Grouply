@@ -1,5 +1,5 @@
 
-import type { UserDTO } from "../../../dtos/models_dtos/user_dto";
+import type { UserDTO } from "../../../shared/models/UserDto";
 import defaultBanner from "../../../../assets/defaultProfileBanner.jpg";
 import { Avatar } from "../../../shared/ui/Avatar";
 import { ProfileSocials } from "./profile_socials";

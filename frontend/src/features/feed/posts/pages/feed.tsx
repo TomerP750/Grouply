@@ -1,66 +1,56 @@
-// import { useCallback, useEffect, useState } from "react";
-// import { BiLoaderAlt } from "react-icons/bi";
-// import { useInView } from "react-intersection-observer";
-// import { toast } from "react-toastify";
-// import type { PostDTO } from "../../../../../dtos/models_dtos/post_dto";
-// import { default as postService } from "../../../../../service/post_service";
-// import { usePagination } from "../../../../../util/helper_hooks";
-// import { Filters } from "../../filters_area/filters";
-// import { useProjectFilters } from "../../filters_area/hooks/useProjectFilters";
-// import { PostCard } from "../../post_card/post_card";
-// import { FeedHeader } from "../components/feed_header";
-
-
-
-// export function Feed() {
-
-//     const [posts, setPosts] = useState<PostDTO[]>([]);
-
-//     const [loading, setLoading] = useState<boolean>(false);
+import { useState } from "react";
+import { FeedHeader } from "../../components/FeedHeader";
+import { PostCard } from "../../components/post_card/PostCard";
+import { Filters } from "../../filters/components/Filters";
+import type { PostDTO } from "../../models/PostDto";
 
 
 
 
-//     const handleAdd = (newPost: PostDTO) => {
-//         setPosts(prev => [...prev, newPost]);
-//     };
+export function Feed() {
+
+    const [posts, setPosts] = useState<PostDTO[]>([]);
+
+    const [loading, setLoading] = useState<boolean>(false);
 
 
-//     const handleRemove = (deletePostId: number) => {
-//         setPosts(prev => prev.filter(p => p.id !== deletePostId))
-//     }
+    const handleAdd = (newPost: PostDTO) => {
+        setPosts(prev => [...prev, newPost]);
+    };
 
 
+    const handleRemove = (deletePostId: number) => {
+        setPosts(prev => prev.filter(p => p.id !== deletePostId))
+    }
 
+    return (
+        <main className="min-h-screen pb-10">
 
-//     return (
-//         <main className="min-h-screen pb-10">
+            {/* POSTS AND FILTERS */}
+            <div className="bg-neutral-200 dark:bg-stone-950 flex flex-col lg:pt-25 md:mt-5 px-5 md:px-0 lg:flex-row w-full items-center lg:items-start gap-6">
+                <Filters />
 
-//             {/* POSTS AND FILTERS */}
-//             <div className="bg-neutral-200 dark:bg-stone-950 flex flex-col lg:pt-25 md:mt-5 px-5 md:px-0 lg:flex-row w-full items-center lg:items-start gap-6">
-//                 <Filters />
+                {/* Main area */}
+                <section className="w-full flex justify-center px-0 sm:px-5 ">
 
-//                 {/* Main area */}
-//                 <section className="w-full flex justify-center px-0 sm:px-5 ">
+                    {/* Width cap + centered */}
+                    <div className="w-full grid grid-cols-1 justify-items-center lg:justify-items-start gap-y-10">
 
-//                     {/* Width cap + centered */}
-//                     <div className="w-full grid grid-cols-1 justify-items-center lg:justify-items-start gap-y-10">
+                        <FeedHeader />
 
-//                         <FeedHeader />
+                        {posts?.map(p => (
+                            <PostCard
+                                key={p.id}
+                                projectPost={p}
+                                onRemove={() => handleRemove(p.id)}
+                            />
+                        ))}
+                    </div>
 
-//                         {posts?.map(p => (
-//                             <PostCard
-//                                 key={p.id}
-//                                 projectPost={p}
-//                                 onRemove={() => handleRemove(p.id)}
-//                             />
-//                         ))}
-//                     </div>
+                </section>
+            </div>
 
-//                 </section>
-//             </div>
+        </main>
 
-//         </main>
-
-//     )
-// }
+    )
+}

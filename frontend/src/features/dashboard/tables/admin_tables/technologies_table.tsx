@@ -2,15 +2,15 @@ import { createColumnHelper, type ColumnDef } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
 import { BiEdit, BiTrash, BiX } from "react-icons/bi";
 import { toast } from "react-toastify";
-import type { TechnologyDTO } from "../../../../dtos/models_dtos/technology_dto";
+import type { TechnologyDTO } from "../../../../shared/models/TechnologyDto";
 import technologyService from "../../../../service/technology_service";
 import { usePagination } from "../../../../../util/helper_hooks";
 import { extractPageCount } from "../../../../../util/pagination_helper";
 import { Dialog } from "../../../../shared/ui/Dialog";
 import { DataTable } from "./data_table";
 import { Modal } from "../../../../shared/ui/Modal";
-import { CreateProjectForm } from "../../forms/create_project_form";
-import { CreateTechnologyForm } from "../../forms/create_technology_form";
+import { CreateProjectForm } from "../../admin/forms/create_project_form";
+import { CreateTechnologyForm } from "../../admin/forms/create_technology_form";
 
 const ch = createColumnHelper<TechnologyDTO>();
 

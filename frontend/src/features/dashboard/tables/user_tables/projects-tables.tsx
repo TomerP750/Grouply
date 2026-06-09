@@ -7,18 +7,18 @@ import { BiPencil, BiPlus, BiTrash, BiX } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import { ProjectStatus } from "../../../../dtos/enums/ProjectStatus";
-import type { ProjectDTO } from "../../../../dtos/models_dtos/project_dto";
+import { ProjectStatus } from "../../../../shared/models/project/ProjectStatus";
+import type { ProjectDTO } from "../../../feed/posts/models/ProjectDto";
 import { useUser } from "../../../../shared/store/hooks";
 import projectService from "../../../../shared/api/project_service";
 import { fmtDate, toNormal } from "../../../../util/format_functions";
 import { Dialog } from "../../../../shared/ui/Dialog";
 import { Modal } from "../../../../shared/ui/Modal";
-import { CreateProjectForm } from "../../forms/create_project_form";
+import { CreateProjectForm } from "../../admin/forms/create_project_form";
 import { DataTable } from "../admin_tables/data_table";
 import { extractPageCount } from "../../../../../util/pagination_helper";
 import { StatusBadge } from "../../../../util/ui_helper";
-import type { UpdateProjectDTO } from "../../../../dtos/models_dtos/request_dto/update_project_dto";
+import type { UpdateProjectDTO } from "../../../../dtos/models_dtos/request_dto/UpdateProjectDto";
 
 
 

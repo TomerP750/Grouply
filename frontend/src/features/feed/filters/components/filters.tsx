@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { BiFilter } from "react-icons/bi";
 import { Hr } from "../../../components/shared/ui/Hr";
-import { MobileFilters } from "./mobile_filters";
+import { MobileFilters } from "./MobileFilters";
 // import { RoleDemandSelect } from "./role_demand_select";
-import { SortGroup } from "./sort_group";
-import { TechnologySelect } from "./technologies_select";
+import { SortGroup } from "./SortGroup";
+import { TechnologySelect } from "./TechnologiesSelect";
 import { useTranslation } from "react-i18next";
 import "./filters.css";
 

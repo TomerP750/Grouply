@@ -6,7 +6,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import type { JoinRequestDTO } from "../../../../dtos/models_dtos/request_dto/JoinRequestDTO";
+import type { JoinRequestDTO } from "../../../feed/shared/models/JoinRequestDTO";
 import { useUser } from "../../../../shared/store/hooks";
 import joinRequestService from "../../../../shared/api/join_request_service";
 import { usePagination } from "../../../../../util/helper_hooks";
