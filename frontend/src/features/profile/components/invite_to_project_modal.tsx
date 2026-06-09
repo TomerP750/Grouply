@@ -3,7 +3,7 @@ import { HiSearch } from "react-icons/hi";
 import { toast } from "react-toastify";
 import { InviteToProjectProvider } from "../../../context/invite_to_project_context";
 import type { ProjectDTO } from "../../feed/posts/models/ProjectDto";
-import projectService from "../../../shared/api/project_service";
+import projectService from "../../../shared/api/projectService";
 import { Modal } from "../../../shared/ui/Modal";
 import { InviteProjectList } from "./invite_project_list";
 

@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 
 import type { JoinRequestDTO } from "../../../feed/shared/models/JoinRequestDTO";
 import { useUser } from "../../../../shared/store/hooks";
-import joinRequestService from "../../../../shared/api/join_request_service";
+import joinRequestService from "../../../feed/posts/api/joinRequestService";
 import { usePagination } from "../../../../../util/helper_hooks";
 import { extractPageCount } from "../../../../../util/pagination_helper";
 import { fmtDate } from "../../../../util/format_functions";

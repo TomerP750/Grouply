@@ -13,8 +13,9 @@ import { Input } from "../../../shared/ui/Input";
 
 
 export function Login() {
-    const [loading, setLoading] = useState(false);
-    const [checkedRememberMe, setCheckedRememberMe] = useState(false);
+
+    const [loading, setLoading] = useState<boolean>(false);
+    const [checkedRememberMe, setCheckedRememberMe] = useState<boolean>(false);
 
     const {
         register,

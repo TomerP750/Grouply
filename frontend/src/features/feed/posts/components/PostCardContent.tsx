@@ -2,30 +2,19 @@ import { useEffect, useState } from "react";
 import { BiDotsVertical, BiHistory } from "react-icons/bi";
 import { MdBookmarkAdd } from "react-icons/md";
 import { toast } from "react-toastify";
-import type { PostDTO } from "../../../dtos/models_dtos/post_dto";
 import { useUser } from "../../../../shared/store/hooks";
-import archivedPostService from "../../../service/archived_project_service";
-import projectMemberService from "../../../../shared/api/project_member_service";
-import { timeAgo, toNormal } from "../../../../util/format_functions";
+import projectMemberService from "../../../../shared/api/projectMemberService";
+
 import { Dialog } from "../../../../shared/ui/Dialog";
 
 import './post_card_css.css';
-import { PostCardPositionCard } from "./post_card_position_card";
 import { EditPostFormModal } from "../forms/EditPostForm";
-
-
-type MemberType = "member" | "owner"
-
-export const getMemberTypeTitle = (type: MemberType) => {
-
-    switch (type) {
-        case "owner":
-            return "Your Project";
-        case "member":
-            return "You Are Member";
-    }
-
-}
+import { timeAgo, toNormal } from "../../../../shared/utils/string_formats";
+import archivedPostService from "../../archived_posts/api/archivedPostService";
+import { PostCardPositionCard } from "../../components/post_card/PostCardPositionCard";
+import type { PostDTO } from "../../shared/models/PostDto";
+import { OwnerCrudMenu } from "./OwnerCrudMenu";
+import { getMemberTypeTitle } from "../util/getMemberTypeTitle";
 
 
 interface ProjectCardContentProps {
@@ -40,12 +29,14 @@ export function PostCardContent({ post, onEdit, onDelete, sentRequest }: Project
     const [loading, setLoading] = useState<boolean>(false);
     const [isOwner, setIsOwner] = useState<boolean>(false);
     const [isMember, setIsMember] = useState<boolean>(false);
-    const user = useUser();
     const [menuOpen, setMenuOpen] = useState<boolean>(false);
     const [dialogOpen, setDialogOpen] = useState<boolean>(false);
     const [editModalOpen, setEditModalOpen] = useState<boolean>(false);
 
     const [archived, setArchived] = useState<boolean>(false);
+
+    const user = useUser();
+
 
     useEffect(() => {
         archivedPostService.isPostArchived(post.id)
@@ -107,13 +98,13 @@ export function PostCardContent({ post, onEdit, onDelete, sentRequest }: Project
 
     return (
         <div className="flex flex-col flex-grow w-full px-6 py-4 gap-2">
-            
+
             {/* Time ago */}
             <div className="flex items-center gap-1">
-                <BiHistory size={18} className="mt-1"/>
-                <p className="text-sm font-medium dark:text-gray-300">{timeAgo(postedAt)}</p> 
+                <BiHistory size={18} className="mt-1" />
+                <p className="text-sm font-medium dark:text-gray-300">{timeAgo(postedAt)}</p>
             </div>
-            
+
             <div className="flex w-full justify-between items-center">
                 {/* Title + isowner */}
                 <div className="flex flex-col-reverse items-start sm:flex justify-between w-full gap-3 font-bold text-2xl text-gray-900 dark:text-white">
@@ -131,14 +122,10 @@ export function PostCardContent({ post, onEdit, onDelete, sentRequest }: Project
                                     <BiDotsVertical size={25} />
                                 </button>
                                 {menuOpen &&
-                                    <div className="crud-buttons absolute right-0 -bottom-18 font-light dark:bg-slate-900 bg-white px-2 w-30 py-2 gap-1 dark:text-white flex flex-col items-center text-base">
-                                        <button
-                                            onClick={() => setEditModalOpen(true)}
-                                            className="cursor-pointer hover:bg-indigo-200 dark:hover:bg-slate-700 w-full">Edit</button>
-                                        <button
-                                            onClick={() => setDialogOpen(true)}
-                                            className="cursor-pointer hover:bg-indigo-200 dark:hover:bg-slate-700 w-full">Delete</button>
-                                    </div>}
+                                    <OwnerCrudMenu 
+                                    onEditModal={() => setEditModalOpen(true)}
+                                    onDialogOpen={() => setDialogOpen(true)} />
+                                }
 
                             </div>}
 
@@ -176,7 +163,7 @@ export function PostCardContent({ post, onEdit, onDelete, sentRequest }: Project
 
             </div>
 
-            {dialogOpen && <Dialog onConfirm={onDelete} open={dialogOpen} message={"Are you sure you want to delete this post?"} onClose={() => setDialogOpen(false)} />}
+            {dialogOpen && <Dialog onConfirm={onDelete} open={dialogOpen} message={"Are you sure you want to delete this post?"} onClose={() => setDialogOpen(false)} type={"danger"} />}
 
 
         </div>

@@ -7,7 +7,7 @@ import { TechnologyDTO } from "../../../../shared/models/TechnologyDto";
 import technologyService from "../../../service/technology_service";
 import { toast } from "react-toastify";
 import { TechSelectChips } from "./tech_select_chip";
-import projectService from "../../../../shared/api/project_service";
+import projectService from "../../../../shared/api/projectService";
 import { toNormal } from "../../../util/format_functions";
 
 

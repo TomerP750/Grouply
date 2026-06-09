@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import type { PostDTO } from "../../models/PostDto";
+import type { PostDTO } from "../../shared/models/PostDto";
 import postService from "../api/postService";
 import { technologyIconMap } from "../../../../shared/utils/technology_icon_mapper";
 import { PostPositionPageCard } from "../../components/PostPagePositionCard";

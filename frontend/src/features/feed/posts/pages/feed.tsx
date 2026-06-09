@@ -2,7 +2,7 @@ import { useState } from "react";
 import { FeedHeader } from "../../components/FeedHeader";
 import { PostCard } from "../../components/post_card/PostCard";
 import { Filters } from "../../filters/components/Filters";
-import type { PostDTO } from "../../models/PostDto";
+import type { PostDTO } from "../../shared/models/PostDto";
 
 
 

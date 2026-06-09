@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 import { ProjectStatus } from "../../../../shared/models/project/ProjectStatus";
 import type { ProjectDTO } from "../../../feed/posts/models/ProjectDto";
 import { useUser } from "../../../../shared/store/hooks";
-import projectService from "../../../../shared/api/project_service";
+import projectService from "../../../../shared/api/projectService";
 import { fmtDate, toNormal } from "../../../../util/format_functions";
 import { Dialog } from "../../../../shared/ui/Dialog";
 import { Modal } from "../../../../shared/ui/Modal";

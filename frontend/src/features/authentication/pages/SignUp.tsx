@@ -11,7 +11,8 @@ import { Input } from "../../../shared/ui/Input";
 
 
 export function SignUp() {
-    const [loading, setLoading] = useState(false);
+    
+    const [loading, setLoading] = useState<boolean>(false);
 
     const navigate = useNavigate();
 

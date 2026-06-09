@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { JoinRequestDTO } from "../../features/feed/shared/models/JoinRequestDTO";
+import type { JoinRequestDTO } from "../../shared/models/JoinRequestDTO";
 import { BASE_API } from "../utils/base_api";
 
 

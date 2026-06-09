@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { PostCard } from "../../components/post_card/PostCard"
-import type { PostDTO } from "../../models/PostDto";
+import type { PostDTO } from "../../shared/models/PostDto";
 import { Filters } from "../../filters/components/Filters";
 
 

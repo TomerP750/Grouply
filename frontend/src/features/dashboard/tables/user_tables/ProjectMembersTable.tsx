@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { ProjectRole } from "../../../../shared/models/project/ProjectRole";
 import type { ProjectMemberDTO } from "../../../../shared/models/ProjectMemberDto";
-import projectMemberService from "../../../../shared/api/project_member_service";
+import projectMemberService from "../../../../shared/api/projectMemberService";
 import { Dialog } from "../../../../shared/ui/Dialog";
 import { DataTable } from "../../shared/ui/DataTable";
 import { usePagination } from "../../../../../util/helper_hooks";

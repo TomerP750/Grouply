@@ -6,7 +6,7 @@ import { toast } from "react-toastify"
 import { useInviteToProject } from "../../../context/invite_to_project_context"
 import { ProjectPosition } from "../../../shared/models/project/ProjectPosition"
 import type { ProjectDTO } from "../../feed/posts/models/ProjectDto"
-import invitationService from "../../../shared/api/invitation_service"
+import invitationService from "../../../shared/api/invitationService"
 import { toNormal } from "../../../util/format_functions"
 
 const btn = `inline-flex items-center gap-2 px-4 py-2 rounded-lg
