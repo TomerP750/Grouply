@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BASE_API } from "../../../../shared/utils/base_api";
+import { BASE_API } from "../../../../shared/api/baseApi";
 
 
 

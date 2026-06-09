@@ -3,25 +3,33 @@ import { FeedHeader } from "../../components/FeedHeader";
 import { PostCard } from "../../components/post_card/PostCard";
 import { Filters } from "../../filters/components/Filters";
 import type { PostDTO } from "../../shared/models/PostDto";
-
-
+import postService from "../api/postService";
+import { useQuery } from "@tanstack/react-query"
+import { BiLoaderCircle } from "react-icons/bi";
 
 
 export function Feed() {
 
-    const [posts, setPosts] = useState<PostDTO[]>([]);
+    const [page, setPage] = useState<number>(0);
+    const size = 10;
 
-    const [loading, setLoading] = useState<boolean>(false);
+    // const { data, isLoading } = useQuery({
+    //     queryKey: ["posts", page],
+    //     queryFn: () => postService.allPosts(page, size),
+    //     staleTime: 60 * 1000 * 5
+    // })
 
+    // const posts: PostDTO[] = data?.content ?? [];
+    const posts: PostDTO[] = [];
+    
 
-    const handleAdd = (newPost: PostDTO) => {
-        setPosts(prev => [...prev, newPost]);
-    };
-
-
-    const handleRemove = (deletePostId: number) => {
-        setPosts(prev => prev.filter(p => p.id !== deletePostId))
-    }
+    // if (isLoading) {
+    //     return (
+    //         <main className="min-h-screen pb-10 flex items-center justify-center">
+    //             <BiLoaderCircle size={30} className="animate-spin"/>
+    //         </main>
+    //     )
+    // }
 
     return (
         <main className="min-h-screen pb-10">
@@ -38,11 +46,10 @@ export function Feed() {
 
                         <FeedHeader />
 
-                        {posts?.map(p => (
+                        {posts.map(p => (
                             <PostCard
                                 key={p.id}
                                 projectPost={p}
-                                onRemove={() => handleRemove(p.id)}
                             />
                         ))}
                     </div>

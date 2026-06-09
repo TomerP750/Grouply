@@ -2,16 +2,17 @@ import { useEffect, useState } from "react";
 import { BiDotsVertical, BiHistory } from "react-icons/bi";
 import { MdBookmarkAdd } from "react-icons/md";
 import { toast } from "react-toastify";
-import type { PostDTO } from "../../../dtos/models_dtos/post_dto";
-import { useUser } from "../../../redux/hooks";
-import archivedPostService from "../../../service/archived_project_service";
-import projectMemberService from "../../../service/project_member_service";
-import { timeAgo, toNormal } from "../../../util/format_functions";
-import { Dialog } from "../../../components/shared/ui/Dialog";
+
 
 import './post_card_css.css';
 import { PostCardPositionCard } from "./PostCardPositionCard";
 import { EditPostFormModal } from "../../posts/forms/EditPostForm";
+import projectMemberService from "../../../../shared/api/projectMemberService";
+import { useUser } from "../../../../shared/store/hooks";
+import { Dialog } from "../../../../shared/ui/Dialog";
+import { timeAgo, toNormal } from "../../../../shared/utils/string_formats";
+import archivedPostService from "../../archived_posts/api/archivedPostService";
+import type { PostDTO } from "../../shared/models/PostDto";
 
 
 type MemberType = "member" | "owner"
@@ -30,12 +31,11 @@ export const getMemberTypeTitle = (type: MemberType) => {
 
 interface ProjectCardContentProps {
     post: PostDTO;
-    sentRequest: boolean
     onEdit: () => void;
     onDelete: () => void;
 }
 
-export function PostCardContent({ post, onEdit, onDelete, sentRequest }: ProjectCardContentProps) {
+export function PostCardContent({ post, onDelete }: ProjectCardContentProps) {
 
     const [loading, setLoading] = useState<boolean>(false);
     const [isOwner, setIsOwner] = useState<boolean>(false);
@@ -55,7 +55,7 @@ export function PostCardContent({ post, onEdit, onDelete, sentRequest }: Project
             .catch(err => {
                 toast.error(err.response.data);
             })
-    })
+    }, [])
 
     useEffect(() => {
         if (user) {
@@ -85,7 +85,6 @@ export function PostCardContent({ post, onEdit, onDelete, sentRequest }: Project
             .then(res => {
                 if (res === false) {
                     toast.success("Removed to archive!");
-                    // onRemoveFromArchive?.(id);
                 }
                 else {
                     toast.success("Added from archive!")
@@ -176,7 +175,7 @@ export function PostCardContent({ post, onEdit, onDelete, sentRequest }: Project
 
             </div>
 
-            {dialogOpen && <Dialog onConfirm={onDelete} open={dialogOpen} message={"Are you sure you want to delete this post?"} onClose={() => setDialogOpen(false)} />}
+            {dialogOpen && <Dialog onConfirm={onDelete} open={dialogOpen} message={"Are you sure you want to delete this post?"} onClose={() => setDialogOpen(false)} type={"danger"} />}
 
 
         </div>

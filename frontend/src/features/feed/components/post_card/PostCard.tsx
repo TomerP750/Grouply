@@ -2,26 +2,21 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import defaultImage from "../../../../assets/projectdefault.jpg";
-import { ProjectCardProvider } from "../../../context/ProjectCardContext";
-
-import type { ProjectMemberDTO } from "../../../dtos/models_dtos/project_member_dto";
-import { useUserSelector } from "../../../redux/hooks";
-import projectPostService from "../../../service/post_service";
-import projectMemberService from "../../../service/project_member_service";
-import { Avatar } from "../../../components/shared/ui/Avatar";
 import { PostCardContent } from "./PostCardContent";
-import type { PostDTO } from "../../../dtos/models_dtos/post_dto";
+import projectMemberService from "../../../../shared/api/projectMemberService";
+import { ProjectCardProvider } from "../../../../shared/context/ProjectCardContext";
+import type { ProjectMemberDTO } from "../../../../shared/models/ProjectMemberDto";
+import { Avatar } from "../../../../shared/ui/Avatar";
+import type { PostDTO } from "../../shared/models/PostDto";
+import postService from "../../posts/api/postService";
 
 
 interface PostCardProps {
     projectPost: PostDTO
-    onRemove?: (id: number) => void
 }
 
 
-export function PostCard({ projectPost, onRemove }: PostCardProps) {
-
-    const user = useUserSelector(state => state.authSlice.user);
+export function PostCard({ projectPost }: PostCardProps) {
 
     const navigate = useNavigate();
 
@@ -38,30 +33,11 @@ export function PostCard({ projectPost, onRemove }: PostCardProps) {
             })
     }, [])
 
-    const [sentRequest, setSentRequest] = useState<boolean>(false);
-    const [archived, setArchived] = useState<boolean>(false);
-
-    const [isOwner, setIsOwner] = useState<boolean>(false);
-
-    useEffect(() => {
-        if (user) {
-            projectMemberService.isOwner(user.sub, projectDTO.id)
-                .then(res => {
-                    setIsOwner(res);
-                })
-                .catch(err => {
-                    toast.error(err.response.data);
-                })
-        }
-    }, []);
-
-
     const handleDeletePost = (id: number) => {
         
-        projectPostService.deletePost(id)
+        postService.deletePost(id)
             .then(() => {
                 toast.success("Post deleted");
-                onRemove?.(id);
             })
             .catch(err => {
                 toast.error(err.response.data);
@@ -82,7 +58,7 @@ export function PostCard({ projectPost, onRemove }: PostCardProps) {
                 {/* Description + Buttons to join */}
                 <PostCardContent
                     post={projectPost}
-                    sentRequest={sentRequest}
+                    // sentRequest={sentRequest}
                     onEdit={handleEdit}
                     onDelete={() => handleDeletePost(projectPost.id)}
                 />

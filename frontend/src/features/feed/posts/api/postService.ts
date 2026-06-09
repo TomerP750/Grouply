@@ -1,15 +1,16 @@
 import axios from "axios";
 import type { EditPostRequestDTO } from "../forms/EditPostForm";
-import { BASE_API } from "../../../../shared/utils/base_api";
 import type { CreateProjectPostDTO } from "../models/CreateProjectPostDTO";
-
-
+import { BASE_API } from "../../../../shared/api/baseApi";
 
 
 class PostService {
 
     async allPosts(page = 0, size = 10) {
-
+        const res = (await axios.get(`${BASE_API}/post/all`, {
+            params: { page, size }
+        }))
+        return res.data;
     }
 
     async onePost(postId: number) {
@@ -25,7 +26,7 @@ class PostService {
     }
 
     async editPost(data: EditPostRequestDTO) {
-
+        return (await axios.put(`${BASE_API}/post/update`, data));
     }
 
     async allPostsWhereUserIsOwner(page: number, size: number) {

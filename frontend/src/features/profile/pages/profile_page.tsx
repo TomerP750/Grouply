@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import type { ProfileDTO } from "../../../../dtos/models_dtos/profile_dto";
 import { useUser } from "../../../shared/store/hooks";
-import profileService from "../api/profile_service";
+import profileService from "../api/profileService";
 
 import { Hr } from "../../../shared/ui/Hr";
 import { ProfileActions } from "../components/profile_actions";
