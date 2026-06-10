@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
 import { BiNews, BiTask } from "react-icons/bi";
-import { FaUserGroup } from "react-icons/fa6";
 import { MdAdminPanelSettings, MdDashboard } from "react-icons/md";
 import { NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
-import logoLight from "../../../../assets/logolight.png";
-import logoDark from "../../../../assets/logodark.png";
-import { AdminMenu } from "./AdminMenu";
-import { useTheme } from "../../../context/ThemeContext";
-import type { JwtUser } from "../../../redux/AuthSlice";
-import userService from "../../../service/user_service";
-import { NavbarRight } from "../../../components/layout/navbar/components/NavbarRight";
+import logoLight from "../../../assets/logolight.png"
+import logoDark from "../../../assets/logodark.png";
+import { NavbarRight } from "../../../layout/navbar/components/NavbarRight";
+import { useTheme } from "../../../shared/context/ThemeContext";
+import type { JwtUser } from "../../../shared/store/AuthSlice";
+import userService from "../../other-pages/settings/api/userService";
+import { AdminMenu } from "../dashboard_index/AdminMenu";
+
 
 
 const baseClasses =

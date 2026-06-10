@@ -2,10 +2,10 @@ import { BiLogOut, BiShield, BiUser } from "react-icons/bi";
 import { MdDisplaySettings } from "react-icons/md";
 import { useDispatch } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
-import { logout } from "../../../../redux/AuthSlice";
 import { useState, useTransition } from "react";
 import { useTranslation } from "react-i18next";
 import { Dialog } from "../../../../shared/ui/Dialog";
+import { logout } from "../../../../shared/store/AuthSlice";
 
 const menuItem =
   "cursor-pointer inline-flex items-center gap-3 w-full py-2 px-3 rounded-lg transition-colors text-slate-600 dark:text-slate-300 hover:bg-sky-500/10 hover:text-sky-600 dark:hover:bg-teal-500/10 dark:hover:text-teal-400";

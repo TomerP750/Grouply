@@ -5,10 +5,11 @@ import { IoColorPaletteOutline } from 'react-icons/io5';
 import { MdDashboard } from 'react-icons/md';
 import { useDispatch } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { useTheme } from '../../../../context/ThemeContext';
-import { logout, type JwtUser } from '../../../../redux/AuthSlice';
-import { Menu } from '../../../../shared/ui/Menu';
+
 import './user_menu_styles.css';
+import { useTheme } from '../../../shared/context/ThemeContext';
+import { type JwtUser, logout } from '../../../shared/store/AuthSlice';
+import { Menu } from '../../../shared/ui/Menu';
 
 
 const rowStyle = "flex items-center justify-between hover:bg-gray-300/40 dark:hover:bg-gray-300/10 py-1 px-2 cursor-pointer";

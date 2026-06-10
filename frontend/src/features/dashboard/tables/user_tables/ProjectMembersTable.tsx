@@ -6,9 +6,7 @@ import { ProjectRole } from "../../../../shared/models/project/ProjectRole";
 import type { ProjectMemberDTO } from "../../../../shared/models/ProjectMemberDto";
 import projectMemberService from "../../../../shared/api/projectMemberService";
 import { Dialog } from "../../../../shared/ui/Dialog";
-import { DataTable } from "../../shared/ui/DataTable";
-import { usePagination } from "../../../../../util/helper_hooks";
-import { extractPageCount } from "../../../../../util/pagination_helper";
+
 import { createColumnHelper, type ColumnDef } from "@tanstack/react-table";
 
 export interface ChangeUserRoleDTO {
@@ -34,7 +32,6 @@ export function ProjectMembersTable() {
 
   const [rows, setRows] = useState<ProjectMemberDTO[]>([]);
 
-  const { pagination, setPagination, pageCount, setPageCount } = usePagination();
 
 
 
@@ -198,25 +195,7 @@ export function ProjectMembersTable() {
     }),
   ];
 
-  // ─────────────────────────────── Data fetch ────────────────────────────────
-
-  useEffect(() => {
-    setLoading(true);
-    projectMemberService
-      .allMembersPagination(
-        projectId,
-        pagination.pageIndex,
-        pagination.pageSize
-      )
-      .then((res) => {
-        setRows(res.content);
-        setPageCount(extractPageCount(res, pagination.pageSize));
-      })
-      .catch((err) => {
-        toast.error(err.response?.data);
-      })
-      .finally(() => setLoading(false));
-  }, [projectId, pagination.pageIndex, pagination.pageSize, setPageCount]);
+  
 
   // ─────────────────────────────── Handlers ────────────────────────────────
 
@@ -271,17 +250,16 @@ export function ProjectMembersTable() {
 
   return (
     <main>
-      <DataTable<ProjectMemberDTO>
+      {/* <DataTable<ProjectMemberDTO>
         columns={columns}
         rows={rows}
-        pageCount={pageCount}
-        pagination={pagination}
-        setPagination={setPagination}
+        pageCount={0}
+        pagination={{pageIndex: 0, pageSize: 10}}
         loading={loading}
         emptyMessage="No members"
         enableSorting
         className="shadow-md dark:text-white p-5"
-      />
+      /> */}
 
       {dialogOpen && (
         <Dialog

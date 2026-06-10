@@ -3,14 +3,10 @@ import { useEffect, useState } from "react";
 import { BiEdit, BiTrash, BiX } from "react-icons/bi";
 import { toast } from "react-toastify";
 import type { TechnologyDTO } from "../../../../shared/models/TechnologyDto";
-import technologyService from "../../../../service/technology_service";
-import { usePagination } from "../../../../../util/helper_hooks";
-import { extractPageCount } from "../../../../../util/pagination_helper";
 import { Dialog } from "../../../../shared/ui/Dialog";
-import { DataTable } from "../../shared/ui/DataTable";
 import { Modal } from "../../../../shared/ui/Modal";
-import { CreateProjectForm } from "../../admin/forms/create_project_form";
 import { CreateTechnologyForm } from "../../admin/forms/CreateTechnologyForm";
+import technologyService from "../../../../shared/api/technologyService";
 
 const ch = createColumnHelper<TechnologyDTO>();
 
@@ -18,7 +14,6 @@ export function TechnologiesTable() {
   // States
   const [technologies, setTechnologies] = useState<TechnologyDTO[]>([]);
 
-  const { pageCount, setPageCount, pagination ,setPagination } = usePagination(10);
 
   const [loading, setLoading] = useState(true);
 
@@ -30,20 +25,6 @@ export function TechnologiesTable() {
   const [techName, setTechName] = useState<string>('');
 
 
-  // UseEffects
-  useEffect(() => {
-    setLoading(true);
-    technologyService
-      .allTechnologiesPage(pagination.pageIndex, pagination.pageSize)
-      .then((res) => {
-        setTechnologies(res.content);
-        setPageCount(extractPageCount(res, pagination.pageSize));
-      })
-      .catch((err) =>
-        toast.error(err?.response?.data ?? "Failed to load technologies")
-      )
-      .finally(() => setLoading(false));
-  }, [pagination.pageIndex, pagination.pageSize]);
 
 
   // Functions
@@ -201,7 +182,7 @@ export function TechnologiesTable() {
               )}
       </div>
 
-      <DataTable<TechnologyDTO>
+      {/* <DataTable<TechnologyDTO>
         columns={techColumns}
         rows={technologies}
         pageCount={pageCount}
@@ -211,7 +192,7 @@ export function TechnologiesTable() {
         emptyMessage="No technologies"
         enableSorting
         className="shadow-md"
-      />
+      /> */}
 
       {dialogOpen && (
         <Dialog

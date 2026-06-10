@@ -11,14 +11,13 @@ import { ProjectStatus } from "../../../../shared/models/project/ProjectStatus";
 import type { ProjectDTO } from "../../../feed/posts/models/ProjectDto";
 import { useUser } from "../../../../shared/store/hooks";
 import projectService from "../../../../shared/api/projectService";
-import { fmtDate, toNormal } from "../../../../util/format_functions";
+import type { UpdateProjectDTO } from "../../shared/models/UpdateProjectDto";
+import { StatusBadge } from "../../../../shared/utils/enum_ui";
 import { Dialog } from "../../../../shared/ui/Dialog";
 import { Modal } from "../../../../shared/ui/Modal";
-import { CreateProjectForm } from "../../admin/forms/create_project_form";
-import { DataTable } from "../../shared/ui/DataTable";
-import { extractPageCount } from "../../../../../util/pagination_helper";
-import { StatusBadge } from "../../../../util/ui_helper";
-import type { UpdateProjectDTO } from "../../../../dtos/models_dtos/request_dto/UpdateProjectDto";
+import { toNormal, fmtDate } from "../../../../shared/utils/string_formats";
+import { CreateProjectForm } from "../../shared/forms/create_project_form";
+
 
 
 
@@ -32,9 +31,6 @@ export function ProjectsTable() {
   const [modalOpen, setModalOpen] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
 
-  const [rows, setRows] = useState<ProjectDTO[]>([]);
-  const [loading, setLoading] = useState(false);
-
 
   const [editedProjectId, setEditedProjectId] = useState<number>(0);
   const [selectedProjectId, setSelectedProjectId] = useState<number>(0); // this is for deleting a row (project)
@@ -44,21 +40,7 @@ export function ProjectsTable() {
   const navigate = useNavigate();
   const user = useUser();
 
-  useEffect(() => {
-    setLoading(true);
-    projectService
-      .getUserOwnedProjectsPagination(pagination.pageIndex, pagination.pageSize)
-      .then((res) => {
-        setRows(res.content);
-        setPageCount(extractPageCount(res, pagination.pageSize));
-      })
-      .catch((err) =>
-        toast.error(err?.response?.data ?? "Failed to load projects")
-      )
-      .finally(() => setLoading(false));
-  }, [pagination.pageIndex, pagination.pageSize]);
-
-
+  
   const handleEditOpen = (id: number, currentName: string, currentStatus: ProjectStatus) => {
     setEditedProjectId(id);
     setName(currentName);
@@ -89,18 +71,18 @@ export function ProjectsTable() {
 
   };
 
-  const handleDeleteProject = (id: number) => {
+  // const handleDeleteProject = (id: number) => {
 
-    projectService
-      .deleteProject(id)
-      .then(() => {
-        setRows((prev) => prev.filter((p) => p.id !== id));
-        toast.success("Project deleted");
-      })
-      .catch((err) => toast.error(err?.response?.data ?? "Delete failed"))
-      .finally(() => setDialogOpen(false));
+  //   projectService
+  //     .deleteProject(id)
+  //     .then(() => {
+  //       setRows((prev) => prev.filter((p) => p.id !== id));
+  //       toast.success("Project deleted");
+  //     })
+  //     .catch((err) => toast.error(err?.response?.data ?? "Delete failed"))
+  //     .finally(() => setDialogOpen(false));
 
-  };
+  // };
 
   const columns: ColumnDef<ProjectDTO, any>[] = useMemo(
     () => [
@@ -259,7 +241,7 @@ export function ProjectsTable() {
         </Modal>
       )}
 
-      <DataTable<ProjectDTO>
+      {/* <DataTable<ProjectDTO>
         columns={columns}
         rows={rows}
         pageCount={pageCount}
@@ -269,15 +251,15 @@ export function ProjectsTable() {
         emptyMessage="No projects"
         enableSorting
         className="shadow-md"
-      />
+      /> */}
 
-      {dialogOpen && (
+      {/* {dialogOpen && (
         <Dialog
           open={dialogOpen}
           message={"Are you sure you want to delete?"}
           onClose={() => setDialogOpen(false)}
           onConfirm={() => handleDeleteProject(editedProjectId)} type={"danger"} />
-      )}
+      )} */}
     </main>
   );
 }

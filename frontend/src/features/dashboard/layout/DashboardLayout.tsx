@@ -3,9 +3,9 @@ import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { DashboardPanel } from "./DashboardPanel";
-import { DashboardNavbar } from "../dashboard_index/DashboardNavbar";
 import { useUserSelector } from "../../../shared/store/hooks";
 import userService from "../../other-pages/settings/api/userService";
+import { DashboardNavbar } from "./DashboardNavbar";
 
 
 export function Dashboard() {

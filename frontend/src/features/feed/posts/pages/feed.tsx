@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { FeedHeader } from "../../components/FeedHeader";
-import { PostCard } from "../../components/post_card/PostCard";
-import { Filters } from "../../filters/components/Filters";
+import { FeedHeader } from "../components/FeedHeader";
+
 import type { PostDTO } from "../../shared/models/PostDto";
 import postService from "../api/postService";
 import { useQuery } from "@tanstack/react-query"
 import { BiLoaderCircle } from "react-icons/bi";
+import { PostCard } from "../components/post_card/PostCard";
 
 
 export function Feed() {
@@ -36,7 +36,7 @@ export function Feed() {
 
             {/* POSTS AND FILTERS */}
             <div className="bg-neutral-200 dark:bg-stone-950 flex flex-col lg:pt-25 md:mt-5 px-5 md:px-0 lg:flex-row w-full items-center lg:items-start gap-6">
-                <Filters />
+                {/* <Filters /> */}
 
                 {/* Main area */}
                 <section className="w-full flex justify-center px-0 sm:px-5 ">

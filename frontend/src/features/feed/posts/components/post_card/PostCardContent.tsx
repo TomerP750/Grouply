@@ -2,9 +2,6 @@ import { useEffect, useState } from "react";
 import { BiDotsVertical, BiHistory } from "react-icons/bi";
 import { MdBookmarkAdd } from "react-icons/md";
 import { toast } from "react-toastify";
-
-
-import './post_card_css.css';
 import { PostCardPositionCard } from "./PostCardPositionCard";
 import { EditPostFormModal } from "../../posts/forms/EditPostForm";
 import projectMemberService from "../../../../shared/api/projectMemberService";

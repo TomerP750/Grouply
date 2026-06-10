@@ -2,9 +2,9 @@ import { useState } from "react";
 import { useForm } from "react-hook-form"
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
-import userService from "../../../../../service/user_service";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import userService from "../../api/userService";
 
 
 const inputStyle = "w-80 rounded-lg border border-gray-500/50 bg-indigo-200 dark:bg-gray-800 px-3 py-1";

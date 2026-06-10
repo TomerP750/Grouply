@@ -5,20 +5,15 @@ import {
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-
-import type { PostDTO } from "../../../../dtos/models_dtos/post_dto";
-import { useUser } from "../../../../shared/store/hooks";
-import postService from "../../../feed/api/post_service";
-import { usePagination } from "../../../../../util/helper_hooks";
-import { extractPageCount } from "../../../../../util/pagination_helper";
-import { fmtDate } from "../../../../util/format_functions";
 import { Dialog } from "../../../../shared/ui/Dialog";
-import { DataTable } from "../../shared/ui/DataTable";
+import { useUser } from "../../../../shared/store/hooks";
+import { fmtDate } from "../../../../shared/utils/string_formats";
+import postService from "../../../feed/posts/api/postService";
+import type { PostDTO } from "../../../feed/shared/models/PostDto";
 
 const ch = createColumnHelper<PostDTO>();
 
 export function PostsTable() {
-    const { pagination, setPageCount, pageCount, setPagination } = usePagination();
     const [rows, setRows] = useState<PostDTO[]>([]);
     const [loading, setLoading] = useState(false);
     const [modalOpen, setModalOpen] = useState(false);
@@ -27,19 +22,7 @@ export function PostsTable() {
     const navigate = useNavigate();
     const user = useUser();
 
-    useEffect(() => {
-        setLoading(true);
-        postService
-            .allPostsWhereUserIsOwner(pagination.pageIndex, pagination.pageSize)
-            .then((res) => {
-                setRows(res.content);
-                setPageCount(extractPageCount(res, pagination.pageSize));
-            })
-            .catch((err) =>
-                toast.error(err?.response?.data ?? "Failed to load posts")
-            )
-            .finally(() => setLoading(false));
-    }, [pagination.pageIndex, pagination.pageSize]);
+    
 
     const columns: ColumnDef<PostDTO, any>[] = useMemo(
         () => [
@@ -84,7 +67,7 @@ export function PostsTable() {
 
             <h2 className="text-lg font-semibold ">Posts</h2>
 
-            <DataTable<PostDTO>
+            {/* <DataTable<PostDTO>
                 columns={columns}
                 rows={rows}
                 pageCount={pageCount}
@@ -94,16 +77,16 @@ export function PostsTable() {
                 emptyMessage="No posts"
                 enableSorting
                 className="shadow-md"
-            />
+            /> */}
 
-            {dialogOpen && (
+            {/* {dialogOpen && (
                 <Dialog
                     open={dialogOpen}
                     message="Are you sure you want to delete?"
                     onClose={() => setDialogOpen(false)}
                     onConfirm={() => { }}
                 />
-            )}
+            )} */}
         </main>
     );
 }

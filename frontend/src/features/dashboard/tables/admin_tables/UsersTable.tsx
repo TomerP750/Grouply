@@ -2,14 +2,11 @@ import { useEffect, useMemo, useState } from "react";
 import { createColumnHelper, type ColumnDef } from "@tanstack/react-table";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-
-import { DataTable } from "../../shared/ui/DataTable";
 import { Role } from "../../../authentication/model/Role";
 import type { UserDTO } from "../../../../shared/models/UserDto";
 import { useUser } from "../../../../shared/store/hooks";
-import userService from "../../../../service/user_service";
-import { extractPageCount } from "../../../../../util/pagination_helper";
-import { RoleBadge } from "../../../../util/ui_helper";
+import { RoleBadge } from "../../../../shared/utils/enum_ui";
+import userService from "../../../other-pages/settings/api/userService";
 
 
 
@@ -86,22 +83,22 @@ export function UsersTable() {
   const navigate = useNavigate();
 
   
-  useEffect(() => {
-    if (user?.role !== Role.ADMIN) navigate("/not-found");
+  // useEffect(() => {
+  //   if (user?.role !== Role.ADMIN) navigate("/not-found");
     
-  }, [user?.role]);
+  // }, [user?.role]);
 
-  useEffect(() => {
-    setLoading(true);
-    userService
-      .getAllUsers(pagination.pageIndex, pagination.pageSize)
-      .then((res) => {
-        setRows(res.content);
-        setPageCount(extractPageCount(res, pagination.pageSize));
-      })
-      .catch((err) => toast.error(err?.response?.data ?? "Failed to load users"))
-      .finally(() => setLoading(false));
-  }, [pagination.pageIndex, pagination.pageSize]);
+  // useEffect(() => {
+  //   setLoading(true);
+  //   userService
+  //     .getAllUsers(pagination.pageIndex, pagination.pageSize)
+  //     .then((res) => {
+  //       setRows(res.content);
+  //       setPageCount(extractPageCount(res, pagination.pageSize));
+  //     })
+  //     .catch((err) => toast.error(err?.response?.data ?? "Failed to load users"))
+  //     .finally(() => setLoading(false));
+  // }, [pagination.pageIndex, pagination.pageSize]);
 
   const columns = useMemo(() => userColumns, []);
 
@@ -110,7 +107,7 @@ export function UsersTable() {
       <div className="mb-3 flex items-center justify-between">
         <h2 className="text-lg font-semibold">Users</h2>
       </div>
-
+{/* 
       <DataTable<UserDTO>
         columns={columns}
         rows={rows}
@@ -122,7 +119,7 @@ export function UsersTable() {
         enableSorting
         onRowClick={(row) => console.log("Row clicked:", row)}
         className="shadow-md"
-      />
+      /> */}
     </div>
   );
 }

@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react"
-import type { ConnectionRequestDTO } from "../../../../dtos/models_dtos/request_dto/connection_request_dto";
-import connectionRequestService from "../../../../features/profile/api/connection_request_service";
 import { toast } from "react-toastify";
 import { ConnectionRequestCard } from "./ConnectionRequestCard";
 import { BiGroup } from "react-icons/bi";
 import { NavLink } from "react-router-dom";
-import { Menu } from "../../../../shared/ui/Menu";
+import connectionRequestService from "../../../features/profile/api/connectionRequestService";
+import { Menu } from "../../../shared/ui/Menu";
+import type { ConnectionRequestDTO } from "./models/ConnectionRequestDto";
 
 
 export function ConnectionMenu() {

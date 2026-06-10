@@ -1,17 +1,11 @@
 import { useState } from "react";
-import { BiBell, BiChat, BiChevronDown } from "react-icons/bi";
-import { HiOutlineGlobeAlt } from "react-icons/hi";
+import { BiChevronDown } from "react-icons/bi";
 import { NavLink } from "react-router-dom";
-import type { JwtUser } from "../../../../redux/AuthSlice";
-import { Avatar } from "../../../../shared/ui/Avatar";
-import { Badge } from "../../../../shared/ui/Badge";
-import { SearchBar } from "../search_bar/SearchBar";
-import { UserMenu } from "./user_menu";
-import { Menu } from "../../../../shared/ui/Menu";
-import { ConnectionMenu } from "../menus/ConnectionsMenu";
-import { NotificationMenu } from "../menus/NotificationsMenu";
+import type { JwtUser } from "../../../shared/store/AuthSlice";
+import { Avatar } from "../../../shared/ui/Avatar";
 import { ConnectionBadge } from "./connection.badge";
 import { NotificationBadge } from "./notification.badge";
+import { UserMenu } from "./user_menu";
 
 
 interface NavbarRightProps {

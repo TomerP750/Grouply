@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { BiChat, BiCog, BiHome, BiMenu, BiSearch, BiUser } from "react-icons/bi";
+import { BiChat, BiHome, BiMenu, BiSearch, BiUser } from "react-icons/bi";
 import { FaHome } from "react-icons/fa";
 import { IoInformation } from "react-icons/io5";
 import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { logout } from "../../../../redux/AuthSlice";
-import { useUserSelector } from "../../../../shared/store/hooks";
+import { logout } from "../../../shared/store/AuthSlice";
+import { useUserSelector } from "../../../shared/store/hooks";
+
 
 
 const baseClasses = "flex flex-col items-center gap-1 flex-1 py-2";

@@ -1,8 +1,8 @@
 import { NavLink } from "react-router-dom";
-import logoDark from "../../../../assets/logodark.png";
-import logoLight from "../../../../assets/logolight.png";
-import { useTheme } from "../../../../context/ThemeContext";
-import type { JwtUser } from "../../../../redux/AuthSlice";
+import logoDark from "../../../assets/logodark.png";
+import logoLight from "../../../assets/logolight.png";
+import { useTheme } from "../../../shared/context/ThemeContext";
+import type { JwtUser } from "../../../shared/store/AuthSlice";
 
 
 

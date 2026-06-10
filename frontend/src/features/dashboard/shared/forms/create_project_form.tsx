@@ -2,13 +2,14 @@ import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { BiLoaderAlt } from "react-icons/bi";
 import { ProjectStatus } from "../../../../shared/models/project/ProjectStatus";
-import { type CreateProjectDTO } from "../../../../dtos/models_dtos/request_dto/CreateProjectDto";
-import { TechnologyDTO } from "../../../../shared/models/TechnologyDto";
-import technologyService from "../../../service/technology_service";
 import { toast } from "react-toastify";
-import { TechSelectChips } from "./tech_select_chip";
 import projectService from "../../../../shared/api/projectService";
-import { toNormal } from "../../../util/format_functions";
+import technologyService from "../../../../shared/api/technologyService";
+import type { TechnologyDTO } from "../../../../shared/models/TechnologyDto";
+import { toNormal } from "../../../../shared/utils/string_formats";
+import type { CreateProjectDTO } from "../models/CreateProjectDto";
+import { TechSelectChips } from "../ui/TechSelectChips";
+
 
 
 const inputBase =

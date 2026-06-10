@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { BiLoaderAlt } from "react-icons/bi";
-import { toast } from "react-toastify";
-
-import type { ProjectPosition } from "../../../dtos/enums/ProjectPosition";
-import type { PostDTO } from "../../../dtos/models_dtos/post_dto";
-import type { ProjectDTO } from "../../../dtos/models_dtos/project_dto";
-import { CreateProjectPostDTO } from "../../../dtos/models_dtos/request_dto/CreateProjectPostDTO";
-import { useUser } from "../../../redux/hooks";
-import postService from "../../../service/post_service";
-import projectService from "../../../service/project_service";
-
 import { useNavigate } from "react-router-dom";
-import { PositionSelectChips } from "../feed/components/position_chip_select";
+import { toast } from "react-toastify";
+import projectService from "../../../../shared/api/projectService";
+import type { ProjectPosition } from "../../../../shared/models/project/ProjectPosition";
+import { useUser } from "../../../../shared/store/hooks";
+import { PositionSelectChips } from "../../components/PositionChipSelect";
+import type { PostDTO } from "../../shared/models/PostDto";
+import postService from "../api/postService";
+import { CreateProjectPostDTO } from "../models/CreateProjectPostDTO";
+import type { ProjectDTO } from "../models/ProjectDto";
+
+
 
 
 
