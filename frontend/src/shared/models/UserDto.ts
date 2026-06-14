@@ -1,4 +1,4 @@
-import type { Role } from "../../features/authentication/model/Role"
+import type { Role } from "../../features/authentication/models/Role"
 
 
 export class UserDTO {

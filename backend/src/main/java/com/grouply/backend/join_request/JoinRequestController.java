@@ -1,5 +1,6 @@
 package com.grouply.backend.join_request;
 
+import com.grouply.backend.join_request.dto.RequestToJoinDTO;
 import com.grouply.backend.shared.exceptions.ExistsException;
 import com.grouply.backend.shared.exceptions.UnauthorizedException;
 import com.grouply.backend.join_request.dto.JoinRequestDTO;
@@ -27,7 +28,7 @@ public class JoinRequestController {
     }
 
     @PostMapping("/request")
-    public boolean requestToJoin(@RequestBody JoinRequestDTO dto) throws UnauthorizedException, ExistsException {
+    public boolean requestToJoin(@RequestBody RequestToJoinDTO dto) throws UnauthorizedException, ExistsException {
         return joinRequestService.toggleJoinRequest(dto);
     }
 

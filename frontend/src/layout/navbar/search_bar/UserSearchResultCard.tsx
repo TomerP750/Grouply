@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import defaultAvatar from "../../../../assets/defaultAvatar.png";
+import defaultAvatar from "../../../assets/defaultAvatar.png";
 import type { UserDTO } from "../../../shared/models/UserDto";
 
 interface UserSearchResultCardProps {

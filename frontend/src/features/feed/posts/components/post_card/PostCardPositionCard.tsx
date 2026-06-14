@@ -1,11 +1,11 @@
+import { useState, useEffect } from "react";
 import { BiGroup, BiCheck } from "react-icons/bi";
-import { toTitleCase } from "../../../util/format_functions";
-import type { ProjectPostPositionDTO } from "../../../dtos/models_dtos/project_post_position_dto";
-import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import joinRequestService from "../../../service/join_request_service";
-import { JoinRequestDTO } from "../../../dtos/models_dtos/request_dto/JoinRequestDTO";
-import type { JwtUser } from "../../../redux/AuthSlice";
+import type { JwtUser } from "../../../../../shared/store/AuthSlice";
+import { toTitleCase } from "../../../../../shared/utils/string_formats";
+import type { ProjectPostPositionDTO } from "../../../shared/models/ProjectPostPositionDto";
+import joinRequestService from "../../api/joinRequestService";
+import type { RequestToJoinDTO } from "../../models/RequestToJoinDTO";
 
 
 interface PostCardPositionCardProps {
@@ -13,7 +13,6 @@ interface PostCardPositionCardProps {
     postId: number
     user: JwtUser | null;
 }
-
 
 export function PostCardPositionCard({ postPosition, postId, user }: PostCardPositionCardProps) {
 
@@ -23,11 +22,15 @@ export function PostCardPositionCard({ postPosition, postId, user }: PostCardPos
     const [loading, setLoading] = useState<boolean>(false);
 
 
-    const handleRequestToJoin = (projectPostPositionId: number) => {
+    const handleRequestToJoin = (postPositionId: number) => {
 
         if (user) {
 
-            const joinRequest = new JoinRequestDTO(user.id!, projectPostPositionId, postId);
+            const joinRequest: RequestToJoinDTO = {
+                senderId: user.id!,
+                postPositionId: postPositionId,
+                postId: postId
+            } 
            
             joinRequestService.toggleJoinRequest(joinRequest)
                 .then((res) => {

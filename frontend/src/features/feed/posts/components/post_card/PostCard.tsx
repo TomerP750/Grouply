@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import defaultImage from "../../../../assets/projectdefault.jpg";
+import defaultImage from "../../../../../assets/projectdefault.jpg";
 import { PostCardContent } from "./PostCardContent";
-import projectMemberService from "../../../../shared/api/projectMemberService";
-import { ProjectCardProvider } from "../../../../shared/context/ProjectCardContext";
-import type { ProjectMemberDTO } from "../../../../shared/models/ProjectMemberDto";
-import { Avatar } from "../../../../shared/ui/Avatar";
-import type { PostDTO } from "../../shared/models/PostDto";
-import postService from "../../posts/api/postService";
+import projectMemberService from "../../../../../shared/api/projectMemberService";
+import { ProjectCardProvider } from "../../../../../shared/context/ProjectCardContext";
+import type { ProjectMemberDTO } from "../../../../../shared/models/ProjectMemberDto";
+import { Avatar } from "../../../../../shared/ui/Avatar";
+import type { PostDTO } from "../../../shared/models/PostDto";
+import postService from "../../api/postService";
+
 
 
 interface PostCardProps {

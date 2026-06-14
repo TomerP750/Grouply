@@ -2,13 +2,13 @@ import { useEffect } from "react";
 
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { DashboardPanel } from "./DashboardPanel";
+import { DashboardPanel } from "../layout/DashboardPanel";
 import { useUserSelector } from "../../../shared/store/hooks";
 import userService from "../../other-pages/settings/api/userService";
-import { DashboardNavbar } from "./DashboardNavbar";
+import { DashboardNavbar } from "../layout/DashboardNavbar";
 
 
-export function Dashboard() {
+export function DashboardPage() {
 
     const user = useUserSelector(state => state.authSlice.user);
     const navigate = useNavigate();

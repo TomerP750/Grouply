@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
-import joinRequestService from "../posts/api/joinRequestService";
-import { useUser } from "../../../shared/store/hooks";
+import { BiLoaderAlt, BiCheck } from "react-icons/bi";
 import { toast } from "react-toastify";
-import { BiCheck, BiLoaderAlt } from "react-icons/bi";
-import projectMemberService from "../../../shared/api/projectMemberService";
-import type { PostDTO } from "../shared/models/PostDto";
-import type { ProjectPostPositionDTO } from "../shared/models/ProjectPostPositionDto";
-import type { JoinRequestDTO } from "../shared/models/JoinRequestDTO";
+import projectMemberService from "../../../../shared/api/projectMemberService";
+import { useUser } from "../../../../shared/store/hooks";
+import type { JoinRequestDTO } from "../../shared/models/JoinRequestDTO";
+import type { PostDTO } from "../../shared/models/PostDto";
+import type { ProjectPostPositionDTO } from "../../shared/models/ProjectPostPositionDto";
+import joinRequestService from "../api/joinRequestService";
+
 
 interface PostPositionPageCardProps {
     postPosition: ProjectPostPositionDTO

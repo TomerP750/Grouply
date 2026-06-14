@@ -4,8 +4,8 @@ import { toast } from "react-toastify";
 import type { PostDTO } from "../../shared/models/PostDto";
 import postService from "../api/postService";
 import { technologyIconMap } from "../../../../shared/utils/technology_icon_mapper";
-import { PostPositionPageCard } from "../../components/PostPagePositionCard";
 import { toNormal } from "../../../../shared/utils/string_formats";
+import { PostPositionPageCard } from "../components/PostPagePositionCard";
 
 
 

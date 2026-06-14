@@ -2,16 +2,16 @@ import { useEffect, useState } from "react";
 import { FiCheckCircle, FiFolder, FiLink } from "react-icons/fi";
 import { MdHistory } from "react-icons/md";
 import { toast } from "react-toastify";
-import type { ActivityDTO } from "../activity/models/ActivityDto";
 import { useUser } from "../../../shared/store/hooks";
 import statisticsService from "../../../shared/api/statisticsService";
 import { Hr } from "../../../shared/ui/Hr";
-import { ActiveProjectsChart } from "../charts/ActiveProjectsChart";
-import { JoinRequestChart } from "../charts/JoinRequestsChart";
-import { ActivityRow } from "../activity/components/ActivityRow";
+import { ActiveProjectsChart } from "./charts/ActiveProjectsChart";
+import { JoinRequestChart } from "./charts/JoinRequestsChart";
 import { DashboardStatCard } from "./DashboardStatCard";
-import activityService from "../activity/api/activityService";
 import type { StatisticsDTO } from "./StatisticsDto";
+import activityService from "./activity/api/activityService";
+import { ActivityRow } from "./activity/components/ActivityRow";
+import type { ActivityDTO } from "./activity/models/ActivityDto";
 
 
 export function Overview() {

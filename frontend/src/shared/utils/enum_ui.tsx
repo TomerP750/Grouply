@@ -1,6 +1,6 @@
 
 import { ProjectStatus } from "../models/project/ProjectStatus";
-import { Role } from "../../features/authentication/model/Role";
+import { Role } from "../../features/authentication/models/Role";
 import { toNormal } from "./string_formats";
 
 export function RoleBadge({ role }: { role: Role }) {

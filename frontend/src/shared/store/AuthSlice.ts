@@ -1,6 +1,6 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit"
-import type { Role } from "../dtos/enums/Role"
 import { jwtDecode } from "jwt-decode"
+import type { Role } from "../../features/authentication/models/Role"
 
 export type JwtUser = {
     id?: number // legacy

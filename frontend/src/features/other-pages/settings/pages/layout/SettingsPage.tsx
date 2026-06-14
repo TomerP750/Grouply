@@ -1,4 +1,4 @@
-import { SettingsSidebar } from "../components/Sidebar";
+import { SettingsSidebar } from "../../components/Sidebar";
 import { SettingsPanel } from "./SettingsPanel";
 
 

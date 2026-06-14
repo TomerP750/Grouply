@@ -5,11 +5,12 @@ import { BrowserRouter } from 'react-router-dom'
 
 import './index.css'
 import "./i18n";
-import { Layout } from './layout/layout'
 import { ThemeProvider } from './shared/context/ThemeContext'
 import { store } from './shared/store/store'
 import { ScrollToTop } from './shared/utils/scroll_to_top'
 import { ToastConfig } from './shared/utils/ToastConfig'
+import { Layout } from './layout/Layout'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 
 axios.interceptors.request.use(function (config) {
@@ -19,16 +20,20 @@ axios.interceptors.request.use(function (config) {
   return config;
 });
 
+const queryClient = new QueryClient();
+
 createRoot(document.getElementById('root')!).render(
   <BrowserRouter>
-    <Provider store={store}>
-      <ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <Provider store={store}>
+        <ThemeProvider>
 
-        <ScrollToTop />
-        <Layout />
-        <ToastConfig />
+          <ScrollToTop />
+          <Layout />
+          <ToastConfig />
 
-      </ThemeProvider>
-    </Provider>
+        </ThemeProvider>
+      </Provider>
+    </QueryClientProvider>
   </BrowserRouter>
 )

@@ -1,9 +1,9 @@
 import { useLocation } from "react-router-dom";
-import { NavbarCenter } from "../components/navbar-center";
 import './Navbar.css';
-import { NavbarLeft } from "../components/navbar_left";
 import { NavbarRight } from "../components/NavbarRight";
 import { useUserSelector } from "../../../shared/store/hooks";
+import { NavbarCenter } from "../components/NavbarCenter";
+import { NavbarLeft } from "../components/NavbarLeft";
 
 
 export function Navbar() {

@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import { BiCheck, BiEdit, BiTrash, BiX } from "react-icons/bi";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { ProjectRole } from "../../../../shared/models/project/ProjectRole";
-import type { ProjectMemberDTO } from "../../../../shared/models/ProjectMemberDto";
-import projectMemberService from "../../../../shared/api/projectMemberService";
-import { Dialog } from "../../../../shared/ui/Dialog";
+
 
 import { createColumnHelper, type ColumnDef } from "@tanstack/react-table";
+import projectMemberService from "../../../../../shared/api/projectMemberService";
+import { ProjectRole } from "../../../../../shared/models/project/ProjectRole";
+import type { ProjectMemberDTO } from "../../../../../shared/models/ProjectMemberDto";
+import { Dialog } from "../../../../../shared/ui/Dialog";
 
 export interface ChangeUserRoleDTO {
   memberId: number;

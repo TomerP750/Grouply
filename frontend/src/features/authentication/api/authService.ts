@@ -1,6 +1,6 @@
 import axios from "axios";
-import type { LoginRequestDTO } from "../model/LoginRequestDto";
-import type { SignUpRequestDTO } from "../model/SignUpRequestDto";
+import type { LoginRequestDTO } from "../models/LoginRequestDto";
+import type { SignUpRequestDTO } from "../models/SignUpRequestDto";
 import { BASE_API } from "../../../shared/api/baseApi";
 
 

@@ -6,11 +6,11 @@ import { toast } from "react-toastify";
 import projectService from "../../../../shared/api/projectService";
 import type { ProjectPosition } from "../../../../shared/models/project/ProjectPosition";
 import { useUser } from "../../../../shared/store/hooks";
-import { PositionSelectChips } from "../../components/PositionChipSelect";
 import type { PostDTO } from "../../shared/models/PostDto";
 import postService from "../api/postService";
 import { CreateProjectPostDTO } from "../models/CreateProjectPostDTO";
 import type { ProjectDTO } from "../models/ProjectDto";
+import { PositionSelectChips } from "../../shared/ui/PositionChipSelect";
 
 
 

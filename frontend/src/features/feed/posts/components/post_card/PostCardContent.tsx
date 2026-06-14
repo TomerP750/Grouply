@@ -3,13 +3,14 @@ import { BiDotsVertical, BiHistory } from "react-icons/bi";
 import { MdBookmarkAdd } from "react-icons/md";
 import { toast } from "react-toastify";
 import { PostCardPositionCard } from "./PostCardPositionCard";
-import { EditPostFormModal } from "../../posts/forms/EditPostForm";
-import projectMemberService from "../../../../shared/api/projectMemberService";
-import { useUser } from "../../../../shared/store/hooks";
-import { Dialog } from "../../../../shared/ui/Dialog";
-import { timeAgo, toNormal } from "../../../../shared/utils/string_formats";
-import archivedPostService from "../../archived_posts/api/archivedPostService";
-import type { PostDTO } from "../../shared/models/PostDto";
+import projectMemberService from "../../../../../shared/api/projectMemberService";
+import { useUser } from "../../../../../shared/store/hooks";
+import { Dialog } from "../../../../../shared/ui/Dialog";
+import { timeAgo, toNormal } from "../../../../../shared/utils/string_formats";
+import archivedPostService from "../../../archived_posts/api/archivedPostService";
+import type { PostDTO } from "../../../shared/models/PostDto";
+import { EditPostFormModal } from "../../forms/EditPostForm";
+
 
 
 type MemberType = "member" | "owner"

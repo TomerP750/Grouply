@@ -1,5 +1,5 @@
 import { BiBellMinus, BiChat, BiGroup } from "react-icons/bi";
-import { NotificationCard } from "./NotificationCard";
+// import { NotificationCard } from "./NotificationCard";
 import { Menu } from "../../../shared/ui/Menu";
 
 type NotificationDTO = {
@@ -56,10 +56,10 @@ export function NotificationMenu({ notifications }: NotificationMenuProps) {
                     <ul className="flex-1 w-full max-h-80 overflow-y-auto space-y-1">
                         {notifications.map((n, idx) => (
                             <li key={idx}>
-                                <NotificationCard
+                                {/* <NotificationCard
                                     notification={n}
                                     isUnread={true}
-                                />
+                                /> */}
                             </li>
                         ))}
                     </ul>

@@ -2,12 +2,18 @@ import { useState } from "react";
 import type { PostDTO } from "../../shared/models/PostDto";
 import { useQuery } from "@tanstack/react-query";
 import archivedPostService from "../api/archivedPostService";
+import type { Pagination } from "../../../../shared/models/Pagination";
 
 
 
 export function ArchivedPostsFeed() {
 
     const [archivedPosts, setArchivedPosts] = useState<PostDTO[]>([]);
+
+    const [pagination, setPagination] = useState<Pagination>({
+        pageIndex: 0,
+        pageSize: 10
+    });
     
     // const {data, isLoading, error} = useQuery({
     //     queryKey: ["archived"],

@@ -36,7 +36,7 @@ export function Input({
                     type={resolvedType}
                     className={[
                         "w-full rounded-lg border px-3 py-2 text-sm outline-none transition",
-                        "bg-slate-900 text-slate-100 border-slate-700",
+                        "bg-stone-900 text-slate-100 border-stone-700",
                         "focus:border-sky-500 focus:ring-1 focus:ring-sky-500",
                         error
                             ? "border-red-500 focus:border-red-500 focus:ring-red-500"

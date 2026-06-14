@@ -2,6 +2,7 @@ package com.grouply.backend.join_request;
 
 import com.grouply.backend.activity.ActivityService;
 import com.grouply.backend.activity.ActivityType;
+import com.grouply.backend.join_request.dto.RequestToJoinDTO;
 import com.grouply.backend.post.archived_post.ArchivedPost;
 import com.grouply.backend.post.archived_post.ArchivedPostRepository;
 import com.grouply.backend.shared.exceptions.ExistsException;
@@ -61,16 +62,16 @@ public class JoinRequestService {
      * @throws NoSuchElementException if the specified position does not exist
      */
 
-    public boolean toggleJoinRequest(JoinRequestDTO dto) throws UnauthorizedException, ExistsException {
+    public boolean toggleJoinRequest(RequestToJoinDTO dto) throws UnauthorizedException, ExistsException {
 
-        User sender = fetchUser(dto.getSenderId());
+        User sender = fetchUser(dto.senderId());
 
         if (sender == null) {
             throw new UnauthorizedException("You must login to request to join");
         }
 
-        Post post = fetchProjectPost(dto.getProjectPostId());
-        ProjectPostPosition position = projectPostPositionRepository.findById(dto.getProjectPostPositionId()).orElseThrow(() -> new NoSuchElementException("Position not found"));
+        Post post = fetchProjectPost(dto.postId());
+        ProjectPostPosition position = projectPostPositionRepository.findById(dto.projectPostPositionId()).orElseThrow(() -> new NoSuchElementException("Position not found"));
 
         if (projectMemberRepository.existsByUserIdAndProjectId(sender.getId(), post.getProject().getId())) {
             throw new ExistsException("You are already a member in the project");

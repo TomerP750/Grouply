@@ -6,7 +6,7 @@ import { BiGroup, BiLoaderAlt } from "react-icons/bi";
 import { toast } from "react-toastify";
 
 import authService from "../api/authService";
-import type { SignUpRequestDTO } from "../model/SignUpRequestDto";
+import type { SignUpRequestDTO } from "../models/SignUpRequestDto";
 import { Input } from "../../../shared/ui/Input";
 
 

@@ -1,6 +1,6 @@
 import axios from "axios";
-import type { JoinRequestDTO } from "../../shared/models/JoinRequestDTO";
 import { BASE_API } from "../../../../shared/api/baseApi";
+import type { RequestToJoinDTO } from "../models/RequestToJoinDTO";
 
 
 
@@ -11,7 +11,7 @@ class JoinRequestService {
         return (await axios.get(`${BASE_API}/join/all/${id}?page=${page}&size=${size}`)).data
     }
 
-    async toggleJoinRequest(data: JoinRequestDTO) {
+    async toggleJoinRequest(data: RequestToJoinDTO) {
         return (await axios.post(`${BASE_API}/join/request`, data)).data
     }
 

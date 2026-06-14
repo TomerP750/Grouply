@@ -3,9 +3,10 @@ import { BiChevronDown } from "react-icons/bi";
 import { NavLink } from "react-router-dom";
 import type { JwtUser } from "../../../shared/store/AuthSlice";
 import { Avatar } from "../../../shared/ui/Avatar";
-import { ConnectionBadge } from "./connection.badge";
-import { NotificationBadge } from "./notification.badge";
-import { UserMenu } from "./user_menu";
+import { ConnectionBadge } from "./ConnectionBadge";
+import { NotificationBadge } from "./NotificationBadge";
+import { UserMenu } from "./UserMenu";
+
 
 
 interface NavbarRightProps {

@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 
 import authService from "../api/authService";
-import type { LoginRequestDTO } from "../model/LoginRequestDto";
+import type { LoginRequestDTO } from "../models/LoginRequestDto";
 import { login } from "../../../shared/store/AuthSlice";
 import { Input } from "../../../shared/ui/Input";
 

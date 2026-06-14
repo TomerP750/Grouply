@@ -4,12 +4,10 @@ import {
 } from "@tanstack/react-table";
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import { Dialog } from "../../../../shared/ui/Dialog";
-import { useUser } from "../../../../shared/store/hooks";
-import { fmtDate } from "../../../../shared/utils/string_formats";
-import postService from "../../../feed/posts/api/postService";
-import type { PostDTO } from "../../../feed/shared/models/PostDto";
+import { useUser } from "../../../../../shared/store/hooks";
+import { fmtDate } from "../../../../../shared/utils/string_formats";
+import type { PostDTO } from "../../../../feed/shared/models/PostDto";
+
 
 const ch = createColumnHelper<PostDTO>();
 

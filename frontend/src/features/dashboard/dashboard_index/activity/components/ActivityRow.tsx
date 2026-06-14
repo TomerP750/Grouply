@@ -3,7 +3,7 @@ import { BiEnvelope, BiFolderMinus, BiFolderPlus, BiPencil, BiQuestionMark, BiRo
 import { useNavigate } from "react-router-dom";
 import { ActivityType } from "../models/ActivityType";
 import type { ActivityDTO } from "../models/ActivityDto";
-import { timeAgo } from "../../../../shared/utils/string_formats";
+import { timeAgo } from "../../../../../shared/utils/string_formats";
 
 interface ActivityRowProps {
     activity: ActivityDTO

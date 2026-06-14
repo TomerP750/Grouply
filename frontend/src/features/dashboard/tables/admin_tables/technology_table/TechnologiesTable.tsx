@@ -2,11 +2,12 @@ import { createColumnHelper, type ColumnDef } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
 import { BiEdit, BiTrash, BiX } from "react-icons/bi";
 import { toast } from "react-toastify";
-import type { TechnologyDTO } from "../../../../shared/models/TechnologyDto";
-import { Dialog } from "../../../../shared/ui/Dialog";
-import { Modal } from "../../../../shared/ui/Modal";
-import { CreateTechnologyForm } from "../../admin/forms/CreateTechnologyForm";
-import technologyService from "../../../../shared/api/technologyService";
+import technologyService from "../../../../../shared/api/technologyService";
+import type { TechnologyDTO } from "../../../../../shared/models/TechnologyDto";
+import { Dialog } from "../../../../../shared/ui/Dialog";
+import { Modal } from "../../../../../shared/ui/Modal";
+import { CreateTechnologyForm } from "../../../admin/forms/CreateTechnologyForm";
+
 
 const ch = createColumnHelper<TechnologyDTO>();
 

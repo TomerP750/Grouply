@@ -1,26 +1,27 @@
 import { Route, Routes } from "react-router-dom";
 import { Login } from "../features/authentication/pages/Login";
-import { Dashboard } from "../features/dashboard/layout/DashboardLayout";
+import { DashboardPage } from "../features/dashboard/pages/DashboardPage";
 import { Overview } from "../features/dashboard/dashboard_index/DashboardIndex";
-import { TechnologiesTable } from "../features/dashboard/tables/admin_tables/TechnologiesTable";
-import { UsersTable } from "../features/dashboard/tables/admin_tables/UsersTable";
-import { JoinRequestsTable } from "../features/dashboard/tables/user_tables/JoinRequestsTable";
-import { PostsTable } from "../features/dashboard/tables/user_tables/PostsTable";
-import { ProjectMembersTable } from "../features/dashboard/tables/user_tables/ProjectMembersTable";
-import { ProjectsTable } from "../features/dashboard/tables/user_tables/ProjectsTable";
+import { UsersTable } from "../features/dashboard/tables/admin_tables/users_table/UsersTable";
+
 import { CreatePostForm } from "../features/feed/posts/forms/CreatePostForm";
 import { PostPage } from "../features/feed/posts/pages/PostPage";
 import { Home } from "../features/home/pages/Home";
 import { NotFoundPage } from "../features/other-pages/not-found/NotFoundPage";
 import { DisplaySettings } from "../features/other-pages/settings/pages/DisplaySettings";
 import { SecuritySettings } from "../features/other-pages/settings/pages/SecuritySettings";
-import { SettingsPage } from "../features/other-pages/settings/pages/SettingsPage";
 import { UserSettings } from "../features/other-pages/settings/pages/user_settings/UserSettings";
-import { ProfilePage } from "../features/profile/pages/profile_page";
 import { useUserSelector } from "../shared/store/hooks";
 import { ArchivedPostsFeed } from "../features/feed/archived_posts/pages/ArchivedPostsFeed";
 import { SignUp } from "../features/authentication/pages/SignUp";
 import { Feed } from "../features/feed/posts/pages/Feed";
+import { TechnologiesTable } from "../features/dashboard/tables/admin_tables/technology_table/TechnologiesTable";
+import { JoinRequestsTable } from "../features/dashboard/tables/user_tables/join_requests_table/JoinRequestsTable";
+import { PostsTable } from "../features/dashboard/tables/user_tables/posts_table/PostsTable";
+import { ProjectMembersTable } from "../features/dashboard/tables/user_tables/project_members_table/ProjectMembersTable";
+import { ProjectsTable } from "../features/dashboard/tables/user_tables/projects_table/pages/ProjectsTable";
+import { SettingsPage } from "../features/other-pages/settings/pages/layout/SettingsPage";
+import { ProfilePage } from "../features/profile/pages/ProfilePage";
 
 
 
@@ -44,7 +45,7 @@ export function Routing() {
 
                 <Route path="/profile/:id" element={<ProfilePage />} />
                 
-                <Route path="/dashboard/:id" element={<Dashboard />}>
+                <Route path="/dashboard/:id" element={<DashboardPage />}>
                     <Route index element={<Overview />} />
                     <Route path="projects" element={<ProjectsTable />} />
                     {/* <Route path="posts" element={<PostsTable />} /> */}

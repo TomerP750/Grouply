@@ -1,4 +1,4 @@
-import type { UserDTO } from "../../shared/models/UserDto"
+import type { UserDTO } from "../../../shared/models/UserDto"
 
 
 export interface StatisticsDTO {

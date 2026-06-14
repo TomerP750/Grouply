@@ -6,7 +6,7 @@ import { MdDashboard } from 'react-icons/md';
 import { useDispatch } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
 
-import './user_menu_styles.css';
+import './UserMenu.css';
 import { useTheme } from '../../../shared/context/ThemeContext';
 import { type JwtUser, logout } from '../../../shared/store/AuthSlice';
 import { Menu } from '../../../shared/ui/Menu';

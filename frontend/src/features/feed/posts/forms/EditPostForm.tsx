@@ -2,14 +2,15 @@ import { useEffect, useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { BiLoaderAlt } from "react-icons/bi";
 import { toast } from "react-toastify";
-import type { ProjectPosition } from "../../../dtos/enums/ProjectPosition";
-import type { PostDTO } from "../../../dtos/models_dtos/post_dto";
-import type { ProjectDTO } from "../../../dtos/models_dtos/project_dto";
-import { useUserSelector } from "../../../redux/hooks";
-import projectService from "../../../service/project_service";
-import { Modal } from "../../../components/shared/ui/Modal";
-import postService from "../../../service/post_service";
-import { PositionSelectChips } from "../feed/components/position_chip_select";
+import projectService from "../../../../shared/api/projectService";
+import type { ProjectPosition } from "../../../../shared/models/project/ProjectPosition";
+import { useUserSelector } from "../../../../shared/store/hooks";
+import { Modal } from "../../../../shared/ui/Modal";
+import type { PostDTO } from "../../shared/models/PostDto";
+import { PositionSelectChips } from "../../shared/ui/PositionChipSelect";
+import postService from "../api/postService";
+import type { ProjectDTO } from "../models/ProjectDto";
+
 
 const labelCls = "text-sm font-medium text-slate-700 dark:text-slate-200";
 const inputBase =

@@ -6,17 +6,16 @@ import {
 import { BiPencil, BiPlus, BiTrash, BiX } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import projectService from "../../../../../../shared/api/projectService";
+import { ProjectStatus } from "../../../../../../shared/models/project/ProjectStatus";
+import { useUser } from "../../../../../../shared/store/hooks";
+import { Modal } from "../../../../../../shared/ui/Modal";
+import { StatusBadge } from "../../../../../../shared/utils/enum_ui";
+import { toNormal, fmtDate } from "../../../../../../shared/utils/string_formats";
+import type { ProjectDTO } from "../../../../../feed/posts/models/ProjectDto";
+import { CreateProjectForm } from "../../../../shared/forms/create_project_form";
+import type { UpdateProjectDTO } from "../models/UpdateProjectDto";
 
-import { ProjectStatus } from "../../../../shared/models/project/ProjectStatus";
-import type { ProjectDTO } from "../../../feed/posts/models/ProjectDto";
-import { useUser } from "../../../../shared/store/hooks";
-import projectService from "../../../../shared/api/projectService";
-import type { UpdateProjectDTO } from "../../shared/models/UpdateProjectDto";
-import { StatusBadge } from "../../../../shared/utils/enum_ui";
-import { Dialog } from "../../../../shared/ui/Dialog";
-import { Modal } from "../../../../shared/ui/Modal";
-import { toNormal, fmtDate } from "../../../../shared/utils/string_formats";
-import { CreateProjectForm } from "../../shared/forms/create_project_form";
 
 
 

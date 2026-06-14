@@ -5,11 +5,12 @@ import {
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useUser } from "../../../../../shared/store/hooks";
+import { Dialog } from "../../../../../shared/ui/Dialog";
+import joinRequestService from "../../../../feed/posts/api/joinRequestService";
+import type { JoinRequestDTO } from "../../../../feed/shared/models/JoinRequestDTO";
 
-import type { JoinRequestDTO } from "../../../feed/shared/models/JoinRequestDTO";
-import { useUser } from "../../../../shared/store/hooks";
-import joinRequestService from "../../../feed/posts/api/joinRequestService";
-import { Dialog } from "../../../../shared/ui/Dialog";
+
 
 
 

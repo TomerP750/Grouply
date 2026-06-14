@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { BiX } from "react-icons/bi";
-import { ProjectPosition } from "../../../shared/models/project/ProjectPosition";
-import { toNormal } from "../../../shared/utils/string_formats";
+import { ProjectPosition } from "../../../../shared/models/project/ProjectPosition";
+import { toNormal } from "../../../../shared/utils/string_formats";
+
 
 
 interface PositionSelectChipsProps {

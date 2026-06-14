@@ -6,12 +6,17 @@ import postService from "../api/postService";
 import { useQuery } from "@tanstack/react-query"
 import { BiLoaderCircle } from "react-icons/bi";
 import { PostCard } from "../components/post_card/PostCard";
+import { Filters } from "../../filters/pages/Filters";
+import type { Pagination } from "../../../../shared/models/Pagination";
 
 
 export function Feed() {
 
-    const [page, setPage] = useState<number>(0);
-    const size = 10;
+    const [pagination, setPagination] = useState<Pagination>({
+        pageIndex: 0,
+        pageSize: 10
+    });
+    
 
     // const { data, isLoading } = useQuery({
     //     queryKey: ["posts", page],
@@ -36,7 +41,7 @@ export function Feed() {
 
             {/* POSTS AND FILTERS */}
             <div className="bg-neutral-200 dark:bg-stone-950 flex flex-col lg:pt-25 md:mt-5 px-5 md:px-0 lg:flex-row w-full items-center lg:items-start gap-6">
-                {/* <Filters /> */}
+                <Filters />
 
                 {/* Main area */}
                 <section className="w-full flex justify-center px-0 sm:px-5 ">
