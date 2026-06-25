@@ -1,10 +1,9 @@
 package com.grouply.backend.service;
 
-import com.grouply.backend.user.Dtos.UserDTO;
-import com.grouply.backend.user.Role;
-import com.grouply.backend.user.User;
-import com.grouply.backend.user.UserRepository;
-import com.grouply.backend.user.UserService;
+import com.grouply.backend.features.user.Role;
+import com.grouply.backend.features.user.User;
+import com.grouply.backend.features.user.UserRepository;
+import com.grouply.backend.features.user.UserService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

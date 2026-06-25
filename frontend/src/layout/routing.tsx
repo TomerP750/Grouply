@@ -24,9 +24,6 @@ import { SettingsPage } from "../features/other-pages/settings/pages/layout/Sett
 import { ProfilePage } from "../features/profile/pages/ProfilePage";
 
 
-
-
-
 export function Routing() {
 
     const user = useUserSelector(state => state.authSlice.user);
@@ -34,7 +31,7 @@ export function Routing() {
     return (
         <div>
             <Routes>
-                <Route path="/" element={user ? <Feed /> : <Home />} />
+                <Route path="/" element={user ? <Feed /> : <Feed />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/settings" element={<SettingsPage />}>

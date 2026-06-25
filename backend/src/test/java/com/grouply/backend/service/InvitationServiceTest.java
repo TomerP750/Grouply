@@ -1,10 +1,10 @@
 package com.grouply.backend.service;
 
-import com.grouply.backend.invitation.InvitationRepository;
-import com.grouply.backend.invitation.InvitationService;
-import com.grouply.backend.project.project.ProjectRepository;
-import com.grouply.backend.project.project_member.ProjectMemberRepository;
-import com.grouply.backend.user.UserRepository;
+import com.grouply.backend.features.invitation.InvitationRepository;
+import com.grouply.backend.features.invitation.InvitationService;
+import com.grouply.backend.features.project.project.ProjectRepository;
+import com.grouply.backend.features.project.project_member.ProjectMemberRepository;
+import com.grouply.backend.features.user.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

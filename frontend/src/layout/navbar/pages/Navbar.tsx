@@ -14,16 +14,14 @@ export function Navbar() {
 
     const hideNavbar = pathname.startsWith("/dashboard") || pathname.startsWith("/login") || pathname.startsWith("/signup");
 
-    const noBackground = pathname === "/" && !user;
-
     if (hideNavbar) {
         return null;
     }
 
     return (
 
-        <nav className={`z-1000 hidden fixed top-0 Navbar  
-                ${noBackground ? 'bg-transparent' : 'bg-white/80 dark:bg-stone-800 backdrop-blur-md '}
+        <nav className={`z-1000 hidden Navbar  
+                ${ 'bg-white/80 dark:bg-stone-800 backdrop-blur-md '}
                 w-full h-24 md:flex justify-between items-center px-5 
                 sm:px-10 text-[#1e293b] dark:text-white`}>
 

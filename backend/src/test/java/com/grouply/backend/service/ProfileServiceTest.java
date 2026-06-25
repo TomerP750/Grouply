@@ -1,11 +1,11 @@
 package com.grouply.backend.service;
 
-import com.grouply.backend.profile.profile.Profile;
-import com.grouply.backend.profile.profile.ProfileRepository;
-import com.grouply.backend.profile.profile.ProfileService;
-import com.grouply.backend.profile.dto.ProfileDTO;
-import com.grouply.backend.user.User;
-import com.grouply.backend.user.UserRepository;
+import com.grouply.backend.features.profile.profile.Profile;
+import com.grouply.backend.features.profile.profile.ProfileRepository;
+import com.grouply.backend.features.profile.profile.ProfileService;
+import com.grouply.backend.features.profile.dto.ProfileDTO;
+import com.grouply.backend.features.user.User;
+import com.grouply.backend.features.user.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

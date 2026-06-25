@@ -1,23 +1,16 @@
 package com.grouply.backend.service;
 
-import com.grouply.backend.authentication.AuthService;
-import com.grouply.backend.user.Role;
-import com.grouply.backend.user.User;
-import com.grouply.backend.user.UserRepository;
+import com.grouply.backend.features.authentication.AuthService;
+import com.grouply.backend.features.user.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class AuthServiceTest {

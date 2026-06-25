@@ -1,9 +1,9 @@
 package com.grouply.backend.service;
 
-import com.grouply.backend.project.project.ProjectRepository;
-import com.grouply.backend.project.project_member.ProjectMemberRepository;
-import com.grouply.backend.project.project_member.ProjectMemberService;
-import com.grouply.backend.user.UserRepository;
+import com.grouply.backend.features.project.project.ProjectRepository;
+import com.grouply.backend.features.project.project_member.ProjectMemberRepository;
+import com.grouply.backend.features.project.project_member.ProjectMemberService;
+import com.grouply.backend.features.user.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

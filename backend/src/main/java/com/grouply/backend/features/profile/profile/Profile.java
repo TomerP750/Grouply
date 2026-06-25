@@ -1,0 +1,44 @@
+package com.grouply.backend.features.profile.profile;
+
+import com.grouply.backend.features.position.Position;
+import com.grouply.backend.features.user.User;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
+import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+@Table(name = "profiles")
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+@Builder
+public class Profile {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Setter(AccessLevel.NONE)
+    private Long id;
+
+    @Size(max = 500)
+    @Column(length = 500)
+    private String about;
+    private String bannerUrl;
+
+
+//    @OneToMany(mappedBy = "profile")
+//    private Set<SocialLink> socialLinks;
+
+    @ManyToMany
+    private List<Position> positions = new ArrayList<>();
+
+
+
+    //TODO add project participant in
+
+    @OneToOne
+    private User user;
+
+}

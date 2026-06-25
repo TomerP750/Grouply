@@ -16,17 +16,18 @@ export function Feed() {
         pageIndex: 0,
         pageSize: 10
     });
-    
+
 
     // const { data, isLoading } = useQuery({
-    //     queryKey: ["posts", page],
-    //     queryFn: () => postService.allPosts(page, size),
-    //     staleTime: 60 * 1000 * 5
-    // })
+    //     queryKey: ["posts", pagination.pageIndex, pagination.pageSize],
+    //     queryFn: () =>
+    //         postService.allPosts(pagination.pageIndex, pagination.pageSize),
+    //     staleTime: 1000 * 60 * 5
+    // });
 
     // const posts: PostDTO[] = data?.content ?? [];
     const posts: PostDTO[] = [];
-    
+
 
     // if (isLoading) {
     //     return (
@@ -37,10 +38,10 @@ export function Feed() {
     // }
 
     return (
-        <main className="min-h-screen pb-10">
+        <main className="min-h-screen">
 
             {/* POSTS AND FILTERS */}
-            <div className="bg-neutral-200 dark:bg-stone-950 flex flex-col lg:pt-25 md:mt-5 px-5 md:px-0 lg:flex-row w-full items-center lg:items-start gap-6">
+            <div className="py-10 bg-neutral-200 dark:bg-stone-950 flex flex-col px-5 md:px-0 lg:flex-row w-full items-center lg:items-start gap-6">
                 <Filters />
 
                 {/* Main area */}

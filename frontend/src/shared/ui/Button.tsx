@@ -1,12 +1,13 @@
+import { type ComponentProps } from "react"
 
-interface ButtonProps {
+type ButtonProps = ComponentProps<"button"> & {
     
 }
 
-export function Button({} : ButtonProps) {
+export function Button({...props} : ButtonProps) {
     return (
-        <button>
-            
+        <button {...props}>
+            {}
         </button>
     )
 }

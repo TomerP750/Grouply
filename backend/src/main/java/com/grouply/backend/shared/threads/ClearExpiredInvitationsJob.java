@@ -1,7 +1,7 @@
 package com.grouply.backend.shared.threads;
 
 
-import com.grouply.backend.invitation.InvitationRepository;
+import com.grouply.backend.features.invitation.InvitationRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;

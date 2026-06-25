@@ -1,0 +1,26 @@
+package com.grouply.backend.features.statistics;
+
+import com.grouply.backend.infrastructure.security.CustomUserDetails;
+import com.grouply.backend.features.statistics.dto.StatisticsDTO;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/api/stats")
+@RequiredArgsConstructor
+public class StatisticsController {
+
+
+    private final StatisticsService statisticsService;
+
+
+    @GetMapping("/get")
+    public StatisticsDTO userStats(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        Long userId = userDetails.getId();
+        return statisticsService.getStats(userId);
+    }
+
+}

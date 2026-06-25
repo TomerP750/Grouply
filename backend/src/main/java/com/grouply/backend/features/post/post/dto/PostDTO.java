@@ -1,0 +1,22 @@
+package com.grouply.backend.features.post.post.dto;
+
+import com.grouply.backend.features.project.project.Dtos.ProjectDTO;
+import com.grouply.backend.features.post.project_post_position.dto.ProjectPostPositionDTO;
+import lombok.Builder;
+import lombok.Data;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+@Data
+@Builder
+public class PostDTO {
+
+    private Long id;
+    private String title;
+    private String description;
+    private List<ProjectPostPositionDTO> positions;
+    private ProjectDTO projectDTO;
+    private LocalDateTime postedAt;
+
+}

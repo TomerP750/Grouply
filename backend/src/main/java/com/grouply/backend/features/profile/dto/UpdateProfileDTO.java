@@ -1,0 +1,15 @@
+package com.grouply.backend.features.profile.dto;
+
+import com.grouply.backend.profile.social_link.dto.SocialLinkDTO;
+import lombok.Data;
+
+import java.util.Set;
+
+@Data
+public class UpdateProfileDTO {
+
+    private String about;
+    private String bannerUrl;
+    private Set<SocialLinkDTO> socialLinkDTOS;
+
+}

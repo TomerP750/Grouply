@@ -1,0 +1,44 @@
+package com.grouply.backend.features.join_request;
+
+import com.grouply.backend.features.post.post.Post;
+import com.grouply.backend.features.post.project_post_position.ProjectPostPosition;
+import com.grouply.backend.features.user.User;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "join_requests")
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+@Builder
+@EntityListeners(AuditingEntityListener.class)
+public class JoinRequest {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne
+    private Post post;
+
+    @Enumerated(EnumType.STRING)
+    private RequestStatus status;
+
+    @ManyToOne
+    private ProjectPostPosition position;
+
+    @ManyToOne
+    private User sender;
+
+    @CreatedDate
+    private LocalDateTime requestedAt;
+
+}

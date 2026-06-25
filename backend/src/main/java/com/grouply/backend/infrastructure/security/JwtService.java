@@ -1,7 +1,7 @@
 package com.grouply.backend.infrastructure.security;
 
-import com.grouply.backend.user.User;
-import com.grouply.backend.user.UserRepository;
+import com.grouply.backend.features.user.User;
+import com.grouply.backend.features.user.UserRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;

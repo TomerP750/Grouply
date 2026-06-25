@@ -1,6 +1,6 @@
 package com.grouply.backend.infrastructure.security;
 
-import com.grouply.backend.user.User;
+import com.grouply.backend.features.user.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -1,6 +1,6 @@
 package com.grouply.backend.infrastructure.security;
 
-import com.grouply.backend.user.UserRepository;
+import com.grouply.backend.features.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
