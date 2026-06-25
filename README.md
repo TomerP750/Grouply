@@ -42,12 +42,6 @@ The goal is to make it easy to:
 - Build a mini developer network
 - Useful for long-term collaboration discovery
 
-### 🔔 Notifications (Planned / Partial)
-- Requests
-- Invitations
-- Status updates
-- Connections
-
 ---
 
 ## 🧱 Tech Stack
@@ -70,21 +64,5 @@ The goal is to make it easy to:
 - **React Icons**
 - **React Hook Form** (for forms)
 - Custom hooks & utilities
-
----
-
-## 📂 Project Structure
-
-```bash
-Grouply/
-├── backend/                # Spring Boot application
-│   ├── src/main/java/...   # Controllers, services, entities, mappers
-│   ├── src/main/resources/ # DB config, application.properties
-│   └── pom.xml
-│
-└── frontend/               # React + TypeScript + Vite
-    ├── src/                # Components, pages, hooks, helpers, etc.
-    ├── public/
-    └── package.json
 
 
