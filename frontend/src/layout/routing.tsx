@@ -21,7 +21,6 @@ import { PostsTable } from "../features/dashboard/tables/user_tables/posts_table
 import { ProjectMembersTable } from "../features/dashboard/tables/user_tables/project_members_table/ProjectMembersTable";
 import { ProjectsTable } from "../features/dashboard/tables/user_tables/projects_table/pages/ProjectsTable";
 import { SettingsPage } from "../features/other-pages/settings/pages/layout/SettingsPage";
-import { ProfilePage } from "../features/profile/pages/ProfilePage";
 
 
 export function Routing() {
@@ -40,8 +39,6 @@ export function Routing() {
                     <Route path="security" element={<SecuritySettings />} />
                 </Route>
 
-                <Route path="/profile/:id" element={<ProfilePage />} />
-                
                 <Route path="/dashboard/:id" element={<DashboardPage />}>
                     <Route index element={<Overview />} />
                     <Route path="projects" element={<ProjectsTable />} />

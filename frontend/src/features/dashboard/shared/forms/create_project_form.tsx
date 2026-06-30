@@ -3,12 +3,12 @@ import { Controller, useForm } from "react-hook-form";
 import { BiLoaderAlt } from "react-icons/bi";
 import { ProjectStatus } from "../../../../shared/models/project/ProjectStatus";
 import { toast } from "react-toastify";
-import projectService from "../../../../shared/api/projectService";
+import projectService from "../../tables/user_tables/projects_table/api/projectService";
 import technologyService from "../../../../shared/api/technologyService";
 import type { TechnologyDTO } from "../../../../shared/models/TechnologyDto";
 import { toNormal } from "../../../../shared/utils/string_formats";
-import type { CreateProjectDTO } from "../models/CreateProjectDto";
 import { TechSelectChips } from "../ui/TechSelectChips";
+import type { CreateProjectDTO } from "../../tables/user_tables/projects_table/models/CreateProjectDto";
 
 
 

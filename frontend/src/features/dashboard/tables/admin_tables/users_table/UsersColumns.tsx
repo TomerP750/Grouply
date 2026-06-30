@@ -5,6 +5,7 @@ import { RoleBadge } from "../../../../../shared/utils/enum_ui";
 const ch = createColumnHelper<UserDTO>();
 
 export const userColumns: ColumnDef<UserDTO, any>[] = [
+  
   ch.accessor("id", { header: "#", cell: (i) => i.getValue() }),
   ch.accessor("firstName", {
     header: "First name",

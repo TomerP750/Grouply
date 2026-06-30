@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { BiLoaderAlt } from "react-icons/bi";
 import { toast } from "react-toastify";
-import projectService from "../../../../shared/api/projectService";
+import projectService from "../../../dashboard/tables/user_tables/projects_table/api/projectService";
 import type { ProjectPosition } from "../../../../shared/models/project/ProjectPosition";
 import { useUserSelector } from "../../../../shared/store/hooks";
 import { Modal } from "../../../../shared/ui/Modal";

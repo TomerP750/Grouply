@@ -12,9 +12,6 @@ export function RoleBadge({ role }: { role: Role }) {
     case Role.ADMIN:
       styles = "bg-amber-500/15 text-amber-500";
       break;
-    case Role.RECRUITER:
-      styles = "bg-purple-500/15 text-purple-400";
-      break;
   }
   return <span className={`text-xs px-2 py-1 rounded-full font-medium ${styles}`}>{role}</span>;
 }

@@ -3,7 +3,7 @@ import { useForm, useWatch } from "react-hook-form";
 import { BiLoaderAlt } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import projectService from "../../../../shared/api/projectService";
+import projectService from "../../../dashboard/tables/user_tables/projects_table/api/projectService";
 import type { ProjectPosition } from "../../../../shared/models/project/ProjectPosition";
 import { useUser } from "../../../../shared/store/hooks";
 import type { PostDTO } from "../../shared/models/PostDto";

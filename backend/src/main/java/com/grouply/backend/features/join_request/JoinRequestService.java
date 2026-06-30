@@ -5,11 +5,13 @@ import com.grouply.backend.features.activity.ActivityType;
 import com.grouply.backend.features.join_request.dto.RequestToJoinDTO;
 import com.grouply.backend.features.post.archived_post.ArchivedPost;
 import com.grouply.backend.features.post.archived_post.ArchivedPostRepository;
+import com.grouply.backend.features.post.post.PostService;
+import com.grouply.backend.features.project.project_member.ProjectMemberService;
+import com.grouply.backend.features.user.UserService;
 import com.grouply.backend.shared.exceptions.ExistsException;
 import com.grouply.backend.shared.exceptions.UnauthorizedException;
 import com.grouply.backend.features.join_request.dto.JoinRequestDTO;
 import com.grouply.backend.features.post.post.Post;
-import com.grouply.backend.features.post.post.PostRepository;
 import com.grouply.backend.features.project.project.Project;
 import com.grouply.backend.features.project.project.ProjectRepository;
 import com.grouply.backend.features.project.project_member.ProjectMember;
@@ -18,7 +20,6 @@ import com.grouply.backend.features.project.project_member.ProjectRole;
 import com.grouply.backend.features.post.project_post_position.ProjectPostPosition;
 import com.grouply.backend.features.post.project_post_position.ProjectPostPositionRepository;
 import com.grouply.backend.features.user.User;
-import com.grouply.backend.features.user.UserRepository;
 import com.grouply.backend.shared.util.EntityToDtoMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,13 +36,14 @@ import java.util.Optional;
 public class JoinRequestService {
 
     private final JoinRequestRepository joinRequestRepository;
-    private final PostRepository postRepository;
     private final ProjectRepository projectRepository;
-    private final UserRepository userRepository;
     private final ProjectMemberRepository projectMemberRepository;
     private final ProjectPostPositionRepository projectPostPositionRepository;
     private final ActivityService activityService;
     private final ArchivedPostRepository archivedPostRepository;
+    private final UserService userService;
+    private final PostService postService;
+    private final ProjectMemberService projectMemberService;
 
     /**
      * Toggles a join request for a given post position.
@@ -64,13 +66,13 @@ public class JoinRequestService {
 
     public boolean toggleJoinRequest(RequestToJoinDTO dto) throws UnauthorizedException, ExistsException {
 
-        User sender = fetchUser(dto.senderId());
+        User sender = userService.findOneUser(dto.senderId());
 
         if (sender == null) {
             throw new UnauthorizedException("You must login to request to join");
         }
 
-        Post post = fetchProjectPost(dto.postId());
+        Post post = postService.findOnePost(dto.postId());
         ProjectPostPosition position = projectPostPositionRepository.findById(dto.projectPostPositionId()).orElseThrow(() -> new NoSuchElementException("Position not found"));
 
         if (projectMemberRepository.existsByUserIdAndProjectId(sender.getId(), post.getProject().getId())) {
@@ -128,13 +130,13 @@ public class JoinRequestService {
         Project project = joinRequest.getPost().getProject();
 
         // im using userId only to check authority
-        if (!isOwner(userId, project.getId())) {
+        if (!projectMemberService.isProjectOwner(userId, project.getId())) {
             throw new UnauthorizedException("Unauthorized to response");
         }
 
         log.info("Starting to create member");
 
-        User sender = fetchUser(joinRequest.getSender().getId());
+        User sender = userService.findOneUser(joinRequest.getSender().getId());
         ProjectMember newMember = ProjectMember.builder()
                 .user(sender)
                 .projectRole(ProjectRole.MEMBER)
@@ -166,12 +168,15 @@ public class JoinRequestService {
      * @throws UnauthorizedException
      */
     public void declineJoinRequest(Long userId, Long joinRequestId) throws UnauthorizedException {
+
         log.info("Entering decline join request");
         JoinRequest joinRequest = fetchJoinRequest(joinRequestId);
         Project project = joinRequest.getPost().getProject();
-        if (!isOwner(userId, project.getId())) {
+
+        if (!projectMemberService.isProjectOwner(userId, project.getId())) {
             throw new UnauthorizedException("Unauthorized to response");
         }
+
         joinRequestRepository.deleteById(joinRequestId);
         log.info("Declined join request");
     }
@@ -193,25 +198,9 @@ public class JoinRequestService {
         return requests.map(EntityToDtoMapper::toJoinRequestDto);
     }
 
-
-
-//    ----------- HELPER METHODS -----------
-
-    private boolean isOwner(Long userId, Long projectId) {
-        return projectMemberRepository
-                .existsByUserIdAndProjectIdAndProjectRole(userId, projectId, ProjectRole.OWNER);
-    }
-
     private JoinRequest fetchJoinRequest(Long requestId) {
         return joinRequestRepository.findById(requestId).orElseThrow(()->new NoSuchElementException("Request not found"));
     }
 
-    private User fetchUser(Long userId) {
-        return userRepository.findById(userId).orElseThrow(()->new NoSuchElementException("User not found"));
-    }
-
-    private Post fetchProjectPost(Long postId) {
-        return postRepository.findById(postId).orElseThrow(() -> new NoSuchElementException("Post not found"));
-    }
 
 }

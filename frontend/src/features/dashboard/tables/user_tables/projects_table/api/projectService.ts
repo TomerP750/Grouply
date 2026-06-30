@@ -1,8 +1,7 @@
 import axios from "axios";
-import type { CreateProjectDTO } from "../../features/dashboard/shared/models/CreateProjectDto";
-import type { UpdateProjectDTO } from "../../features/dashboard/shared/models/UpdateProjectDto";
-import { BASE_API } from "./baseApi";
-
+import { BASE_API } from "../../../../../../shared/api/baseApi";
+import type { CreateProjectDTO } from "../models/CreateProjectDto";
+import type { UpdateProjectDTO } from "../models/UpdateProjectDto";
 
 
 class ProjectService {

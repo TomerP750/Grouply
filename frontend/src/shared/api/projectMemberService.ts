@@ -1,6 +1,6 @@
 import axios from "axios";
-import type { ChangeUserRoleDTO } from "../../features/dashboard/tables/user_tables/ProjectMembersTable";
 import { BASE_API } from "./baseApi";
+import type { ChangeUserRoleDTO } from "../../features/dashboard/tables/user_tables/project_members_table/ProjectMembersTable";
 
 
 

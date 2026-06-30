@@ -6,7 +6,6 @@ import postService from "../api/postService";
 import { useQuery } from "@tanstack/react-query"
 import { BiLoaderCircle } from "react-icons/bi";
 import { PostCard } from "../components/post_card/PostCard";
-import { Filters } from "../../filters/pages/Filters";
 import type { Pagination } from "../../../../shared/models/Pagination";
 
 
@@ -42,7 +41,6 @@ export function Feed() {
 
             {/* POSTS AND FILTERS */}
             <div className="py-10 bg-neutral-200 dark:bg-stone-950 flex flex-col px-5 md:px-0 lg:flex-row w-full items-center lg:items-start gap-6">
-                <Filters />
 
                 {/* Main area */}
                 <section className="w-full flex justify-center px-0 sm:px-5 ">

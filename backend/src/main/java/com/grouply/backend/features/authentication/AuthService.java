@@ -1,6 +1,5 @@
 package com.grouply.backend.features.authentication;
 
-import com.grouply.backend.authentication.dto.*;
 import com.grouply.backend.features.authentication.dto.AuthResponseDTO;
 import com.grouply.backend.features.authentication.dto.LoginRequestDTO;
 import com.grouply.backend.features.authentication.dto.SignUpRequestDTO;

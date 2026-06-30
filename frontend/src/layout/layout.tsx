@@ -1,7 +1,6 @@
-import { Footer } from "./footer/Footer";
 import { BottomNav } from "./navbar/pages/BottomNav";
 import { Navbar } from "./navbar/pages/Navbar";
-import { Routing } from "./routing";
+import { Routing } from "./Routing";
 
 
 export function Layout() {
@@ -11,7 +10,6 @@ export function Layout() {
             <Navbar />
             <BottomNav />
             <Routing />
-            <Footer />
         </div>
     )
 

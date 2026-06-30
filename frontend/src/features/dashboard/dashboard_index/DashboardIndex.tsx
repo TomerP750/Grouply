@@ -1,14 +1,8 @@
 import { useEffect, useState } from "react";
-import { FiCheckCircle, FiFolder, FiLink } from "react-icons/fi";
 import { MdHistory } from "react-icons/md";
 import { toast } from "react-toastify";
 import { useUser } from "../../../shared/store/hooks";
-import statisticsService from "../../../shared/api/statisticsService";
 import { Hr } from "../../../shared/ui/Hr";
-import { ActiveProjectsChart } from "./charts/ActiveProjectsChart";
-import { JoinRequestChart } from "./charts/JoinRequestsChart";
-import { DashboardStatCard } from "./DashboardStatCard";
-import type { StatisticsDTO } from "./StatisticsDto";
 import activityService from "./activity/api/activityService";
 import { ActivityRow } from "./activity/components/ActivityRow";
 import type { ActivityDTO } from "./activity/models/ActivityDto";
@@ -18,17 +12,9 @@ export function Overview() {
 
   const user = useUser();
 
-  const [stats, setStats] = useState<StatisticsDTO>();
   const [activites, setActivities] = useState<ActivityDTO[]>([]);
 
   useEffect(() => {
-    statisticsService.getStats()
-      .then(res => {
-        setStats(res);
-      })
-      .catch(err => {
-        toast.error(err.response.data);
-      })
     activityService.allActivities()
       .then(res => {
         setActivities(res)
@@ -48,63 +34,7 @@ export function Overview() {
         <p className="text-slate-700 dark:text-slate-400">Here’s an overview of your workspace today.</p>
       </div>
 
-      {/* Stats Row */}
-      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full mb-5">
-        <DashboardStatCard
-          Icon={FiFolder}
-          label="Active Projects"
-          value={stats?.activeProjects!}
-          color="text-teal-400"
-        />
-
-        <DashboardStatCard
-          Icon={FiCheckCircle}
-          label="Completed Projects"
-          value={stats?.completedProjects!}
-          color="text-indigo-400"
-        />
-
-        <DashboardStatCard
-          Icon={FiLink}
-          label="Connections"
-          value={stats?.joinRequestsCount!}
-          color="text-pink-400"
-        />
-
-      </section>
-      
-
-      {/* Charts Row */}
-
-      {/* Projects chart */}
-      {stats && <section className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full  mb-8 dark:text-white">
-        {/* Active projects and connections */}
-        <div className="bg-gradient-to-br from-white to-slate-100 dark:from-stone-800 dark:to-stone-900 rounded-xl p-6 border border-slate-800 shadow-md">
-          <h1 className="inline-flex items-center gap-1 text-black dark:text-white font-medium ">
-            <MdHistory size={30}/>
-            <span className="text-2xl">Projects</span>
-            </h1>
-
-          <Hr />
-
-          <ActiveProjectsChart activeProjectsCount={stats?.activeProjects} />
-        </div>
-
-        {/* Join Request chart */}
-        <div className="bg-gradient-to-br from-white to-slate-100 dark:from-stone-800 dark:to-stone-900 rounded-xl p-6 border border-slate-800 shadow-md space-y-5">
-          <h1 className="inline-flex items-center gap-1 text-black dark:text-white font-medium ">
-            <MdHistory size={30}/>
-            <span className="text-2xl">Join Requests Sent</span>
-            </h1>
-
-          <Hr />
-
-          <JoinRequestChart total={stats?.joinRequestsCount} />
-        </div>
-
-      </section>}
-
-        {/* Recent activity */}
+      {/* Recent activity */}
       <section className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full">
 
         <div className="bg-gradient-to-br from-white to-slate-100 dark:from-stone-800 dark:to-stone-900 rounded-xl min-h-60 p-6 border border-slate-800 shadow-md">
@@ -122,11 +52,7 @@ export function Overview() {
           </ul>
 
         </div>
-
-        {/* <div className="bg-gradient-to-br from-white to-slate-100 dark:from-slate-800 dark:to-slate-900 rounded-xl p-6 border border-slate-800 shadow-md">
-
-        </div> */}
-
+        
       </section>
 
     </main>

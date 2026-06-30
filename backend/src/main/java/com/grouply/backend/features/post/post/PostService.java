@@ -78,7 +78,7 @@ public class PostService implements IPostService {
     @Override
     public void updatePost(Long userId, UpdateProjectPostDTO dto) throws UnauthorizedException, InvalidInputException {
 
-        Post post = fetchPost(dto.getPostId());
+        Post post = findOnePost(dto.getPostId());
 
         if (!projectMemberService.isProjectOwner(userId, post.getProject().getId())) {
             throw new UnauthorizedException("You are not the owner of the project");
@@ -92,7 +92,7 @@ public class PostService implements IPostService {
     @Override
     public void deletePost(Long userId ,Long postId) throws UnauthorizedException {
 
-        Post post = fetchPost(postId);
+        Post post = findOnePost(postId);
         User user = userService.findOneUser(userId);
 
         if (!projectMemberService.isProjectOwner(user.getId(), post.getProject().getId())) {
@@ -109,7 +109,7 @@ public class PostService implements IPostService {
 
     @Override
     public PostDTO getOnePost(Long postId) {
-        return EntityToDtoMapper.toPostDto(fetchPost(postId));
+        return EntityToDtoMapper.toPostDto(findOnePost(postId));
     }
 
     @Override
@@ -127,7 +127,7 @@ public class PostService implements IPostService {
     }
 
 
-    private Post fetchPost(Long postId) {
+    public Post findOnePost(Long postId) {
         return postRepository.findById(postId).orElseThrow(() -> new NoSuchElementException("Post not found"));
     }
 

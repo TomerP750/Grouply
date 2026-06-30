@@ -1,5 +1,4 @@
 import { NavLink } from "react-router-dom";
-import { Menu } from "../../../shared/ui/Menu";
 import { HiUserGroup, HiFolderOpen, HiCpuChip } from "react-icons/hi2";
 import { HiClipboardList } from "react-icons/hi";
 

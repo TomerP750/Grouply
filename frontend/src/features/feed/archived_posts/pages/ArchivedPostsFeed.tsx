@@ -31,10 +31,8 @@ export function ArchivedPostsFeed() {
             <div className="flex-col lg:flex-row flex w-full items-center gap-5 
             lg:pt-35 dark:bg-stone-950
             lg:gap-0 lg:items-start lg:py-10 min-h-screen">
-                {/* Filters */}
-                {/* <Filters /> */}
-
-                {/* Archived Grid */}
+               
+     
                 {/* {
                     archivedPosts.length > 0 ?
                 <div className="grid grid-cols-1 flex-1 justify-items-start gap-5 px-10">
