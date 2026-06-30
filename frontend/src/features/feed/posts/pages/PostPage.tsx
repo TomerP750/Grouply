@@ -1,12 +1,10 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
-import { toast } from "react-toastify";
+import { toNormal } from "../../../../shared/utils/string_formats";
+import { technologyIconMap } from "../../../../shared/utils/technology_icon_mapper";
 import type { PostDTO } from "../../shared/models/PostDto";
 import postService from "../api/postService";
-import { technologyIconMap } from "../../../../shared/utils/technology_icon_mapper";
-import { toNormal } from "../../../../shared/utils/string_formats";
 import { PostPositionPageCard } from "../components/PostPagePositionCard";
-
 
 
 export function PostPage() {
@@ -14,25 +12,19 @@ export function PostPage() {
     useScrollToTop();
 
     const params = useParams();
-    const id = +params.id!;
+    const id = Number(params.id);
 
-    const [post, setPost] = useState<PostDTO>();
-    const techs = post?.projectDTO.technologies;
+    const { data: post, isLoading, isError } = useQuery<PostDTO>({
+        queryKey: ["post", id],
+        queryFn: () => postService.onePost(id),
+        enabled: !!id,
+    });
 
-    useEffect(() => {
-        postService.onePost(id)
-            .then(res => {
-                setPost(res);
-            })
-            .catch(err => {
-                toast.error(err.respone.data);
-            })
-    }, []);
-
+    const techs = post?.projectDTO?.technologies;
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-neutral-100 to-neutral-200 dark:via-teal-950 dark:to-stone-900 text-slate-900 dark:text-white">
-            
+
             <main className="w-full flex flex-col items-center mx-auto pb-8">
 
 
@@ -41,7 +33,7 @@ export function PostPage() {
 
                     <div className="w-9/10 sm:w-4/5 space-y-2 py-10 lg:pt-25">
 
-                       
+
                         <p className="text-lg sm:text-4xl font-semibold mb-8">{post && toNormal(post?.title)}</p>
                         <p className="dark:text-gray-300 max-w-9/10 break-words">{post && toNormal(post?.description)}</p>
                         <p className="mb-5">Project's Technologies:</p>

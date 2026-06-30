@@ -1,6 +1,6 @@
 import axios from "axios";
 import type { EditPostRequestDTO } from "../forms/EditPostForm";
-import type { CreateProjectPostDTO } from "../models/CreateProjectPostDTO";
+import type { CreateProjectPostDTO } from "../models/CreatePostDTO";
 import { BASE_API } from "../../../../shared/api/baseApi";
 
 

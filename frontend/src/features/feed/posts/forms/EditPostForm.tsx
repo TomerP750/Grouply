@@ -10,6 +10,7 @@ import type { PostDTO } from "../../shared/models/PostDto";
 import { PositionSelectChips } from "../../shared/ui/PositionChipSelect";
 import postService from "../api/postService";
 import type { ProjectDTO } from "../models/ProjectDto";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 
 const labelCls = "text-sm font-medium text-slate-700 dark:text-slate-200";
@@ -34,74 +35,61 @@ interface EditPostFormModalProps {
 }
 
 export function EditPostFormModal({ open, onClose, post }: EditPostFormModalProps) {
-  const [ownedProjects, setOwnedProjects] = useState<ProjectDTO[]>([]);
-  const [loadingProjects, setLoadingProjects] = useState(false);
-  const [loading, setLoading] = useState<boolean>(false);
 
   const [positions, setPositions] = useState<ProjectPosition[]>([]);
 
   const user = useUserSelector((state) => state.authSlice.user);
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-    control,
-    resetField,
-    setValue,
-  } = useForm<EditPostRequestDTO>();
+  const client = useQueryClient();
+
+  const { register, handleSubmit, reset, formState: { errors }, control, resetField, setValue } = useForm<EditPostRequestDTO>();
 
   useEffect(() => {
+    if (!post) return;
+
     setValue("title", post.title);
     setValue("description", post.description);
-    setValue("projectId", post.projectDTO.id);
+    setValue("projectId", post.projectDTO?.id);
   }, [post, setValue]);
 
-  useEffect(() => {
-    if (!open || !user) return;
-    setLoadingProjects(true);
-    projectService
-      .allUserProjectsWithNoPosts()
-      .then((res) => setOwnedProjects(res))
-      .catch((err) => toast.error(err?.response?.data))
-      .finally(() => setLoadingProjects(false));
-  }, [open, user]);
+  const { data: ownedProjects, isLoading } = useQuery<ProjectDTO[]>({
+    queryKey: ["ownedProjects", user?.id],
+    queryFn: projectService.allUserProjectsWithNoPosts,
+    enabled: open && !!user,
+  });
 
   const description = useWatch({ control, name: "description", defaultValue: "" });
   const length = description?.length ?? 0;
 
-  const sendUpdate = (data: EditPostRequestDTO) => {
-    setLoading(true);
-    const dataToSend: EditPostRequestDTO = {
-      title: data.title,
-      description: data.description,
-      projectId: data.projectId,
-    };
+  const mutation = useMutation({
+    mutationFn: postService.editPost,
 
-    postService
-      .editPost(dataToSend)
-      .then(() => {
-        toast.success("Created Post");
-        onClose();
-      })
-      .catch((err) => {
-        toast.error(err.response.data);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    onSuccess: () => {
+      if (post?.id) {
+        client.invalidateQueries({ queryKey: ["post", post.id] });
+      }
+      client.invalidateQueries({ queryKey: ["posts"] });
+
+      reset();
+      toast.success("Post updated");
+      onClose();
+
+    },
+    onError: (err: any) => {
+      toast.error(err?.response?.data);
+    },
+  });
+
+  const sendUpdate = (data: EditPostRequestDTO) => {
+    mutation.mutate(data);
   };
 
   return (
-    <Modal
-      open={open}
-      onClose={() => {
-        reset();
-        onClose();
-      }}
-      title="Edit Post"
-    >
+    <Modal open={open} onClose={() => {
+      reset();
+      onClose();
+    }}>
+
       <form
         onSubmit={handleSubmit(sendUpdate)}
         className="flex min-h-[40vh] max-h-[70vh] flex-col"
@@ -120,7 +108,7 @@ export function EditPostFormModal({ open, onClose, post }: EditPostFormModalProp
               <h3 className="text-sm font-semibold text-slate-800 dark:text-slate-100">
                 Project & Positions
               </h3>
-              {loadingProjects && (
+              {isLoading && (
                 <span className="inline-flex items-center gap-1 text-xs text-slate-500 dark:text-slate-400">
                   <BiLoaderAlt className="animate-spin" size={14} />
                   Loading projects…
@@ -133,15 +121,15 @@ export function EditPostFormModal({ open, onClose, post }: EditPostFormModalProp
               <span className={labelCls}>Choose Project</span>
               <select
                 className={inputBase}
-                disabled={loadingProjects}
+                disabled={isLoading}
                 {...register("projectId", { required: "Please choose a project" })}
                 aria-invalid={!!errors.projectId}
               >
                 <option value="">
-                  {loadingProjects ? "Loading projects…" : "Select a project"}
+                  {isLoading ? "Loading projects…" : "Select a project"}
                 </option>
 
-                {ownedProjects.map((op) => (
+                {ownedProjects?.map((op) => (
                   <option key={op.id} value={op.id}>
                     {op.name}
                   </option>
@@ -205,7 +193,6 @@ export function EditPostFormModal({ open, onClose, post }: EditPostFormModalProp
 
               <textarea
                 rows={7}
-                readOnly={length > 500}
                 placeholder="Describe the project and what you’re looking for…"
                 className={`${inputBase} resize-none leading-relaxed min-h-[140px]`}
                 {...register("description", {
@@ -223,8 +210,8 @@ export function EditPostFormModal({ open, onClose, post }: EditPostFormModalProp
                     length > 500
                       ? "font-semibold text-red-500"
                       : length > 450
-                      ? "font-medium text-amber-500"
-                      : "text-slate-400 dark:text-slate-500"
+                        ? "font-medium text-amber-500"
+                        : "text-slate-400 dark:text-slate-500"
                   }
                 >
                   {length} / 500
@@ -253,10 +240,10 @@ export function EditPostFormModal({ open, onClose, post }: EditPostFormModalProp
             </button>
             <button
               type="submit"
-              disabled={loading || loadingProjects}
+              disabled={isLoading}
               className="inline-flex items-center justify-center rounded-md bg-sky-500 dark:bg-teal-600 px-4 py-2 text-sm font-medium text-white transition hover:brightness-110 disabled:opacity-60 cursor-pointer"
             >
-              {loading ? <BiLoaderAlt size={20} className="animate-spin" /> : "Edit Post"}
+              {mutation.isPending ? <BiLoaderAlt size={20} className="animate-spin" /> : "Edit Post"}
             </button>
           </div>
         </div>

@@ -1,7 +1,7 @@
-import type { ProjectPosition } from "../../../shared/models/project/ProjectPosition"
+import type { ProjectPosition } from "../../../../shared/models/project/ProjectPosition"
 
 
-export class CreateProjectPostDTO {
+export class CreatePostDTO {
 
     title: string
     description: string

@@ -6,25 +6,19 @@ import postService from "../api/postService";
 import { useQuery } from "@tanstack/react-query"
 import { BiLoaderCircle } from "react-icons/bi";
 import { PostCard } from "../components/post_card/PostCard";
-import type { Pagination } from "../../../../shared/models/Pagination";
 
 
 export function Feed() {
 
-    const [pagination, setPagination] = useState<Pagination>({
-        pageIndex: 0,
-        pageSize: 10
-    });
+    const [pageIndex, setPageIndex] = useState<number>(0);
+    const [pageSize, setPageSize] = useState<number>(10);
 
-
-    // const { data, isLoading } = useQuery({
-    //     queryKey: ["posts", pagination.pageIndex, pagination.pageSize],
-    //     queryFn: () =>
-    //         postService.allPosts(pagination.pageIndex, pagination.pageSize),
-    //     staleTime: 1000 * 60 * 5
+    // const { data, isLoading } = useQuery<PostDTO>({
+    //     queryKey: ["posts", pageIndex, pageSize],
+    //     queryFn: () => postService.allPosts(pageIndex, pageSize),
+    //     staleTime: 1000 * 60 * 5,
     // });
 
-    // const posts: PostDTO[] = data?.content ?? [];
     const posts: PostDTO[] = [];
 
 

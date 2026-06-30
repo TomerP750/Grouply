@@ -55,7 +55,7 @@ public class ProjectController {
     //TODO merge all and paged in one method
     @GetMapping("/owned")
     public Page<ProjectDTO> getUserOwnedProjects(@AuthenticationPrincipal CustomUserDetails userDetails,
-                                                 @RequestParam(value = "pageIndex", defaultValue = "0") int pageIndex,
+                                                 @RequestParam(value = "page", defaultValue = "0") int pageIndex,
                                                  @RequestParam(value = "size", defaultValue = "10") int size) {
         PageRequest pageRequest = PageRequest.of(pageIndex, size);
         Long userId = userDetails.getId();

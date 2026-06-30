@@ -5,15 +5,12 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import projectService from "../../../dashboard/tables/user_tables/projects_table/api/projectService";
 import type { ProjectPosition } from "../../../../shared/models/project/ProjectPosition";
-import { useUser } from "../../../../shared/store/hooks";
 import type { PostDTO } from "../../shared/models/PostDto";
 import postService from "../api/postService";
-import { CreateProjectPostDTO } from "../models/CreateProjectPostDTO";
 import type { ProjectDTO } from "../models/ProjectDto";
 import { PositionSelectChips } from "../../shared/ui/PositionChipSelect";
-
-
-
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { CreatePostDTO } from "../models/CreatePostDTO";
 
 
 const labelCls = "text-sm font-medium text-slate-700 dark:text-slate-200";
@@ -31,60 +28,50 @@ interface CreatePostFormProps {
 }
 
 export function CreatePostForm({ onAdd }: CreatePostFormProps) {
-  const [ownedProjects, setOwnedProjects] = useState<ProjectDTO[]>([]);
-  const [loadingProjects, setLoadingProjects] = useState(false);
-  const [loading, setLoading] = useState<boolean>(false);
+
+  const client = useQueryClient();
 
   const [positions, setPositions] = useState<ProjectPosition[]>([]);
 
   const navigate = useNavigate();
-  const user = useUser();
 
-  useEffect(() => {
+  const { data, isFetching } = useQuery<ProjectDTO[]>({
+    queryKey: ["userProjectsWithNoPosts"],
+    queryFn: () => projectService.allUserProjectsWithNoPosts()
+  });
 
-    setLoadingProjects(true);
-    projectService
-      .allUserProjectsWithNoPosts()
-      .then((res) => {
-        console.log(res);
-
-        setOwnedProjects(res)
-      })
-      .catch((err) => toast.error(err?.response?.data))
-      .finally(() => setLoadingProjects(false));
-
-  }, []);
-
-
-  const { register, handleSubmit, reset, formState: { errors }, control, resetField } = useForm<CreateProjectPostDTO>();
+  const { register, handleSubmit, reset,formState: { errors, isSubmitting }, control, resetField }= useForm<CreatePostDTO>();
 
   const description = useWatch({ control, name: "description", defaultValue: "" });
   const length = description?.length ?? 0;
 
-  const sendCreation = (data: CreateProjectPostDTO) => {
 
-    setLoading(true);
+  const createPostMutation = useMutation({
+    
+    mutationFn: postService.createPost,
 
-    const dataToSend: CreateProjectPostDTO = new CreateProjectPostDTO(data.title, data.description, positions, data.projectId)
+    onSuccess: (res) => {
+      toast.success("Created Post");
 
-    postService.createPost(dataToSend)
-      .then(res => {
-        toast.success("Created Post");
-        navigate("/");
-        onAdd?.(res);
-      })
-      .catch(err => {
-        toast.error(err.response.data);
-      })
-      .finally(() => {
-        setLoading(false);
-      })
+      client.invalidateQueries({ queryKey: ["posts"] });
 
+      navigate("/");
+
+      onAdd?.(res);
+    },
+
+    onError: (err: any) => {
+      toast.error(err?.response?.data);
+    },
+  });
+  const sendCreation = (data: CreatePostDTO) => {
+
+    createPostMutation.mutate(data);
   };
 
   return (
     <div className="min-h-screen flex justify-center dark:bg-stone-900">
-   
+
       <form
         onSubmit={handleSubmit(sendCreation)}
         className="flex flex-col w-1/2 pb-10 pt-25"
@@ -105,23 +92,26 @@ export function CreatePostForm({ onAdd }: CreatePostFormProps) {
             <select
               defaultValue=""
               className={`${inputBase} bg-slate-800/60 dark:bg-slate-800/60`}
-              disabled={loadingProjects}
+              // disabled={false}
               {...register("projectId", { required: "Please choose a project", valueAsNumber: true })}
               aria-invalid={!!errors.projectId}
             >
               <option value="" disabled>
-                {loadingProjects ? "Loading projects…" : "Select a project"}
+                {isFetching ? "Loading projects…" : "Select a project"}
               </option>
-              {ownedProjects.map((op) => (
+
+              {data?.map((op) => (
                 <option key={op.id} value={op.id}>
                   {op.name}
                 </option>
               ))}
+
             </select>
             {errors.projectId && <span className={errorCls}>{errors.projectId.message}</span>}
           </label>
 
           {/* Title */}
+
           <label className="flex flex-col gap-2">
             <span className={labelCls}>Title</span>
             <input
@@ -139,6 +129,7 @@ export function CreatePostForm({ onAdd }: CreatePostFormProps) {
           </label>
 
           {/* Description */}
+
           <label className="flex flex-col gap-2">
             <div className="flex items-center justify-between">
               <span className={labelCls}>Description</span>
@@ -153,7 +144,6 @@ export function CreatePostForm({ onAdd }: CreatePostFormProps) {
 
             <textarea
               rows={8}
-              readOnly={length > 500}
               placeholder="Describe the project and what you’re looking for…"
               className={`${inputBase} resize-none leading-relaxed bg-slate-800/60 dark:bg-slate-800/60`}
               {...register("description", {
@@ -172,6 +162,7 @@ export function CreatePostForm({ onAdd }: CreatePostFormProps) {
         </div>
 
         {/* Buttons */}
+
         <div className="mt-6 mr-4 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
           <button
             type="button"
@@ -187,12 +178,13 @@ export function CreatePostForm({ onAdd }: CreatePostFormProps) {
 
           <button
             type="submit"
-            disabled={loading || loadingProjects}
+            disabled={createPostMutation.isPending}
             className="disabled:cursor-not-allowed cursor-pointer inline-flex items-center justify-center rounded-lg bg-sky-500 dark:bg-teal-600 text-white px-4 py-2 text-sm font-semibold hover:brightness-110 disabled:opacity-60 transition"
           >
-            {loading ? <BiLoaderAlt size={20} className="animate-spin" /> : "Create Post"}
+            {isSubmitting ? <BiLoaderAlt size={20} className="animate-spin" /> : "Create Post"}
           </button>
         </div>
+
       </form>
     </div>
 

@@ -6,8 +6,8 @@ import type { UpdateProjectDTO } from "../models/UpdateProjectDto";
 
 class ProjectService {
 
-    async getUserOwnedProjectsPagination(pageIndex: number, size: number) {
-        return (await axios.get(`${BASE_API}/project/owned?pageIndex=${pageIndex}&size=${size}`)).data
+    async getUserOwnedProjectsPagination(page: number, size: number) {
+        return (await axios.get(`${BASE_API}/project/owned?page=${page}&size=${size}`)).data
     }
 
     async getAllUserOwnedProjects() {
